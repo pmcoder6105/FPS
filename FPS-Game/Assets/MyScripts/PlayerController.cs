@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             items[itemIndex].Use();
         }
 
-        if (transform.position.y < -10f) // die if u fall into the VOID
+        if (transform.position.y < -10f)
         {
             Die();
         }
