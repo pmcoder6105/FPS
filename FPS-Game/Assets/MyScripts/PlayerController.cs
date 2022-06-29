@@ -84,9 +84,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 EquipItem(0);
             }
             else
-            {                
+            {
                 EquipItem(itemIndex + 1);
-            }            
+            }
         }
         if (Input.GetAxisRaw("Mouse ScrollWheel") < 0f)
         {
@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             else
             {
                 EquipItem(itemIndex - 1);
-            }            
+            }
         }
 
         if (Input.GetMouseButtonDown(0))
