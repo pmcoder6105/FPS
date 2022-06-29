@@ -162,7 +162,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        if (!PV.IsMine && targetPlayer == PV.Owner)
+       if (!PV.IsMine && targetPlayer == PV.Owner)
         {
             EquipItem((int)changedProps["itemIndex"]);
         }
