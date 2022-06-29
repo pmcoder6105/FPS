@@ -5,6 +5,7 @@ using Photon.Pun;
 using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
+using TMPro;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
@@ -34,6 +35,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     PlayerManager playerManager;
 
+    public TMP_Text killsText, deathText;
+    public int killCount;
+    public static int deathCount;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -55,6 +60,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Destroy(rb);
             Destroy(ui);
         }
+        killCount = 0;
     }
 
     private void Update()
@@ -67,6 +73,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Move();
 
         Jump();
+
+        deathText.text = deathCount.ToString();
 
         for (int i = 0; i < items.Length; i++)
         {
@@ -204,6 +212,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     void Die()
     {
         playerManager.Die();
+        deathCount++;
     }
 }
 
