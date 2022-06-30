@@ -31,13 +31,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     PhotonView PV;
 
     const float maxHealth = 100f;
-    float currentHealth = maxHealth;
+    public float currentHealth = maxHealth;
 
     PlayerManager playerManager;
 
     public TMP_Text killsText, deathText;
     public int killCount;
     public static int deathCount;
+
+    SingleShotGun singleShotGun;
 
     private void Awake()
     {
@@ -188,7 +190,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, int player)
     {
         PV.RPC("RPC_TakeDamage", RpcTarget.All, damage);
     }
@@ -213,6 +215,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         playerManager.Die();
         deathCount++;
+        isDead = true;
     }
 }
 

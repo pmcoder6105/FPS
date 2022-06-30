@@ -437,9 +437,11 @@ MonoBehaviour:
   items:
   - {fileID: 2971969791767809099}
   - {fileID: 2471543789871672640}
+  currentHealth: 100
   killsText: {fileID: 4481775027535688456}
   deathText: {fileID: 1163647738217267379}
   killCount: 0
+  isDead: 0
 --- !u!54 &2567718919365197072
 Rigidbody:
   m_ObjectHideFlags: 0
