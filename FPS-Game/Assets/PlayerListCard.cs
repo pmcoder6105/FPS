@@ -6,7 +6,7 @@ using Photon.Realtime;
 
 public class PlayerListCard : MonoBehaviour
 {
-    public TMP_Text usernameText;
+    public TMP_Text usernameText, kills, deaths;
 
     public void Initialize(Player player)
     {

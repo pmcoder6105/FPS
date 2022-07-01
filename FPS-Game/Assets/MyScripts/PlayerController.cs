@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public static int deathCount;
 
     SingleShotGun singleShotGun;
+    public int playerID;
 
     private void Awake()
     {
@@ -190,7 +191,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
     }
 
-    public void TakeDamage(float damage, int player)
+    public void TakeDamage(float damage)
     {
         PV.RPC("RPC_TakeDamage", RpcTarget.All, damage);
     }
@@ -208,14 +209,20 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (currentHealth <= 0)
         {
             Die();
+            PV.RPC("RPC_IncreaseKillsScoreToKiller", RpcTarget.Others);
         }
+    }
+
+    [PunRPC]
+    void RPC_IncreaseKillsScoreToKiller()
+    {
+        Debug.Log("You got a kill!");
     }
 
     void Die()
     {
         playerManager.Die();
         deathCount++;
-        isDead = true;
     }
 }
 

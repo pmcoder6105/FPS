@@ -9,7 +9,7 @@ public class SingleShotGun : Gun
 
     PhotonView PV;
 
-    //PlayerController victimPlayerController;
+    PlayerController victimPlayerController;
 
     public int playerID;
 
@@ -29,13 +29,7 @@ public class SingleShotGun : Gun
         ray.origin = cam.transform.position;
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);            
-            //if (hit.collider.gameObject.GetComponent<PhotonView>() != null)
-            //{
-            //    victimPlayerController = hit.collider.gameObject.GetComponent<PlayerController>();
-            //    VictimDeath();
-            //    Debug.Log(victimPlayerController);
-            //}            
+            hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);                     
             PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
         }
 
@@ -53,21 +47,4 @@ public class SingleShotGun : Gun
         }
         
     }
-
-    //public void VictimDeath()
-    //{      
-    //    if (victimPlayerController == null)
-    //    {
-    //        //Debug.Log(victimPlayerController.isDead);
-    //        //if (victimPlayerController.isDead)
-    //        //{
-    //        //   Debug.Log("You killed someone");
-    //        //}
-    //        Debug.Log("You killed someone");
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("You hit the environment");
-    //    }
-    //}
 }
