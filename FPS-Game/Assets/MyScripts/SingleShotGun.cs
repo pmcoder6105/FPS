@@ -9,27 +9,32 @@ public class SingleShotGun : Gun
 
     PhotonView PV;
 
-    PlayerController victimPlayerController;
+    //PlayerController victimPlayerController;
 
     public int playerID;
 
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
+        playerID = PhotonNetwork.LocalPlayer.ActorNumber;
     }
 
     public override void Use()
     {
-        Shoot(PhotonNetwork.LocalPlayer.ActorNumber);
+        Shoot();
     }
 
-    void Shoot(int playerID)
+    void Shoot()
     {
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));        
         ray.origin = cam.transform.position;
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);                     
+            hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+            if (hit.collider.gameObject.GetComponent<PlayerController>() != null)
+            {
+                hit.collider.gameObject.GetComponent<PlayerController>().playerID = playerID;
+            }           
             PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
         }
 

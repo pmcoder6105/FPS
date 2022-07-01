@@ -17,26 +17,9 @@ public class RoomListItem : MonoBehaviour
         text.text = info.Name;
     }
 
-    private void Update()
-    {
-        if (PhotonNetwork.PlayerList.Length == 1)
-        {
-            playerListAmount.text = "1/2";
-        }
-        if (PhotonNetwork.PlayerList.Length == 2)
-        {
-            playerListAmount.text = "MAX";
-        }
-    }
-
     public void OnClick()
     {
-        RoomOptions options = new RoomOptions();
-        options.MaxPlayers = 2;
-        if (PhotonNetwork.PlayerList.Length > 2)
-        {
-            Launcher.Instance.JoinRoom(info);
-        }
+         Launcher.Instance.JoinRoom(info);
         
     }
 }

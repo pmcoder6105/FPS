@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         if (transform.position.y < -10f)
         {
-            Die();
+            Invoke(nameof(Die), 2f);
         }
     }
 
@@ -206,10 +206,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         healthBarImage.fillAmount = currentHealth / maxHealth;
 
+        Player playerRPC = PhotonNetwork.CurrentRoom.GetPlayer(playerID);
+
         if (currentHealth <= 0)
         {
-            Die();
-            PV.RPC("RPC_IncreaseKillsScoreToKiller", RpcTarget.Others);
+            Invoke(nameof(Die), 2f);
+            PV.RPC("RPC_IncreaseKillsScoreToKiller", playerRPC);
         }
     }
 
