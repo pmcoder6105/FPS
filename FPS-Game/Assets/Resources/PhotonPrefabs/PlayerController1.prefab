@@ -441,7 +441,7 @@ MonoBehaviour:
   killsText: {fileID: 4481775027535688456}
   deathText: {fileID: 1163647738217267379}
   killCount: 0
-  isDead: 0
+  playerID: 0
 --- !u!54 &2567718919365197072
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -524,6 +524,7 @@ MonoBehaviour:
   itemGameObject: {fileID: 7425839047087695605}
   bulletImpactPrefab: {fileID: 3929114802051229733, guid: 36039ee1a1843a74fbdbc51b7bae5265, type: 3}
   cam: {fileID: 2511184436295150316}
+  playerID: 0
 --- !u!114 &4454856278380405542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1086,6 +1087,7 @@ MonoBehaviour:
   itemGameObject: {fileID: 7823995809657890754}
   bulletImpactPrefab: {fileID: 3929114802051229733, guid: 36039ee1a1843a74fbdbc51b7bae5265, type: 3}
   cam: {fileID: 2511184436295150316}
+  playerID: 0
 --- !u!114 &4235356016196635108
 MonoBehaviour:
   m_ObjectHideFlags: 0
