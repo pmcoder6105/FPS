@@ -15,8 +15,7 @@ public class SingleShotGun : Gun
 
     private void Awake()
     {
-        PV = GetComponent<PhotonView>();
-        playerID = PhotonNetwork.LocalPlayer.ActorNumber;
+        PV = GetComponent<PhotonView>();        
     }
 
     public override void Use()
@@ -31,6 +30,7 @@ public class SingleShotGun : Gun
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+            playerID = PhotonNetwork.LocalPlayer.ActorNumber;
             if (hit.collider.gameObject.GetComponent<PlayerController>() != null)
             {
                 hit.collider.gameObject.GetComponent<PlayerController>().playerID = playerID;

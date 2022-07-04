@@ -63,7 +63,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Destroy(rb);
             Destroy(ui);
         }
-        killCount = 0;
     }
 
     private void Update()
@@ -118,7 +117,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         if (transform.position.y < -10f)
         {
-            Invoke(nameof(Die), 2f);
+            Invoke(nameof(Die), 0.1f);
         }
     }
 
@@ -210,7 +209,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         if (currentHealth <= 0)
         {
-            Invoke(nameof(Die), 2f);
+            Invoke(nameof(Die), 0.1f);
             PV.RPC("RPC_IncreaseKillsScoreToKiller", playerRPC);
         }
     }
@@ -218,13 +217,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [PunRPC]
     void RPC_IncreaseKillsScoreToKiller()
     {
+        killCount++;
+        killsText.text = killCount.ToString();
         Debug.Log("You got a kill!");
     }
 
     void Die()
     {
+        if (!PV.IsMine)
+            return;
         playerManager.Die();
         deathCount++;
+        //killCount = 0;
     }
 }
 
