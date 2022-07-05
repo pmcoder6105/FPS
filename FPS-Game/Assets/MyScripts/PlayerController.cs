@@ -219,7 +219,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         killCount++;
         killsText.text = killCount.ToString();
-        Debug.Log("You got a kill!");
+        Debug.Log("You got a kill! Called from player# " + PV.Owner.ActorNumber + ", AKA " + PV.Owner.NickName);
     }
 
     void Die()
