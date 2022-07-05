@@ -9,8 +9,6 @@ public class SingleShotGun : Gun
 
     PhotonView PV;
 
-    //PlayerController victimPlayerController;
-
     public int playerID;
 
     private void Awake()
