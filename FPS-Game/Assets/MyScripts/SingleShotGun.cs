@@ -7,6 +7,8 @@ public class SingleShotGun : Gun
 {
     [SerializeField] Camera cam;
 
+    public GameObject bulletImpactVFX;
+
     PhotonView PV;
 
     public int playerID;
@@ -27,12 +29,7 @@ public class SingleShotGun : Gun
         ray.origin = cam.transform.position;
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-            playerID = PhotonNetwork.LocalPlayer.ActorNumber;
-            if (hit.collider.gameObject.GetComponent<PlayerController>() != null)
-            {
-                hit.collider.gameObject.GetComponent<PlayerController>().playerID = playerID;
-            }           
+            hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);          
             PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
         }
 
@@ -44,9 +41,13 @@ public class SingleShotGun : Gun
         Collider[] colliders = Physics.OverlapSphere(hitPosition, 0.3f);
         if (colliders.Length != 0)
         {
-            GameObject bulletImpactObject = Instantiate(bulletImpactPrefab, hitPosition + hitNormal * 0.001f, Quaternion.LookRotation(hitNormal, Vector3.up) * bulletImpactPrefab.transform.rotation);
-            Destroy((bulletImpactObject), 10f);
-            bulletImpactObject.transform.SetParent(colliders[0].transform);
+            //GameObject bulletImpactObject = Instantiate(bulletImpactPrefab, hitPosition + hitNormal * 0.001f, Quaternion.LookRotation(hitNormal, Vector3.up) * bulletImpactPrefab.transform.rotation);
+            //Destroy((bulletImpactObject), 10f);
+            //bulletImpactObject.transform.SetParent(colliders[0].transform);
+
+            GameObject impactObject = Instantiate(bulletImpactVFX, hitPosition, Quaternion.LookRotation(hitNormal));
+            Destroy(impactObject, 3f);
+            impactObject.transform.SetParent(colliders[0].transform);
         }
         
     }

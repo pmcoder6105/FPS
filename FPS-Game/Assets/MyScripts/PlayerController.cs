@@ -35,13 +35,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     PlayerManager playerManager;
 
-    public TMP_Text killsText, deathText;
-    public int killCount;
-    public static int deathCount;
-
-    SingleShotGun singleShotGun;
-    public int playerID;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -75,8 +68,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Move();
 
         Jump();
-
-        deathText.text = deathCount.ToString();
 
         for (int i = 0; i < items.Length; i++)
         {
@@ -205,21 +196,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         healthBarImage.fillAmount = currentHealth / maxHealth;
 
-        Player playerRPC = PhotonNetwork.CurrentRoom.GetPlayer(playerID);
-
         if (currentHealth <= 0)
         {
-            Invoke(nameof(Die), 0.1f);
-            PV.RPC("RPC_IncreaseKillsScoreToKiller", playerRPC);
+            Die();
         }
-    }
-
-    [PunRPC]
-    void RPC_IncreaseKillsScoreToKiller()
-    {
-        killCount++;
-        killsText.text = killCount.ToString();
-        Debug.Log("You got a kill! Called from player# " + PV.Owner.ActorNumber + ", AKA " + PV.Owner.NickName);
     }
 
     void Die()
@@ -227,7 +207,5 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (!PV.IsMine)
             return;
         playerManager.Die();
-        deathCount++;
-        //killCount = 0;
     }
 }
