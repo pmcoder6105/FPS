@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Destroy(rb);
             Destroy(ui);
         }
+        GameObject.Find("MainCamera").SetActive(false);
     }
 
     private void Update()

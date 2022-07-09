@@ -18,6 +18,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject roomListItemPrefab;
     [SerializeField] GameObject playerListItemPrefab;
     [SerializeField] GameObject startGameButton;
+    [SerializeField] GameObject mapChooseMenu;    
+    [SerializeField] GameObject nonClientWaitingText;
 
 
     private void Awake()
@@ -75,11 +77,18 @@ public class Launcher : MonoBehaviourPunCallbacks
         }
 
         startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+        mapChooseMenu.SetActive(PhotonNetwork.IsMasterClient);
+
+        if (PhotonNetwork.IsMasterClient == false)
+        {
+            nonClientWaitingText.SetActive(true);
+        }
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         startGameButton.SetActive(PhotonNetwork.IsMasterClient);
+        mapChooseMenu.SetActive(PhotonNetwork.IsMasterClient);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -90,7 +99,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel(1);
+        PhotonNetwork.LoadLevel(mapChooseMenu.GetComponent<MapChooser>().mapName);
+        //PhotonNetwork.LoadLevel(1);
     }
 
     public void LeaveRoom()
