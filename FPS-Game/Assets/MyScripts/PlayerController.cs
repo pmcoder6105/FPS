@@ -56,7 +56,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Destroy(rb);
             Destroy(ui);
         }
-        GameObject.Find("MainCamera").SetActive(false);
     }
 
     private void Update()
@@ -196,8 +195,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         if (currentHealth <= 0)
         {
+            Debug.Log("You were killed by " + info.Sender.NickName.ToString());
             Die();
-            PlayerManager.Find(info.Sender).GetKill();
+            PlayerManager.Find(info.Sender).GetKill();  
         }
     }
 
