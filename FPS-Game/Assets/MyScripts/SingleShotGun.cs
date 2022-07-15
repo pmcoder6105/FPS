@@ -41,10 +41,6 @@ public class SingleShotGun : Gun
         Collider[] colliders = Physics.OverlapSphere(hitPosition, 0.3f);
         if (colliders.Length != 0)
         {
-            //GameObject bulletImpactObject = Instantiate(bulletImpactPrefab, hitPosition + hitNormal * 0.001f, Quaternion.LookRotation(hitNormal, Vector3.up) * bulletImpactPrefab.transform.rotation);
-            //Destroy((bulletImpactObject), 10f);
-            //bulletImpactObject.transform.SetParent(colliders[0].transform);
-
             GameObject impactObject = Instantiate(bulletImpactVFX, hitPosition, Quaternion.LookRotation(hitNormal));
             Destroy(impactObject, 3f);
             impactObject.transform.SetParent(colliders[0].transform);
