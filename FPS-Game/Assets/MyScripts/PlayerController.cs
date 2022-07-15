@@ -217,8 +217,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             Debug.Log("You were killed by " + info.Sender.NickName.ToString());
             Die();
-            PlayerManager.Find(info.Sender).GetKill();  
+            PlayerManager.Find(info.Sender).GetKill();
+            Player player = info.Sender;
+            PV.RPC(nameof(RPC_InstantiateKillText), player);
         }
+    }
+
+    [PunRPC]
+    void RPC_InstantiateKillText()
+    {
+        Debug.Log("You got a kill!");
     }
 
     public void SetPlayerHealthShader()
