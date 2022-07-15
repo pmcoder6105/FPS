@@ -275,26 +275,29 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             GameObject particleSystem = Instantiate(redDeathParticleSystem, this.gameObject.transform.position, Quaternion.identity);
             particleSystem.GetComponent<ParticleSystem>().Emit(30);
             Debug.Log("Red Death Effect");
+            Destroy(particleSystem, 5f);
         }
         if (PlayerPrefs.GetInt("DeathEffectColor") == 2)
         {
             GameObject particleSystem = Instantiate(blueDeathParticleSystem, this.gameObject.transform.position, Quaternion.identity);
             particleSystem.GetComponent<ParticleSystem>().Emit(30);
             Debug.Log("Blue Death Effect");
+            Destroy(particleSystem, 5f);
         }
         if (PlayerPrefs.GetInt("DeathEffectColor") == 3)
         {
             GameObject particleSystem = Instantiate(greenDeathParticleSystem, this.gameObject.transform.position, Quaternion.identity);
             particleSystem.GetComponent<ParticleSystem>().Emit(30);
             Debug.Log("Green Death Effect");
+            Destroy(particleSystem, 5f);
         }
         if (PlayerPrefs.GetInt("DeathEffectColor") == 4)
         {
             GameObject particleSystem = Instantiate(blackDeathParticleSystem, this.gameObject.transform.position, Quaternion.identity);
             particleSystem.GetComponent<ParticleSystem>().Emit(30);
             Debug.Log("Black Death Effect");
+            Destroy(particleSystem, 5f);
         }
-
         playerManager.Die();
     }
 }
