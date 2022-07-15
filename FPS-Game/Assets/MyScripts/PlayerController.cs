@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] GameObject hurt;
     int playerHealth;
 
+    public GameObject redDeathParticleSystem;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -264,6 +266,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         if (!PV.IsMine)
             return;
+
+        GameObject particleSystem = Instantiate(redDeathParticleSystem, this.gameObject.transform.position, Quaternion.identity);
+        particleSystem.GetComponent<ParticleSystem>().Emit(30);
         playerManager.Die();
     }
 }
