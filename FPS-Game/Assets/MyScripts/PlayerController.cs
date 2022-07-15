@@ -41,6 +41,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     int playerHealth;
 
     public GameObject redDeathParticleSystem;
+    public GameObject blueDeathParticleSystem;
+    public GameObject greenDeathParticleSystem;
+    public GameObject blackDeathParticleSystem;
 
     private void Awake()
     {
@@ -267,8 +270,31 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (!PV.IsMine)
             return;
 
-        GameObject particleSystem = Instantiate(redDeathParticleSystem, this.gameObject.transform.position, Quaternion.identity);
-        particleSystem.GetComponent<ParticleSystem>().Emit(30);
+        if (PlayerPrefs.GetInt("DeathEffectColor") == 1)
+        {
+            GameObject particleSystem = Instantiate(redDeathParticleSystem, this.gameObject.transform.position, Quaternion.identity);
+            particleSystem.GetComponent<ParticleSystem>().Emit(30);
+            Debug.Log("Red Death Effect");
+        }
+        if (PlayerPrefs.GetInt("DeathEffectColor") == 2)
+        {
+            GameObject particleSystem = Instantiate(blueDeathParticleSystem, this.gameObject.transform.position, Quaternion.identity);
+            particleSystem.GetComponent<ParticleSystem>().Emit(30);
+            Debug.Log("Blue Death Effect");
+        }
+        if (PlayerPrefs.GetInt("DeathEffectColor") == 3)
+        {
+            GameObject particleSystem = Instantiate(greenDeathParticleSystem, this.gameObject.transform.position, Quaternion.identity);
+            particleSystem.GetComponent<ParticleSystem>().Emit(30);
+            Debug.Log("Green Death Effect");
+        }
+        if (PlayerPrefs.GetInt("DeathEffectColor") == 4)
+        {
+            GameObject particleSystem = Instantiate(blackDeathParticleSystem, this.gameObject.transform.position, Quaternion.identity);
+            particleSystem.GetComponent<ParticleSystem>().Emit(30);
+            Debug.Log("Black Death Effect");
+        }
+
         playerManager.Die();
     }
 }
