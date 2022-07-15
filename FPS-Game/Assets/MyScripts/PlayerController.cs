@@ -35,6 +35,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     PlayerManager playerManager;
 
+    [SerializeField] GameObject healthy;
+    [SerializeField] GameObject normal;
+    [SerializeField] GameObject hurt;
+    int playerHealth;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -68,6 +73,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Move();
 
         Jump();
+
+        SetPlayerHealthShader();
 
         for (int i = 0; i < items.Length; i++)
         {
@@ -164,9 +171,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
        if (changedProps.ContainsKey("itemIndex") && !PV.IsMine && targetPlayer == PV.Owner)
-        {
+       {
             EquipItem((int)changedProps["itemIndex"]);
-        }
+       }
     }
 
     public void SetGroundedState(bool _grounded)
@@ -193,11 +200,55 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         healthBarImage.fillAmount = currentHealth / maxHealth;
 
+        if (currentHealth <= 100 && currentHealth >= 50)
+        {
+            playerHealth = 3;
+        }
+        if (currentHealth <= 49 && currentHealth >= 30)
+        {
+            playerHealth = 2;
+        }
+        if (currentHealth <= 29 && currentHealth >= 0)
+        {
+            playerHealth = 1;
+        }
+
         if (currentHealth <= 0)
         {
             Debug.Log("You were killed by " + info.Sender.NickName.ToString());
             Die();
             PlayerManager.Find(info.Sender).GetKill();  
+        }
+    }
+
+    public void SetPlayerHealthShader()
+    {
+        if (PV.IsMine)
+        {
+            PV.RPC(nameof(RPC_SetPlayerHealthShader), RpcTarget.All, playerHealth);
+        }        
+    }
+
+    [PunRPC]
+    void RPC_SetPlayerHealthShader(int _playerHealth)
+    {
+        if (_playerHealth == 3)
+        {
+            healthy.SetActive(true);
+            normal.SetActive(false);
+            hurt.SetActive(false);
+        }
+        if (_playerHealth == 2)
+        {
+            healthy.SetActive(false);
+            normal.SetActive(true);
+            hurt.SetActive(false);
+        }
+        if (_playerHealth == 1)
+        {
+            healthy.SetActive(false);
+            normal.SetActive(false);
+            hurt.SetActive(true);
         }
     }
 
