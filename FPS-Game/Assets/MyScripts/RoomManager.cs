@@ -37,10 +37,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        //if (scene.buildIndex == 1)
-        //{
-        //   
-        //}
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
+        if (scene.buildIndex == 1 || scene.buildIndex == 2 || scene.buildIndex == 3 || scene.buildIndex == 4 || scene.buildIndex == 5)
+        {
+            Debug.Log("I've joined an open room");
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
+        }
+        
     }
 }

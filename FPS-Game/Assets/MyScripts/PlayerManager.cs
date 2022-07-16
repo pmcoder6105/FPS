@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
 {
     PhotonView PV;
 
-    GameObject controller;
+    public GameObject controller;
 
     int kills;
     int deaths;
@@ -24,16 +24,13 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (PV.IsMine)
-        {
-            CreateController();
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        //if (PV.IsMine)
+        //{
+        //    CreateController();
+        //}
+        if (!PV.IsMine)
+            return;
+        CreateController();
     }
 
     void CreateController()
