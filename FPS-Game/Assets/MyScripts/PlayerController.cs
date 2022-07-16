@@ -270,6 +270,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (!PV.IsMine)
             return;
 
+        if (PV.IsMine)
+        {
+            PV.RPC(nameof(DisplayDeathParticleSystem), RpcTarget.All);
+        }
+        playerManager.Die();
+    }
+
+    [PunRPC] 
+    void DisplayDeathParticleSystem()
+    {
         if (PlayerPrefs.GetInt("DeathEffectColor") == 1)
         {
             GameObject particleSystem = Instantiate(redDeathParticleSystem, this.gameObject.transform.position, Quaternion.identity);
@@ -298,6 +308,5 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Debug.Log("Black Death Effect");
             Destroy(particleSystem, 5f);
         }
-        playerManager.Die();
     }
 }
