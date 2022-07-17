@@ -6,6 +6,7 @@ using System.IO;
 using Photon.Realtime;
 using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using TMPro;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PlayerManager : MonoBehaviour
 
     int kills;
     int deaths;
+
+    [SerializeField] GameObject killTextNotification;
 
     private void Awake()
     {
@@ -69,7 +72,15 @@ public class PlayerManager : MonoBehaviour
     public void GetKill()
     {
         PV.RPC(nameof(RPC_GetKill), PV.Owner);
+
+        //if (PV.IsMine == false)
+        //    return;
+
+        //GameObject killTextGameObject = Instantiate(killTextNotification, controller.GetComponent<PlayerController>().killTextNotificationHolder.transform);
+        //killTextGameObject.GetComponent<TMP_Text>().text = "You got a kill!";
+        //Destroy(killTextGameObject, 3);
     }
+
 
     [PunRPC]
     void RPC_GetKill()

@@ -59,7 +59,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     //[SerializeField] CinemachineVirtualCamera virtualCam;
 
     [SerializeField] GameObject killTextNotification;
-    [SerializeField] GameObject killTextNotificationHolder;
+    public GameObject killTextNotificationHolder;
+    [SerializeField] GameObject deathPanel;
+
+    public GameObject killTextNotificationGameObject;
+
+    bool hasInstantiatedDeathPanel = false;
 
     private void Awake()
     {
@@ -90,13 +95,27 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (!PV.IsMine)
             return;
 
-        if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked)
+        if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked && hasInstantiatedDeathPanel == false)
         {
             Cursor.lockState = CursorLockMode.None;
         }
-        if (Input.GetMouseButtonDown(0) && Cursor.lockState == CursorLockMode.None)
+        if (Input.GetMouseButtonDown(0) && Cursor.lockState == CursorLockMode.None && hasInstantiatedDeathPanel == false)
         {
             Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        if (killTextNotificationGameObject == null && isDead && hasInstantiatedDeathPanel == false)
+        {
+            Debug.Log("Time to spawn panel");
+            GameObject deathPanelGameObject = Instantiate(deathPanel, ui.transform);
+            if (deathPanelGameObject != null)
+            {
+                hasInstantiatedDeathPanel = true;
+            }
+            deathPanelGameObject.transform.Find("Replay").GetComponent<Button>().onClick.AddListener(Respawn);
+            Debug.Log(deathPanelGameObject.transform.Find("Replay"));
+            //deathPanelGameObject.GetComponentInChildren<Button>().onClick.AddListener(Respawn);
+            Cursor.lockState = CursorLockMode.None;
         }
 
         if (isDead == true)
@@ -108,7 +127,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         Jump();
 
-        SetPlayerHealthShader();
+        SetPlayerHealthShader();        
 
         for (int i = 0; i < items.Length; i++)
         {
@@ -150,6 +169,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (transform.position.y < -10f)
         {
             Die();
+            killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform);
+            killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: The Void";
+            Destroy(killTextNotificationGameObject, 5);            
         }
     }
 
@@ -253,9 +275,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Die();
             PlayerManager.Find(info.Sender).GetKill();
 
-            GameObject killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform);
+            killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform);
             killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: " + info.Sender.NickName.ToString();
-            Destroy(killTextNotificationGameObject, 3f);
+            Destroy(killTextNotificationGameObject, 5);
 
             //GameObject killer = entity.GetEntity(info.Sender.ActorNumber);
             //Debug.Log(killer.name);
@@ -263,7 +285,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             //cinemachineCam.gameObject.SetActive(true);
             //normalCam.gameObject.SetActive(false);
             //virtualCam.gameObject.SetActive(true);
-            //virtualCam.LookAt = PlayerManager.Find(info.Sender).controller.transform;
+            //virtualCam.LookAt = killer.transform;
         }
     }
 
@@ -321,6 +343,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         
 
         //comment out after testing to make info panel and personal death notification texts
+    }
+
+    void Respawn()
+    {
+        if (!PV.IsMine)
+            return;
+
+        playerManager.Die();
     }
 
     [PunRPC] 
