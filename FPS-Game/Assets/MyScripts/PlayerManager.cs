@@ -24,13 +24,10 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //if (PV.IsMine)
-        //{
-        //    CreateController();
-        //}
-        if (!PV.IsMine)
-            return;
-        CreateController();
+        if (PV.IsMine)
+        {
+            CreateController();
+        }
     }
 
     void CreateController()

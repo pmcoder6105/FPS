@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public bool isDead = false;
 
-    [SerializeField] GameObject overheadUsernameText;
+    //[SerializeField] GameObject overheadUsernameText;
 
     //[SerializeField] Camera cinemachineCam;
     //[SerializeField] Camera normalCam;
@@ -71,9 +71,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
         else
         {
+
+            //PROBLEM HERE
+
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Destroy(rb);
             Destroy(ui);
+
+
+            //PROBLEM HERE
+
         }
     }
 
@@ -82,9 +89,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (!PV.IsMine)
             return;
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked)
         {
             Cursor.lockState = CursorLockMode.None;
+        }
+        if (Input.GetMouseButtonDown(0) && Cursor.lockState == CursorLockMode.None)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         if (isDead == true)
@@ -295,6 +306,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
 
         //comment out after testing to make info panel and personal death notification texts
+
+
         //playerManager.Die();
         //Destroy(healthy);
         //Destroy(normal);
@@ -305,39 +318,45 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //}
         //Destroy(overheadUsernameText);
         //Destroy(ui);
+
+
         //comment out after testing to make info panel and personal death notification texts
     }
 
     [PunRPC] 
     void RPC_DisplayDeath()
     {
-        if (PlayerPrefs.GetInt("DeathEffectColor") == 1)
-        {
-            GameObject particleSystem = PhotonNetwork.Instantiate(nameof(redDeathParticleSystem), this.gameObject.transform.position, Quaternion.identity, 0);
-            particleSystem.GetComponent<ParticleSystem>().Emit(30);
-            Debug.Log("Red Death Effect");
-            Destroy(particleSystem, 5f);
-        }
-        if (PlayerPrefs.GetInt("DeathEffectColor") == 2)
-        {
-            GameObject particleSystem = PhotonNetwork.Instantiate(nameof(blueDeathParticleSystem), this.gameObject.transform.position, Quaternion.identity, 0);
-            particleSystem.GetComponent<ParticleSystem>().Emit(30);
-            Debug.Log("Blue Death Effect");
-            Destroy(particleSystem, 5f);
-        }
-        if (PlayerPrefs.GetInt("DeathEffectColor") == 3)
-        {
-            GameObject particleSystem = PhotonNetwork.Instantiate(nameof(greenDeathParticleSystem), this.gameObject.transform.position, Quaternion.identity, 0);
-            particleSystem.GetComponent<ParticleSystem>().Emit(30);
-            Debug.Log("Green Death Effect");
-            Destroy(particleSystem, 5f);
-        }
-        if (PlayerPrefs.GetInt("DeathEffectColor") == 4)
-        {
-            GameObject particleSystem = PhotonNetwork.Instantiate(nameof(blackDeathParticleSystem), this.gameObject.transform.position, Quaternion.identity, 0);
-            particleSystem.GetComponent<ParticleSystem>().Emit(30);
-            Debug.Log("Black Death Effect");
-            Destroy(particleSystem, 5f);
-        }      
+        GameObject particleSystem = PhotonNetwork.Instantiate(nameof(redDeathParticleSystem), this.gameObject.transform.position, Quaternion.identity, 0);
+        particleSystem.GetComponent<ParticleSystem>().Emit(30);
+        Destroy(particleSystem, 5f);
+
+        //if (PlayerPrefs.GetInt("DeathEffectColor") == 1)
+        //{
+        //    GameObject particleSystem = PhotonNetwork.Instantiate(nameof(redDeathParticleSystem), this.gameObject.transform.position, Quaternion.identity, 0);
+        //    particleSystem.GetComponent<ParticleSystem>().Emit(30);
+        //    Debug.Log("Red Death Effect");
+        //    Destroy(particleSystem, 5f);
+        //}
+        //if (PlayerPrefs.GetInt("DeathEffectColor") == 2)
+        //{
+        //    GameObject particleSystem = PhotonNetwork.Instantiate(nameof(blueDeathParticleSystem), this.gameObject.transform.position, Quaternion.identity, 0);
+        //    particleSystem.GetComponent<ParticleSystem>().Emit(30);
+        //    Debug.Log("Blue Death Effect");
+        //    Destroy(particleSystem, 5f);
+        //}
+        //if (PlayerPrefs.GetInt("DeathEffectColor") == 3)
+        //{
+        //    GameObject particleSystem = PhotonNetwork.Instantiate(nameof(greenDeathParticleSystem), this.gameObject.transform.position, Quaternion.identity, 0);
+        //    particleSystem.GetComponent<ParticleSystem>().Emit(30);
+        //    Debug.Log("Green Death Effect");
+        //    Destroy(particleSystem, 5f);
+        //}
+        //if (PlayerPrefs.GetInt("DeathEffectColor") == 4)
+        //{
+        //    GameObject particleSystem = PhotonNetwork.Instantiate(nameof(blackDeathParticleSystem), this.gameObject.transform.position, Quaternion.identity, 0);
+        //    particleSystem.GetComponent<ParticleSystem>().Emit(30);
+        //    Debug.Log("Black Death Effect");
+        //    Destroy(particleSystem, 5f);
+        //}      
     }
 }
