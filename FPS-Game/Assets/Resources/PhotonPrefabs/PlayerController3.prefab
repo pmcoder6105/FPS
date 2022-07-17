@@ -449,8 +449,10 @@ MonoBehaviour:
   blackDeathParticleSystem: {fileID: 1018666524451035006, guid: 19759b15d97fb7b4ebf6f34baacde4a3, type: 3}
   isDead: 0
   overheadUsernameText: {fileID: 7480224287480394087}
-  cam: {fileID: 0}
-  virtualCam: {fileID: 0}
+  itemHolder: {fileID: 5084062447775689742}
+  healthBar: {fileID: 7419847586430249810}
+  killTextNotification: {fileID: 4123704285322427525, guid: 21c7fa7c4b79f104e9a51257c911b394, type: 3}
+  killTextNotificationHolder: {fileID: 8162844677597702386}
 --- !u!54 &2567718919365197072
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -883,6 +885,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2103372724538454953}
+  - {fileID: 2619353673074774718}
   m_Father: {fileID: 2511184437448133923}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1337,6 +1340,42 @@ Transform:
   m_Father: {fileID: 814627686903236821}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8162844677597702386
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2619353673074774718}
+  m_Layer: 0
+  m_Name: KillTextNotificationHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2619353673074774718
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8162844677597702386}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3754081854239679212}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 550.5, y: 294.5}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1089589091376532954
 PrefabInstance:
   m_ObjectHideFlags: 0

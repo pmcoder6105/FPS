@@ -48,11 +48,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public bool isDead = false;
 
-    //[SerializeField] GameObject overheadUsernameText;
+    [SerializeField] GameObject overheadUsernameText;
+    [SerializeField] GameObject itemHolder;
+    [SerializeField] GameObject healthBar;
+
+    EntityManager entity;
 
     //[SerializeField] Camera cinemachineCam;
     //[SerializeField] Camera normalCam;
     //[SerializeField] CinemachineVirtualCamera virtualCam;
+
+    [SerializeField] GameObject killTextNotification;
+    [SerializeField] GameObject killTextNotificationHolder;
 
     private void Awake()
     {
@@ -60,6 +67,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         PV = GetComponent<PhotonView>();
 
         playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
+        entity = FindObjectOfType<EntityManager>();
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -71,16 +79,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
         else
         {
-
-            //PROBLEM HERE
-
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Destroy(rb);
             Destroy(ui);
-
-
-            //PROBLEM HERE
-
         }
     }
 
@@ -251,6 +252,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Debug.Log("You were killed by " + info.Sender.NickName.ToString());
             Die();
             PlayerManager.Find(info.Sender).GetKill();
+
+            GameObject killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform);
+            killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: " + info.Sender.NickName.ToString();
+            Destroy(killTextNotificationGameObject, 3f);
+
+            //GameObject killer = entity.GetEntity(info.Sender.ActorNumber);
+            //Debug.Log(killer.name);
+
             //cinemachineCam.gameObject.SetActive(true);
             //normalCam.gameObject.SetActive(false);
             //virtualCam.gameObject.SetActive(true);
@@ -309,16 +318,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
 
         //playerManager.Die();
-        //Destroy(healthy);
-        //Destroy(normal);
-        //Destroy(hurt);
-        //if (items[itemIndex].gameObject != null)
-        //{
-        //    Destroy(items[itemIndex].gameObject);
-        //}
-        //Destroy(overheadUsernameText);
-        //Destroy(ui);
-
+        
 
         //comment out after testing to make info panel and personal death notification texts
     }
@@ -329,6 +329,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         GameObject particleSystem = PhotonNetwork.Instantiate(nameof(redDeathParticleSystem), this.gameObject.transform.position, Quaternion.identity, 0);
         particleSystem.GetComponent<ParticleSystem>().Emit(30);
         Destroy(particleSystem, 5f);
+
+        Destroy(healthy);
+        Destroy(normal);
+        Destroy(hurt);
+        Destroy(itemHolder);
+        Destroy(overheadUsernameText);
+        Destroy(healthBar);
 
         //if (PlayerPrefs.GetInt("DeathEffectColor") == 1)
         //{
