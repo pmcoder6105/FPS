@@ -62,9 +62,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public GameObject killTextNotificationHolder;
     [SerializeField] GameObject deathPanel;
 
-    public GameObject killTextNotificationGameObject;
+    GameObject killTextNotificationGameObject;
 
     bool hasInstantiatedDeathPanel = false;
+
+    [SerializeField] GameObject publicKillTextNotification;
+    public GameObject publicKillTextNotificationHolder;
+
+    GameObject publicKillTextNotificationGameObject;
 
     private void Awake()
     {
@@ -114,7 +119,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             }
             deathPanelGameObject.transform.Find("Replay").GetComponent<Button>().onClick.AddListener(Respawn);
             Debug.Log(deathPanelGameObject.transform.Find("Replay"));
-            //deathPanelGameObject.GetComponentInChildren<Button>().onClick.AddListener(Respawn);
             Cursor.lockState = CursorLockMode.None;
         }
 
@@ -270,14 +274,22 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
 
         if (currentHealth <= 0)
-        {
-            Debug.Log("You were killed by " + info.Sender.NickName.ToString());
+        {            
             Die();
             PlayerManager.Find(info.Sender).GetKill();
+
+            //Player killer = PhotonNetwork.CurrentRoom.GetPlayer(info.Sender.ActorNumber);            
+
+            PV.RPC(nameof(RPC_InstantiateKillText), RpcTarget.All);
+
+            publicKillTextNotificationGameObject.GetComponent<TMP_Text>().text = info.Sender.NickName.ToString() + " killed " + PV.Owner.NickName;
+
 
             killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform);
             killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: " + info.Sender.NickName.ToString();
             Destroy(killTextNotificationGameObject, 5);
+
+
 
             //GameObject killer = entity.GetEntity(info.Sender.ActorNumber);
             //Debug.Log(killer.name);
@@ -292,7 +304,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [PunRPC]
     void RPC_InstantiateKillText()
     {
-        Debug.Log("You got a kill!");
+        Debug.Log("Instantiate +1 kill now!");
+        publicKillTextNotificationGameObject = Instantiate(publicKillTextNotification, publicKillTextNotificationHolder.transform);       
+        Destroy(publicKillTextNotificationGameObject, 3);
+        
     }
 
     public void SetPlayerHealthShader()
@@ -366,6 +381,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Destroy(itemHolder);
         Destroy(overheadUsernameText);
         Destroy(healthBar);
+        GetComponent<CapsuleCollider>().enabled = false;
 
         //if (PlayerPrefs.GetInt("DeathEffectColor") == 1)
         //{
