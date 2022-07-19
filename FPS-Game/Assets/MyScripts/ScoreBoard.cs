@@ -3,6 +3,7 @@ using Photon.Pun;
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ScoreBoard : MonoBehaviourPunCallbacks
 {
