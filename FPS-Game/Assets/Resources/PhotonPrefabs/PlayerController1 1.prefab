@@ -649,6 +649,7 @@ MonoBehaviour:
   deathPanel: {fileID: 3714018868535391958, guid: 662b13b97930b7641876d621a63c06ef, type: 3}
   publicKillTextNotification: {fileID: 4123704285322427525, guid: 5950b25f8b6ce334ba79eb41e105079a, type: 3}
   publicKillTextNotificationHolder: {fileID: 2099640874226108644}
+  gunClippingCam: {fileID: 2429949987780874682}
 --- !u!54 &2567718919365197072
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1057,6 +1058,10 @@ MonoBehaviour:
   randomRecoilContstraints: {x: 0, y: 0}
   recoilPattern: {x: 0, y: 0}
   recoilAmount: 0.05
+  animator: {fileID: 0}
+  reload: 
+  doesHaveAnimationForShooting: 0
+  shoot: 
 --- !u!114 &4454856278380405542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1299,6 +1304,10 @@ MonoBehaviour:
   randomRecoilContstraints: {x: 0, y: 0}
   recoilPattern: {x: 0, y: 0}
   recoilAmount: 0.1
+  animator: {fileID: 6326706048471507744}
+  reload: 
+  doesHaveAnimationForShooting: 1
+  shoot: PistolShoot
 --- !u!114 &2816010621069780856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1551,6 +1560,10 @@ MonoBehaviour:
   randomRecoilContstraints: {x: 0, y: 0}
   recoilPattern: {x: 0, y: 0}
   recoilAmount: 0.1
+  animator: {fileID: 0}
+  reload: 
+  doesHaveAnimationForShooting: 0
+  shoot: 
 --- !u!114 &4235356016196635108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2678,6 +2691,11 @@ PrefabInstance:
 --- !u!4 &2254392478204262325 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5225811241229620920, guid: c3799ee8ec1b3d34884287fe1f7630e1, type: 3}
+  m_PrefabInstance: {fileID: 6326706047894511885}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6326706048471507744 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 778355245, guid: c3799ee8ec1b3d34884287fe1f7630e1, type: 3}
   m_PrefabInstance: {fileID: 6326706047894511885}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8699230871613041813

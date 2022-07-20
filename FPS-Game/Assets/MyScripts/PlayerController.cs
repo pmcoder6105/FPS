@@ -71,6 +71,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     GameObject publicKillTextNotificationGameObject;
 
+    [SerializeField] GameObject gunClippingCam;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -92,6 +94,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Destroy(rb);
             Destroy(ui);
+            Destroy(gunClippingCam);
         }
     }
 

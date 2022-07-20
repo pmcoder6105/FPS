@@ -44,6 +44,14 @@ public class SingleShotGun : Gun
     public Vector2 recoilPattern;
     public float recoilAmount = 0.1f;
 
+    [Header("Animations")]
+    //Reloading
+    public Animator animator;
+    public string reload;
+    public bool doesHaveAnimationForShooting;
+    public string shoot;
+
+
     private void Start()
     {
         _currentAmmoInClip = clipSize;
@@ -87,6 +95,10 @@ public class SingleShotGun : Gun
                     hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
                     PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
                 }
+                if (doesHaveAnimationForShooting)
+                {
+                    animator.Play(shoot.ToString(), 0, 0.0f);
+                }
             }
             else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInClip < clipSize && _ammoInReserve > 0)
             {
@@ -116,7 +128,11 @@ public class SingleShotGun : Gun
                     hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
                     PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
                 }
-            }
+                if (doesHaveAnimationForShooting)
+                {
+                    animator.Play(shoot.ToString(), 0, 0.0f);
+                }
+            }            
             else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInClip < clipSize && _ammoInReserve > 0)
             {
                 int ammoNeeded = clipSize - _currentAmmoInClip;
