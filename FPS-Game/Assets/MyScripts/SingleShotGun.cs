@@ -29,6 +29,21 @@ public class SingleShotGun : Gun
     public GameObject muzzleFlashEffect;
     public Transform muzzleFlashSpawnPlace;
 
+    //Aiming
+    public Vector3 normalLocalPosition;
+    public Vector3 aimingLocalPosition;
+    public float aimSmoothing = 10;
+
+    //Weapon Sway
+    public float weaponSwayAmount = 10;
+
+    //Weapon Recoil
+    public bool randomizeRecoil;
+    public Vector2 randomRecoilContstraints;
+    //you only need to assign this is randomizerecoil is off
+    public Vector2 recoilPattern;
+    public float recoilAmount = 0.1f;
+
     private void Start()
     {
         _currentAmmoInClip = clipSize;
@@ -56,6 +71,8 @@ public class SingleShotGun : Gun
 
     void Shoot()
     {
+        DetermineAim();
+        DetermineWeaponSway();
         if (isAutomatic)
         {
             if (Input.GetMouseButton(0) && _canShoot && _currentAmmoInClip > 0)
@@ -118,13 +135,35 @@ public class SingleShotGun : Gun
         
     }
 
+    void DetermineWeaponSway()
+    {
+        Vector2 mouseAxis = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+
+        transform.localPosition += (Vector3)mouseAxis * weaponSwayAmount / 1000;
+    }
+
+    void DetermineAim()
+    {
+        Vector3 target = normalLocalPosition;
+        if (Input.GetMouseButton(1)) target = aimingLocalPosition;
+
+        Vector3 desiredPosition = Vector3.Lerp(transform.localPosition, target, Time.deltaTime * aimSmoothing);
+
+        transform.localPosition = desiredPosition;
+    }
     IEnumerator ShootGun()
     {
         GameObject flash = Instantiate(muzzleFlashEffect, muzzleFlashSpawnPlace);
         flash.GetComponent<ParticleSystem>().Emit(1);
         flash.transform.Find("Sparks").GetComponent<ParticleSystem>().Emit(1);
+        DetermineRecoil();
         yield return new WaitForSeconds(fireRate);
         _canShoot = true;
+    }
+
+    void DetermineRecoil()
+    {
+        transform.localPosition -= Vector3.forward * recoilAmount;
     }
 
     [PunRPC]
