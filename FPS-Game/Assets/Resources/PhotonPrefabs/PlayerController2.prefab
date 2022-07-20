@@ -843,6 +843,10 @@ MonoBehaviour:
   cam: {fileID: 2511184436295150316}
   bulletImpactVFX: {fileID: 8923324794198242486, guid: 5acee24a3668e214a931fc7dc4acd0c8, type: 3}
   playerID: 0
+  fireRate: 0.1
+  clipSize: 30
+  reservedAmmoCapacity: 270
+  damage: 0
 --- !u!114 &4454856278380405542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1137,6 +1141,10 @@ MonoBehaviour:
   cam: {fileID: 2511184436295150316}
   bulletImpactVFX: {fileID: 8923324794198242486, guid: 5acee24a3668e214a931fc7dc4acd0c8, type: 3}
   playerID: 0
+  fireRate: 0.1
+  clipSize: 30
+  reservedAmmoCapacity: 270
+  damage: 0
 --- !u!114 &4235356016196635108
 MonoBehaviour:
   m_ObjectHideFlags: 0

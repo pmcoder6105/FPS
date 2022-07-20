@@ -141,7 +141,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 break;
             }
         }
-
         if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
         {
             if (itemIndex >= items.Length - 1)
@@ -165,10 +164,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             }
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            items[itemIndex].Use();
-        }
+        items[itemIndex].Use();
 
         if (transform.position.y < -10f)
         {
@@ -178,7 +174,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Destroy(killTextNotificationGameObject, 5);            
         }
     }
-
     void Look()
     {
         transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * mouseSensitivity);
@@ -280,7 +275,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
             //Player killer = PhotonNetwork.CurrentRoom.GetPlayer(info.Sender.ActorNumber);            
 
-            PV.RPC(nameof(RPC_InstantiateKillText), RpcTarget.All);
+            PV.RPC(nameof(RPC_InstantiateKillText), RpcTarget.Others);
 
             publicKillTextNotificationGameObject.GetComponent<TMP_Text>().text = info.Sender.NickName.ToString() + " killed " + PV.Owner.NickName;
 
