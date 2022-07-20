@@ -121,9 +121,10 @@ public class SingleShotGun : Gun
     IEnumerator ShootGun()
     {
         GameObject flash = Instantiate(muzzleFlashEffect, muzzleFlashSpawnPlace);
+        flash.GetComponent<ParticleSystem>().Emit(1);
+        flash.transform.Find("Sparks").GetComponent<ParticleSystem>().Emit(1);
         yield return new WaitForSeconds(fireRate);
         _canShoot = true;
-        Destroy(flash);
     }
 
     [PunRPC]
