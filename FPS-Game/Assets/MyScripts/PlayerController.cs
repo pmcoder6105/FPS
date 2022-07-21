@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     [SerializeField] GameObject gunClippingCam;
 
+    public bool canSwitchWeapons = true;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -134,36 +135,39 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         Jump();
 
-        SetPlayerHealthShader();        
-
-        for (int i = 0; i < items.Length; i++)
+        SetPlayerHealthShader();   
+        
+        if (canSwitchWeapons)
         {
-            if (Input.GetKeyDown((i + 1).ToString()))
+            for (int i = 0; i < items.Length; i++)
             {
-                EquipItem(i);
-                break;
+                if (Input.GetKeyDown((i + 1).ToString()))
+                {
+                    EquipItem(i);
+                    break;
+                }
             }
-        }
-        if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
-        {
-            if (itemIndex >= items.Length - 1)
+            if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
             {
-                EquipItem(0);
+                if (itemIndex >= items.Length - 1)
+                {
+                    EquipItem(0);
+                }
+                else
+                {
+                    EquipItem(itemIndex + 1);
+                }
             }
-            else
+            if (Input.GetAxisRaw("Mouse ScrollWheel") < 0f)
             {
-                EquipItem(itemIndex + 1);
-            }
-        }
-        if (Input.GetAxisRaw("Mouse ScrollWheel") < 0f)
-        {
-            if (itemIndex <= 0)
-            {
-                EquipItem(items.Length - 1);
-            }
-            else
-            {
-                EquipItem(itemIndex - 1);
+                if (itemIndex <= 0)
+                {
+                    EquipItem(items.Length - 1);
+                }
+                else
+                {
+                    EquipItem(itemIndex - 1);
+                }
             }
         }
 

@@ -650,6 +650,7 @@ MonoBehaviour:
   publicKillTextNotification: {fileID: 4123704285322427525, guid: 5950b25f8b6ce334ba79eb41e105079a, type: 3}
   publicKillTextNotificationHolder: {fileID: 2099640874226108644}
   gunClippingCam: {fileID: 2429949987780874682}
+  canSwitchWeapons: 1
 --- !u!54 &2567718919365197072
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1048,6 +1049,7 @@ MonoBehaviour:
   clipSize: 30
   reservedAmmoCapacity: 270
   isAutomatic: 1
+  reloadTime: 3.31
   muzzleFlashEffect: {fileID: 100006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
   muzzleFlashSpawnPlace: {fileID: 1417356945351635494}
   normalLocalPosition: {x: 0, y: 0, z: 0}
@@ -1058,10 +1060,11 @@ MonoBehaviour:
   randomRecoilContstraints: {x: 0, y: 0}
   recoilPattern: {x: 0, y: 0}
   recoilAmount: 0.05
-  animator: {fileID: 0}
-  reload: 
+  animator: {fileID: 7795593234172517852}
+  reload: RifleReload
   doesHaveAnimationForShooting: 0
   shoot: 
+  playerController: {fileID: 3069946463937519793}
 --- !u!114 &4454856278380405542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1294,6 +1297,7 @@ MonoBehaviour:
   clipSize: 15
   reservedAmmoCapacity: 30
   isAutomatic: 0
+  reloadTime: 0
   muzzleFlashEffect: {fileID: 100006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
   muzzleFlashSpawnPlace: {fileID: 7829378323093517404}
   normalLocalPosition: {x: 0, y: 0, z: 0}
@@ -1308,6 +1312,7 @@ MonoBehaviour:
   reload: 
   doesHaveAnimationForShooting: 1
   shoot: PistolShoot
+  playerController: {fileID: 0}
 --- !u!114 &2816010621069780856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1550,6 +1555,7 @@ MonoBehaviour:
   clipSize: 30
   reservedAmmoCapacity: 270
   isAutomatic: 0
+  reloadTime: 0
   muzzleFlashEffect: {fileID: 0}
   muzzleFlashSpawnPlace: {fileID: 0}
   normalLocalPosition: {x: 0, y: 0, z: 0}
@@ -1564,6 +1570,7 @@ MonoBehaviour:
   reload: 
   doesHaveAnimationForShooting: 0
   shoot: 
+  playerController: {fileID: 0}
 --- !u!114 &4235356016196635108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2451,6 +2458,11 @@ PrefabInstance:
 --- !u!4 &7795593234172517855 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7399821039810068613, guid: a85ed85edce37894f98bafe1c07f94db, type: 3}
+  m_PrefabInstance: {fileID: 765313668339326298}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7795593234172517852 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7399821039810068614, guid: a85ed85edce37894f98bafe1c07f94db, type: 3}
   m_PrefabInstance: {fileID: 765313668339326298}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1089589091376532954

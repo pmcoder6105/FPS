@@ -19,6 +19,7 @@ public class SingleShotGun : Gun
     public int clipSize = 30;
     public int reservedAmmoCapacity = 270;
     public bool isAutomatic;
+    public float reloadTime;
 
     //Variables that change throughout the code
     bool _canShoot;
@@ -50,6 +51,9 @@ public class SingleShotGun : Gun
     public string reload;
     public bool doesHaveAnimationForShooting;
     public string shoot;
+    bool isReloading = false;
+
+    public PlayerController playerController;
 
 
     private void Start()
@@ -86,6 +90,7 @@ public class SingleShotGun : Gun
             if (Input.GetMouseButton(0) && _canShoot && _currentAmmoInClip > 0)
             {
                 _canShoot = false;
+                playerController.canSwitchWeapons = false;
                 _currentAmmoInClip--;
                 StartCoroutine(ShootGun());
                 Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
@@ -102,23 +107,19 @@ public class SingleShotGun : Gun
             }
             else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInClip < clipSize && _ammoInReserve > 0)
             {
-                int ammoNeeded = clipSize - _currentAmmoInClip;
-                if (ammoNeeded >= _ammoInReserve)
+                if (isReloading == false)
                 {
-                    _currentAmmoInClip += _ammoInReserve;
-                    _ammoInReserve = 0;
-                } 
-                else
-                {
-                    _currentAmmoInClip = clipSize;
-                    _ammoInReserve -= ammoNeeded;
-                }
+                    playerController.canSwitchWeapons = false;
+
+                    StartCoroutine(Reload());
+                }                
             }
         } else
         {
             if (Input.GetMouseButtonDown(0) && _canShoot && _currentAmmoInClip > 0)
             {
                 _canShoot = false;
+                playerController.canSwitchWeapons = false;
                 _currentAmmoInClip--;
                 StartCoroutine(ShootGun());
                 Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
@@ -135,20 +136,37 @@ public class SingleShotGun : Gun
             }            
             else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInClip < clipSize && _ammoInReserve > 0)
             {
-                int ammoNeeded = clipSize - _currentAmmoInClip;
-                if (ammoNeeded >= _ammoInReserve)
+                if (isReloading == false)
                 {
-                    _currentAmmoInClip += _ammoInReserve;
-                    _ammoInReserve = 0;
-                }
-                else
-                {
-                    _currentAmmoInClip = clipSize;
-                    _ammoInReserve -= ammoNeeded;
+                    playerController.canSwitchWeapons = false;
+
+                    StartCoroutine(Reload());
                 }
             }
         }
         
+    }
+
+    IEnumerator Reload()
+    {
+        animator.Play(reload.ToString(), 0, 0.0f);
+        isReloading = true;
+        _canShoot = false;
+        yield return new WaitForSeconds(reloadTime);
+        isReloading = false;
+        _canShoot = true;
+        playerController.canSwitchWeapons = true;
+        int ammoNeeded = clipSize - _currentAmmoInClip;
+        if (ammoNeeded >= _ammoInReserve)
+        {
+            _currentAmmoInClip += _ammoInReserve;
+            _ammoInReserve = 0;
+        }
+        else
+        {
+            _currentAmmoInClip = clipSize;
+            _ammoInReserve -= ammoNeeded;
+        }
     }
 
     void DetermineWeaponSway()
@@ -175,6 +193,7 @@ public class SingleShotGun : Gun
         DetermineRecoil();
         yield return new WaitForSeconds(fireRate);
         _canShoot = true;
+        playerController.canSwitchWeapons = true;
     }
 
     void DetermineRecoil()
