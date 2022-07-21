@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
+using System.Linq;
 
 public class SingleShotGun : Gun
 {
     [SerializeField] Camera cam;
 
     public GameObject bulletImpactVFX;
+    public GameObject[] scopePieces;
 
     PhotonView PV;
 
@@ -54,6 +57,14 @@ public class SingleShotGun : Gun
     bool isReloading = false;
 
     public PlayerController playerController;
+
+    public bool isSniper;
+    bool isScoped = false;
+    public bool isShotGun;
+    public GameObject scope;
+
+    public Vector2 _currentRotation;
+    bool canAim = true;
 
 
     private void Start()
@@ -150,23 +161,28 @@ public class SingleShotGun : Gun
     IEnumerator Reload()
     {
         animator.Play(reload.ToString(), 0, 0.0f);
+        canAim = false;
         isReloading = true;
         _canShoot = false;
         yield return new WaitForSeconds(reloadTime);
+        canAim = true;
         isReloading = false;
         _canShoot = true;
         playerController.canSwitchWeapons = true;
-        int ammoNeeded = clipSize - _currentAmmoInClip;
-        if (ammoNeeded >= _ammoInReserve)
-        {
-            _currentAmmoInClip += _ammoInReserve;
-            _ammoInReserve = 0;
-        }
-        else
-        {
-            _currentAmmoInClip = clipSize;
-            _ammoInReserve -= ammoNeeded;
-        }
+
+        _currentAmmoInClip = clipSize;
+
+        //int ammoNeeded = clipSize - _currentAmmoInClip;
+        //if (ammoNeeded >= _ammoInReserve)
+        //{
+        //    _currentAmmoInClip += _ammoInReserve;
+        //    _ammoInReserve = 0;
+        //}
+        //else
+        //{
+        //    _currentAmmoInClip = clipSize;
+        //    _ammoInReserve -= ammoNeeded;
+        //}
     }
 
     void DetermineWeaponSway()
@@ -178,12 +194,58 @@ public class SingleShotGun : Gun
 
     void DetermineAim()
     {
+        if (canAim == false)
+            return;
+
         Vector3 target = normalLocalPosition;
-        if (Input.GetMouseButton(1)) target = aimingLocalPosition;
+        if (Input.GetMouseButton(1))
+        {
+            target = aimingLocalPosition;            
+        }
+
+        Debug.Log("Mouse Sensitivity is: " + playerController.mouseSensitivity);
+
+        if (isSniper)
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                isScoped = true;
+                StartCoroutine(OpenScope());
+                playerController.mouseSensitivity = 0.5f;
+            }
+            else if (Input.GetMouseButtonUp(1))
+            {
+                isScoped = false;
+                cam.fieldOfView = 60;
+                playerController.mouseSensitivity = 3;
+                for (int i = 0; i < scopePieces.Count(); i++)
+                {
+                    scopePieces[i].SetActive(true);
+                }
+                //weaponCam.SetActive(true);
+                scope.SetActive(false);
+                //Enable sniper visuals
+                //Modify muzzleFlash
+            }
+        }       
 
         Vector3 desiredPosition = Vector3.Lerp(transform.localPosition, target, Time.deltaTime * aimSmoothing);
 
         transform.localPosition = desiredPosition;
+    }
+
+    IEnumerator OpenScope()
+    {
+        yield return new WaitForSeconds(Time.deltaTime * aimSmoothing);
+        scope.SetActive(true);
+        cam.fieldOfView = 30;
+        for (int i = 0; i < scopePieces.Count(); i++)
+        {
+            scopePieces[i].SetActive(false);
+        }
+        //weaponCam.SetActive(false);
+        //Disable sniper visuals
+        //Modify muzzle flash
     }
     IEnumerator ShootGun()
     {
@@ -208,6 +270,8 @@ public class SingleShotGun : Gun
         if (colliders.Length != 0)
         {
             GameObject impactObject = Instantiate(bulletImpactVFX, hitPosition, Quaternion.LookRotation(hitNormal));
+            if (isScoped)
+                impactObject.transform.localScale = impactObject.transform.localScale * 4;
             Destroy(impactObject, 3f);
             impactObject.transform.SetParent(colliders[0].transform);
         }
