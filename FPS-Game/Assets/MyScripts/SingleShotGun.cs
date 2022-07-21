@@ -66,6 +66,8 @@ public class SingleShotGun : Gun
     public Vector2 _currentRotation;
     bool canAim = true;
 
+    public float shotGunRange;
+
 
     private void Start()
     {
@@ -118,6 +120,9 @@ public class SingleShotGun : Gun
             }
             else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInClip < clipSize && _ammoInReserve > 0)
             {
+                if (_canShoot == false)
+                    return;
+
                 if (isReloading == false)
                 {
                     playerController.canSwitchWeapons = false;
@@ -133,13 +138,57 @@ public class SingleShotGun : Gun
                 playerController.canSwitchWeapons = false;
                 _currentAmmoInClip--;
                 StartCoroutine(ShootGun());
-                Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-                ray.origin = cam.transform.position;
-                if (Physics.Raycast(ray, out RaycastHit hit))
+                if (isShotGun == false)
                 {
-                    hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                    PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
-                }
+                    Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
+                    ray.origin = cam.transform.position;
+                    if (Physics.Raycast(ray, out RaycastHit hit))
+                    {
+                        hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                        PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
+                    }
+                } else
+                {
+                    float x = Random.Range(-0.2f, 0.2f);
+                    float y = Random.Range(-0.2f, 0.2f);
+                    float x1 = Random.Range(-0.2f, 0.2f);
+                    float y1 = Random.Range(-0.2f, 0.2f);
+                    float x2 = Random.Range(-0.2f, 0.2f);
+                    float y2 = Random.Range(-0.2f, 0.2f);
+                    float x3 = Random.Range(-0.2f, 0.2f);
+                    float y3 = Random.Range(-0.2f, 0.2f);
+
+                    Vector3 directionOfRay = cam.transform.forward + new Vector3(x, y, 0);
+                    Vector3 directionOfRay1 = cam.transform.forward + new Vector3(x1, y1, 0);
+                    Vector3 directionOfRay2 = cam.transform.forward + new Vector3(x2, y2, 0);
+                    Vector3 directionOfRay3 = cam.transform.forward + new Vector3(x3, y3, 0);
+
+                    Debug.Log("Direction 1 is: " + directionOfRay);
+                    Debug.Log("Direction 2 is: " + directionOfRay1);
+                    Debug.Log("Direction 3 is: " + directionOfRay2);
+                    Debug.Log("Direction 4 is: " + directionOfRay3);
+
+                    if (Physics.Raycast(cam.transform.position, directionOfRay, out RaycastHit hit, shotGunRange))
+                    {
+                        hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                        PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
+                    }
+                    if (Physics.Raycast(cam.transform.position, directionOfRay1, out RaycastHit hit1, shotGunRange))
+                    {
+                        hit1.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                        PV.RPC("RPC_Shoot", RpcTarget.All, hit1.point, hit1.normal);
+                    }
+                    if (Physics.Raycast(cam.transform.position, directionOfRay2, out RaycastHit hit2, shotGunRange))
+                    {
+                        hit2.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                        PV.RPC("RPC_Shoot", RpcTarget.All, hit2.point, hit2.normal);
+                    }
+                    if (Physics.Raycast(cam.transform.position, directionOfRay3, out RaycastHit hit3, shotGunRange))
+                    {
+                        hit3.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                        PV.RPC("RPC_Shoot", RpcTarget.All, hit3.point, hit3.normal);
+                    }
+                }                
                 if (doesHaveAnimationForShooting)
                 {
                     animator.Play(shoot.ToString(), 0, 0.0f);
@@ -147,6 +196,9 @@ public class SingleShotGun : Gun
             }            
             else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInClip < clipSize && _ammoInReserve > 0)
             {
+                if (_canShoot == false)
+                    return;
+
                 if (isReloading == false)
                 {
                     playerController.canSwitchWeapons = false;
