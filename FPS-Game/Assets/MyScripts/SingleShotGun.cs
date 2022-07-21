@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 using System.Linq;
+using TMPro;
 
 public class SingleShotGun : Gun
 {
@@ -68,6 +69,9 @@ public class SingleShotGun : Gun
 
     public float shotGunRange;
 
+    //Gun UI
+    public TMP_Text bulletCount;
+
 
     private void Start()
     {
@@ -98,6 +102,9 @@ public class SingleShotGun : Gun
     {
         DetermineAim();
         DetermineWeaponSway();
+
+        bulletCount.text = _currentAmmoInClip + " / " + clipSize;
+
         if (isAutomatic)
         {
             if (Input.GetMouseButton(0) && _canShoot && _currentAmmoInClip > 0)
@@ -157,16 +164,23 @@ public class SingleShotGun : Gun
                     float y2 = Random.Range(-0.2f, 0.2f);
                     float x3 = Random.Range(-0.2f, 0.2f);
                     float y3 = Random.Range(-0.2f, 0.2f);
+                    float x4 = Random.Range(-0.2f, 0.2f);
+                    float y4 = Random.Range(-0.2f, 0.2f);
+                    float x5 = Random.Range(-0.2f, 0.2f);
+                    float y5 = Random.Range(-0.2f, 0.2f);
+                    float x6 = Random.Range(-0.2f, 0.2f);
+                    float y6 = Random.Range(-0.2f, 0.2f);
+                    float x7 = Random.Range(-0.2f, 0.2f);
+                    float y7 = Random.Range(-0.2f, 0.2f);
 
                     Vector3 directionOfRay = cam.transform.forward + new Vector3(x, y, 0);
                     Vector3 directionOfRay1 = cam.transform.forward + new Vector3(x1, y1, 0);
                     Vector3 directionOfRay2 = cam.transform.forward + new Vector3(x2, y2, 0);
                     Vector3 directionOfRay3 = cam.transform.forward + new Vector3(x3, y3, 0);
-
-                    Debug.Log("Direction 1 is: " + directionOfRay);
-                    Debug.Log("Direction 2 is: " + directionOfRay1);
-                    Debug.Log("Direction 3 is: " + directionOfRay2);
-                    Debug.Log("Direction 4 is: " + directionOfRay3);
+                    Vector3 directionOfRay4 = cam.transform.forward + new Vector3(x4, y4, 0);
+                    Vector3 directionOfRay5 = cam.transform.forward + new Vector3(x5, y5, 0);
+                    Vector3 directionOfRay6 = cam.transform.forward + new Vector3(x6, y6, 0);
+                    Vector3 directionOfRay7 = cam.transform.forward + new Vector3(x7, y7, 0);
 
                     if (Physics.Raycast(cam.transform.position, directionOfRay, out RaycastHit hit, shotGunRange))
                     {
@@ -187,6 +201,26 @@ public class SingleShotGun : Gun
                     {
                         hit3.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
                         PV.RPC("RPC_Shoot", RpcTarget.All, hit3.point, hit3.normal);
+                    }
+                    if (Physics.Raycast(cam.transform.position, directionOfRay4, out RaycastHit hit4, shotGunRange))
+                    {
+                        hit4.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                        PV.RPC("RPC_Shoot", RpcTarget.All, hit4.point, hit4.normal);
+                    }
+                    if (Physics.Raycast(cam.transform.position, directionOfRay5, out RaycastHit hit5, shotGunRange))
+                    {
+                        hit5.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                        PV.RPC("RPC_Shoot", RpcTarget.All, hit5.point, hit5.normal);
+                    }
+                    if (Physics.Raycast(cam.transform.position, directionOfRay6, out RaycastHit hit6, shotGunRange))
+                    {
+                        hit6.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                        PV.RPC("RPC_Shoot", RpcTarget.All, hit6.point, hit6.normal);
+                    }
+                    if (Physics.Raycast(cam.transform.position, directionOfRay7, out RaycastHit hit7, shotGunRange))
+                    {
+                        hit7.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                        PV.RPC("RPC_Shoot", RpcTarget.All, hit7.point, hit7.normal);
                     }
                 }                
                 if (doesHaveAnimationForShooting)
