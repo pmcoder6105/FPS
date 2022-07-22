@@ -56,6 +56,10 @@ public class SingleShotGun : Gun
     public bool doesHaveAnimationForShooting;
     public string shoot;
     bool isReloading = false;
+    public AudioSource audioSource;
+    public AudioClip reloadSFX;
+    public AudioClip outOfAmmoSFX;
+    bool isPistol;
 
     public PlayerController playerController;
 
@@ -137,6 +141,9 @@ public class SingleShotGun : Gun
                     playerController.canSwitchWeapons = false;
 
                     StartCoroutine(Reload());
+
+                    if (!audioSource.isPlaying)
+                        audioSource.PlayOneShot(reloadSFX);
                 }                
             }
         } else
@@ -241,8 +248,17 @@ public class SingleShotGun : Gun
                     playerController.canSwitchWeapons = false;
 
                     StartCoroutine(Reload());
+
+                    if (!audioSource.isPlaying)
+                        audioSource.PlayOneShot(reloadSFX);
                 }
             }
+        }
+
+        if (_currentAmmoInClip <= 0)
+        {
+            if (!audioSource.isPlaying)
+                audioSource.PlayOneShot(outOfAmmoSFX);
         }
         
     }
