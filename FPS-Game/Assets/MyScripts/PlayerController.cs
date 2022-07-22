@@ -7,6 +7,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
 using TMPro;
 using Cinemachine;
+using System.Linq;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
@@ -75,10 +76,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public bool canSwitchWeapons = true;
 
-    public Image rifleIcon;
-    public Image shotGunIcon;
-    public Image pistolIcon;
-    public Image sniperIcon;
+    public GameObject scoreBoard;
+
+    public GameObject[] canvas;
 
     private void Awake()
     {
@@ -101,6 +101,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Destroy(rb);
             Destroy(ui);
+            for (int i = 0; i < canvas.Count(); i++)
+            {
+                Destroy(canvas[i]);
+            }
+        }
+
+        if (gunClippingCam.GetComponent<PhotonView>().IsMine)
+        {
+            gunClippingCam.GetComponent<Camera>().enabled = true;
+        }
+        else
+        {
             Destroy(gunClippingCam);
         }
     }
@@ -110,11 +122,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (!PV.IsMine)
             return;
 
+        scoreBoard = GameObject.Find("ScoreBoard");
+
         if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked && hasInstantiatedDeathPanel == false)
         {
             Cursor.lockState = CursorLockMode.None;
         }
-        if (Input.GetMouseButtonDown(0) && Cursor.lockState == CursorLockMode.None && hasInstantiatedDeathPanel == false)
+        if (Input.GetMouseButtonDown(0) && Cursor.lockState == CursorLockMode.None && hasInstantiatedDeathPanel == false && scoreBoard.GetComponent<ScoreBoard>().isOpen == false)
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -358,6 +372,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             return;
 
         PV.RPC(nameof(RPC_DisplayDeath), RpcTarget.All);
+
+
+        for (int i = 0; i < canvas.Count(); i++)
+        {
+            Destroy(canvas[i]);
+        }
 
         isDead = true;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;

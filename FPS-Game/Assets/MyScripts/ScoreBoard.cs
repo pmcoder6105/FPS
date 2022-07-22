@@ -14,6 +14,8 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
     [SerializeField] CanvasGroup scoreBoardTitle;
     [SerializeField] TMP_Text holdTabForScoreBoardText;
 
+    public bool isOpen = false;
+
     Dictionary<Player, ScoreBoardItem> scoreBoardItems = new Dictionary<Player, ScoreBoardItem>();
 
     private void Start()
@@ -53,14 +55,24 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             canvasGroup.alpha = 1;
+            isOpen = true;
             scoreBoardTitle.alpha = 1;
             holdTabForScoreBoardText.color = new Color(holdTabForScoreBoardText.color.r, holdTabForScoreBoardText.color.g, holdTabForScoreBoardText.color.b, 0);
+            Cursor.lockState = CursorLockMode.None;
         }
         if (Input.GetKeyUp(KeyCode.Tab))
         {
             canvasGroup.alpha = 0;
+            isOpen = false;
             scoreBoardTitle.alpha = 0;
             holdTabForScoreBoardText.color = new Color(holdTabForScoreBoardText.color.r, holdTabForScoreBoardText.color.g, holdTabForScoreBoardText.color.b, 1);
         }
+    }
+
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+        SceneManager.LoadScene(0);
+        Debug.Log("Leave Room");
     }
 }
