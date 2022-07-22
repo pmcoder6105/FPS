@@ -33,13 +33,21 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (!PV.IsMine)
+            return;
+
+        this.gameObject.transform.position = controller.transform.position;
+    }
+
     void CreateController()
     {
         if (PlayerPrefs.GetInt("PillColor") == 1)
         {
             Transform spawnpoint = SpawnManager.Instance.GetSpawnPoint();
             //
-            controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController1 1"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
+            controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController1"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
             //
         }
         if (PlayerPrefs.GetInt("PillColor") == 2)

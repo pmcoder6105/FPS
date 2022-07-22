@@ -282,7 +282,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
             //Player killer = PhotonNetwork.CurrentRoom.GetPlayer(info.Sender.ActorNumber);            
 
-            PV.RPC(nameof(RPC_InstantiateKillText), RpcTarget.Others);
+            if (PV.IsMine)
+            {
+                PV.RPC(nameof(RPC_InstantiateKillText), RpcTarget.All);
+            }
 
             publicKillTextNotificationGameObject.GetComponent<TMP_Text>().text = info.Sender.NickName.ToString() + " killed " + PV.Owner.NickName;
 
