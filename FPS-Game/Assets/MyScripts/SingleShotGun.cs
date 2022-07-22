@@ -79,10 +79,7 @@ public class SingleShotGun : Gun
         _ammoInReserve = reservedAmmoCapacity;
         _canShoot = true;
 
-        if (PV.IsMine == false)
-        {
-            this.gameObject.layer = default;
-        }
+        
     }
 
     private void Awake()
@@ -92,7 +89,10 @@ public class SingleShotGun : Gun
 
     private void Update()
     {
-        
+        if (PV.IsMine == false)
+        {
+            this.gameObject.layer = default;
+        }
     }
 
     public override void Use()
