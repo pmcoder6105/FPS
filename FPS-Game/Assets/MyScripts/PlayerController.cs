@@ -221,8 +221,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         items[itemIndex].itemGameObject.SetActive(true);
 
-        string itemName = items[itemIndex].itemGameObject.name;
-
         if (previousItemIndex != -1)
         {
             items[previousItemIndex].itemGameObject.SetActive(false);
