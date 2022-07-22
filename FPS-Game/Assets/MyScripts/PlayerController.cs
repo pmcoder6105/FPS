@@ -74,6 +74,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] GameObject gunClippingCam;
 
     public bool canSwitchWeapons = true;
+
+    public Image rifleIcon;
+    public Image shotGunIcon;
+    public Image pistolIcon;
+    public Image sniperIcon;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -214,6 +220,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         itemIndex = _index;
 
         items[itemIndex].itemGameObject.SetActive(true);
+
+        string itemName = items[itemIndex].itemGameObject.name;
 
         if (previousItemIndex != -1)
         {
