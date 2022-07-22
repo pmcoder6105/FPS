@@ -79,7 +79,7 @@ public class SingleShotGun : Gun
         _ammoInReserve = reservedAmmoCapacity;
         _canShoot = true;
 
-        
+
     }
 
     private void Awake()
@@ -89,10 +89,7 @@ public class SingleShotGun : Gun
 
     private void Update()
     {
-        if (PV.IsMine == false)
-        {
-            this.gameObject.layer = default;
-        }
+
     }
 
     public override void Use()
@@ -162,22 +159,22 @@ public class SingleShotGun : Gun
                     }
                 } else
                 {
-                    float x = Random.Range(-0.2f, 0.2f);
-                    float y = Random.Range(-0.2f, 0.2f);
-                    float x1 = Random.Range(-0.2f, 0.2f);
-                    float y1 = Random.Range(-0.2f, 0.2f);
-                    float x2 = Random.Range(-0.2f, 0.2f);
-                    float y2 = Random.Range(-0.2f, 0.2f);
-                    float x3 = Random.Range(-0.2f, 0.2f);
-                    float y3 = Random.Range(-0.2f, 0.2f);
-                    float x4 = Random.Range(-0.2f, 0.2f);
-                    float y4 = Random.Range(-0.2f, 0.2f);
-                    float x5 = Random.Range(-0.2f, 0.2f);
-                    float y5 = Random.Range(-0.2f, 0.2f);
-                    float x6 = Random.Range(-0.2f, 0.2f);
-                    float y6 = Random.Range(-0.2f, 0.2f);
-                    float x7 = Random.Range(-0.2f, 0.2f);
-                    float y7 = Random.Range(-0.2f, 0.2f);
+                    float x = Random.Range(-0.1f, 0.1f);
+                    float y = Random.Range(-0.1f, 0.1f);
+                    float x1 = Random.Range(-0.1f, 0.1f);
+                    float y1 = Random.Range(-0.1f, 0.1f);
+                    float x2 = Random.Range(-0.1f, 0.1f);
+                    float y2 = Random.Range(-0.1f, 0.1f);
+                    float x3 = Random.Range(-0.1f, 0.1f);
+                    float y3 = Random.Range(-0.1f, 0.1f);
+                    float x4 = Random.Range(-0.1f, 0.1f);
+                    float y4 = Random.Range(-0.1f, 0.1f);
+                    float x5 = Random.Range(-0.1f, 0.1f);
+                    float y5 = Random.Range(-0.1f, 0.1f);
+                    float x6 = Random.Range(-0.1f, 0.1f);
+                    float y6 = Random.Range(-0.1f, 0.1f);
+                    float x7 = Random.Range(-0.1f, 0.1f);
+                    float y7 = Random.Range(-0.1f, 0.1f);
 
                     Vector3 directionOfRay = cam.transform.forward + new Vector3(x, y, 0);
                     Vector3 directionOfRay1 = cam.transform.forward + new Vector3(x1, y1, 0);

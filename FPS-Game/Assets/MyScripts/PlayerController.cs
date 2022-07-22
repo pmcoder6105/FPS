@@ -80,6 +80,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public GameObject[] canvas;
 
+    public GameObject[] weapons;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -95,6 +97,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (PV.IsMine)
         {
             EquipItem(0);
+            for (int i = 0; i < weapons.Count(); i++)
+            {
+                weapons[i].layer = LayerMask.NameToLayer("Weapon");
+            }
         }
         else
         {
@@ -105,15 +111,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             {
                 Destroy(canvas[i]);
             }
-        }
-
-        if (gunClippingCam.GetComponent<PhotonView>().IsMine)
-        {
-            gunClippingCam.GetComponent<Camera>().enabled = true;
-        }
-        else
-        {
-            Destroy(gunClippingCam);
         }
     }
 
