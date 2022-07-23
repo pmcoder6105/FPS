@@ -108,9 +108,6 @@ public class SingleShotGun : Gun
         DetermineAim();
         DetermineWeaponSway();
 
-        this.gameObject.layer = LayerMask.NameToLayer("Weapon");
-        foreach (Transform child in this.gameObject.transform)
-
         bulletCount.text = _currentAmmoInClip + " / " + clipSize;
 
         if (isAutomatic)
