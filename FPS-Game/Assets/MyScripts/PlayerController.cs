@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] GameObject itemHolder;
     [SerializeField] GameObject healthBar;
 
-    EntityManager entity;
+    //EntityManager entity;
 
     //[SerializeField] Camera cinemachineCam;
     //[SerializeField] Camera normalCam;
@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         PV = GetComponent<PhotonView>();
 
         playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
-        entity = FindObjectOfType<EntityManager>();
+        //entity = FindObjectOfType<EntityManager>();
         Cursor.lockState = CursorLockMode.Locked;
     }
     private void Start()
