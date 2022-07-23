@@ -2224,7 +2224,9 @@ MonoBehaviour:
   shoot: 
   audioSource: {fileID: 4135902534383793385}
   reloadSFX: {fileID: 8300000, guid: 4606d521cfc728845a2f3e30cd7e7eee, type: 3}
-  outOfAmmoSFX: {fileID: 8300000, guid: 3056d507ad6a3cf428e4b4b429cf003f, type: 3}
+  outOfAmmoSFX: {fileID: 8300000, guid: 4668dc5e3d2db294ea4df04c79d7e210, type: 3}
+  isPistol: 0
+  pistolOutOfAmmo: 
   playerController: {fileID: 3069946463937519793}
   isSniper: 0
   isShotGun: 0
@@ -2680,7 +2682,9 @@ MonoBehaviour:
   shoot: PistolShoot
   audioSource: {fileID: 8786427023694913072}
   reloadSFX: {fileID: 8300000, guid: 9a845ae0b44672f48824ad14bf1bd183, type: 3}
-  outOfAmmoSFX: {fileID: 0}
+  outOfAmmoSFX: {fileID: 8300000, guid: 2f0b13469f8f0ad41a2c5f0aa391d254, type: 3}
+  isPistol: 1
+  pistolOutOfAmmo: PistolOutOfAmmo
   playerController: {fileID: 3069946463937519793}
   isSniper: 0
   isShotGun: 0
@@ -3047,7 +3051,9 @@ MonoBehaviour:
   shoot: ShotGunShoot
   audioSource: {fileID: 6658943969797146815}
   reloadSFX: {fileID: 8300000, guid: a90585fd37caa234dabd5b069c373d3a, type: 3}
-  outOfAmmoSFX: {fileID: 0}
+  outOfAmmoSFX: {fileID: 8300000, guid: 4668dc5e3d2db294ea4df04c79d7e210, type: 3}
+  isPistol: 0
+  pistolOutOfAmmo: 
   playerController: {fileID: 3069946463937519793}
   isSniper: 0
   isShotGun: 1
@@ -3361,7 +3367,9 @@ MonoBehaviour:
   shoot: 
   audioSource: {fileID: 3655982602380629654}
   reloadSFX: {fileID: 8300000, guid: 0b61ee034968ad94490a9edc458b4bbf, type: 3}
-  outOfAmmoSFX: {fileID: 0}
+  outOfAmmoSFX: {fileID: 8300000, guid: 4668dc5e3d2db294ea4df04c79d7e210, type: 3}
+  isPistol: 0
+  pistolOutOfAmmo: 
   playerController: {fileID: 3069946463937519793}
   isSniper: 1
   isShotGun: 0

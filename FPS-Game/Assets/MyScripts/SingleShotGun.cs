@@ -59,7 +59,8 @@ public class SingleShotGun : Gun
     public AudioSource audioSource;
     public AudioClip reloadSFX;
     public AudioClip outOfAmmoSFX;
-    bool isPistol;
+    public bool isPistol;
+    public string pistolOutOfAmmo;
 
     public PlayerController playerController;
 
@@ -153,6 +154,11 @@ public class SingleShotGun : Gun
                 {
                     if (!audioSource.isPlaying)
                         audioSource.PlayOneShot(outOfAmmoSFX);
+
+                    if (isPistol)
+                    {
+                        animator.Play(shoot, 1, 0.5f);
+                    }
                 }
                 _canShoot = false;
                 playerController.canSwitchWeapons = false;
