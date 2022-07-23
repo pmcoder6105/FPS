@@ -150,16 +150,6 @@ public class SingleShotGun : Gun
         {
             if (Input.GetMouseButtonDown(0) && _canShoot && _currentAmmoInClip > 0)
             {
-                if (_currentAmmoInClip <= 0)
-                {
-                    if (!audioSource.isPlaying)
-                        audioSource.PlayOneShot(outOfAmmoSFX);
-
-                    if (isPistol)
-                    {
-                        animator.Play(shoot, 1, 0.5f);
-                    }
-                }
                 _canShoot = false;
                 playerController.canSwitchWeapons = false;
                 _currentAmmoInClip--;
@@ -269,6 +259,11 @@ public class SingleShotGun : Gun
         {
             if (_currentAmmoInClip <= 0)
             {
+                if (isPistol)
+                {
+                    animator.Play(pistolOutOfAmmo);
+                }
+
                 if (!audioSource.isPlaying)
                     audioSource.PlayOneShot(outOfAmmoSFX);
             }
