@@ -91,16 +91,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         entity = FindObjectOfType<EntityManager>();
         Cursor.lockState = CursorLockMode.Locked;
     }
-
     private void Start()
     {
+
         if (PV.IsMine)
         {
             EquipItem(0);
-            for (int i = 0; i < weapons.Count(); i++)
-            {
-                weapons[i].layer = LayerMask.NameToLayer("Weapon");
-            }
+
         }
         else
         {
@@ -219,8 +216,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
-            rb.AddForce(transform.up * jumpForce);
+            rb.AddForce(transform.up * jumpForce);            
         }
+        
     }
 
     void EquipItem(int _index)

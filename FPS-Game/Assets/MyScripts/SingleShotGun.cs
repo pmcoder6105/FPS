@@ -82,8 +82,6 @@ public class SingleShotGun : Gun
         _currentAmmoInClip = clipSize;
         _ammoInReserve = reservedAmmoCapacity;
         _canShoot = true;
-
-
     }
 
     private void Awake()
@@ -102,6 +100,7 @@ public class SingleShotGun : Gun
             return;
 
         Shoot();
+        
     }
 
     void Shoot()
@@ -109,12 +108,15 @@ public class SingleShotGun : Gun
         DetermineAim();
         DetermineWeaponSway();
 
+        this.gameObject.layer = LayerMask.NameToLayer("Weapon");
+        foreach (Transform child in this.gameObject.transform)
+
         bulletCount.text = _currentAmmoInClip + " / " + clipSize;
 
         if (isAutomatic)
         {
             if (Input.GetMouseButton(0) && _canShoot && _currentAmmoInClip > 0)
-            {
+            {                
                 _canShoot = false;
                 playerController.canSwitchWeapons = false;
                 _currentAmmoInClip--;
@@ -150,6 +152,11 @@ public class SingleShotGun : Gun
         {
             if (Input.GetMouseButtonDown(0) && _canShoot && _currentAmmoInClip > 0)
             {
+                if (_currentAmmoInClip <= 0)
+                {
+                    if (!audioSource.isPlaying)
+                        audioSource.PlayOneShot(outOfAmmoSFX);
+                }
                 _canShoot = false;
                 playerController.canSwitchWeapons = false;
                 _currentAmmoInClip--;
@@ -255,10 +262,13 @@ public class SingleShotGun : Gun
             }
         }
 
-        if (_currentAmmoInClip <= 0)
+        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0) && _canShoot)
         {
-            if (!audioSource.isPlaying)
-                audioSource.PlayOneShot(outOfAmmoSFX);
+            if (_currentAmmoInClip <= 0)
+            {
+                if (!audioSource.isPlaying)
+                    audioSource.PlayOneShot(outOfAmmoSFX);
+            }
         }
         
     }
