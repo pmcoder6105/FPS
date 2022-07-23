@@ -36,17 +36,7 @@ public class PlayerManager : MonoBehaviour
     }
 
 
-    [PunRPC]
-    public void PlayKillDingSFX()
-    {
-        if (PV.IsMine)
-        {
-            if (controller.GetComponent<AudioSource>().isPlaying == false)
-            {
-                controller.gameObject.GetComponent<AudioSource>().PlayOneShot(killSFX);
-            }
-        }           
-    }
+    
 
     private void Update()
     {
