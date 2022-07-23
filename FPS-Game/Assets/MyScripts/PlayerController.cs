@@ -55,9 +55,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     //EntityManager entity;
 
-    //[SerializeField] Camera cinemachineCam;
-    //[SerializeField] Camera normalCam;
-    //[SerializeField] CinemachineVirtualCamera virtualCam;
+    [SerializeField] Camera cinemachineCam;
+    [SerializeField] Camera normalCam;
+    [SerializeField] CinemachineVirtualCamera virtualCam;
 
     [SerializeField] GameObject killTextNotification;
     public GameObject killTextNotificationHolder;
@@ -291,34 +291,35 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
 
         if (currentHealth <= 0)
-        {            
-            Die();
-            PlayerManager.Find(info.Sender).GetKill();
+        {
+            if (isDead)
+                return;
 
-            //Player killer = PhotonNetwork.CurrentRoom.GetPlayer(info.Sender.ActorNumber);            
+            PlayerManager.Find(info.Sender).GetKill();        
 
             if (PV.IsMine)
             {
-                PV.RPC(nameof(RPC_InstantiateKillText), RpcTarget.All);
+                InstantiateKillText();
+                Debug.Log("Instantiate +1 kill now!");
+                publicKillTextNotificationGameObject.GetComponent<TMP_Text>().text = info.Sender.NickName.ToString() + " killed " + PV.Owner.NickName;
             }
-
-            publicKillTextNotificationGameObject.GetComponent<TMP_Text>().text = info.Sender.NickName.ToString() + " killed " + PV.Owner.NickName;
-
 
             killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform);
             killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: " + info.Sender.NickName.ToString();
             Destroy(killTextNotificationGameObject, 5);
 
+            cinemachineCam.gameObject.SetActive(true);
+            normalCam.gameObject.SetActive(false);
+            virtualCam.gameObject.SetActive(true);
+            virtualCam.LookAt = PlayerManager.Find(info.Sender).transform;
 
-
-            //GameObject killer = entity.GetEntity(info.Sender.ActorNumber);
-            //Debug.Log(killer.name);
-
-            //cinemachineCam.gameObject.SetActive(true);
-            //normalCam.gameObject.SetActive(false);
-            //virtualCam.gameObject.SetActive(true);
-            //virtualCam.LookAt = killer.transform;
+            Die();
         }
+    }
+
+    void InstantiateKillText()
+    {
+        PV.RPC(nameof(RPC_InstantiateKillText), RpcTarget.All);
     }
 
     [PunRPC]
@@ -327,7 +328,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Debug.Log("Instantiate +1 kill now!");
         publicKillTextNotificationGameObject = Instantiate(publicKillTextNotification, publicKillTextNotificationHolder.transform);       
         Destroy(publicKillTextNotificationGameObject, 3);
-        
+        //publicKillTextNotificationGameObject.GetComponent<TMP_Text>().text = info.Sender.NickName.ToString() + " killed " + PV.Owner.NickName;
+
     }
 
     public void SetPlayerHealthShader()
