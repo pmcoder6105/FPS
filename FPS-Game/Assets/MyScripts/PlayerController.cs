@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] GameObject ui;
     
     [SerializeField] GameObject cameraHolder;
+    public AudioClip killSFX;
 
     public float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
 
@@ -271,6 +272,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
 
     [PunRPC]
+    public void PlayKillDingSFX()
+    {
+        if (PV.IsMine)
+        {
+            if (this.gameObject.GetComponent<AudioSource>().isPlaying == false)
+            {
+                this.gameObject.GetComponent<AudioSource>().PlayOneShot(killSFX);
+            }
+        }
+    }
+
+    [PunRPC]
     void RPC_TakeDamage(float damage, PhotonMessageInfo info)
     {
         currentHealth -= damage;
@@ -295,7 +308,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             if (isDead)
                 return;
 
-            PlayerManager.Find(info.Sender).GetKill();        
+            PlayerManager.Find(info.Sender).GetKill();
+
+            PV.RPC(nameof(PlayKillDingSFX), info.Sender);
 
             if (PV.IsMine)
             {
@@ -325,6 +340,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [PunRPC]
     void RPC_InstantiateKillText()
     {
+        if (!PV.IsMine)
+            return;
         Debug.Log("Instantiate +1 kill now!");
         publicKillTextNotificationGameObject = Instantiate(publicKillTextNotification, publicKillTextNotificationHolder.transform);       
         Destroy(publicKillTextNotificationGameObject, 3);
