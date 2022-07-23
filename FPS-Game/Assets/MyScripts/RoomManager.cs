@@ -14,11 +14,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     void Awake()
     {
-        if (Instance)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        //if (Instance)
+        //{
+        //    Destroy(gameObject);
+        //    return;
+        //}
         DontDestroyOnLoad(gameObject);
         Instance = this;
     }
