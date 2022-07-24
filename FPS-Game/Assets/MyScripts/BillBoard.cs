@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class BillBoard : MonoBehaviour
 {
-    Camera cam;
+    GameObject cam;
 
     private void Update()
     {
+
         if (cam == null)
-            cam = Camera.main;
+            cam = GameObject.FindGameObjectWithTag("MainCam");
 
         if (cam == null)
             return;
