@@ -9,7 +9,7 @@ public class BillBoard : MonoBehaviour
     private void Update()
     {
         if (cam == null)
-            cam = FindObjectOfType<Camera>();
+            cam = Camera.main;
 
         if (cam == null)
             return;
