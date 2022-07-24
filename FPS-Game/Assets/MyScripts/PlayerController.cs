@@ -272,14 +272,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
 
     [PunRPC]
-    public void PlayKillDingSFX()
+    public void RPC_PlayKillDingSFX()
     {
-        if (PV.IsMine)
+        Debug.Log("Play ding sfx symbolizing a kill");
+        if (this.gameObject.GetComponent<AudioSource>().isPlaying == false)
         {
-            if (this.gameObject.GetComponent<AudioSource>().isPlaying == false)
-            {
-                this.gameObject.GetComponent<AudioSource>().PlayOneShot(killSFX);
-            }
+            this.gameObject.GetComponent<AudioSource>().PlayOneShot(killSFX);
         }
     }
 
@@ -310,7 +308,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
             PlayerManager.Find(info.Sender).GetKill();
 
-            PV.RPC(nameof(PlayKillDingSFX), info.Sender);
+            PV.RPC(nameof(RPC_PlayKillDingSFX), info.Sender);
 
             if (PV.IsMine)
             {
