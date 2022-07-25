@@ -83,6 +83,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public GameObject[] weapons;
 
+    bool canRegen = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -150,8 +152,22 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         Jump();
 
-        SetPlayerHealthShader();   
-        
+        SetPlayerHealthShader();
+
+        healthBarImage.fillAmount = currentHealth / maxHealth;
+        if (currentHealth <= 100 && currentHealth >= 50)
+        {
+            playerHealth = 3;
+        }
+        if (currentHealth <= 49 && currentHealth >= 30)
+        {
+            playerHealth = 2;
+        }
+        if (currentHealth <= 29 && currentHealth >= 0)
+        {
+            playerHealth = 1;
+        }
+
         if (canSwitchWeapons)
         {
             for (int i = 0; i < items.Length; i++)
@@ -286,20 +302,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         currentHealth -= damage;
 
-        healthBarImage.fillAmount = currentHealth / maxHealth;
+        CancelInvoke(nameof(StartRegen));
+        Invoke(nameof(StartRegen), 5f);
+        canRegen = false;
 
-        if (currentHealth <= 100 && currentHealth >= 50)
-        {
-            playerHealth = 3;
-        }
-        if (currentHealth <= 49 && currentHealth >= 30)
-        {
-            playerHealth = 2;
-        }
-        if (currentHealth <= 29 && currentHealth >= 0)
-        {
-            playerHealth = 1;
-        }
+        
 
         if (currentHealth <= 0)
         {
@@ -327,6 +334,23 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             virtualCam.LookAt = PlayerManager.Find(info.Sender).transform;
 
             Die();
+        }
+    } 
+
+    void StartRegen()
+    {
+        canRegen = true;
+        StartCoroutine(nameof(Regen));
+    }
+
+    IEnumerator Regen()
+    {
+        while (currentHealth < 100 && canRegen)
+        {            
+            yield return new WaitForSeconds(0.1f);
+            currentHealth += 0.5f;
+            Debug.Log("Regen needed");
+
         }
     }
 
