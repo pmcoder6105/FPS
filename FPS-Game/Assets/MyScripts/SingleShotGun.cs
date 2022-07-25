@@ -83,6 +83,8 @@ public class SingleShotGun : Gun
 
     bool canShotgunShoot = false;
 
+    public AudioClip scopeSFX;
+
 
     private void Start()
     {
@@ -341,6 +343,8 @@ public class SingleShotGun : Gun
             if (Input.GetMouseButtonDown(1))
             {
                 isScoped = true;
+                audioSource.Stop();
+                audioSource.PlayOneShot(scopeSFX);
                 StartCoroutine(OpenScope());
                 playerController.mouseSensitivity = 0.5f;
             }
