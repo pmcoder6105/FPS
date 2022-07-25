@@ -2511,6 +2511,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3b78431f62913f848a344747bdb37a1e, type: 3}
   - {fileID: 8300000, guid: aa5666bf0a515374386acdc02e96a27e, type: 3}
   - {fileID: 8300000, guid: 954df1b8013ae564cbb63819111f3d69, type: 3}
+  equip: {fileID: 0}
 --- !u!114 &4454856278380405542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2974,6 +2975,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 80cc36dadaa334a47b5754020b5ef371, type: 3}
   - {fileID: 8300000, guid: be69f7b6b1521b54da81095f9571d524, type: 3}
   - {fileID: 8300000, guid: 6c0d05357221c66459c53305d7643199, type: 3}
+  equip: {fileID: 0}
 --- !u!114 &2816010621069780856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3408,7 +3410,7 @@ MonoBehaviour:
   doesHaveAnimationForShooting: 1
   shoot: ShotGunShoot
   audioSource: {fileID: 2335191786576950542}
-  reloadSFX: {fileID: 8300000, guid: a90585fd37caa234dabd5b069c373d3a, type: 3}
+  reloadSFX: {fileID: 8300000, guid: f92b4024390d19641b7e8a3ecb2476be, type: 3}
   outOfAmmoSFX: {fileID: 8300000, guid: 4668dc5e3d2db294ea4df04c79d7e210, type: 3}
   isPistol: 0
   pistolOutOfAmmo: 
@@ -3420,10 +3422,8 @@ MonoBehaviour:
   shotGunRange: 10
   bulletCount: {fileID: 607867078}
   shootSFX:
-  - {fileID: 8300000, guid: 471043d9993219f4894c2b4d9eb3ebaa, type: 3}
-  - {fileID: 8300000, guid: 82c8a6ab4850cc247b5d3467f17a54b1, type: 3}
-  - {fileID: 8300000, guid: 9b65b34eb2d8d244a89866e58d5b55c8, type: 3}
-  - {fileID: 8300000, guid: a19d34ed00e3ecd4c9777c253a575232, type: 3}
+  - {fileID: 8300000, guid: 4d9b43650c24803418e54ccfe7438c38, type: 3}
+  equip: {fileID: 0}
 --- !u!114 &4855853581015313852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3742,6 +3742,7 @@ MonoBehaviour:
   bulletCount: {fileID: 607867078}
   shootSFX:
   - {fileID: 8300000, guid: 1a54ebc2a2386824486af559ed2bb1cb, type: 3}
+  equip: {fileID: 0}
 --- !u!114 &4235356016196635108
 MonoBehaviour:
   m_ObjectHideFlags: 0
