@@ -97,8 +97,7 @@ public class SingleShotGun : Gun
     }
 
     private void Update()
-    {
-
+    {        
     }
 
     public override void Use()
@@ -108,13 +107,6 @@ public class SingleShotGun : Gun
 
         Shoot();
         
-    }
-
-    private void OnEnable()
-    {
-        audioSource.Stop();
-        audioSource.PlayOneShot(equip);
-        canShotgunShoot = false;
     }
 
     IEnumerator WaitUntilShotgunCanShoot()
