@@ -1265,7 +1265,7 @@ RectTransform:
   m_GameObject: {fileID: 2262855254198210219}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.69948, y: 0.69948, z: 0.69948}
+  m_LocalScale: {x: 0.58033526, y: 0.58033526, z: 0.58033526}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2103372724538454953}
@@ -1273,7 +1273,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -201.1, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4287223551789936585
@@ -2390,6 +2390,11 @@ MonoBehaviour:
   _currentRotation: {x: 0, y: 0}
   shotGunRange: 0
   bulletCount: {fileID: 607867078}
+  shootSFX:
+  - {fileID: 8300000, guid: dc2ba4c3c71ad5940a9fa23f7a13be95, type: 3}
+  - {fileID: 8300000, guid: 3b78431f62913f848a344747bdb37a1e, type: 3}
+  - {fileID: 8300000, guid: aa5666bf0a515374386acdc02e96a27e, type: 3}
+  - {fileID: 8300000, guid: 954df1b8013ae564cbb63819111f3d69, type: 3}
 --- !u!114 &4454856278380405542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2964,6 +2969,11 @@ MonoBehaviour:
   _currentRotation: {x: 0, y: 0}
   shotGunRange: 0
   bulletCount: {fileID: 607867078}
+  shootSFX:
+  - {fileID: 8300000, guid: f32b15a949ff57846834a0b6f03f7ea1, type: 3}
+  - {fileID: 8300000, guid: 80cc36dadaa334a47b5754020b5ef371, type: 3}
+  - {fileID: 8300000, guid: be69f7b6b1521b54da81095f9571d524, type: 3}
+  - {fileID: 8300000, guid: 6c0d05357221c66459c53305d7643199, type: 3}
 --- !u!114 &2816010621069780856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3561,6 +3571,11 @@ MonoBehaviour:
   _currentRotation: {x: 0, y: 0}
   shotGunRange: 10
   bulletCount: {fileID: 607867078}
+  shootSFX:
+  - {fileID: 8300000, guid: a19d34ed00e3ecd4c9777c253a575232, type: 3}
+  - {fileID: 8300000, guid: 9b65b34eb2d8d244a89866e58d5b55c8, type: 3}
+  - {fileID: 8300000, guid: 82c8a6ab4850cc247b5d3467f17a54b1, type: 3}
+  - {fileID: 8300000, guid: 471043d9993219f4894c2b4d9eb3ebaa, type: 3}
 --- !u!114 &4855853581015313852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3877,6 +3892,8 @@ MonoBehaviour:
   _currentRotation: {x: 0, y: 0}
   shotGunRange: 0
   bulletCount: {fileID: 607867078}
+  shootSFX:
+  - {fileID: 8300000, guid: 1a54ebc2a2386824486af559ed2bb1cb, type: 3}
 --- !u!114 &4235356016196635108
 MonoBehaviour:
   m_ObjectHideFlags: 0

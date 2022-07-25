@@ -77,6 +77,8 @@ public class SingleShotGun : Gun
     //Gun UI
     public TMP_Text bulletCount;
 
+    public AudioClip[] shootSFX;
+
 
     private void Start()
     {
@@ -104,6 +106,13 @@ public class SingleShotGun : Gun
         
     }
 
+    [PunRPC]
+    void PlayShootSFX()
+    {
+        int clipToPlay = Random.Range(1, shootSFX.Length - 1);
+        audioSource.PlayOneShot(shootSFX[clipToPlay]);
+    }
+
     void Shoot()
     {
         DetermineAim();
@@ -114,7 +123,8 @@ public class SingleShotGun : Gun
         if (isAutomatic)
         {
             if (Input.GetMouseButton(0) && _canShoot && _currentAmmoInClip > 0)
-            {                
+            {
+                PV.RPC(nameof(PlayShootSFX), RpcTarget.All);
                 _canShoot = false;
                 playerController.canSwitchWeapons = false;
                 _currentAmmoInClip--;
@@ -144,12 +154,15 @@ public class SingleShotGun : Gun
 
                     if (!audioSource.isPlaying)
                         audioSource.PlayOneShot(reloadSFX);
+                    else
+                        audioSource.Stop();
                 }                
             }
         } else
         {
             if (Input.GetMouseButtonDown(0) && _canShoot && _currentAmmoInClip > 0)
             {
+                PV.RPC(nameof(PlayShootSFX), RpcTarget.All);
                 _canShoot = false;
                 playerController.canSwitchWeapons = false;
                 _currentAmmoInClip--;
@@ -251,6 +264,8 @@ public class SingleShotGun : Gun
 
                     if (!audioSource.isPlaying)
                         audioSource.PlayOneShot(reloadSFX);
+                    else
+                        audioSource.Stop();
                 }
             }
         }
@@ -266,6 +281,8 @@ public class SingleShotGun : Gun
 
                 if (!audioSource.isPlaying)
                     audioSource.PlayOneShot(outOfAmmoSFX);
+                else
+                    audioSource.Stop();
             }
         }
         
