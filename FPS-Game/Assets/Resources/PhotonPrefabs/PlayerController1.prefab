@@ -2663,6 +2663,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3b78431f62913f848a344747bdb37a1e, type: 3}
   - {fileID: 8300000, guid: aa5666bf0a515374386acdc02e96a27e, type: 3}
   - {fileID: 8300000, guid: 954df1b8013ae564cbb63819111f3d69, type: 3}
+  equip: {fileID: 0}
 --- !u!114 &4454856278380405542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3126,6 +3127,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: be69f7b6b1521b54da81095f9571d524, type: 3}
   - {fileID: 8300000, guid: 80cc36dadaa334a47b5754020b5ef371, type: 3}
   - {fileID: 8300000, guid: f32b15a949ff57846834a0b6f03f7ea1, type: 3}
+  equip: {fileID: 0}
 --- !u!114 &2816010621069780856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3500,6 +3502,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 82c8a6ab4850cc247b5d3467f17a54b1, type: 3}
   - {fileID: 8300000, guid: 9b65b34eb2d8d244a89866e58d5b55c8, type: 3}
   - {fileID: 8300000, guid: a19d34ed00e3ecd4c9777c253a575232, type: 3}
+  equip: {fileID: 0}
 --- !u!114 &4855853581015313852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3818,6 +3821,7 @@ MonoBehaviour:
   bulletCount: {fileID: 607867078}
   shootSFX:
   - {fileID: 8300000, guid: 1a54ebc2a2386824486af559ed2bb1cb, type: 3}
+  equip: {fileID: 0}
 --- !u!114 &4235356016196635108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4390,7 +4394,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3590471501742499627
 Transform:
   m_ObjectHideFlags: 0

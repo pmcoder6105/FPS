@@ -79,6 +79,10 @@ public class SingleShotGun : Gun
 
     public AudioClip[] shootSFX;
 
+    public AudioClip equip;
+
+    bool canShotgunShoot = false;
+
 
     private void Start()
     {
@@ -104,6 +108,19 @@ public class SingleShotGun : Gun
 
         Shoot();
         
+    }
+
+    private void OnEnable()
+    {
+        audioSource.Stop();
+        audioSource.PlayOneShot(equip);
+        canShotgunShoot = false;
+    }
+
+    IEnumerator WaitUntilShotgunCanShoot()
+    {
+        yield return new WaitForSeconds(0.4f / 0.6f);
+        canShotgunShoot = true;
     }
 
     [PunRPC]
@@ -174,7 +191,7 @@ public class SingleShotGun : Gun
                         hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
                         PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
                     }
-                } else
+                } else if (isShotGun && canShotgunShoot)
                 {
                     float x = Random.Range(-0.1f, 0.1f);
                     float y = Random.Range(-0.1f, 0.1f);
@@ -305,18 +322,6 @@ public class SingleShotGun : Gun
         playerController.canSwitchWeapons = true;
 
         _currentAmmoInClip = clipSize;
-
-        //int ammoNeeded = clipSize - _currentAmmoInClip;
-        //if (ammoNeeded >= _ammoInReserve)
-        //{
-        //    _currentAmmoInClip += _ammoInReserve;
-        //    _ammoInReserve = 0;
-        //}
-        //else
-        //{
-        //    _currentAmmoInClip = clipSize;
-        //    _ammoInReserve -= ammoNeeded;
-        //}
     }
 
     void DetermineWeaponSway()
