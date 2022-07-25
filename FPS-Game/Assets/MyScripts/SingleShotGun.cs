@@ -109,7 +109,7 @@ public class SingleShotGun : Gun
     [PunRPC]
     void PlayShootSFX()
     {
-        int clipToPlay = Random.Range(1, shootSFX.Length - 1);
+        int clipToPlay = Random.Range(0, shootSFX.Length - 1);
         audioSource.PlayOneShot(shootSFX[clipToPlay]);
     }
 
@@ -151,11 +151,8 @@ public class SingleShotGun : Gun
                     playerController.canSwitchWeapons = false;
 
                     StartCoroutine(Reload());
-
-                    if (!audioSource.isPlaying)
-                        audioSource.PlayOneShot(reloadSFX);
-                    else
-                        audioSource.Stop();
+                    audioSource.Stop();
+                    audioSource.PlayOneShot(reloadSFX);
                 }                
             }
         } else
@@ -262,28 +259,35 @@ public class SingleShotGun : Gun
 
                     StartCoroutine(Reload());
 
-                    if (!audioSource.isPlaying)
-                        audioSource.PlayOneShot(reloadSFX);
-                    else
-                        audioSource.Stop();
+                    audioSource.Stop();
+                    audioSource.PlayOneShot(reloadSFX);
                 }
             }
         }
 
         if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0) && _canShoot)
         {
-            if (_currentAmmoInClip <= 0)
+            if (!isSniper)
             {
-                if (isPistol)
+                if (_currentAmmoInClip <= 0)
                 {
-                    animator.Play(pistolOutOfAmmo);
-                }
+                    if (isPistol)
+                    {
+                        animator.Play(pistolOutOfAmmo);
+                    }
 
-                if (!audioSource.isPlaying)
-                    audioSource.PlayOneShot(outOfAmmoSFX);
-                else
                     audioSource.Stop();
+                    audioSource.PlayOneShot(outOfAmmoSFX);
+                }
+            } else
+            {
+                if (_currentAmmoInClip <0)
+                {
+                    audioSource.Stop();
+                    audioSource.PlayOneShot(outOfAmmoSFX);
+                }
             }
+            
         }
         
     }
