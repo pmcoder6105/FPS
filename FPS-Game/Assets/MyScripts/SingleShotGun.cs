@@ -185,7 +185,7 @@ public class SingleShotGun : Gun
                         hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
                         PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
                     }
-                } else if (isShotGun && canShotgunShoot)
+                } else if (isShotGun)
                 {
                     float x = Random.Range(-0.1f, 0.1f);
                     float y = Random.Range(-0.1f, 0.1f);
@@ -276,7 +276,7 @@ public class SingleShotGun : Gun
             }
         }
 
-        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0) && _canShoot)
+        if (Input.GetMouseButtonDown(0) && _canShoot)
         {
             if (!isSniper)
             {
