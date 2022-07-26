@@ -21,6 +21,13 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject mapChooseMenu;    
     [SerializeField] GameObject nonClientWaitingText;
 
+    [SerializeField] GameObject playerViewerParent;
+    [SerializeField] GameObject player1;
+    [SerializeField] GameObject player2;
+    [SerializeField] GameObject player3;
+    [SerializeField] GameObject player4;
+    [SerializeField] GameObject titleMenu;
+
 
     private void Awake()
     {
@@ -44,12 +51,59 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         MenuManager.Instance.OpenMenu("title");
         Debug.Log("Joined Lobby");
+        playerViewerParent.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (PlayerPrefs.GetInt("PillColor") == 0)
+        {
+            PlayerPrefs.SetInt("PillColor", 1);
+        }
+
+        if (titleMenu.activeInHierarchy == true)
+        {
+            if (PlayerPrefs.GetInt("PillColor") == 1)
+            {
+                Debug.Log("player1");
+                player1.SetActive(true);
+                player2.SetActive(false);
+                player3.SetActive(false);
+                player4.SetActive(false);
+            }
+            if (PlayerPrefs.GetInt("PillColor") == 2)
+            {
+                Debug.Log("player2");
+                player1.SetActive(false);
+                player2.SetActive(true);
+                player3.SetActive(false);
+                player4.SetActive(false);
+            }
+            if (PlayerPrefs.GetInt("PillColor") == 3)
+            {
+                Debug.Log("player3");
+                player1.SetActive(false);
+                player2.SetActive(false);
+                player3.SetActive(true);
+                player4.SetActive(false);
+            }
+            if (PlayerPrefs.GetInt("PillColor") == 4)
+            {
+                Debug.Log("player4");
+                player1.SetActive(false);
+                player2.SetActive(false);
+                player3.SetActive(false);
+                player4.SetActive(true);
+            }
+            Debug.Log("menu is active");
+        } else
+        {
+            player1.SetActive(false);
+            player2.SetActive(false);
+            player3.SetActive(false);
+            player4.SetActive(false);
+        }
     }
 
     public void CreateRoom()
