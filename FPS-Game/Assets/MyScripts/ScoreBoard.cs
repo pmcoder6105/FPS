@@ -67,12 +67,12 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
             scoreBoardTitle.alpha = 0;
             holdTabForScoreBoardText.color = new Color(holdTabForScoreBoardText.color.r, holdTabForScoreBoardText.color.g, holdTabForScoreBoardText.color.b, 1);
         }
-    }
-
-    public void LeaveRoom()
-    {
-        PhotonNetwork.LeaveRoom();
-        SceneManager.LoadScene(0);
-        Debug.Log("Leave Room");
+        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PhotonNetwork.LeaveRoom();
+            SceneManager.LoadScene(0);
+            Debug.Log("Leave Room");
+        }
     }
 }
