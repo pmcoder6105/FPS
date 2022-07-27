@@ -11,6 +11,8 @@ public class SingleShotGun : Gun
     [SerializeField] Camera cam;
     [SerializeField] GameObject camHolder;
 
+    bool isSniperScoped = false;
+
     public GameObject bulletImpactVFX;
     public GameObject[] scopePieces;
 
@@ -128,7 +130,10 @@ public class SingleShotGun : Gun
     void Shoot()
     {
         DetermineAim();
-        DetermineWeaponSway();
+        if (!isSniperScoped)
+        {
+            DetermineWeaponSway();
+        }        
 
         bulletCount.text = _currentAmmoInClip + " / " + clipSize;
 
@@ -333,24 +338,39 @@ public class SingleShotGun : Gun
 
         Vector3 target = normalLocalPosition;
         if (Input.GetMouseButton(1))
-        {
-            target = aimingLocalPosition;            
-        }
+        {            
+            if (isSniper)
+                isSniperScoped = true;
 
-        Debug.Log("Mouse Sensitivity is: " + playerController.mouseSensitivity);
+            target = aimingLocalPosition;
+        }
+        else if (Input.GetMouseButtonUp(1) && isSniper)
+        {
+            if (isSniper)
+                isSniperScoped = false;
+        }          
+       
 
         if (isSniper)
         {
+
+            Debug.Log(transform.gameObject.name);
+            Debug.Log(transform.localPosition);
             if (Input.GetMouseButtonDown(1))
             {
+                Debug.Log("Should enable scope NOW");
+
                 isScoped = true;
                 audioSource.Stop();
                 audioSource.PlayOneShot(scopeSFX);
                 StartCoroutine(OpenScope());
                 playerController.mouseSensitivity = 0.5f;
+
             }
+
             else if (Input.GetMouseButtonUp(1))
             {
+                StopCoroutine(nameof(OpenScope));
                 isScoped = false;
                 cam.fieldOfView = 60;
                 playerController.mouseSensitivity = 3;
@@ -358,10 +378,7 @@ public class SingleShotGun : Gun
                 {
                     scopePieces[i].SetActive(true);
                 }
-                //weaponCam.SetActive(true);
                 scope.SetActive(false);
-                //Enable sniper visuals
-                //Modify muzzleFlash
             }
         }       
 
@@ -372,13 +389,18 @@ public class SingleShotGun : Gun
 
     IEnumerator OpenScope()
     {
+       
         yield return new WaitForSeconds(Time.deltaTime * aimSmoothing);
-        scope.SetActive(true);
-        cam.fieldOfView = 30;
-        for (int i = 0; i < scopePieces.Count(); i++)
+        Debug.Log(Input.GetMouseButton(1));
+        if (Input.GetMouseButton(1))
         {
-            scopePieces[i].SetActive(false);
-        }
+            scope.SetActive(true);
+            cam.fieldOfView = 30;
+            for (int i = 0; i < scopePieces.Count(); i++)
+            {
+                scopePieces[i].SetActive(false);
+            }
+        }            
         //weaponCam.SetActive(false);
         //Disable sniper visuals
         //Modify muzzle flash
