@@ -9,7 +9,6 @@ using TMPro;
 public class SingleShotGun : Gun
 {
     [SerializeField] Camera cam;
-    [SerializeField] GameObject camHolder;
 
     bool isSniperScoped = false;
 
@@ -413,8 +412,6 @@ public class SingleShotGun : Gun
         
         DetermineRecoil();
         yield return new WaitForSeconds(fireRate);
-        if (isSniper)
-            camHolder.GetComponent<Animator>().enabled = false;
         _canShoot = true;
         playerController.canSwitchWeapons = true;
     }
@@ -422,11 +419,6 @@ public class SingleShotGun : Gun
     void DetermineRecoil()
     {
         transform.localPosition -= Vector3.forward * recoilAmount;
-        if (isSniper)
-        {
-            camHolder.GetComponent<Animator>().enabled = true;
-            camHolder.GetComponent<Animator>().Play("CameraJerkWhenSniperShoot");
-        }
     }
 
     [PunRPC]

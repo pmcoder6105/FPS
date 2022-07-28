@@ -44,9 +44,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     int playerHealth;
 
     public GameObject redDeathParticleSystem;
-    public GameObject blueDeathParticleSystem;
-    public GameObject greenDeathParticleSystem;
-    public GameObject blackDeathParticleSystem;
 
     public bool isDead = false;
 
@@ -84,6 +81,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public GameObject[] weapons;
 
     bool canRegen = false;
+
+    [SerializeField] GameObject playerHitParticleEffect;
 
     private void Awake()
     {
@@ -285,6 +284,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public void TakeDamage(float damage)
     {
         PV.RPC(nameof(RPC_TakeDamage), PV.Owner, damage);
+        PV.RPC(nameof(RPC_DisplayDamage), RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void RPC_DisplayDamage()
+    {
+        GameObject playerHitEffect = Instantiate(playerHitParticleEffect, this.gameObject.transform.position, Quaternion.identity);
+        playerHitEffect.GetComponent<ParticleSystem>().Emit(15);
+        Destroy(playerHitEffect, 2f);
+
     }
 
     [PunRPC]
@@ -307,6 +316,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         canRegen = false;
 
         
+
+
 
         if (currentHealth <= 0)
         {

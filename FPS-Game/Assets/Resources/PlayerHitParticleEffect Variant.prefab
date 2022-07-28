@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8972677214114591282
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 234312485718157017, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: sceneViewId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034992, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: lengthInSec
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034992, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034992, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034992, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034992, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].time
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034993, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034993, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.8517647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034993, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.625
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034993, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034993, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034993, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034993, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034993, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034993, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034993, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034993, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451035006, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: m_Name
+      value: PlayerHitParticleEffect Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451035007, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: efa1f321eee5e6f4791e7aa8cb801796, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
