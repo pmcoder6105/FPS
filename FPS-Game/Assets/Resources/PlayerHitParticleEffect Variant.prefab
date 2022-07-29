@@ -21,11 +21,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1018666524451034992, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 0.2
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018666524451034992, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 1018666524451034992, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
-      value: 10
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 1018666524451034992, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].time

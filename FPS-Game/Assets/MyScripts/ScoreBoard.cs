@@ -14,6 +14,8 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
     [SerializeField] CanvasGroup scoreBoardTitle;
     [SerializeField] TMP_Text holdTabForScoreBoardText;
 
+    public CanvasGroup areYouSureYouWantToLeaveConfirmation;
+
     public bool isOpen = false;
 
     Dictionary<Player, ScoreBoardItem> scoreBoardItems = new Dictionary<Player, ScoreBoardItem>();
@@ -25,6 +27,7 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
             AddScoreBoardItem(player);
         }
         scoreBoardTitle.alpha = 0;
+        areYouSureYouWantToLeaveConfirmation.alpha = 0;
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -70,9 +73,16 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
         
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PhotonNetwork.LeaveRoom();
-            SceneManager.LoadScene(0);
-            Debug.Log("Leave Room");
+            areYouSureYouWantToLeaveConfirmation.alpha = 1;
+            //Application.Quit();
+            //Debug.Log("Leave Room");
+            Cursor.lockState = CursorLockMode.None;
+            isOpen = true;
         }
+    }
+
+    public void LeaveGame()
+    {
+        Application.Quit();
     }
 }

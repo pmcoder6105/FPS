@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             Cursor.lockState = CursorLockMode.None;
         }
-        if (Input.GetMouseButtonDown(0) && Cursor.lockState == CursorLockMode.None && hasInstantiatedDeathPanel == false && scoreBoard.GetComponent<ScoreBoard>().isOpen == false)
+        if (Input.GetMouseButtonDown(0) && Cursor.lockState == CursorLockMode.None && hasInstantiatedDeathPanel == false && scoreBoard.GetComponent<ScoreBoard>().isOpen == false && scoreBoard.GetComponent<ScoreBoard>().areYouSureYouWantToLeaveConfirmation.alpha != 1)
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -459,35 +459,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Destroy(itemHolder);
         Destroy(overheadUsernameText);
         Destroy(healthBar);
-        GetComponent<CapsuleCollider>().enabled = false;
-
-        //if (PlayerPrefs.GetInt("DeathEffectColor") == 1)
-        //{
-        //    GameObject particleSystem = PhotonNetwork.Instantiate(nameof(redDeathParticleSystem), this.gameObject.transform.position, Quaternion.identity, 0);
-        //    particleSystem.GetComponent<ParticleSystem>().Emit(30);
-        //    Debug.Log("Red Death Effect");
-        //    Destroy(particleSystem, 5f);
-        //}
-        //if (PlayerPrefs.GetInt("DeathEffectColor") == 2)
-        //{
-        //    GameObject particleSystem = PhotonNetwork.Instantiate(nameof(blueDeathParticleSystem), this.gameObject.transform.position, Quaternion.identity, 0);
-        //    particleSystem.GetComponent<ParticleSystem>().Emit(30);
-        //    Debug.Log("Blue Death Effect");
-        //    Destroy(particleSystem, 5f);
-        //}
-        //if (PlayerPrefs.GetInt("DeathEffectColor") == 3)
-        //{
-        //    GameObject particleSystem = PhotonNetwork.Instantiate(nameof(greenDeathParticleSystem), this.gameObject.transform.position, Quaternion.identity, 0);
-        //    particleSystem.GetComponent<ParticleSystem>().Emit(30);
-        //    Debug.Log("Green Death Effect");
-        //    Destroy(particleSystem, 5f);
-        //}
-        //if (PlayerPrefs.GetInt("DeathEffectColor") == 4)
-        //{
-        //    GameObject particleSystem = PhotonNetwork.Instantiate(nameof(blackDeathParticleSystem), this.gameObject.transform.position, Quaternion.identity, 0);
-        //    particleSystem.GetComponent<ParticleSystem>().Emit(30);
-        //    Debug.Log("Black Death Effect");
-        //    Destroy(particleSystem, 5f);
-        //}      
+        GetComponent<CapsuleCollider>().enabled = false;      
     }
 }
