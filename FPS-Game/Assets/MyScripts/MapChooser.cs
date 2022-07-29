@@ -45,4 +45,10 @@ public class MapChooser : MonoBehaviour
         mapName = "UndergroundPill-Amid";
         mapChooseContinueButton.SetActive(true);
     }
+    public void Sky()
+    {
+        mapChosen = 6;
+        mapName = "Sky-Pills";
+        mapChooseContinueButton.SetActive(true);
+    }
 }

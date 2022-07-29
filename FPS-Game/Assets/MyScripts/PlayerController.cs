@@ -8,6 +8,7 @@ using Photon.Realtime;
 using TMPro;
 using Cinemachine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
@@ -110,6 +111,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             {
                 Destroy(canvas[i]);
             }
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex == 6)
+        {
+            Physics.gravity = new Vector3(0, -2, 0);
+            jumpForce = 700;
         }
     }
 
