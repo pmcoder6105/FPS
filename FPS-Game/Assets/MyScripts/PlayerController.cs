@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (SceneManager.GetActiveScene().buildIndex == 6)
         {
             Physics.gravity = new Vector3(0, -2, 0);
-            jumpForce = 700;
+            jumpForce = 500;
         }
     }
 
