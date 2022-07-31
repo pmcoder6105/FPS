@@ -26,6 +26,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject player2;
     [SerializeField] GameObject player3;
     [SerializeField] GameObject player4;
+    [SerializeField] GameObject player5;
+    [SerializeField] GameObject player6;
     [SerializeField] GameObject titleMenu;
 
 
@@ -71,6 +73,8 @@ public class Launcher : MonoBehaviourPunCallbacks
                 player2.SetActive(false);
                 player3.SetActive(false);
                 player4.SetActive(false);
+                player5.SetActive(false);
+                player6.SetActive(false);
             }
             if (PlayerPrefs.GetInt("PillColor") == 2)
             {
@@ -79,6 +83,8 @@ public class Launcher : MonoBehaviourPunCallbacks
                 player2.SetActive(true);
                 player3.SetActive(false);
                 player4.SetActive(false);
+                player5.SetActive(false);
+                player6.SetActive(false);
             }
             if (PlayerPrefs.GetInt("PillColor") == 3)
             {
@@ -87,6 +93,8 @@ public class Launcher : MonoBehaviourPunCallbacks
                 player2.SetActive(false);
                 player3.SetActive(true);
                 player4.SetActive(false);
+                player5.SetActive(false);
+                player6.SetActive(false);
             }
             if (PlayerPrefs.GetInt("PillColor") == 4)
             {
@@ -95,14 +103,38 @@ public class Launcher : MonoBehaviourPunCallbacks
                 player2.SetActive(false);
                 player3.SetActive(false);
                 player4.SetActive(true);
+                player5.SetActive(false);
+                player6.SetActive(false);
             }
-            Debug.Log("menu is active");
+            if (PlayerPrefs.GetInt("PillColor") == 5)
+            {
+                Debug.Log("player5");
+                player1.SetActive(false);
+                player2.SetActive(false);
+                player3.SetActive(false);
+                player4.SetActive(false);
+                player5.SetActive(true);
+                player6.SetActive(false);
+            }
+            if (PlayerPrefs.GetInt("PillColor") == 6)
+            {
+                Debug.Log("player6");
+                player1.SetActive(false);
+                player2.SetActive(false);
+                player3.SetActive(false);
+                player4.SetActive(false);
+                player5.SetActive(false);
+                player6.SetActive(true);
+            }
+
         } else
         {
             player1.SetActive(false);
             player2.SetActive(false);
             player3.SetActive(false);
             player4.SetActive(false);
+            player5.SetActive(false);
+            player6.SetActive(false);
         }
     }
 

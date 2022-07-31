@@ -70,6 +70,16 @@ public class PlayerManager : MonoBehaviour
             Transform spawnpoint = SpawnManager.Instance.GetSpawnPoint();
             controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController4"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
         }
+        if (PlayerPrefs.GetInt("PillColor") == 5)
+        {
+            Transform spawnpoint = SpawnManager.Instance.GetSpawnPoint();
+            controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController5"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
+        }
+        if (PlayerPrefs.GetInt("PillColor") == 6)
+        {
+            Transform spawnpoint = SpawnManager.Instance.GetSpawnPoint();
+            controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController6"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
+        }
     }
 
     public void Die()

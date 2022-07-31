@@ -13,7 +13,7 @@ public class CustomizeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerPrefs.SetInt("PillColor", 1);
+        //PlayerPrefs.SetInt("PillColor", 1);
     }
 
     // Update is called once per frame
@@ -57,6 +57,16 @@ public class CustomizeManager : MonoBehaviour
         isGreenAndBlue = false;
         isBlackAndWhite = true;
         pillColorKey = 4;
+        PlayerPrefs.SetInt("PillColor", pillColorKey);
+    }
+    public void ChangeToPurpleAndBlack()
+    {
+        pillColorKey = 5;
+        PlayerPrefs.SetInt("PillColor", pillColorKey);
+    }
+    public void ChangeToBlueAndPurple()
+    {
+        pillColorKey = 6;
         PlayerPrefs.SetInt("PillColor", pillColorKey);
     }
 }
