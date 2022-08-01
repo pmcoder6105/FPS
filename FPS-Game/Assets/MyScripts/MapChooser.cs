@@ -58,4 +58,11 @@ public class MapChooser : MonoBehaviour
         mapName = "PillFightingGround";
         mapChooseContinueButton.SetActive(true);
     }
+
+    public void CloseCombat()
+    {
+        mapChosen = 8;
+        mapName = "ClosePillCombat";
+        mapChooseContinueButton.SetActive(true);
+    }
 }
