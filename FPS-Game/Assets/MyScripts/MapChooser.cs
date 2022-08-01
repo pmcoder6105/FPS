@@ -51,4 +51,11 @@ public class MapChooser : MonoBehaviour
         mapName = "Sky-Pills";
         mapChooseContinueButton.SetActive(true);
     }
+
+    public void FightingGround()
+    {
+        mapChosen = 7;
+        mapName = "PillFightingGround";
+        mapChooseContinueButton.SetActive(true);
+    }
 }

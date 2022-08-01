@@ -2,6 +2,7 @@ using Photon.Realtime;
 using Photon.Pun;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -79,10 +80,39 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
             Cursor.lockState = CursorLockMode.None;
             isOpen = true;
         }
+
+        if (areYouSureYouWantToLeaveConfirmation.alpha == 1)
+        {
+            StartCoroutine(nameof(Leave));
+        }
     }
 
-    public void LeaveGame()
+    IEnumerator Leave()
     {
-        Application.Quit();
+        yield return new WaitForSeconds(0.01f);
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
+
+    //public void LeaveGame()
+    //{
+    //    Application.Quit();
+    //}
+
+
+    public void StopLeaveGame()
+    {
+        Application.CancelQuit();
+    }
+    //public void StopLeaveGame()
+    //{
+    //    Application.wantsToQuit += WantsToQuit;
+    //}
+    //static bool WantsToQuit()
+    //{
+    //    Debug.Log("Player prevented from quitting.");
+    //    return false;
+    //}
 }
