@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public GameObject[] canvas;
 
-    public GameObject[] weapons;
+    //public GameObject[] weapons;
 
     bool canRegen = false;
 
@@ -335,12 +335,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
             PV.RPC(nameof(RPC_PlayKillDingSFX), info.Sender);
 
-            if (PV.IsMine)
-            {
-                InstantiateKillText();
-                Debug.Log("Instantiate +1 kill now!");
-                publicKillTextNotificationGameObject.GetComponent<TMP_Text>().text = info.Sender.NickName.ToString() + " killed " + PV.Owner.NickName;
-            }
+            //if (PV.IsMine)
+            //{
+            //    InstantiateKillText();
+            //    Debug.Log("Instantiate +1 kill now!");
+            //    publicKillTextNotificationGameObject.GetComponent<TMP_Text>().text = info.Sender.NickName.ToString() + " killed " + PV.Owner.NickName;
+            //}
 
             killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform);
             killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: " + info.Sender.NickName.ToString();
@@ -372,22 +372,22 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
     }
 
-    void InstantiateKillText()
-    {
-        PV.RPC(nameof(RPC_InstantiateKillText), RpcTarget.All);
-    }
+    //void InstantiateKillText()
+    //{
+    //    PV.RPC(nameof(RPC_InstantiateKillText), RpcTarget.All);
+    //}
+    
+    //{PunRPC]
+    //void RPC_InstantiateKillText()
+    //{
+    //    if (!PV.IsMine)
+    //        return;
+    //    Debug.Log("Instantiate +1 kill now!");
+    //    publicKillTextNotificationGameObject = Instantiate(publicKillTextNotification, publicKillTextNotificationHolder.transform);       
+    //    Destroy(publicKillTextNotificationGameObject, 3);
+    //    //publicKillTextNotificationGameObject.GetComponent<TMP_Text>().text = info.Sender.NickName.ToString() + " killed " + PV.Owner.NickName;
 
-    [PunRPC]
-    void RPC_InstantiateKillText()
-    {
-        if (!PV.IsMine)
-            return;
-        Debug.Log("Instantiate +1 kill now!");
-        publicKillTextNotificationGameObject = Instantiate(publicKillTextNotification, publicKillTextNotificationHolder.transform);       
-        Destroy(publicKillTextNotificationGameObject, 3);
-        //publicKillTextNotificationGameObject.GetComponent<TMP_Text>().text = info.Sender.NickName.ToString() + " killed " + PV.Owner.NickName;
-
-    }
+    //}
 
     public void SetPlayerHealthShader()
     {

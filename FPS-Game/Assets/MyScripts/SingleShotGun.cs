@@ -1,14 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using UnityEngine.UI;
 using System.Linq;
 using TMPro;
 
 public class SingleShotGun : Gun
 {
     [SerializeField] Camera cam;
+
+    public bool canDaggerSwing = true;
 
     bool isSniperScoped = false;
 
@@ -28,7 +28,7 @@ public class SingleShotGun : Gun
     public float reloadTime;
 
     //Variables that change throughout the code
-    bool _canShoot;
+    public bool _canShoot;
     int _currentAmmoInClip;
     int _ammoInReserve;
 
@@ -87,7 +87,7 @@ public class SingleShotGun : Gun
 
     public AudioClip equip;
 
-    bool canShotgunShoot = false;
+    public bool isDagger;
 
     public AudioClip scopeSFX;
 
@@ -104,23 +104,12 @@ public class SingleShotGun : Gun
         PV = GetComponent<PhotonView>();        
     }
 
-    private void Update()
-    {        
-    }
-
     public override void Use()
     {
         if (PV.IsMine == false)
             return;
 
         Shoot();
-        
-    }
-
-    IEnumerator WaitUntilShotgunCanShoot()
-    {
-        yield return new WaitForSeconds(0.4f / 0.6f);
-        canShotgunShoot = true;
     }
 
     [PunRPC]
@@ -132,13 +121,25 @@ public class SingleShotGun : Gun
 
     void Shoot()
     {
-        DetermineAim();
+
+
+        if (isDagger == false)
+        {
+            DetermineAim();
+        }
+
         if (!isSniperScoped)
         {
             DetermineWeaponSway();
         }        
 
-        bulletCount.text = _currentAmmoInClip + " / " + clipSize;
+        if (isDagger)
+        {
+            bulletCount.text = "";
+        } else if (!isDagger)
+        {
+            bulletCount.text = _currentAmmoInClip + " / " + clipSize;
+        }
 
         if (isAutomatic)
         {
@@ -202,16 +203,20 @@ public class SingleShotGun : Gun
                     
                 }                
             }
-        } else
+        } else if (!isAutomatic)
         {
             if (Input.GetMouseButtonDown(0) && _canShoot && _currentAmmoInClip > 0)
             {
+                if (isDagger == false)
+                {
+                    _currentAmmoInClip--;
+                }
                 PV.RPC(nameof(PlayShootSFX), RpcTarget.All);
                 _canShoot = false;
                 playerController.canSwitchWeapons = false;
-                _currentAmmoInClip--;
+                
                 StartCoroutine(ShootGun());
-                if (isShotGun == false)
+                if (isShotGun == false && isDagger == false)
                 {
                     Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
                     ray.origin = cam.transform.position;
@@ -295,7 +300,7 @@ public class SingleShotGun : Gun
                     animator.Play(shoot.ToString(), 0, 0.0f);
                 }
             }            
-            else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInClip < clipSize && _ammoInReserve > 0)
+            else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInClip < clipSize && _ammoInReserve > 0 && !isDagger)
             {
                 if (_canShoot == false)
                     return;
@@ -352,7 +357,7 @@ public class SingleShotGun : Gun
                     audioSource.Stop();
                     audioSource.PlayOneShot(outOfAmmoSFX);
                 }
-            } else
+            } else if (isSniper)
             {
                 if (_currentAmmoInClip <0)
                 {
@@ -412,6 +417,9 @@ public class SingleShotGun : Gun
 
     void DetermineWeaponSway()
     {
+        if (isDagger)
+            return;
+
         Vector2 mouseAxis = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
         transform.localPosition += (Vector3)mouseAxis * weaponSwayAmount / 1000;
@@ -493,18 +501,27 @@ public class SingleShotGun : Gun
     }
     IEnumerator ShootGun()
     {
-        GameObject flash = Instantiate(muzzleFlashEffect, muzzleFlashSpawnPlace);
-        flash.GetComponent<ParticleSystem>().Emit(1);
-        flash.transform.Find("Sparks").GetComponent<ParticleSystem>().Emit(1);        
+        if (isDagger == false)
+        {
+            GameObject flash = Instantiate(muzzleFlashEffect, muzzleFlashSpawnPlace);
+            flash.GetComponent<ParticleSystem>().Emit(1);
+            flash.transform.Find("Sparks").GetComponent<ParticleSystem>().Emit(1);
+        }
+        if (isDagger)
+        {
+            canDaggerSwing = false;
+        }
         DetermineRecoil();
         yield return new WaitForSeconds(fireRate);
         _canShoot = true;
+        canDaggerSwing = true;
         playerController.canSwitchWeapons = true;
     }
 
     void DetermineRecoil()
     {
-        transform.localPosition -= Vector3.forward * recoilAmount;
+        if (!isDagger)
+            transform.localPosition -= Vector3.forward * recoilAmount;       
     }
 
     [PunRPC]
