@@ -65,4 +65,11 @@ public class MapChooser : MonoBehaviour
         mapName = "ClosePillCombat";
         mapChooseContinueButton.SetActive(true);
     }
+
+    public void PillBox()
+    {
+        mapChosen = 9;
+        mapName = "PillBox";
+        mapChooseContinueButton.SetActive(true);
+    }
 }
