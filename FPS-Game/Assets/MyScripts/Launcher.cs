@@ -206,44 +206,21 @@ public class Launcher : MonoBehaviourPunCallbacks
         MenuManager.Instance.OpenMenu("title");
     }
 
-    List<RoomInfo> fullRoomList = new List<RoomInfo>();
-    List<RoomListItem> roomListItems = new List<RoomListItem>();
+    //List<RoomInfo> fullRoomList = new List<RoomInfo>();
+    //List<RoomListItem> roomListItems = new List<RoomListItem>();
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        foreach (RoomInfo updatedRoom in roomList)
+        foreach (Transform trans in roomListContent)
         {
-            RoomInfo existingRoom = fullRoomList.Find(x => x.Name.Equals(updatedRoom.Name)); // Check to see if we have that room already
-            if (existingRoom == null) // WE DO NOT HAVE IT
-            {
-                fullRoomList.Add(updatedRoom); // Add the room to the full room list
-            }
-            else if (updatedRoom.RemovedFromList) // WE DO HAVE IT, so check if it has been removed
-            {
-                fullRoomList.Remove(existingRoom); // Remove it from our full room list
-            }
+            Destroy(trans.gameObject);
         }
-        RenderRoomList();
-    }
-
-    void RenderRoomList()
-    {
-        RemoveRoomList();
-        foreach (RoomInfo roomInfo in fullRoomList)
+        for (int i = 0; i < roomList.Count; i++)
         {
-            RoomListItem roomListItem = Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>();
-            roomListItem.SetUp(roomInfo);
-            roomListItems.Add(roomListItem);
+            if (roomList[i].RemovedFromList)
+                continue;
+            Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>().SetUp(roomList[i]);
         }
-    }
-
-    void RemoveRoomList()
-    {
-        foreach (RoomListItem roomListItem in roomListItems)
-        {
-            Destroy(roomListItem.gameObject);
-        }
-        roomListItems.Clear();
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
