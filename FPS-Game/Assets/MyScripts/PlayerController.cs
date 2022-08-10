@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                     break;
                 }
             }
-            if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
+            if (Input.GetAxisRaw("Mouse ScrollWheel") < 0f)
             {
                 if (itemIndex >= items.Length - 1)
                 {
@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                     EquipItem(itemIndex + 1);
                 }
             }
-            if (Input.GetAxisRaw("Mouse ScrollWheel") < 0f)
+            if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
             {
                 if (itemIndex <= 0)
                 {

@@ -2939,6 +2939,7 @@ MonoBehaviour:
   equip: {fileID: 8300000, guid: e89f3bdad1ddd5b479ed7163cd4a335b, type: 3}
   isDagger: 0
   scopeSFX: {fileID: 0}
+  otherGunScopeReference: {fileID: 8757865083568207718}
 --- !u!114 &4454856278380405542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3512,6 +3513,7 @@ MonoBehaviour:
   equip: {fileID: 8300000, guid: cd2754d7e9ce164449c8ff82ce1cfe47, type: 3}
   isDagger: 0
   scopeSFX: {fileID: 0}
+  otherGunScopeReference: {fileID: 8757865083568207718}
 --- !u!114 &2816010621069780856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4061,6 +4063,7 @@ MonoBehaviour:
   equip: {fileID: 8300000, guid: 7fae24c31cc7c714da1a6c5d86ffab9b, type: 3}
   isDagger: 0
   scopeSFX: {fileID: 0}
+  otherGunScopeReference: {fileID: 8757865083568207718}
 --- !u!114 &4855853581015313852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4275,6 +4278,7 @@ MonoBehaviour:
   equip: {fileID: 8300000, guid: 1af78e904a7c4de4ca7c933dc1e4c1b4, type: 3}
   isDagger: 1
   scopeSFX: {fileID: 0}
+  otherGunScopeReference: {fileID: 8757865083568207718}
 --- !u!114 &51159370034668043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4662,7 +4666,6 @@ Transform:
   m_Children:
   - {fileID: 2834624604261686685}
   - {fileID: 8089965405699872532}
-  - {fileID: 1636060479742888904}
   m_Father: {fileID: 8448507570091309318}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4738,6 +4741,7 @@ MonoBehaviour:
   equip: {fileID: 8300000, guid: 212e7a428cd9baa4387bdb3a2d90bbca, type: 3}
   isDagger: 0
   scopeSFX: {fileID: 8300000, guid: 2843658595b9ac44d8d5a41fa5bb664a, type: 3}
+  otherGunScopeReference: {fileID: 0}
 --- !u!114 &4235356016196635108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5801,6 +5805,7 @@ Transform:
   m_Children:
   - {fileID: 8362412132205351792}
   - {fileID: 3526425270442822491}
+  - {fileID: 1636060479742888904}
   m_Father: {fileID: 814627686903236821}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5836,7 +5841,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4771985551912486856}
-  m_Father: {fileID: 814627686903236821}
+  m_Father: {fileID: 2834624604261686685}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

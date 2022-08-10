@@ -91,6 +91,8 @@ public class SingleShotGun : Gun
 
     public AudioClip scopeSFX;
 
+    public GameObject otherGunScopeReference;
+
 
     private void Start()
     {
@@ -110,8 +112,20 @@ public class SingleShotGun : Gun
             return;
 
         Shoot();
-    }
 
+        if (!isSniper)
+        {
+            GameObject sniper = GameObject.Find("Sniper");
+            otherGunScopeReference.SetActive(false);
+            isScoped = false;
+            cam.fieldOfView = 60;
+            playerController.mouseSensitivity = 3;
+            for (int i = 0; i < sniper.GetComponent<SingleShotGun>().scopePieces.Count(); i++)
+            {
+                sniper.GetComponent<SingleShotGun>().scopePieces[i].SetActive(true);
+            }
+        }
+    }
     [PunRPC]
     void PlayShootSFX()
     {
@@ -403,6 +417,17 @@ public class SingleShotGun : Gun
                 animator.Play("ShotGunReload5", 0, 0.0f);
             }
         }        
+        if (isSniper)
+        {
+            scope.SetActive(false);
+            isScoped = false;
+            cam.fieldOfView = 60;
+            playerController.mouseSensitivity = 3;
+            for (int i = 0; i < scopePieces.Count(); i++)
+            {
+                scopePieces[i].SetActive(true);
+            }
+        }
         canAim = false;
         isReloading = true;
         _canShoot = false;
@@ -413,6 +438,7 @@ public class SingleShotGun : Gun
         playerController.canSwitchWeapons = true;
 
         _currentAmmoInClip = clipSize;
+
     }
 
     void DetermineWeaponSway()
