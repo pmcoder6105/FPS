@@ -1082,7 +1082,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh186220
+  m_Name: pb_Mesh252066
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1307,21 +1307,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1835872764
+--- !u!1001 &1850046846
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1502517798438988727, guid: d6f7529cad3e3e44d8b8a4de2277c852, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.99
-      objectReference: {fileID: 0}
-    - target: {fileID: 2511184437448133920, guid: d6f7529cad3e3e44d8b8a4de2277c852, type: 3}
-      propertyPath: sceneViewId
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 2511184437448133923, guid: d6f7529cad3e3e44d8b8a4de2277c852, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -1369,38 +1361,6 @@ PrefabInstance:
     - target: {fileID: 2511184437448133935, guid: d6f7529cad3e3e44d8b8a4de2277c852, type: 3}
       propertyPath: m_Name
       value: PlayerController1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2816010621069780856, guid: d6f7529cad3e3e44d8b8a4de2277c852, type: 3}
-      propertyPath: sceneViewId
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4235356016196635108, guid: d6f7529cad3e3e44d8b8a4de2277c852, type: 3}
-      propertyPath: sceneViewId
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4454856278380405542, guid: d6f7529cad3e3e44d8b8a4de2277c852, type: 3}
-      propertyPath: sceneViewId
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4855853581015313852, guid: d6f7529cad3e3e44d8b8a4de2277c852, type: 3}
-      propertyPath: sceneViewId
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6781862427375013795, guid: d6f7529cad3e3e44d8b8a4de2277c852, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7905872336652455339, guid: d6f7529cad3e3e44d8b8a4de2277c852, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9045063059842191127, guid: d6f7529cad3e3e44d8b8a4de2277c852, type: 3}
-      propertyPath: sceneViewId
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 9209597007893392388, guid: d6f7529cad3e3e44d8b8a4de2277c852, type: 3}
-      propertyPath: sceneViewId
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6f7529cad3e3e44d8b8a4de2277c852, type: 3}
