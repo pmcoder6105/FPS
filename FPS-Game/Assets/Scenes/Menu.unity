@@ -4210,7 +4210,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Reload Time: 0 secs'
+  m_text: 'Swing Rate: 0.75 secs'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
   m_sharedMaterial: {fileID: 7472722706876977885, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
@@ -16756,7 +16756,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Damage: 75'
+  m_text: 'Damage: 40'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
   m_sharedMaterial: {fileID: 7472722706876977885, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
@@ -17164,7 +17164,10 @@ MonoBehaviour:
   m_text: "-Reversed scroll wheel weapon flow to make more sense\n-Fixed sniper reticle
     bug where you could use reticle when using other guns\n-Fixed sniper reticle
     bug where you could use reticle when reloading sniper \n-Pushed shotgun position
-    away from the player"
+    away from the player\n-Increasead knife swing range\n-Improved knife swing animation
+    visually\n-Decreased swing time of dagger\n-Decreased damage of dagger\n-Updated
+    stats into weapon viewer menu\n-Increased weapon drag speed in weapon viewer
+    menu"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
   m_sharedMaterial: {fileID: 7472722706876977885, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
@@ -17191,8 +17194,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 26.5
+  m_fontSizeBase: 26.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

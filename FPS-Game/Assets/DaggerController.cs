@@ -25,7 +25,7 @@ public class DaggerController : MonoBehaviour
     {
         if (daggerManager.canDaggerSwing == false && other.gameObject.transform != transform.root.gameObject && pV.IsMine)
         {
-            other.gameObject.GetComponent<IDamageable>()?.TakeDamage(75);
+            other.gameObject.GetComponent<IDamageable>()?.TakeDamage(40);
         }
     }
 }

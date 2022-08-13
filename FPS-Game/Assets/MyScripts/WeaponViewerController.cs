@@ -17,7 +17,7 @@ public class WeaponViewerController : MonoBehaviour
     }
     void OnMouseDrag()
     {
-        float rotSpeed = 100;
+        float rotSpeed = 150;
         float rotX = Input.GetAxis("Mouse X") * rotSpeed * Mathf.Deg2Rad;
         float rotY = Input.GetAxis("Mouse Y") * rotSpeed * Mathf.Deg2Rad;
 

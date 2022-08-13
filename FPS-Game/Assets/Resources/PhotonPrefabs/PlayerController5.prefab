@@ -5935,7 +5935,7 @@ MonoBehaviour:
   bulletImpactVFX: {fileID: 8923324794198242486, guid: 5acee24a3668e214a931fc7dc4acd0c8, type: 3}
   scopePieces: []
   playerID: 0
-  fireRate: 1
+  fireRate: 0.75
   clipSize: 5
   reservedAmmoCapacity: 270
   isAutomatic: 0
@@ -8484,8 +8484,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 7.594304, y: 12.38997, z: 6.236204}
-  m_Center: {x: -0.027620038, y: 0.29499605, z: -0.23280677}
+  m_Size: {x: 7.594304, y: 24.69219, z: 6.236204}
+  m_Center: {x: -0.02762213, y: 6.4460483, z: -0.23281476}
 --- !u!95 &3838154171550671782
 Animator:
   serializedVersion: 4
