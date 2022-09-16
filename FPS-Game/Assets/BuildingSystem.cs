@@ -14,6 +14,7 @@ public class BuildingSystem : MonoBehaviour
     GameObject lastHighlightedBlock;
 
     bool canBuild = true;
+    bool canDestroy = true;
 
     void Update()
     {
@@ -24,16 +25,24 @@ public class BuildingSystem : MonoBehaviour
         }
         if (Input.GetMouseButton(1))
         {
-            DestroyBlock();
+            StartCoroutine(nameof(DestroyBlockAndWait));
         }
         HighlightBlock();
+    }
+
+    IEnumerator DestroyBlockAndWait()
+    {
+        DestroyBlock();
+        canDestroy = false;
+        yield return new WaitForSeconds(0.05f);
+        canDestroy = true;
     }
 
     IEnumerator BuildBlockAndWait()
     {
         BuildBlock(blockPrefab);
         canBuild = false;
-        yield return new WaitForSeconds(0.075f);
+        yield return new WaitForSeconds(0.1f);
         canBuild = true;
     }
 
