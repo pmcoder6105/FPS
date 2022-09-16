@@ -52,7 +52,7 @@ public class PlayerManager : MonoBehaviour
         {
             Transform spawnpoint = SpawnManager.Instance.GetSpawnPoint();
             //
-            controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController1"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
+            controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Testing"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
             //
         }
         if (PlayerPrefs.GetInt("PillColor") == 2)
