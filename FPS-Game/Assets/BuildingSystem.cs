@@ -58,7 +58,7 @@ public class BuildingSystem : MonoBehaviour
             }
             else //if is the ground
             {
-                Vector3 spawnPosition = new Vector3(Mathf.RoundToInt(hitInfo.point.x), Mathf.RoundToInt(hitInfo.point.y), Mathf.RoundToInt(hitInfo.point.z));
+                Vector3 spawnPosition = new Vector3(Mathf.RoundToInt(hitInfo.point.x), Mathf.RoundToInt(hitInfo.point.y) + 0.001f, Mathf.RoundToInt(hitInfo.point.z));
                 Instantiate(block, spawnPosition, Quaternion.identity);
             }
         }
