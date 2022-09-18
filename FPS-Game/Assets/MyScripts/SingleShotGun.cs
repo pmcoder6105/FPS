@@ -93,7 +93,7 @@ public class SingleShotGun : Gun
 
     public GameObject otherGunScopeReference;
 
-
+    BuildingSystem buildingSystem;
     private void Start()
     {
         _currentAmmoInClip = clipSize;
@@ -103,13 +103,21 @@ public class SingleShotGun : Gun
 
     private void Awake()
     {
-        PV = GetComponent<PhotonView>();        
+        PV = GetComponent<PhotonView>();
+        buildingSystem = transform.root.transform.gameObject.GetComponent<BuildingSystem>();
     }
 
     public override void Use()
     {
         if (PV.IsMine == false)
             return;
+
+        if (buildingSystem.isInBuildMode)
+        {
+            Debug.Log("You are in build mode, so no shooting");
+            return;
+        }
+            
 
         Shoot();
 

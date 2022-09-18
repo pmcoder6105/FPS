@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class BuildingSystem : MonoBehaviour
 {
@@ -16,18 +17,38 @@ public class BuildingSystem : MonoBehaviour
     bool canBuild = true;
     bool canDestroy = true;
 
+    public bool isInBuildMode = false;
+
+    PhotonView PV;
+
+    private void Awake()
+    {
+        PV = GetComponent<PhotonView>();
+    }
+
     void Update()
     {
-        if (Input.GetMouseButton(0) && canBuild)
+        if (!PV.IsMine)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.B))
         {
-            //BuildBlock(blockPrefab);
-            StartCoroutine(nameof(BuildBlockAndWait));
+            isInBuildMode = !isInBuildMode;
         }
-        if (Input.GetMouseButton(1))
+
+        if (isInBuildMode)
         {
-            StartCoroutine(nameof(DestroyBlockAndWait));
+            if (Input.GetMouseButton(0) && canBuild)
+            {
+                //BuildBlock(blockPrefab);
+                StartCoroutine(nameof(BuildBlockAndWait));
+            }
+            if (Input.GetMouseButton(1))
+            {
+                StartCoroutine(nameof(DestroyBlockAndWait));
+            }
+            HighlightBlock();
         }
-        HighlightBlock();
     }
 
     IEnumerator DestroyBlockAndWait()

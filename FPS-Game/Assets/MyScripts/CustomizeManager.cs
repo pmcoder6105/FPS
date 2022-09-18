@@ -10,6 +10,8 @@ public class CustomizeManager : MonoBehaviour
     public bool isBlackAndWhite = false;
     public int pillColorKey = 1;
 
+    public GameObject customizeBeanModel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,15 @@ public class CustomizeManager : MonoBehaviour
     {
         Debug.Log(PlayerPrefs.GetInt("PillColor"));
         Debug.Log(pillColorKey);
+
+        if (this.gameObject.activeInHierarchy == true)
+        {
+            customizeBeanModel.SetActive(true);
+        }
+        if (this.gameObject.activeInHierarchy == false)
+        {
+            customizeBeanModel.SetActive(false);
+        }
     }
 
     public void ChangeToRedAndYellow()
