@@ -5,7 +5,9 @@ using UnityEngine;
 public class ApplyColor : MonoBehaviour
 {
     public FlexibleColorPicker fcp;
-    public Material mat;
+    public Material matHealthy;
+    public Material matNormal;
+    public Material matHurt;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +19,18 @@ public class ApplyColor : MonoBehaviour
     void Update()
     {
         //mat.color = fcp.color;
-        mat.SetColor("_MaterialColor", fcp.color);
+        matHealthy.SetColor("_MaterialColor", fcp.color);
+        matNormal.SetColor("_MaterialColor", fcp.color);
+        matHurt.SetColor("_MaterialColor", fcp.color);
+
+
+
+        PlayerPrefs.SetString("HealthyColor", ColorUtility.ToHtmlStringRGB(matHealthy.GetColor("_MaterialColor")));
+
+        fcp.TypeHex(PlayerPrefs.GetString("HealthyColor"));
+
+        //fcp.color = ColorUtility.TryParseHtmlString(PlayerPrefs.GetString("HealthyColor"), out matHealthy.GetColor("_MaterialColor"));
+
+        ////fcp.color. = PlayerPrefs.GetString("HealthyColor");
     }
 }
