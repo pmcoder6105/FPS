@@ -9,6 +9,8 @@ public class ApplyColor : MonoBehaviour
     public Material matNormal;
     public Material matHurt;
 
+    public Material blockColor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,14 +25,10 @@ public class ApplyColor : MonoBehaviour
         matNormal.SetColor("_MaterialColor", fcp.color);
         matHurt.SetColor("_MaterialColor", fcp.color);
 
-
+        blockColor.color = fcp.color;
 
         PlayerPrefs.SetString("HealthyColor", ColorUtility.ToHtmlStringRGB(matHealthy.GetColor("_MaterialColor")));
 
         fcp.TypeHex(PlayerPrefs.GetString("HealthyColor"));
-
-        //fcp.color = ColorUtility.TryParseHtmlString(PlayerPrefs.GetString("HealthyColor"), out matHealthy.GetColor("_MaterialColor"));
-
-        ////fcp.color. = PlayerPrefs.GetString("HealthyColor");
     }
 }

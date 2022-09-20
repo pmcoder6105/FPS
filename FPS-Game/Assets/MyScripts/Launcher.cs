@@ -22,12 +22,10 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject nonClientWaitingText;
 
     [SerializeField] GameObject playerViewerParent;
-    [SerializeField] GameObject player1;
-    [SerializeField] GameObject player2;
-    [SerializeField] GameObject player3;
-    [SerializeField] GameObject player4;
-    [SerializeField] GameObject player5;
-    [SerializeField] GameObject player6;
+    [SerializeField] GameObject playerModelSkin;
+    //[SerializeField] GameObject applyColorGameObject;
+    public Material colorChosen;
+    ApplyColor colorSystem;
     [SerializeField] GameObject titleMenu;
 
 
@@ -40,6 +38,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connecting to Master");
         PhotonNetwork.ConnectUsingSettings();
+        //colorSystem = applyColorGameObject.GetComponent<ApplyColor>();
     }
 
     public override void OnConnectedToMaster()
@@ -59,82 +58,85 @@ public class Launcher : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if (PlayerPrefs.GetInt("PillColor") == 0)
-        {
-            PlayerPrefs.SetInt("PillColor", 1);
-        }
+        //if (PlayerPrefs.GetInt("PillColor") == 0)
+        //{
+        //    PlayerPrefs.SetInt("PillColor", 1);
+        //}
 
         if (titleMenu.activeInHierarchy == true)
         {
-            if (PlayerPrefs.GetInt("PillColor") == 1)
-            {
-                Debug.Log("player1");
-                player1.SetActive(true);
-                player2.SetActive(false);
-                player3.SetActive(false);
-                player4.SetActive(false);
-                player5.SetActive(false);
-                player6.SetActive(false);
-            }
-            if (PlayerPrefs.GetInt("PillColor") == 2)
-            {
-                Debug.Log("player2");
-                player1.SetActive(false);
-                player2.SetActive(true);
-                player3.SetActive(false);
-                player4.SetActive(false);
-                player5.SetActive(false);
-                player6.SetActive(false);
-            }
-            if (PlayerPrefs.GetInt("PillColor") == 3)
-            {
-                Debug.Log("player3");
-                player1.SetActive(false);
-                player2.SetActive(false);
-                player3.SetActive(true);
-                player4.SetActive(false);
-                player5.SetActive(false);
-                player6.SetActive(false);
-            }
-            if (PlayerPrefs.GetInt("PillColor") == 4)
-            {
-                Debug.Log("player4");
-                player1.SetActive(false);
-                player2.SetActive(false);
-                player3.SetActive(false);
-                player4.SetActive(true);
-                player5.SetActive(false);
-                player6.SetActive(false);
-            }
-            if (PlayerPrefs.GetInt("PillColor") == 5)
-            {
-                Debug.Log("player5");
-                player1.SetActive(false);
-                player2.SetActive(false);
-                player3.SetActive(false);
-                player4.SetActive(false);
-                player5.SetActive(true);
-                player6.SetActive(false);
-            }
-            if (PlayerPrefs.GetInt("PillColor") == 6)
-            {
-                Debug.Log("player6");
-                player1.SetActive(false);
-                player2.SetActive(false);
-                player3.SetActive(false);
-                player4.SetActive(false);
-                player5.SetActive(false);
-                player6.SetActive(true);
-            }
+            playerModelSkin.SetActive(true);
+            playerModelSkin.transform.GetChild(0).GetChild(0).transform.gameObject.GetComponent<MeshRenderer>().material = colorChosen;
+            playerModelSkin.transform.GetChild(0).GetChild(1).transform.gameObject.GetComponent<MeshRenderer>().material = colorChosen;
+            //if (PlayerPrefs.GetInt("PillColor") == 1)
+            //{
+            //    Debug.Log("player1");
+            //    player1.SetActive(true);
+            //    player2.SetActive(false);
+            //    player3.SetActive(false);
+            //    player4.SetActive(false);
+            //    player5.SetActive(false);
+            //    player6.SetActive(false);
+            //}
+            //if (PlayerPrefs.GetInt("PillColor") == 2)
+            //{
+            //    Debug.Log("player2");
+            //    player1.SetActive(false);
+            //    player2.SetActive(true);
+            //    player3.SetActive(false);
+            //    player4.SetActive(false);
+            //    player5.SetActive(false);
+            //    player6.SetActive(false);
+            //}
+            //if (PlayerPrefs.GetInt("PillColor") == 3)
+            //{
+            //    Debug.Log("player3");
+            //    player1.SetActive(false);
+            //    player2.SetActive(false);
+            //    player3.SetActive(true);
+            //    player4.SetActive(false);
+            //    player5.SetActive(false);
+            //    player6.SetActive(false);
+            //}
+            //if (PlayerPrefs.GetInt("PillColor") == 4)
+            //{
+            //    Debug.Log("player4");
+            //    player1.SetActive(false);
+            //    player2.SetActive(false);
+            //    player3.SetActive(false);
+            //    player4.SetActive(true);
+            //    player5.SetActive(false);
+            //    player6.SetActive(false);
+            //}
+            //if (PlayerPrefs.GetInt("PillColor") == 5)
+            //{
+            //    Debug.Log("player5");
+            //    player1.SetActive(false);
+            //    player2.SetActive(false);
+            //    player3.SetActive(false);
+            //    player4.SetActive(false);
+            //    player5.SetActive(true);
+            //    player6.SetActive(false);
+            //}
+            //if (PlayerPrefs.GetInt("PillColor") == 6)
+            //{
+            //    Debug.Log("player6");
+            //    player1.SetActive(false);
+            //    player2.SetActive(false);
+            //    player3.SetActive(false);
+            //    player4.SetActive(false);
+            //    player5.SetActive(false);
+            //    player6.SetActive(true);
+            //}
 
         } else
         {
-            player1.SetActive(false);
-            player2.SetActive(false);
-            player3.SetActive(false);
-            player4.SetActive(false);
-            player5.SetActive(false);
-            player6.SetActive(false);
+            playerModelSkin.SetActive(false);
+            //player2.SetActive(false);
+            //player3.SetActive(false);
+            //player4.SetActive(false);
+            //player5.SetActive(false);
+            //player6.SetActive(false);
         }
     }
 
