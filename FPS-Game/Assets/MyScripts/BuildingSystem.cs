@@ -40,7 +40,6 @@ public class BuildingSystem : MonoBehaviour
         {
             if (Input.GetMouseButton(0) && canBuild)
             {
-                //BuildBlock(blockPrefab);
                 StartCoroutine(nameof(BuildBlockAndWait));
             }
             if (Input.GetMouseButton(1))

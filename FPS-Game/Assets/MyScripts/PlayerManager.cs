@@ -47,37 +47,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     void CreateController()
-    {
-        //if (PlayerPrefs.GetInt("PillColor") == 1)
-        //{
-        //    Transform spawnpoint = SpawnManager.Instance.GetSpawnPoint();            
-        //    controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController1"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });            
-        //}
-        //if (PlayerPrefs.GetInt("PillColor") == 2)
-        //{
-        //    Transform spawnpoint = SpawnManager.Instance.GetSpawnPoint();
-        //    controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController2"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
-        //}
-        //if (PlayerPrefs.GetInt("PillColor") == 3)
-        //{
-        //    Transform spawnpoint = SpawnManager.Instance.GetSpawnPoint();
-        //    controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController3"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
-        //}
-        //if (PlayerPrefs.GetInt("PillColor") == 4)
-        //{
-        //    Transform spawnpoint = SpawnManager.Instance.GetSpawnPoint();
-        //    controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController4"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
-        //}
-        //if (PlayerPrefs.GetInt("PillColor") == 5)
-        //{
-        //    Transform spawnpoint = SpawnManager.Instance.GetSpawnPoint();
-        //    controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController5"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
-        //}
-        //if (PlayerPrefs.GetInt("PillColor") == 6)
-        //{
-        //    Transform spawnpoint = SpawnManager.Instance.GetSpawnPoint();
-        //    controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController6"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
-        //}
+    {        
         Transform spawnpoint = SpawnManager.Instance.GetSpawnPoint();
         controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
     }
@@ -97,13 +67,6 @@ public class PlayerManager : MonoBehaviour
     public void GetKill()
     {
         PV.RPC(nameof(RPC_GetKill), PV.Owner);
-
-        //if (PV.IsMine == false)
-        //    return;
-
-        //GameObject killTextGameObject = Instantiate(killTextNotification, controller.GetComponent<PlayerController>().killTextNotificationHolder.transform);
-        //killTextGameObject.GetComponent<TMP_Text>().text = "You got a kill!";
-        //Destroy(killTextGameObject, 3);
     }
 
 
