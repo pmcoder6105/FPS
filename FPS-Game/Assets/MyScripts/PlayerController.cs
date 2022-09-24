@@ -52,8 +52,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] GameObject itemHolder;
     [SerializeField] GameObject healthBar;
 
-    //EntityManager entity;
-
     [SerializeField] Camera cinemachineCam;
     [SerializeField] Camera normalCam;
     [SerializeField] CinemachineVirtualCamera virtualCam;
@@ -77,15 +75,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public GameObject[] canvas;
 
-    //public GameObject[] weapons;
-
     bool canRegen = false;
 
     [SerializeField] GameObject playerHitParticleEffect;
 
-    public Material matHealthy;
-    public Material matNormal;
-    public Material matHurt;
     public Shader glowShader;
 
     private void Awake()
@@ -278,18 +271,35 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             EquipItem((int)changedProps["itemIndex"]);
        }
 
-
        if (changedProps.ContainsKey("beanColor") && !PV.IsMine && targetPlayer == PV.Owner)
        {
             Material healthyMat = new Material(glowShader);
             if (ColorUtility.TryParseHtmlString("#" + changedProps["beanColor"], out Color healthyColor))
             {
                 healthyMat.SetColor("_MaterialColor", healthyColor);
-                healthyMat.SetColor("_FresnelColor", Color.green);
                 healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = healthyMat;
                 healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = healthyMat;
             }        
        }
+
+       if (changedProps.ContainsKey("healthColor") && !PV.IsMine && targetPlayer == PV.Owner)
+       {
+           if (playerHealth == 3)
+           {
+               healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.green);
+               healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.green);
+           }
+           if (playerHealth == 3)
+           {
+               healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.yellow);
+               healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.yellow);
+            }
+            if (playerHealth == 3)
+           {
+               healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.red);
+               healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.red);
+            }
+        }
     }
 
     public void SetGroundedState(bool _grounded)
@@ -392,11 +402,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (PV.IsMine)
         {
             Hashtable hash3 = new Hashtable();
-            hash3.Add("healthColor", PlayerPrefs.GetString("BeanPlayerColor"));
+            hash3.Add("healthColor", playerHealth);
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash3);
         }
-        SetHealthyNewMaterial();
-        SetNormalNewMaterial();
+        if (playerHealth == 3)
+            SetHealthyNewMaterial();
+        if (playerHealth == 2)
+            SetNormalNewMaterial();
+        if (playerHealth == 1)
+            SetHurtNewMaterial();
     }
 
     void SetHealthyNewMaterial()
@@ -420,6 +434,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Debug.Log("You should be applying new mat");
             normalMat.SetColor("_MaterialColor", normalColor);
             normalMat.SetColor("_FresnelColor", Color.yellow);
+            healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = normalMat;
+            healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = normalMat;
+        }
+    }
+    void SetHurtNewMaterial()
+    {
+        Material normalMat = new Material(glowShader);
+        if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("BeanPlayerColor"), out Color normalColor))
+        {
+            Debug.Log("You should be applying new mat");
+            normalMat.SetColor("_MaterialColor", normalColor);
+            normalMat.SetColor("_FresnelColor", Color.red);
             healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = normalMat;
             healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = normalMat;
         }
