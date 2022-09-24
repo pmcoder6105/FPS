@@ -30,7 +30,7 @@ public class ApplyColor : MonoBehaviour
 
         blockColor.color = fcp.color;
 
-        PlayerPrefs.SetString("HealthyColor", ColorUtility.ToHtmlStringRGB(matHealthy.GetColor("_MaterialColor")));
+        PlayerPrefs.SetString("BeanPlayerColor", ColorUtility.ToHtmlStringRGB(matHealthy.GetColor("_MaterialColor")));
         fcp.TypeHex(PlayerPrefs.GetString("HealthyColor"));
     }
 }

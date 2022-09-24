@@ -277,6 +277,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
        {
             EquipItem((int)changedProps["itemIndex"]);
        }
+
+
        if (changedProps.ContainsKey("beanColor") && !PV.IsMine && targetPlayer == PV.Owner)
        {
             Material healthyMat = new Material(glowShader);
@@ -381,9 +383,26 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             PV.RPC(nameof(RPC_SetPlayerHealthShader), RpcTarget.All, playerHealth);
         }
+        if (PV.IsMine)
+        {
+            Hashtable hash2 = new Hashtable();
+            hash2.Add("beanColor", PlayerPrefs.GetString("BeanPlayerColor"));
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash2);
+        }
+        if (PV.IsMine)
+        {
+            Hashtable hash3 = new Hashtable();
+            hash3.Add("healthColor", PlayerPrefs.GetString("BeanPlayerColor"));
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash3);
+        }
+        SetHealthyNewMaterial();
+        SetNormalNewMaterial();
+    }
 
+    void SetHealthyNewMaterial()
+    {
         Material healthyMat = new Material(glowShader);
-        if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("HealthyColor"), out Color healthyColor))
+        if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("BeanPlayerColor"), out Color healthyColor))
         {
             Debug.Log("You should be applying new mat");
             healthyMat.SetColor("_MaterialColor", healthyColor);
@@ -391,11 +410,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = healthyMat;
             healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = healthyMat;
         }
-        if (PV.IsMine)
+        
+    }
+    void SetNormalNewMaterial()
+    {
+        Material normalMat = new Material(glowShader);
+        if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("BeanPlayerColor"), out Color normalColor))
         {
-            Hashtable hash2 = new Hashtable();
-            hash2.Add("beanColor", PlayerPrefs.GetString("HealthyColor"));
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hash2);
+            Debug.Log("You should be applying new mat");
+            normalMat.SetColor("_MaterialColor", normalColor);
+            normalMat.SetColor("_FresnelColor", Color.yellow);
+            healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = normalMat;
+            healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = normalMat;
         }
     }
 
@@ -413,14 +439,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             healthy.SetActive(false);
             normal.SetActive(true);
             hurt.SetActive(false);
-            //normal.gameObject.transform.GetChild(0 & 1).gameObject.GetComponent<MeshRenderer>().material = matNormal;
         }
         if (_playerHealth == 1)
         {
             healthy.SetActive(false);
             normal.SetActive(false);
             hurt.SetActive(true);
-            //hurt.gameObject.transform.GetChild(0 & 1).gameObject.GetComponent<MeshRenderer>().material = matHurt;
         }
     }
 
