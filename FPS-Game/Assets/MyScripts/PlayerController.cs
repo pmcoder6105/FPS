@@ -69,8 +69,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] GameObject publicKillTextNotification;
     public GameObject publicKillTextNotificationHolder;
 
-    GameObject publicKillTextNotificationGameObject;
-
     [SerializeField] GameObject gunClippingCam;
 
     public bool canSwitchWeapons = true;
@@ -84,6 +82,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     bool canRegen = false;
 
     [SerializeField] GameObject playerHitParticleEffect;
+
+    public Material matHealthy;
+    public Material matNormal;
+    public Material matHurt;
+    public Shader glowShader;
 
     private void Awake()
     {
@@ -220,7 +223,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
     void Look()
     {
-        transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * mouseSensitivity);
+        transform.Rotate(Input.GetAxisRaw("Mouse X") * mouseSensitivity * Vector3.up);
 
         verticalLookRotation += Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
         verticalLookRotation = Mathf.Clamp(verticalLookRotation, -90f, 90f);
@@ -274,6 +277,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
        {
             EquipItem((int)changedProps["itemIndex"]);
        }
+       if (changedProps.ContainsKey("beanColor") && !PV.IsMine && targetPlayer == PV.Owner)
+       {
+            Material healthyMat = new Material(glowShader);
+            if (ColorUtility.TryParseHtmlString("#" + changedProps["beanColor"], out Color healthyColor))
+            {
+                healthyMat.SetColor("_MaterialColor", healthyColor);
+                healthyMat.SetColor("_FresnelColor", Color.green);
+                healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = healthyMat;
+                healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = healthyMat;
+            }        
+       }
     }
 
     public void SetGroundedState(bool _grounded)
@@ -322,10 +336,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Invoke(nameof(StartRegen), 5f);
         canRegen = false;
 
-        
-
-
-
         if (currentHealth <= 0)
         {
             if (isDead)
@@ -334,13 +344,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             PlayerManager.Find(info.Sender).GetKill();
 
             PV.RPC(nameof(RPC_PlayKillDingSFX), info.Sender);
-
-            //if (PV.IsMine)
-            //{
-            //    InstantiateKillText();
-            //    Debug.Log("Instantiate +1 kill now!");
-            //    publicKillTextNotificationGameObject.GetComponent<TMP_Text>().text = info.Sender.NickName.ToString() + " killed " + PV.Owner.NickName;
-            //}
 
             killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform);
             killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: " + info.Sender.NickName.ToString();
@@ -372,29 +375,28 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
     }
 
-    //void InstantiateKillText()
-    //{
-    //    PV.RPC(nameof(RPC_InstantiateKillText), RpcTarget.All);
-    //}
-    
-    //{PunRPC]
-    //void RPC_InstantiateKillText()
-    //{
-    //    if (!PV.IsMine)
-    //        return;
-    //    Debug.Log("Instantiate +1 kill now!");
-    //    publicKillTextNotificationGameObject = Instantiate(publicKillTextNotification, publicKillTextNotificationHolder.transform);       
-    //    Destroy(publicKillTextNotificationGameObject, 3);
-    //    //publicKillTextNotificationGameObject.GetComponent<TMP_Text>().text = info.Sender.NickName.ToString() + " killed " + PV.Owner.NickName;
-
-    //}
-
     public void SetPlayerHealthShader()
     {
         if (PV.IsMine)
         {
             PV.RPC(nameof(RPC_SetPlayerHealthShader), RpcTarget.All, playerHealth);
-        }        
+        }
+
+        Material healthyMat = new Material(glowShader);
+        if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("HealthyColor"), out Color healthyColor))
+        {
+            Debug.Log("You should be applying new mat");
+            healthyMat.SetColor("_MaterialColor", healthyColor);
+            healthyMat.SetColor("_FresnelColor", Color.green);
+            healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = healthyMat;
+            healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = healthyMat;
+        }
+        if (PV.IsMine)
+        {
+            Hashtable hash2 = new Hashtable();
+            hash2.Add("beanColor", PlayerPrefs.GetString("HealthyColor"));
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash2);
+        }
     }
 
     [PunRPC]
@@ -404,19 +406,21 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             healthy.SetActive(true);
             normal.SetActive(false);
-            hurt.SetActive(false);
+            hurt.SetActive(false);            
         }
         if (_playerHealth == 2)
         {
             healthy.SetActive(false);
             normal.SetActive(true);
             hurt.SetActive(false);
+            //normal.gameObject.transform.GetChild(0 & 1).gameObject.GetComponent<MeshRenderer>().material = matNormal;
         }
         if (_playerHealth == 1)
         {
             healthy.SetActive(false);
             normal.SetActive(false);
             hurt.SetActive(true);
+            //hurt.gameObject.transform.GetChild(0 & 1).gameObject.GetComponent<MeshRenderer>().material = matHurt;
         }
     }
 
@@ -435,14 +439,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         isDead = true;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
-
-        //comment out after testing to make info panel and personal death notification texts
-
-
-        //playerManager.Die();
-        
-
-        //comment out after testing to make info panel and personal death notification texts
     }
 
     void Respawn()

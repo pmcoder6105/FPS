@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class ApplyColor : MonoBehaviour
 {
+    public PhotonView PV;
+
     public FlexibleColorPicker fcp;
     public Material matHealthy;
     public Material matNormal;
@@ -11,16 +14,16 @@ public class ApplyColor : MonoBehaviour
 
     public Material blockColor;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject customizeMenuBeanModelGameObject;
+
+    public Shader glowShader;
 
     // Update is called once per frame
     void Update()
     {
-        //mat.color = fcp.color;
+        if (!PV.IsMine)
+            return;
+
         matHealthy.SetColor("_MaterialColor", fcp.color);
         matNormal.SetColor("_MaterialColor", fcp.color);
         matHurt.SetColor("_MaterialColor", fcp.color);
@@ -28,7 +31,6 @@ public class ApplyColor : MonoBehaviour
         blockColor.color = fcp.color;
 
         PlayerPrefs.SetString("HealthyColor", ColorUtility.ToHtmlStringRGB(matHealthy.GetColor("_MaterialColor")));
-
         fcp.TypeHex(PlayerPrefs.GetString("HealthyColor"));
     }
 }

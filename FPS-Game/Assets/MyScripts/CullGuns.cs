@@ -23,11 +23,6 @@ public class CullGuns : MonoBehaviour
         this.gameObject.GetComponent<Camera>().cullingMask = 7;
     }
 
-    private void OnPostRender()
-    {
-        
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -48,11 +43,5 @@ public class CullGuns : MonoBehaviour
         {
             trans.gameObject.layer = layerNumber;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

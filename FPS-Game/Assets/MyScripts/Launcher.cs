@@ -25,7 +25,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject playerModelSkin;
     //[SerializeField] GameObject applyColorGameObject;
     public Material colorChosen;
-    ApplyColor colorSystem;
     [SerializeField] GameObject titleMenu;
 
 

@@ -1422,8 +1422,9 @@ GameObject:
   - component: {fileID: 109604511}
   - component: {fileID: 109604513}
   - component: {fileID: 109604514}
+  - component: {fileID: 109604515}
   m_Layer: 0
-  m_Name: PlayerController1
+  m_Name: ApplyColorBeanModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1507,6 +1508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af89bc34e1e82b4e8dec59755060657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PV: {fileID: 109604515}
   fcp: {fileID: 867644778}
   matHealthy: {fileID: 2100000, guid: d0474e32081b0ee48ba0e742382ca5b7, type: 2}
   matNormal: {fileID: 2100000, guid: 40ba54bd8b9253c4396977c9a72f1d86, type: 2}
@@ -1532,6 +1534,28 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &109604515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109604508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 990
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &116027132
 GameObject:
   m_ObjectHideFlags: 0
