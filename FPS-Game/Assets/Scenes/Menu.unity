@@ -1514,6 +1514,8 @@ MonoBehaviour:
   matNormal: {fileID: 2100000, guid: 40ba54bd8b9253c4396977c9a72f1d86, type: 2}
   matHurt: {fileID: 2100000, guid: 14cb237d04ead3446911c47556c59b8b, type: 2}
   blockColor: {fileID: 2100000, guid: 625ed3f5f0a6f8042b2c12fd7f60f4b1, type: 2}
+  customizeMenuBeanModelGameObject: {fileID: 0}
+  glowShader: {fileID: 0}
 --- !u!95 &109604514
 Animator:
   serializedVersion: 4
@@ -16646,7 +16648,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PatchNotes v2.1
+  m_text: PatchNotes v2.2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
   m_sharedMaterial: {fileID: 7472722706876977885, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
@@ -17613,13 +17615,20 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '-Rebranded game entirely from PillBox to BeanBox
+  m_text: '-Added a new customization system where you
 
-    -Renamed all maps
-    to fit new game name
+    make your own bean color
+    instead of choosing
 
-    -Included a new cover image to compensate for name
-    change'
+    between 6 different skin options
+
+    -Changed the player
+    model to look more like a bean
+
+    -Used Hashtables to effectively sync player
+    change
+
+    across the network whenever you join a room'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
   m_sharedMaterial: {fileID: 7472722706876977885, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}

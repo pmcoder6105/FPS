@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] GameObject healthy;
     [SerializeField] GameObject normal;
     [SerializeField] GameObject hurt;
-    int playerHealth;
+    [HideInInspector] public int playerHealth;
 
     public GameObject redDeathParticleSystem;
 
@@ -134,14 +134,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         if (killTextNotificationGameObject == null && isDead && hasInstantiatedDeathPanel == false)
         {
-            Debug.Log("Time to spawn panel");
             GameObject deathPanelGameObject = Instantiate(deathPanel, ui.transform);
             if (deathPanelGameObject != null)
             {
                 hasInstantiatedDeathPanel = true;
             }
             deathPanelGameObject.transform.Find("Replay").GetComponent<Button>().onClick.AddListener(Respawn);
-            Debug.Log(deathPanelGameObject.transform.Find("Replay"));
             Cursor.lockState = CursorLockMode.None;
         }
 
@@ -168,6 +166,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (currentHealth <= 29 && currentHealth >= 0)
         {
             playerHealth = 1;
+        }
+        if (PV.IsMine)
+        {
+            Hashtable hash3 = new Hashtable();
+            hash3.Add("healthColor", playerHealth);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash3);
+
+            PV.RPC(nameof(SetGlowIntensitity), RpcTarget.All);
         }
 
         if (canSwitchWeapons)
@@ -214,6 +220,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Destroy(killTextNotificationGameObject, 5);            
         }
     }
+
+    [PunRPC]
+    void SetGlowIntensitity()
+    {
+        healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.SetFloat("_FresnelGlowIntensity", 3f);
+    }
+
     void Look()
     {
         transform.Rotate(Input.GetAxisRaw("Mouse X") * mouseSensitivity * Vector3.up);
@@ -284,22 +297,26 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
        if (changedProps.ContainsKey("healthColor") && !PV.IsMine && targetPlayer == PV.Owner)
        {
-           if (playerHealth == 3)
-           {
-               healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.green);
-               healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.green);
-           }
-           if (playerHealth == 3)
-           {
-               healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.yellow);
-               healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.yellow);
+            Debug.Log(playerHealth);
+            if ((int)changedProps["healthColor"] == 3)
+            {
+                healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.green);
+                healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.green);
+                Debug.Log("The health colour should change from green to GREEN");
             }
-            if (playerHealth == 3)
-           {
-               healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.red);
-               healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.red);
+            else if ((int)changedProps["healthColor"] == 2)
+            {
+                healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.yellow);
+                healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.yellow);
+                Debug.Log("The health colour should change from green to YELLOW");
             }
-        }
+            else if((int)changedProps["healthColor"] == 1)
+            {
+                healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.red);
+                healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.red);
+                Debug.Log("The health colour should change from green to RED");
+            }
+       }
     }
 
     public void SetGroundedState(bool _grounded)
@@ -335,6 +352,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Debug.Log("Play ding sfx symbolizing a kill");
         if (this.gameObject.GetComponent<AudioSource>().isPlaying == false)
         {
+            this.gameObject.GetComponent<AudioSource>().PlayOneShot(killSFX);
+        } else
+        {
+            this.gameObject.GetComponent<AudioSource>().Stop();
             this.gameObject.GetComponent<AudioSource>().PlayOneShot(killSFX);
         }
     }
@@ -398,17 +419,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Hashtable hash2 = new Hashtable();
             hash2.Add("beanColor", PlayerPrefs.GetString("BeanPlayerColor"));
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash2);
-        }
-        if (PV.IsMine)
-        {
-            Hashtable hash3 = new Hashtable();
-            hash3.Add("healthColor", playerHealth);
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hash3);
-        }
+        }        
         if (playerHealth == 3)
             SetHealthyNewMaterial();
+
         if (playerHealth == 2)
             SetNormalNewMaterial();
+
         if (playerHealth == 1)
             SetHurtNewMaterial();
     }
@@ -418,7 +435,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Material healthyMat = new Material(glowShader);
         if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("BeanPlayerColor"), out Color healthyColor))
         {
-            Debug.Log("You should be applying new mat");
             healthyMat.SetColor("_MaterialColor", healthyColor);
             healthyMat.SetColor("_FresnelColor", Color.green);
             healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = healthyMat;
@@ -431,7 +447,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Material normalMat = new Material(glowShader);
         if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("BeanPlayerColor"), out Color normalColor))
         {
-            Debug.Log("You should be applying new mat");
             normalMat.SetColor("_MaterialColor", normalColor);
             normalMat.SetColor("_FresnelColor", Color.yellow);
             healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = normalMat;
@@ -443,7 +458,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Material normalMat = new Material(glowShader);
         if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("BeanPlayerColor"), out Color normalColor))
         {
-            Debug.Log("You should be applying new mat");
             normalMat.SetColor("_MaterialColor", normalColor);
             normalMat.SetColor("_FresnelColor", Color.red);
             healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = normalMat;
@@ -457,20 +471,20 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (_playerHealth == 3)
         {
             healthy.SetActive(true);
-            normal.SetActive(false);
-            hurt.SetActive(false);            
+            //normal.SetActive(false);
+            //hurt.SetActive(false);            
         }
         if (_playerHealth == 2)
         {
-            healthy.SetActive(false);
-            normal.SetActive(true);
-            hurt.SetActive(false);
+            //healthy.SetActive(false);
+            //normal.SetActive(true);
+            //hurt.SetActive(false);
         }
         if (_playerHealth == 1)
         {
-            healthy.SetActive(false);
-            normal.SetActive(false);
-            hurt.SetActive(true);
+            //healthy.SetActive(false);
+            //normal.SetActive(false);
+            //hurt.SetActive(true);
         }
     }
 

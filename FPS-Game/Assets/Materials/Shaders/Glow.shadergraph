@@ -8,6 +8,9 @@
         },
         {
             "m_Id": "2854cf9d8ef64b4285b31d07af6c3037"
+        },
+        {
+            "m_Id": "9e40487ddac54ba9aeb8a51b2f294198"
         }
     ],
     "m_Keywords": [],
@@ -71,6 +74,9 @@
         },
         {
             "m_Id": "03b994738ee3412784d3f70f0016c4e9"
+        },
+        {
+            "m_Id": "bac234dd52f641edb3758aa5fbfe702c"
         }
     ],
     "m_GroupDatas": [],
@@ -158,6 +164,20 @@
                     "m_Id": "09cd5526564945dfb205601337c7f32b"
                 },
                 "m_SlotId": 1
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "bac234dd52f641edb3758aa5fbfe702c"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "93ded2c3dcd04bc48c393e314c86c3c6"
+                },
+                "m_SlotId": 2
             }
         },
         {
@@ -458,8 +478,8 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "r": 8.0,
-        "g": 0.0,
+        "r": 0.2547750174999237,
+        "g": 7.999999046325684,
         "b": 0.0,
         "a": 0.0
     },
@@ -750,6 +770,9 @@
         },
         {
             "m_Id": "2854cf9d8ef64b4285b31d07af6c3037"
+        },
+        {
+            "m_Id": "9e40487ddac54ba9aeb8a51b2f294198"
         }
     ]
 }
@@ -1416,6 +1439,33 @@
 }
 
 {
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "9e40487ddac54ba9aeb8a51b2f294198",
+    "m_Guid": {
+        "m_GuidSerialized": "335f7028-84ff-4eed-8288-0b83d5b428d6"
+    },
+    "m_Name": "FresnelGlowIntensitity",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "FresnelGlowIntensitity",
+    "m_DefaultReferenceName": "_FresnelGlowIntensitity",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 3.0,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
+}
+
+{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "9e4debf4c866446da5494b16ce1f99a6",
@@ -1602,6 +1652,41 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "bac234dd52f641edb3758aa5fbfe702c",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -1158.050048828125,
+            "y": 300.1500244140625,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "d21e2edf8bb141ffb89a1576dc73f75d"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "9e40487ddac54ba9aeb8a51b2f294198"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.NormalMaterialSlot",
     "m_ObjectId": "c302122134594ea2baf865d247a1e3b1",
     "m_Id": 0,
@@ -1642,6 +1727,21 @@
         "x": 0.0,
         "y": 0.0
     },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "d21e2edf8bb141ffb89a1576dc73f75d",
+    "m_Id": 0,
+    "m_DisplayName": "FresnelGlowIntensitity",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
     "m_Labels": []
 }
 
@@ -1771,7 +1871,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Power",
     "m_StageCapability": 3,
-    "m_Value": 7.0,
+    "m_Value": 3.0,
     "m_DefaultValue": 1.0,
     "m_Labels": []
 }

@@ -2717,6 +2717,7 @@ MonoBehaviour:
   healthy: {fileID: 4195023367634013940}
   normal: {fileID: 279106974722732171}
   hurt: {fileID: 8392609306517066180}
+  playerHealth: 0
   redDeathParticleSystem: {fileID: 1018666524451035006, guid: 3dfc555df8fef8b4988adb2c173f6177, type: 3}
   isDead: 0
   overheadUsernameText: {fileID: 7480224287480394087}
@@ -2743,9 +2744,6 @@ MonoBehaviour:
   - {fileID: 1906730112}
   - {fileID: 4852459695501899741}
   playerHitParticleEffect: {fileID: 8261393566248920396, guid: 3e455111b006e8a478d0b83034a50041, type: 3}
-  matHealthy: {fileID: 2100000, guid: d0474e32081b0ee48ba0e742382ca5b7, type: 2}
-  matNormal: {fileID: 2100000, guid: 40ba54bd8b9253c4396977c9a72f1d86, type: 2}
-  matHurt: {fileID: 2100000, guid: 14cb237d04ead3446911c47556c59b8b, type: 2}
   glowShader: {fileID: -6465566751694194690, guid: 6ad2dabf2acfce943a062f5e7878dd92, type: 3}
 --- !u!54 &2567718919365197072
 Rigidbody:
