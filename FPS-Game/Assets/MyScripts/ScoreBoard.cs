@@ -92,14 +92,20 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(0.01f);
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            StartCoroutine(DisconnectAndLoad());
         }
     }
 
-    //public void LeaveGame()
-    //{
-    //    Application.Quit();
-    //}
+    IEnumerator DisconnectAndLoad()
+    {
+        PhotonNetwork.Disconnect();
+        Destroy(RoomManager.Instance.gameObject);
+
+        while (PhotonNetwork.IsConnected)
+            yield return null;
+
+        SceneManager.LoadScene(0);
+    }
 
 
     public void StopLeaveGame()

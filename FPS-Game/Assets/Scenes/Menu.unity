@@ -5012,11 +5012,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5febb18ad17e98c429a7374909bb1cdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRedAndYellow: 0
-  isRedAndBlue: 0
-  isGreenAndBlue: 0
-  isBlackAndWhite: 0
-  pillColorKey: 1
   customizeBeanModel: {fileID: 109604508}
 --- !u!1 &388195022
 GameObject:
@@ -16648,7 +16643,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PatchNotes v2.2
+  m_text: PatchNotes v2.3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
   m_sharedMaterial: {fileID: 7472722706876977885, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
@@ -17615,18 +17610,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '-Added a new customization system where you
-
-    make your own bean color
-    instead of choosing
-
-    between 6 different skin options
-
-    -Changed the player
-    model to look more like a bean
-
-    -Used Hashtables to effectively sync player
-    color change across the network whenever you join a room'
+  m_text: "-Added actual room disconnection so you don't have \nto leave the game
+    to enter a new match"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
   m_sharedMaterial: {fileID: 7472722706876977885, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
