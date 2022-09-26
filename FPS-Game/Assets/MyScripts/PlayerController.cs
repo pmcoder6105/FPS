@@ -9,6 +9,7 @@ using TMPro;
 using Cinemachine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using System;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
@@ -81,6 +82,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public Shader glowShader;
 
+    bool isMicOn = true;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -91,7 +94,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
     private void Start()
     {
-
         if (PV.IsMine)
         {
             EquipItem(0);
@@ -141,6 +143,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             deathPanelGameObject.transform.Find("Replay").GetComponent<Button>().onClick.AddListener(Respawn);
             Cursor.lockState = CursorLockMode.None;
         }
+
 
         if (isDead == true)
             return;
