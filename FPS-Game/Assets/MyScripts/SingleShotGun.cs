@@ -94,6 +94,7 @@ public class SingleShotGun : Gun
     public GameObject otherGunScopeReference;
 
     BuildingSystem buildingSystem;
+
     private void Start()
     {
         _currentAmmoInClip = clipSize;
@@ -171,6 +172,7 @@ public class SingleShotGun : Gun
                 _canShoot = false;
                 playerController.canSwitchWeapons = false;
                 _currentAmmoInClip--;
+
                 StartCoroutine(ShootGun());
                 Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
                 ray.origin = cam.transform.position;
@@ -236,7 +238,6 @@ public class SingleShotGun : Gun
                 PV.RPC(nameof(PlayShootSFX), RpcTarget.All);
                 _canShoot = false;
                 playerController.canSwitchWeapons = false;
-                
                 StartCoroutine(ShootGun());
                 if (isShotGun == false && isDagger == false)
                 {
@@ -546,6 +547,7 @@ public class SingleShotGun : Gun
             canDaggerSwing = false;
         }
         DetermineRecoil();
+        
         yield return new WaitForSeconds(fireRate);
         _canShoot = true;
         canDaggerSwing = true;
