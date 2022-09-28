@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Photon.Realtime;
 
-public class BuildingSystem : MonoBehaviour
+public class BuildingSystem : MonoBehaviourPunCallbacks
 {
     public Transform blockShootingPoint;
     public GameObject blockPrefab;
 
 
-    public Material normalColour;
+    //public Material normalColour;
     public Material highlightedColour;
 
     GameObject lastHighlightedBlock;
@@ -17,13 +19,33 @@ public class BuildingSystem : MonoBehaviour
     bool canBuild = true;
     bool canDestroy = true;
 
-    public bool isInBuildMode = false;
+    [HideInInspector] public bool isInBuildMode = false;
 
     PhotonView PV;
+
+    public Material lit;
+
+    float elapsedTime;
+    float desiredDuration = 10;
+
+    public Texture proBuilderTexture;
+
+    GameObject blockInstantiated;
+
+    int blockID;
+
+    public AudioClip placeBlock;
+
+    public AudioClip destroyBlock;
 
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
+    }
+
+    private void Start()
+    {
+
     }
 
     void Update()
@@ -38,15 +60,21 @@ public class BuildingSystem : MonoBehaviour
 
         if (isInBuildMode)
         {
-            if (Input.GetMouseButton(0) && canBuild)
+            if (PV.IsMine)
             {
-                StartCoroutine(nameof(BuildBlockAndWait));
+                if (Input.GetMouseButton(0) && canBuild)
+                {
+                    StartCoroutine(nameof(BuildBlockAndWait));
+                }
+                if (Input.GetMouseButton(1))
+                {
+                    StartCoroutine(nameof(DestroyBlockAndWait));
+                }
+                
             }
-            if (Input.GetMouseButton(1))
-            {
-                StartCoroutine(nameof(DestroyBlockAndWait));
-            }
-            HighlightBlock();
+                
+            
+            //HighlightBlock();
         }
     }
 
@@ -54,49 +82,94 @@ public class BuildingSystem : MonoBehaviour
     {
         DestroyBlock();
         canDestroy = false;
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         canDestroy = true;
     }
 
     IEnumerator BuildBlockAndWait()
     {
-        BuildBlock(blockPrefab);
+        BuildBlock();
         canBuild = false;
         yield return new WaitForSeconds(0.1f);
         canBuild = true;
-    }
+    }    
 
 
-    void BuildBlock(GameObject block)
+    void BuildBlock()
     {
         if (Physics.Raycast(blockShootingPoint.position, blockShootingPoint.forward, out RaycastHit hitInfo, 10)) 
         {
             if (hitInfo.transform.tag == "BuildingBlock")
             {
-                Vector3 spawnPosition = new Vector3(Mathf.RoundToInt(hitInfo.point.x + hitInfo.normal.x/2), Mathf.RoundToInt(hitInfo.point.y + hitInfo.normal.y/2), Mathf.RoundToInt(hitInfo.point.z + hitInfo.normal.z/2));
-                Instantiate(block, spawnPosition, Quaternion.identity);
+                Vector3 spawnPosition = new Vector3(Mathf.RoundToInt(hitInfo.point.x + hitInfo.normal.x/2), Mathf.RoundToInt(hitInfo.point.y + hitInfo.normal.y/2), Mathf.RoundToInt(hitInfo.point.z + hitInfo.normal.z/2));                
+                blockInstantiated = PhotonNetwork.Instantiate("BuildingBlockPrefab", spawnPosition, Quaternion.identity);
+                PV.RPC(nameof(DisplayBlockConstruction), RpcTarget.All, blockInstantiated.GetComponent<PhotonView>().ViewID);
             }
             else //if is the ground
             {
                 Vector3 spawnPosition = new Vector3(Mathf.RoundToInt(hitInfo.point.x), Mathf.RoundToInt(hitInfo.point.y) + 0.001f, Mathf.RoundToInt(hitInfo.point.z));
-                Instantiate(block, spawnPosition, Quaternion.identity);
+                blockInstantiated = PhotonNetwork.Instantiate("BuildingBlockPrefab", spawnPosition, Quaternion.identity);
+                PV.RPC(nameof(DisplayBlockConstruction), RpcTarget.All, blockInstantiated.GetComponent<PhotonView>().ViewID);
             }
         }
+        
     }
 
     void DestroyBlock()
     {
-        if (Physics.Raycast(blockShootingPoint.position, blockShootingPoint.forward, out RaycastHit hitInfo, 10))
+        if (Physics.Raycast(blockShootingPoint.position, blockShootingPoint.forward, out RaycastHit hitInfo, 10) && canDestroy)
         {
             if (hitInfo.transform.tag == "BuildingBlock")
             {
-                Destroy(hitInfo.transform.gameObject);
+                PV.RPC(nameof(DisplayBlockDestruction), RpcTarget.All, hitInfo.transform.gameObject.GetComponent<PhotonView>().ViewID);
             }            
         }
     }
 
-    void HighlightBlock()
+
+    [PunRPC]
+    void DisplayBlockConstruction(int _blockInstantiatedViewID)
     {
+
+        Material blockMaterial = new Material(lit);
+        if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("BeanPlayerColor"), out Color beanColor))
+        {
+            blockMaterial.color = beanColor;
+        }
+        blockMaterial.mainTexture = proBuilderTexture;
+        PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
+        PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<AudioSource>().PlayOneShot(placeBlock);
+        blockID = _blockInstantiatedViewID;
+
+        if (PV.IsMine)
+        {
+            Hashtable hash = new();
+            hash.Add("blockColour", PlayerPrefs.GetString("BeanPlayerColor"));
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+        }        
+    }
+    [PunRPC]
+    void DisplayBlockDestruction(int hitID)
+    {
+        Destroy(PhotonView.Find(hitID).gameObject);
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        if (changedProps.ContainsKey("blockColour") && !PV.IsMine && targetPlayer == PV.Owner)
+        {
+            Material blockMaterial = new Material(lit);
+            if (ColorUtility.TryParseHtmlString("#" + changedProps["blockColour"], out Color beanColor))
+            {
+                blockMaterial.color = beanColor;
+            }
+            blockMaterial.mainTexture = proBuilderTexture;
+            PhotonView.Find(blockID).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
+        }
+    }
+
+        void HighlightBlock()
+        {
         if (Physics.Raycast(blockShootingPoint.position, blockShootingPoint.forward, out RaycastHit hitInfo, 10))
         {
             if (hitInfo.transform.tag == "BuildingBlock")
@@ -108,7 +181,8 @@ public class BuildingSystem : MonoBehaviour
                 }
                 else if (lastHighlightedBlock != hitInfo.transform.gameObject)
                 {
-                    lastHighlightedBlock.GetComponent<MeshRenderer>().material = normalColour;
+                    Material blockColour = new Material(lit);
+                    lastHighlightedBlock.GetComponent<MeshRenderer>().material = blockColour;
                     hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = highlightedColour;
 
                     lastHighlightedBlock = hitInfo.transform.gameObject;

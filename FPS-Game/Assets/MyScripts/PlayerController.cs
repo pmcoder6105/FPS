@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public Shader glowShader;
 
-    bool isMicOn = true;
+    bool micIsOn = true;
 
     private void Awake()
     {
@@ -142,6 +142,22 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             }
             deathPanelGameObject.transform.Find("Replay").GetComponent<Button>().onClick.AddListener(Respawn);
             Cursor.lockState = CursorLockMode.None;
+        }
+
+        string _deviceName = Microphone.devices[0];
+
+        if (Input.GetKeyDown(KeyCode.M)) 
+        {
+            micIsOn = !micIsOn;
+            if (micIsOn)
+            {
+                Microphone.End(_deviceName);
+            }
+
+            else
+            {
+                Microphone.Start(_deviceName, true, 10, AudioSettings.outputSampleRate);
+            }
         }
 
 
