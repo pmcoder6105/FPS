@@ -152,6 +152,8 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
     void DisplayBlockDestruction(int hitID)
     {
         Destroy(PhotonView.Find(hitID).gameObject);
+        this.gameObject.GetComponent<AudioSource>().Stop();
+        this.gameObject.GetComponent<AudioSource>().PlayOneShot(destroyBlock);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
