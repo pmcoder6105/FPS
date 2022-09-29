@@ -38,14 +38,13 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
     public AudioClip destroyBlock;
 
+    public GameObject blockDestructionVFX;
+
+    public bool isDead = false;
+
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
-    }
-
-    private void Start()
-    {
-
     }
 
     void Update()
@@ -72,9 +71,6 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
                 }
                 
             }
-                
-            
-            //HighlightBlock();
         }
     }
 
@@ -139,6 +135,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
         blockMaterial.mainTexture = proBuilderTexture;
         PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
         PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<AudioSource>().PlayOneShot(placeBlock);
+        PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<Animator>().SetBool("isActive", true);
         blockID = _blockInstantiatedViewID;
 
         if (PV.IsMine)
@@ -146,7 +143,9 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
             Hashtable hash = new();
             hash.Add("blockColour", PlayerPrefs.GetString("BeanPlayerColor"));
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-        }        
+        }
+
+        StartCoroutine(nameof(AutoDestructCountdownTimer), _blockInstantiatedViewID);
     }
     [PunRPC]
     void DisplayBlockDestruction(int hitID)
@@ -154,6 +153,27 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
         Destroy(PhotonView.Find(hitID).gameObject);
         this.gameObject.GetComponent<AudioSource>().Stop();
         this.gameObject.GetComponent<AudioSource>().PlayOneShot(destroyBlock);
+
+        StartCoroutine(nameof(DisplayDestroyVFX), hitID);
+    }
+
+    IEnumerator DisplayDestroyVFX(int _hitID)
+    {
+        GameObject destroyVFX = Instantiate(blockDestructionVFX, PhotonView.Find(_hitID).gameObject.transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(2);
+        Destroy(destroyVFX);
+    }
+
+    IEnumerator AutoDestructCountdownTimer(int __blockInstantiatedViewID)
+    {
+        yield return new WaitForSeconds(4);
+        isDead = true;
+        if (PhotonView.Find(__blockInstantiatedViewID).gameObject.activeInHierarchy == true)
+        {
+            Destroy(PhotonView.Find(__blockInstantiatedViewID).gameObject);
+        }        
+
+        StartCoroutine(nameof(DisplayDestroyVFX), __blockInstantiatedViewID);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
