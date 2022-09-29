@@ -84,6 +84,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     bool micIsOn = true;
 
+    GameObject micToggleText;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -123,6 +125,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             return;
 
         scoreBoard = GameObject.Find("ScoreBoard");
+        micToggleText = GameObject.Find("MicToggleText");
 
         if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked && hasInstantiatedDeathPanel == false)
         {
@@ -151,14 +154,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             micIsOn = !micIsOn;
             if (micIsOn)
             {
-                Microphone.End(_deviceName);
+                Microphone.End(_deviceName);                
             }
-
             else
-            {
+            {                
                 Microphone.Start(_deviceName, true, 10, AudioSettings.outputSampleRate);
             }
         }
+        if (micIsOn) micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic on";
+        if (micIsOn == false) micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic off";
 
 
         if (isDead == true)

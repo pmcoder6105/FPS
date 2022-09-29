@@ -44,6 +44,10 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
     public GameObject blockCrosshair;
 
+    public GameObject handHeldBlock;
+
+    public GameObject blockIndictorUIImage;
+
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -72,9 +76,17 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
                     StartCoroutine(nameof(DestroyBlockAndWait));
                 }
                 blockCrosshair.GetComponent<SpriteRenderer>().enabled = true;
+                handHeldBlock.SetActive(true);
+                PV.RPC(nameof(DisplayHandHeldBlockColour), RpcTarget.All);
+                blockIndictorUIImage.SetActive(true);
             }
         }
-        else blockCrosshair.GetComponent<SpriteRenderer>().enabled = false;
+        else
+        {
+            blockCrosshair.GetComponent<SpriteRenderer>().enabled = false;
+            handHeldBlock.SetActive(false);
+            blockIndictorUIImage.SetActive(false);
+        }              
     }
 
     IEnumerator DestroyBlockAndWait()
@@ -150,6 +162,29 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
         StartCoroutine(nameof(AutoDestructCountdownTimer), _blockInstantiatedViewID);
     }
+
+
+    [PunRPC]
+    void DisplayHandHeldBlockColour()
+    {
+
+        Material blockMaterial = new Material(lit);
+        if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("BeanPlayerColor"), out Color beanColor))
+        {
+            blockMaterial.color = beanColor;
+        }
+        blockMaterial.mainTexture = proBuilderTexture;
+        handHeldBlock.gameObject.GetComponent<MeshRenderer>().material = blockMaterial;      
+
+        if (PV.IsMine)
+        {
+            Hashtable hash = new();
+            hash.Add("handHeldBlockColour", PlayerPrefs.GetString("BeanPlayerColor"));
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+        }
+    }
+
+
     [PunRPC]
     void DisplayBlockDestruction(int hitID)
     {
@@ -190,6 +225,18 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
             }
             blockMaterial.mainTexture = proBuilderTexture;
             PhotonView.Find(blockID).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
+        }
+
+        if (changedProps.ContainsKey("handHeldBlockColour") && !PV.IsMine && targetPlayer == PV.Owner)
+        {
+            Material blockMaterial = new Material(lit);
+            if (ColorUtility.TryParseHtmlString("#" + changedProps["blockColour"], out Color beanColor))
+            {
+                blockMaterial.color = beanColor;
+            }
+            blockMaterial.mainTexture = proBuilderTexture;
+            handHeldBlock.gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
+            handHeldBlock.gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
         }
     }
 
