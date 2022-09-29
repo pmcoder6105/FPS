@@ -42,6 +42,8 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
     public bool isDead = false;
 
+    public GameObject blockCrosshair;
+
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -69,9 +71,10 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
                 {
                     StartCoroutine(nameof(DestroyBlockAndWait));
                 }
-                
+                blockCrosshair.GetComponent<SpriteRenderer>().enabled = true;
             }
         }
+        else blockCrosshair.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     IEnumerator DestroyBlockAndWait()
