@@ -72,11 +72,15 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
             holdTabForScoreBoardText.color = new Color(holdTabForScoreBoardText.color.r, holdTabForScoreBoardText.color.g, holdTabForScoreBoardText.color.b, 1);
         }
         
+        
+    }
+
+    public void OpenLeaveConfirmation()
+    {
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             areYouSureYouWantToLeaveConfirmation.alpha = 1;
-            //Application.Quit();
-            //Debug.Log("Leave Room");
             Cursor.lockState = CursorLockMode.None;
             isOpen = true;
         }
@@ -106,19 +110,4 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
 
         SceneManager.LoadScene(0);
     }
-
-
-    public void StopLeaveGame()
-    {
-        Application.CancelQuit();
-    }
-    //public void StopLeaveGame()
-    //{
-    //    Application.wantsToQuit += WantsToQuit;
-    //}
-    //static bool WantsToQuit()
-    //{
-    //    Debug.Log("Player prevented from quitting.");
-    //    return false;
-    //}
 }

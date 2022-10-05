@@ -54,6 +54,9 @@ public class PlayerManager : MonoBehaviour
 
     public void Die()
     {
+        if (!PV.IsMine)
+            return;
+
         PhotonNetwork.Destroy(controller);
         CreateController();
 

@@ -563,6 +563,9 @@ public class SingleShotGun : Gun
     [PunRPC]
     void RPC_Shoot(Vector3 hitPosition, Vector3 hitNormal)
     {
+        if (!PhotonNetwork.InRoom)
+            return;
+
         Collider[] colliders = Physics.OverlapSphere(hitPosition, 0.3f);
         if (colliders.Length != 0)
         {

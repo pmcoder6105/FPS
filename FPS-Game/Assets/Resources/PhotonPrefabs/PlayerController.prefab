@@ -2718,6 +2718,7 @@ MonoBehaviour:
   - {fileID: 4277642062194922114}
   - {fileID: 2471543789871672640}
   - {fileID: 4593207813660433441}
+  PV: {fileID: 0}
   currentHealth: 100
   healthy: {fileID: 4195023367634013940}
   normal: {fileID: 279106974722732171}
@@ -2750,6 +2751,7 @@ MonoBehaviour:
   - {fileID: 4852459695501899741}
   playerHitParticleEffect: {fileID: 8261393566248920396, guid: 3e455111b006e8a478d0b83034a50041, type: 3}
   glowShader: {fileID: -6465566751694194690, guid: 6ad2dabf2acfce943a062f5e7878dd92, type: 3}
+  buildingSystem: {fileID: 2918023864005975165}
 --- !u!54 &2567718919365197072
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2894,6 +2896,7 @@ MonoBehaviour:
   blockPrefab: {fileID: 2595410697727815476, guid: 817995a0b12724c47bbd982608bb2680, type: 3}
   highlightedColour: {fileID: 2100000, guid: 8d11a740eb98a0d44895f38af3a4d464, type: 2}
   isInBuildMode: 0
+  PV: {fileID: 2511184437448133920}
   lit: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   proBuilderTexture: {fileID: 2800000, guid: 6344bf96fbda94141a525046d088fb23, type: 3}
   placeBlock: {fileID: 8300000, guid: 38cdaaa9a39d8bd4abbefdd20b30cef0, type: 3}
@@ -2903,6 +2906,7 @@ MonoBehaviour:
   blockCrosshair: {fileID: 5705690230848472547}
   handHeldBlock: {fileID: 4085674627049060603}
   blockIndictorUIImage: {fileID: 5340953337472002079}
+  controller: {fileID: 3069946463937519793}
 --- !u!1 &2742421990493099115
 GameObject:
   m_ObjectHideFlags: 0
@@ -4332,7 +4336,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: G
+  m_text: B
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
   m_sharedMaterial: {fileID: 7472722706876977885, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
@@ -7566,7 +7570,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2483830318150601257, guid: 817995a0b12724c47bbd982608bb2680, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2483830318150601257, guid: 817995a0b12724c47bbd982608bb2680, type: 3}
       propertyPath: m_SynchronizeParameters.Array.size

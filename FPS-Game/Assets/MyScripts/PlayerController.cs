@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     Rigidbody rb;
 
-    PhotonView PV;
+    public PhotonView PV;
 
     const float maxHealth = 100f;
     public float currentHealth = maxHealth;
@@ -86,10 +86,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     GameObject micToggleText;
 
+    public BuildingSystem buildingSystem;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         PV = GetComponent<PhotonView>();
+        //buildingSystem = GetComponent<BuildingSystem>();
 
         playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
         Cursor.lockState = CursorLockMode.Locked;
@@ -106,6 +109,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Destroy(rb);
             Destroy(ui);
+            Destroy(buildingSystem.handHeldBlock);
             for (int i = 0; i < canvas.Count(); i++)
             {
                 Destroy(canvas[i]);
@@ -121,6 +125,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void Update()
     {
+
+
         if (!PV.IsMine)
             return;
 
@@ -164,6 +170,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (micIsOn) micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic on";
         if (micIsOn == false) micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic off";
 
+        if (PV.IsMine && PV != null)
+            scoreBoard.GetComponent<ScoreBoard>().OpenLeaveConfirmation();
+
+
 
         if (isDead == true)
             return;
@@ -191,9 +201,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
         if (PV.IsMine)
         {
-            Hashtable hash3 = new Hashtable();
-            hash3.Add("healthColor", playerHealth);
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hash3);
+            Hashtable hash = new Hashtable();
+            hash.Add("healthColor", playerHealth);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 
             PV.RPC(nameof(SetGlowIntensitity), RpcTarget.All);
         }
@@ -234,7 +244,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         items[itemIndex].Use();
 
-        if (transform.position.y < -10f)
+        if (transform.position.y < -10f && PV.IsMine)
         {
             Die();
             killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform);
@@ -394,10 +404,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         if (currentHealth <= 0)
         {
-            if (isDead)
+            if (isDead || !PV.IsMine)
                 return;
 
             PlayerManager.Find(info.Sender).GetKill();
+
+            Debug.Log(info.Sender.NickName);
 
             PV.RPC(nameof(RPC_PlayKillDingSFX), info.Sender);
 
@@ -433,24 +445,22 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public void SetPlayerHealthShader()
     {
+
         if (PV.IsMine)
         {
-            PV.RPC(nameof(RPC_SetPlayerHealthShader), RpcTarget.All, playerHealth);
-        }
-        if (PV.IsMine)
-        {
-            Hashtable hash2 = new Hashtable();
-            hash2.Add("beanColor", PlayerPrefs.GetString("BeanPlayerColor"));
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hash2);
+            Hashtable hash = new Hashtable();
+            hash.Add("beanColor", PlayerPrefs.GetString("BeanPlayerColor"));
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+            if (playerHealth == 3)
+                SetHealthyNewMaterial();
+
+            if (playerHealth == 2)
+                SetNormalNewMaterial();
+
+            if (playerHealth == 1)
+                SetHurtNewMaterial();
         }        
-        if (playerHealth == 3)
-            SetHealthyNewMaterial();
-
-        if (playerHealth == 2)
-            SetNormalNewMaterial();
-
-        if (playerHealth == 1)
-            SetHurtNewMaterial();
+        
     }
 
     void SetHealthyNewMaterial()
@@ -478,36 +488,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
     void SetHurtNewMaterial()
     {
-        Material normalMat = new Material(glowShader);
-        if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("BeanPlayerColor"), out Color normalColor))
+        Material hurtMat = new Material(glowShader);
+        if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("BeanPlayerColor"), out Color hurtColor))
         {
-            normalMat.SetColor("_MaterialColor", normalColor);
-            normalMat.SetColor("_FresnelColor", Color.red);
-            healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = normalMat;
-            healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = normalMat;
-        }
-    }
-
-    [PunRPC]
-    void RPC_SetPlayerHealthShader(int _playerHealth)
-    {
-        if (_playerHealth == 3)
-        {
-            healthy.SetActive(true);
-            //normal.SetActive(false);
-            //hurt.SetActive(false);            
-        }
-        if (_playerHealth == 2)
-        {
-            //healthy.SetActive(false);
-            //normal.SetActive(true);
-            //hurt.SetActive(false);
-        }
-        if (_playerHealth == 1)
-        {
-            //healthy.SetActive(false);
-            //normal.SetActive(false);
-            //hurt.SetActive(true);
+            hurtMat.SetColor("_MaterialColor", hurtColor);
+            hurtMat.SetColor("_FresnelColor", Color.red);
+            healthy.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = hurtMat;
+            healthy.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = hurtMat;
         }
     }
 
@@ -544,8 +531,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Destroy(particleSystem, 5f);
 
         Destroy(healthy);
-        Destroy(normal);
-        Destroy(hurt);
         Destroy(itemHolder);
         Destroy(overheadUsernameText);
         Destroy(healthBar);

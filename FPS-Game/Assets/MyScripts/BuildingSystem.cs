@@ -21,7 +21,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
     [HideInInspector] public bool isInBuildMode = false;
 
-    PhotonView PV;
+    public PhotonView PV;
 
     public Material lit;
 
@@ -48,22 +48,25 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
     public GameObject blockIndictorUIImage;
 
-    private void Awake()
-    {
-        PV = GetComponent<PhotonView>();
-    }
+    public PlayerController controller;
 
     void Update()
     {
-        if (!PV.IsMine)
+        if (!PV.IsMine && controller.isDead == true)
             return;
+
+        if (controller.isDead)
+        {
+            //Destroy(handHeldBlock.GetComponent<PhotonView>());
+            Destroy(handHeldBlock);
+        }
 
         if (Input.GetKeyDown(KeyCode.B))
         {
             isInBuildMode = !isInBuildMode;
         }
 
-        if (isInBuildMode)
+        if (isInBuildMode && controller.isDead == false)
         {
             if (PV.IsMine)
             {
@@ -81,7 +84,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
                 blockIndictorUIImage.SetActive(true);
             }
         }
-        else
+        else if (isInBuildMode == false && controller.isDead == false)
         {
             blockCrosshair.GetComponent<SpriteRenderer>().enabled = false;
             handHeldBlock.SetActive(false);
