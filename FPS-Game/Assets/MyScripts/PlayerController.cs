@@ -125,10 +125,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void Update()
     {
-
+        if (PhotonNetwork.IsConnectedAndReady == false)
+            return;
 
         if (!PV.IsMine)
             return;
+        
 
         scoreBoard = GameObject.Find("ScoreBoard");
         micToggleText = GameObject.Find("MicToggleText");
@@ -199,9 +201,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             playerHealth = 1;
         }
-        if (PV.IsMine)
+        if (PV.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
             Hashtable hash = new Hashtable();
+            if (hash.ContainsKey("healthColor"))
+            {
+                hash.Remove("healthColor");
+            }
             hash.Add("healthColor", playerHealth);
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 
@@ -305,6 +311,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (PV.IsMine)
         {
             Hashtable hash = new Hashtable();
+            if (hash.ContainsKey("itemIndex"))
+            {
+                hash.Remove("itemIndex");
+            }
             hash.Add("itemIndex", itemIndex);
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
         }
@@ -449,6 +459,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (PV.IsMine)
         {
             Hashtable hash = new Hashtable();
+            if (hash.ContainsKey("beanColor"))
+            {
+                hash.Remove("beanColor");
+            }
             hash.Add("beanColor", PlayerPrefs.GetString("BeanPlayerColor"));
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
             if (playerHealth == 3)
