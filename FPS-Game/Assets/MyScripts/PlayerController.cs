@@ -88,6 +88,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public BuildingSystem buildingSystem;
 
+    GameObject roomViewerCamera;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -134,6 +136,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         scoreBoard = GameObject.Find("ScoreBoard");
         micToggleText = GameObject.Find("MicToggleText");
+        roomViewerCamera = GameObject.Find("RoomViewerCamera");
 
         if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked && hasInstantiatedDeathPanel == false)
         {
@@ -175,6 +178,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (PV.IsMine && PV != null)
             scoreBoard.GetComponent<ScoreBoard>().OpenLeaveConfirmation();
 
+        if (scoreBoard.GetComponent<ScoreBoard>().areYouSureYouWantToLeaveConfirmation.alpha == 1)
+        {
+            StartCoroutine(nameof(Leave));
+        }
 
 
         if (isDead == true)
@@ -290,6 +297,38 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             rb.AddForce(transform.up * jumpForce);            
         }
         
+    }
+
+    IEnumerator Leave()
+    {
+        if (PV.IsMine && PV.isActiveAndEnabled)
+        {
+            yield return new WaitForSeconds(0.01f);
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                StartCoroutine(DisconnectAndLoad());
+                //DisconnectAndLoad();
+            }
+
+        }
+    }
+
+    IEnumerator DisconnectAndLoad()
+    {
+        if (PhotonNetwork.IsConnectedAndReady)
+        {
+            PhotonNetwork.LeaveRoom();
+            Destroy(RoomManager.Instance.gameObject);
+
+            normalCam.gameObject.SetActive(false);
+            gunClippingCam.gameObject.SetActive(false);
+            roomViewerCamera.SetActive(true);
+
+            while (PhotonNetwork.InRoom)
+                yield return null;
+
+            SceneManager.LoadScene(0);
+        }
     }
 
     void EquipItem(int _index)

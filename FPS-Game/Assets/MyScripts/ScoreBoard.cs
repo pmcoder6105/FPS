@@ -83,31 +83,8 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
             areYouSureYouWantToLeaveConfirmation.alpha = 1;
             Cursor.lockState = CursorLockMode.None;
             isOpen = true;
-        }
-
-        if (areYouSureYouWantToLeaveConfirmation.alpha == 1)
-        {
-            StartCoroutine(nameof(Leave));
-        }
+        }        
     }
 
-    IEnumerator Leave()
-    {
-        yield return new WaitForSeconds(0.01f);
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            StartCoroutine(DisconnectAndLoad());
-        }
-    }
-
-    IEnumerator DisconnectAndLoad()
-    {
-        PhotonNetwork.Disconnect();
-        Destroy(RoomManager.Instance.gameObject);
-
-        while (PhotonNetwork.IsConnected)
-            yield return null;
-
-        SceneManager.LoadScene(0);
-    }
+    
 }
