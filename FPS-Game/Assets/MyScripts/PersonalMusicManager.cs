@@ -5,16 +5,16 @@ using Photon.Pun;
 
 public class PersonalMusicManager : MonoBehaviour
 {
-
-    [SerializeField] AudioClip musicChoice1;
+    [SerializeField] AudioClip musicChoice;
 
     AudioSource audioSource;
 
-    public PhotonView PV;
+    PhotonView PV;
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        PV = GetComponentInParent<PhotonView>();
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class PersonalMusicManager : MonoBehaviour
 
         if (!audioSource.isPlaying)
         {
-            audioSource.PlayOneShot(musicChoice1);
+            audioSource.PlayOneShot(musicChoice);
         }        
     }
 }

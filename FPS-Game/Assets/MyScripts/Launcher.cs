@@ -23,7 +23,6 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     [SerializeField] GameObject playerViewerParent;
     [SerializeField] GameObject playerModelSkin;
-    //[SerializeField] GameObject applyColorGameObject;
     public Material colorChosen;
     [SerializeField] GameObject titleMenu;
 

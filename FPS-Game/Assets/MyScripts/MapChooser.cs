@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class MapChooser : MonoBehaviour
 {
-    //public GameObject opposingPillsButton;
-    //public GameObject pillArenaButton;
-    //public GameObject pillarsButton;
-    //public GameObject trialsButton;
-    //public GameObject underGroundButton;
-
-
     public int mapChosen = 0;
     [SerializeField] GameObject mapChooseContinueButton;
     public string mapName;

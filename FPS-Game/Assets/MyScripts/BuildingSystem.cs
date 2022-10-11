@@ -10,8 +10,6 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
     public Transform blockShootingPoint;
     public GameObject blockPrefab;
 
-
-    //public Material normalColour;
     public Material highlightedColour;
 
     GameObject lastHighlightedBlock;
@@ -25,9 +23,6 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
     public Material lit;
 
-    float elapsedTime;
-    float desiredDuration = 10;
-
     public Texture proBuilderTexture;
 
     GameObject blockInstantiated;
@@ -40,7 +35,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
     public GameObject blockDestructionVFX;
 
-    public bool isDead = false;
+    public bool isDestroyed = false;
 
     public GameObject blockCrosshair;
 
@@ -52,13 +47,13 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (!PV.IsMine && controller.isDead == true)
+        if (!PV.IsMine)
             return;
 
         if (controller.isDead)
         {
-            //Destroy(handHeldBlock.GetComponent<PhotonView>());
             Destroy(handHeldBlock);
+            return;
         }
 
         if (Input.GetKeyDown(KeyCode.B))
@@ -86,9 +81,12 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
         }
         else if (isInBuildMode == false && controller.isDead == false)
         {
-            blockCrosshair.GetComponent<SpriteRenderer>().enabled = false;
-            handHeldBlock.SetActive(false);
-            blockIndictorUIImage.SetActive(false);
+            if (PV.IsMine)
+            {
+                blockCrosshair.GetComponent<SpriteRenderer>().enabled = false;
+                handHeldBlock.SetActive(false);
+                blockIndictorUIImage.SetActive(false);
+            }            
         }              
     }
 
@@ -191,7 +189,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
     [PunRPC]
     void DisplayBlockDestruction(int hitID)
     {
-        Destroy(PhotonView.Find(hitID).gameObject);
+        PhotonNetwork.Destroy(PhotonView.Find(hitID).gameObject);
         this.gameObject.GetComponent<AudioSource>().Stop();
         this.gameObject.GetComponent<AudioSource>().PlayOneShot(destroyBlock);
 
@@ -208,7 +206,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
     IEnumerator AutoDestructCountdownTimer(int __blockInstantiatedViewID)
     {
         yield return new WaitForSeconds(4);
-        isDead = true;
+        isDestroyed = true;
         if (PhotonView.Find(__blockInstantiatedViewID).gameObject.activeInHierarchy == true)
         {
             Destroy(PhotonView.Find(__blockInstantiatedViewID).gameObject);

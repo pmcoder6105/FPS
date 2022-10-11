@@ -70,9 +70,7 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
             isOpen = false;
             scoreBoardTitle.alpha = 0;
             holdTabForScoreBoardText.color = new Color(holdTabForScoreBoardText.color.r, holdTabForScoreBoardText.color.g, holdTabForScoreBoardText.color.b, 1);
-        }
-        
-        
+        }                
     }
 
     public void OpenLeaveConfirmation()
@@ -85,6 +83,4 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
             isOpen = true;
         }        
     }
-
-    
 }

@@ -35,9 +35,6 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-
-    
-
     private void Update()
     {
         if (!PV.IsMine)

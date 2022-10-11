@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
@@ -9,7 +8,6 @@ using TMPro;
 using Cinemachine;
 using System.Linq;
 using UnityEngine.SceneManagement;
-using System;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
@@ -41,8 +39,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     PlayerManager playerManager;
 
     [SerializeField] GameObject healthy;
-    [SerializeField] GameObject normal;
-    [SerializeField] GameObject hurt;
     [HideInInspector] public int playerHealth;
 
     public GameObject redDeathParticleSystem;
@@ -94,7 +90,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         rb = GetComponent<Rigidbody>();
         PV = GetComponent<PhotonView>();
-        //buildingSystem = GetComponent<BuildingSystem>();
 
         playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
         Cursor.lockState = CursorLockMode.Locked;
@@ -104,7 +99,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (PV.IsMine)
         {
             EquipItem(0);
-
         }
         else
         {
@@ -112,6 +106,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Destroy(rb);
             Destroy(ui);
             Destroy(buildingSystem.handHeldBlock);
+            Destroy(buildingSystem.blockCrosshair);
             for (int i = 0; i < canvas.Count(); i++)
             {
                 Destroy(canvas[i]);
@@ -133,7 +128,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (!PV.IsMine)
             return;
         
-
         scoreBoard = GameObject.Find("ScoreBoard");
         micToggleText = GameObject.Find("MicToggleText");
         roomViewerCamera = GameObject.Find("RoomViewerCamera");
@@ -173,16 +167,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             }
         }
         if (micIsOn) micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic on";
-        if (micIsOn == false) micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic off";
+        else micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic off";
 
-        if (PV.IsMine && PV != null)
+        if (PV.IsMine)
             scoreBoard.GetComponent<ScoreBoard>().OpenLeaveConfirmation();
 
         if (scoreBoard.GetComponent<ScoreBoard>().areYouSureYouWantToLeaveConfirmation.alpha == 1)
         {
             StartCoroutine(nameof(Leave));
         }
-
 
         if (isDead == true)
             return;
@@ -307,9 +300,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 StartCoroutine(DisconnectAndLoad());
-                //DisconnectAndLoad();
             }
-
         }
     }
 
