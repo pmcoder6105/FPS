@@ -11,32 +11,32 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
-    [SerializeField] Image healthBarImage;
-    [SerializeField] GameObject ui;
+    [SerializeField] Image healthBarImage; // health bar image from Tutorial
+    [SerializeField] GameObject ui; // ui from Tutorial
     
-    [SerializeField] GameObject cameraHolder;
-    public AudioClip killSFX;
+    [SerializeField] GameObject cameraHolder; // Camera holder from Tutorial
+    public AudioClip killSFX; // kill SFX that plays to killer when victim dies
 
-    public float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
+    public float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime; // player variables from Tutorial
 
-    [SerializeField] Item[] items;
+    [SerializeField] Item[] items; // gun items from Tutorial
 
-    int itemIndex;
-    int previousItemIndex = -1;
+    int itemIndex; // item index from Tutorial
+    int previousItemIndex = -1; // previous item index from Tutorial
 
-    float verticalLookRotation;
-    bool grounded;
-    Vector3 smoothMoveVelocity;
-    Vector3 moveAmount;
+    float verticalLookRotation; // vertical look rotation from Tutorial
+    bool grounded; // grounded bool from Tutorial
+    Vector3 smoothMoveVelocity; // smooth move velocity from Tutorial
+    Vector3 moveAmount; // move amount from Tutorial
 
-    Rigidbody rb;
+    Rigidbody rb; // rigidbody
 
-    public PhotonView PV;
+    public PhotonView PV; // photonview
 
-    const float maxHealth = 100f;
-    public float currentHealth = maxHealth;
+    const float maxHealth = 100f; // max health from Tutorial
+    public float currentHealth = maxHealth; // current health from Tutorial
 
-    PlayerManager playerManager;
+    PlayerManager playerManager; // player manager
 
     [SerializeField] GameObject healthy;
     [HideInInspector] public int playerHealth;
@@ -548,7 +548,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             return;
 
         PV.RPC(nameof(RPC_DisplayDeath), RpcTarget.All);
-
+        Destroy(buildingSystem);
+        GetComponent<CapsuleCollider>().enabled = false;
 
         for (int i = 0; i < canvas.Count(); i++)
         {
