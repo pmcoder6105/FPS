@@ -15,7 +15,7 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
     [SerializeField] CanvasGroup scoreBoardTitle;
     [SerializeField] TMP_Text holdTabForScoreBoardText;
 
-    public CanvasGroup areYouSureYouWantToLeaveConfirmation;
+    public CanvasGroup leaveConfirmation;
 
     public bool isOpen = false;
 
@@ -28,7 +28,7 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
             AddScoreBoardItem(player);
         }
         scoreBoardTitle.alpha = 0;
-        areYouSureYouWantToLeaveConfirmation.alpha = 0;
+        leaveConfirmation.alpha = 0;
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -75,10 +75,9 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
 
     public void OpenLeaveConfirmation()
     {
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            areYouSureYouWantToLeaveConfirmation.alpha = 1;
+            leaveConfirmation.alpha = 1;
             Cursor.lockState = CursorLockMode.None;
             isOpen = true;
         }        
