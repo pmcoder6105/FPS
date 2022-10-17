@@ -14,44 +14,44 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] Image healthBarImage; // health bar image from Tutorial
     [SerializeField] GameObject ui; // ui from Tutorial
     
-    [SerializeField] GameObject cameraHolder; // Camera holder from Tutorial
-    public AudioClip killSFX; // kill SFX that plays to killer when victim dies
+    [SerializeField] GameObject cameraHolder;
+    public AudioClip killSFX;
 
-    public float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime; // player variables from Tutorial
+    public float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
 
-    [SerializeField] Item[] items; // gun items from Tutorial
+    [SerializeField] Item[] items;
 
-    int itemIndex; // item index from Tutorial
-    int previousItemIndex = -1; // previous item index from Tutorial
+    int itemIndex;
+    int previousItemIndex = -1;
 
-    float verticalLookRotation; // vertical look rotation from Tutorial
-    bool grounded; // grounded bool from Tutorial
-    Vector3 smoothMoveVelocity; // smooth move velocity from Tutorial
-    Vector3 moveAmount; // move amount from Tutorial
+    float verticalLookRotation; 
+    bool grounded; 
+    Vector3 smoothMoveVelocity; 
+    Vector3 moveAmount; 
 
-    Rigidbody rb; // rigidbody
+    Rigidbody rb; 
 
-    public PhotonView PV; // photonview
+    public PhotonView PV; 
 
-    const float maxHealth = 100f; // max health from Tutorial
-    public float currentHealth = maxHealth; // current health from Tutorial
+    const float maxHealth = 100f; 
+    public float currentHealth = maxHealth; 
 
     PlayerManager playerManager; // player manager
 
     [SerializeField] GameObject playerVisuals; // this is the colored visual part of the "bean" player
-    [HideInInspector] public int playerHealth; // player health from tutorial
+    [HideInInspector] public int playerHealth; 
 
-    public GameObject redDeathParticleSystem; // particle system that goes off when a player dies
+    public GameObject redDeathParticleSystem; 
 
-    public bool isDead = false; // is player dead?
+    public bool isDead = false; 
 
-    [SerializeField] GameObject overheadUsernameText; // overhead username text from tutorial
-    [SerializeField] GameObject itemHolder; // item holder from tutorial
+    [SerializeField] GameObject overheadUsernameText; 
+    [SerializeField] GameObject itemHolder; 
     [SerializeField] GameObject healthBar; // health bar from tutorial
 
     [SerializeField] Camera cinemachineCam; // the cinemachine cam that activates when the player dies
-    [SerializeField] Camera normalCam; // the NORMAL rendering camera
-    [SerializeField] CinemachineVirtualCamera virtualCam; // cinemachine virtual camera
+    [SerializeField] Camera normalCam;
+    [SerializeField] CinemachineVirtualCamera virtualCam;
 
     [SerializeField] GameObject killTextNotification; // a kill (player killed player) that instantiates whenever a victim dies
     public GameObject killTextNotificationHolder; // kill text notification holder empty gameobject
@@ -59,34 +59,34 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     GameObject killTextNotificationGameObject; // a gameobject that I assign later in the script
 
-    bool hasDeathPanelActivated = false; // has the death panel activated?
+    bool hasDeathPanelActivated = false;
 
     [SerializeField] GameObject gunClippingCam; // a camera that only renders the weapons to prevent them clipping into the walls
 
-    public bool canSwitchWeapons = true; // can switch weapons?
+    public bool canSwitchWeapons = true;
 
-    [HideInInspector] public GameObject scoreBoard; // scoreboard
+    [HideInInspector] public GameObject scoreBoard; // scoreboard that I assign later
 
     public GameObject[] canvas; // canvases I want to destroy when a player dies
 
-    bool canRegenerateHealth = false; // can regenerate health?
+    bool canRegenerateHealth = false;
 
-    [SerializeField] GameObject playerHitParticleEffect; // a particle effect that goes off when a player gets hit by a bullet
+    [SerializeField] GameObject playerHitParticleEffect; 
 
     public Shader glowShader; // a glow shader that i use for my player visuals
 
-    bool micIsOn = true; // is mic on?
+    bool micIsOn = true; 
 
     GameObject micToggleText; // a UI text that shows if the mic is on or off to the player ingame
 
-    public BuildingSystem buildingSystem; // building system class
+    public BuildingSystem buildingSystem; 
 
     GameObject mapViewerCamera; // a camera that overlooks the map
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>(); // assign rigidbody
-        PV = GetComponent<PhotonView>(); // assign photonview
+        rb = GetComponent<Rigidbody>();
+        PV = GetComponent<PhotonView>();
 
         playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>(); // HONESTLY I DONT KNOW HOW THIS WORKS BUT THIS IS FROM THE TUTORIAL
         Cursor.lockState = CursorLockMode.Locked; // lock cursor
