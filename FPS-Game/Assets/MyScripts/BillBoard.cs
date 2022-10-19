@@ -8,7 +8,6 @@ public class BillBoard : MonoBehaviour
 
     private void Update()
     {
-
         if (cam == null)
             cam = GameObject.FindGameObjectWithTag("MainCam");
 

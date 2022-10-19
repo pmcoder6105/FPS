@@ -12,8 +12,6 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
     public Material highlightedColour;
 
-    GameObject lastHighlightedBlock;
-
     bool canBuild = true;
     bool canDestroy = true;
 
@@ -47,14 +45,8 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (!PV.IsMine)
-            return;
-
-        if (controller.isDead)
-        {
-            Destroy(handHeldBlock);
-            return;
-        }
+        if (!PV.IsMine || controller.isDead)
+            return;        
 
         if (Input.GetKeyDown(KeyCode.B))
         {
@@ -238,29 +230,6 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
             blockMaterial.mainTexture = proBuilderTexture;
             handHeldBlock.gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
             handHeldBlock.gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
-        }
-    }
-
-        void HighlightBlock()
-        {
-        if (Physics.Raycast(blockShootingPoint.position, blockShootingPoint.forward, out RaycastHit hitInfo, 10))
-        {
-            if (hitInfo.transform.tag == "BuildingBlock")
-            {
-                if (lastHighlightedBlock == null)
-                {
-                    lastHighlightedBlock = hitInfo.transform.gameObject;
-                    hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = highlightedColour;
-                }
-                else if (lastHighlightedBlock != hitInfo.transform.gameObject)
-                {
-                    Material blockColour = new Material(lit);
-                    lastHighlightedBlock.GetComponent<MeshRenderer>().material = blockColour;
-                    hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material = highlightedColour;
-
-                    lastHighlightedBlock = hitInfo.transform.gameObject;
-                }
-            }
         }
     }
 }

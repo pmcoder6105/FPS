@@ -9,12 +9,11 @@ public class PersonalMusicManager : MonoBehaviour
 
     AudioSource audioSource;
 
-    PhotonView PV;
+    public PhotonView PV;
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        PV = GetComponentInParent<PhotonView>();
     }
 
     // Update is called once per frame
@@ -26,6 +25,6 @@ public class PersonalMusicManager : MonoBehaviour
         if (!audioSource.isPlaying)
         {
             audioSource.PlayOneShot(musicChoice);
-        }        
+        }
     }
 }

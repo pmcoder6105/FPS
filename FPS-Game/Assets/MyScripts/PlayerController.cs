@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] CinemachineVirtualCamera virtualCam;
 
     [SerializeField] GameObject killTextNotification; // a kill (player killed player) that instantiates whenever a victim dies
-    public GameObject killTextNotificationHolder; // kill text notification holder empty gameobject
+    GameObject killTextNotificationHolder; // kill text notification holder empty gameobject
     [SerializeField] GameObject deathPanel; // death panel with respawn button
 
     GameObject killTextNotificationGameObject; // a gameobject that I assign later in the script
@@ -129,6 +129,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         scoreBoard = GameObject.Find("ScoreBoard");
         micToggleText = GameObject.Find("MicToggleText");
         mapViewerCamera = GameObject.Find("RoomViewerCamera");
+        killTextNotificationGameObject = GameObject.Find("KillTextNotificationHolder");
 
         // if you click escape and the death panel hasn't been instantiated, then unlock cursor
         if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked && hasDeathPanelActivated == false)
@@ -267,9 +268,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (transform.position.y < -10f && PV.IsMine)
         {
             Die(); // die
-            killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform); // instantiate a new kill text notif
-            killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: The Void"; // set the text of that to you were killed by the void
-            Destroy(killTextNotificationGameObject, 5); // destroy that in 5 secs       
+            //killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform); // instantiate a new kill text notif
+            //killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: The Void"; // set the text of that to you were killed by the void
+            //Destroy(killTextNotificationGameObject, 5); // destroy that in 5 secs       
         }
     }
 
@@ -472,9 +473,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
             PV.RPC(nameof(RPC_PlayKillDingSFX), info.Sender); // play ding sfx to info.sender
 
-            killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform); // instantiate a new kill notification
-            killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: " + info.Sender.NickName.ToString(); // set the text of that notification to you were killed by killer
-            Destroy(killTextNotificationGameObject, 5); // destroy that in 5 seconds
+            //killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform); // instantiate a new kill notification
+            //killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: " + info.Sender.NickName.ToString(); // set the text of that notification to you were killed by killer
+            //Destroy(killTextNotificationGameObject, 5); // destroy that in 5 seconds
 
             cinemachineCam.gameObject.SetActive(true); // set the cinemachine cam active
             normalCam.gameObject.SetActive(false); // set the normal cam disabled
@@ -601,6 +602,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         PV.RPC(nameof(RPC_DisplayDeath), RpcTarget.All); // call RPC DisplayDeath to all players
         buildingSystem.enabled = false; // disable building system class
         GetComponent<CapsuleCollider>().enabled = false; // disable capsule collider
+        playerManager.Die();
 
         for (int i = 0; i < canvas.Count(); i++)
         {

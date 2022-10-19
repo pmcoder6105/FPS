@@ -2820,10 +2820,10 @@ GameObject:
   m_Component:
   - component: {fileID: 109604509}
   - component: {fileID: 109604512}
+  - component: {fileID: 109604515}
   - component: {fileID: 109604511}
   - component: {fileID: 109604513}
   - component: {fileID: 109604514}
-  - component: {fileID: 109604515}
   m_Layer: 0
   m_Name: ApplyColorBeanModel
   m_TagString: Untagged
@@ -36386,7 +36386,7 @@ MonoBehaviour:
     new gun colours to improve aesthetic\n-Added shinyness to gun colours\n-Fixed
     room leaving bug which occurs when you \ndie, respawn, and then try to leave\n-Added
     new startup splash screen with logo and \nbackground\n-Updated new weapon materials
-    in weapon viewer"
+    in weapon viewer\n-Fixed player background music bug\n-"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
   m_sharedMaterial: {fileID: 7472722706876977885, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}

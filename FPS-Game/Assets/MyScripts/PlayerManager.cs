@@ -7,6 +7,7 @@ using Photon.Realtime;
 using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -14,12 +15,21 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject controller;
 
-    public AudioClip killSFX;
-
     int kills;
     int deaths;
 
-    [SerializeField] GameObject killTextNotification;
+    [SerializeField] GameObject killTextNotification; // a kill (player killed player) that instantiates whenever a victim dies
+    GameObject killTextNotificationHolder; // kill text notification holder empty gameobject
+    [SerializeField] GameObject deathPanel; // death panel with respawn button
+
+    GameObject killTextNotificationGameObject; // a gameobject that I assign later in the script
+
+    bool hasDeathPanelActivated = false;
+
+    GameObject canvas;
+
+    GameObject deathPanelGameObject;
+    public GameObject musicHolder;
 
     private void Awake()
     {
@@ -32,6 +42,10 @@ public class PlayerManager : MonoBehaviour
         if (PV.IsMine)
         {
             CreateController();
+            killTextNotificationHolder = GameObject.Find("KillTextNotificationHolder");
+            canvas = GameObject.Find("ScoreBoardCanvas");
+            GameObject musicHolderGO = Instantiate(musicHolder);
+            musicHolderGO.GetComponent<PersonalMusicManager>().PV = PV;
         }
     }
 
@@ -40,7 +54,23 @@ public class PlayerManager : MonoBehaviour
         if (!PV.IsMine)
             return;
 
-        this.gameObject.transform.position = controller.transform.position;
+        if (killTextNotificationGameObject == null && controller == null && hasDeathPanelActivated == false)
+        {
+            deathPanelGameObject = Instantiate(deathPanel, canvas.transform); // new gameobject called deathPanelGameObject with a prefab of deathPanel and the ui.transform
+
+            //if the deathPanelGameObject isn't null
+            if (deathPanelGameObject != null)
+            {
+                //has death panel activated is true
+                hasDeathPanelActivated = true;
+            }
+            deathPanelGameObject.transform.Find("Replay").GetComponent<Button>().onClick.AddListener(Respawn); // of the deathPanelGameObject, find the button called "Replay" and add listener with the function called "Respawn"
+            Cursor.lockState = CursorLockMode.None; // unlock the cursor
+        }
+
+        //this.gameObject.transform.position = controller.transform.position;        
+
+        
     }
 
     void CreateController()
@@ -49,13 +79,24 @@ public class PlayerManager : MonoBehaviour
         controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
     }
 
+    void Respawn()
+    {
+        Destroy(deathPanelGameObject);
+        CreateController();
+    }
+
     public void Die()
     {
         if (!PV.IsMine)
             return;
 
         PhotonNetwork.Destroy(controller);
-        CreateController();
+
+        killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform); // instantiate a new kill text notif
+        killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: The Void"; // set the text of that to you were killed by the void
+        Destroy(killTextNotificationGameObject, 5); // destroy that in 5 secs
+
+        
 
         deaths++;
 
