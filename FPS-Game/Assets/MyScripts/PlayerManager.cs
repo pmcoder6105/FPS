@@ -8,6 +8,7 @@ using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
 using UnityEngine.UI;
+using Cinemachine;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -30,6 +31,15 @@ public class PlayerManager : MonoBehaviour
 
     GameObject deathPanelGameObject;
     public GameObject musicHolder;
+
+    public GameObject cinemachineCam;
+    public GameObject virtualCam;
+
+    GameObject cinemachineCamInstantiation;
+    GameObject virtualCamInstantiation;
+
+    public Player killer;
+
 
     private void Awake()
     {
@@ -66,11 +76,7 @@ public class PlayerManager : MonoBehaviour
             }
             deathPanelGameObject.transform.Find("Replay").GetComponent<Button>().onClick.AddListener(Respawn); // of the deathPanelGameObject, find the button called "Replay" and add listener with the function called "Respawn"
             Cursor.lockState = CursorLockMode.None; // unlock the cursor
-        }
-
-        //this.gameObject.transform.position = controller.transform.position;        
-
-        
+        }                
     }
 
     void CreateController()
@@ -82,6 +88,8 @@ public class PlayerManager : MonoBehaviour
     void Respawn()
     {
         Destroy(deathPanelGameObject);
+        Destroy(virtualCamInstantiation);
+        Destroy(cinemachineCamInstantiation);
         CreateController();
     }
 
@@ -90,13 +98,18 @@ public class PlayerManager : MonoBehaviour
         if (!PV.IsMine)
             return;
 
+        cinemachineCamInstantiation = Instantiate(cinemachineCam, this.transform.position, Quaternion.identity);
+        GameObject virtualCamera = Instantiate(virtualCam, this.transform.position, Quaternion.identity);
+
+        virtualCamera.GetComponent<CinemachineVirtualCamera>().LookAt = Find(killer).transform;
+
+        virtualCamInstantiation = virtualCamera;
+
         PhotonNetwork.Destroy(controller);
 
         killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform); // instantiate a new kill text notif
         killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: The Void"; // set the text of that to you were killed by the void
         Destroy(killTextNotificationGameObject, 5); // destroy that in 5 secs
-
-        
 
         deaths++;
 

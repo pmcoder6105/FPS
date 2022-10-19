@@ -53,11 +53,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] Camera normalCam;
     [SerializeField] CinemachineVirtualCamera virtualCam;
 
-    [SerializeField] GameObject killTextNotification; // a kill (player killed player) that instantiates whenever a victim dies
-    GameObject killTextNotificationHolder; // kill text notification holder empty gameobject
-    [SerializeField] GameObject deathPanel; // death panel with respawn button
+    //[SerializeField] GameObject killTextNotification; // a kill (player killed player) that instantiates whenever a victim dies
+    //GameObject killTextNotificationHolder; // kill text notification holder empty gameobject
+    //[SerializeField] GameObject deathPanel; // death panel with respawn button
 
-    GameObject killTextNotificationGameObject; // a gameobject that I assign later in the script
+    //GameObject killTextNotificationGameObject; // a gameobject that I assign later in the script
 
     bool hasDeathPanelActivated = false;
 
@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         scoreBoard = GameObject.Find("ScoreBoard");
         micToggleText = GameObject.Find("MicToggleText");
         mapViewerCamera = GameObject.Find("RoomViewerCamera");
-        killTextNotificationGameObject = GameObject.Find("KillTextNotificationHolder");
+        //killTextNotificationGameObject = GameObject.Find("KillTextNotificationHolder");
 
         // if you click escape and the death panel hasn't been instantiated, then unlock cursor
         if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked && hasDeathPanelActivated == false)
@@ -140,22 +140,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (Input.GetMouseButtonDown(0) && Cursor.lockState == CursorLockMode.None && hasDeathPanelActivated == false && scoreBoard.GetComponent<ScoreBoard>().isOpen == false && scoreBoard.GetComponent<ScoreBoard>().leaveConfirmation.alpha != 1)
         {
             Cursor.lockState = CursorLockMode.Locked;
-        }
-
-        //if the kill notification GAMEOBJECT is null, if the player is dead, and if the death panel hasn't activated
-        if (killTextNotificationGameObject == null && isDead && hasDeathPanelActivated == false)
-        {
-            GameObject deathPanelGameObject = Instantiate(deathPanel, ui.transform); // new gameobject called deathPanelGameObject with a prefab of deathPanel and the ui.transform
-            
-            //if the deathPanelGameObject isn't null
-            if (deathPanelGameObject != null)
-            {
-                //has death panel activated is true
-                hasDeathPanelActivated = true;
-            }
-            deathPanelGameObject.transform.Find("Replay").GetComponent<Button>().onClick.AddListener(Respawn); // of the deathPanelGameObject, find the button called "Replay" and add listener with the function called "Respawn"
-            Cursor.lockState = CursorLockMode.None; // unlock the cursor
-        }
+        }        
 
         string _deviceName = Microphone.devices[0]; // find the first device and log the name
 
@@ -181,10 +166,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (scoreBoard.GetComponent<ScoreBoard>().leaveConfirmation.alpha == 1)
         {
             StartCoroutine(nameof(Leave)); // start Leave coroutine
-        }
+        }        
 
         if (isDead == true) // if dead, return
             return;
+
+        playerManager.transform.position = this.gameObject.transform.position;
 
         Look(); // look
 
@@ -469,6 +456,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             if (isDead || !PV.IsMine) // if isDead OR if PV isn't mine, return 
                 return;
 
+            playerManager.killer = info.Sender;
+
             PlayerManager.Find(info.Sender).GetKill(); // find info.Sender's playermanager and call GetKill
 
             PV.RPC(nameof(RPC_PlayKillDingSFX), info.Sender); // play ding sfx to info.sender
@@ -477,10 +466,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             //killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: " + info.Sender.NickName.ToString(); // set the text of that notification to you were killed by killer
             //Destroy(killTextNotificationGameObject, 5); // destroy that in 5 seconds
 
-            cinemachineCam.gameObject.SetActive(true); // set the cinemachine cam active
-            normalCam.gameObject.SetActive(false); // set the normal cam disabled
-            virtualCam.gameObject.SetActive(true); // set the virtual cam active
-            virtualCam.LookAt = PlayerManager.Find(info.Sender).transform; // set the look at target of the virtual camera to the transform of the killer
+            //cinemachineCam.gameObject.SetActive(true); // set the cinemachine cam active
+            //normalCam.gameObject.SetActive(false); // set the normal cam disabled
+            //virtualCam.gameObject.SetActive(true); // set the virtual cam active
+            //virtualCam.LookAt = PlayerManager.Find(info.Sender).transform; // set the look at target of the virtual camera to the transform of the killer
 
             Die(); // die
         }
