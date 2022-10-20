@@ -34755,6 +34755,7 @@ GameObject:
   - component: {fileID: 1687258582}
   - component: {fileID: 1687258586}
   - component: {fileID: 1687258587}
+  - component: {fileID: 1687258588}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -34888,6 +34889,38 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1687258588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687258581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee01e66702087b4798e633ca34c7956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxUpdateRate: Infinity
+  preview: 0
+  blurAlgorithmSelection: 0
+  blurConfig: {fileID: 11400000, guid: fa943312a9a3ec04daed25e2922324ad, type: 2}
+  downsample: 0
+  lastDownsample: 0
+  blurRegion:
+    x: 0
+    y: 0
+    width: 0.000911577
+    height: 0.0016207455
+  lastBlurRegion:
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  camera: {fileID: 1687258584}
+  previewMaterial: {fileID: 0}
+  blurredScreen: {fileID: 0}
+  lastUpdate: 0
 --- !u!1 &1689491946
 GameObject:
   m_ObjectHideFlags: 0
@@ -36382,11 +36415,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "-Fixed Immortality bug\n-Fixed gun mesh clipping visual bugs in the\nrifle
-    and shotgun. \n-Added new gun colours to improve aesthetic\n-Added shinyness
-    to gun colours\n-Fixed room leaving bug which occurs when you \ndie, respawn,
-    and then try to leave\n-Added new startup splash screen with logo and \nbackground\n-Updated
-    new weapon materials in weapon viewer\n-Fixed player background music bug"
+  m_text: "-Fixed Immortality bug\n-Added player footstep SFXs (NEED TO TEST HELLOW)\n-Fixed
+    gun mesh clipping visual bugs in the\nrifle and shotgun. \n-Added new gun colours
+    to improve aesthetic\n-Added shinyness to gun colours\n-Fixed room leaving bug
+    which occurs when you \ndie, respawn, and then try to leave\n-Added new startup
+    splash screen with logo and \nbackground\n-Updated new weapon materials in weapon
+    viewer\n-Fixed player background music bug"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
   m_sharedMaterial: {fileID: 7472722706876977885, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
@@ -42514,7 +42548,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh32142
+  m_Name: pb_Mesh43040
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
