@@ -80,6 +80,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public AudioClip walkSound;
     public AudioClip runSound;
     public float footstepDelay;
+    public AudioSource footstepAudioSource;
 
     private void Awake()
     {
@@ -251,8 +252,35 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         // if the transform.y is < -10 and the PV is mine
         if (transform.position.y < -10f && PV.IsMine)
         {
-            Die(); // die  
+            Die(); // die
         }
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {                    
+            if (grounded)
+                StartCoroutine(nameof(WalkSFX));
+
+        }
+        else
+        {
+            StartCoroutine(nameof(StopWalkSFX));
+        }
+    }
+
+    IEnumerator WalkSFX()
+    {
+        yield return new WaitForSeconds(0.05f);
+        footstepAudioSource.enabled = true;
+        if (footstepAudioSource.isPlaying == false)
+        {
+            footstepAudioSource.PlayOneShot(walkSound, 0.25f);
+        }
+    }
+
+    IEnumerator StopWalkSFX()
+    {
+        yield return new WaitForSeconds(0.1f);
+        footstepAudioSource.enabled = false;        
     }
 
     // this function basically gets both player visual gameobjects and sets the material Glow Intensity variable in the shader to 2.5f
