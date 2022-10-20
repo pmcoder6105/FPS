@@ -51,13 +51,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     [SerializeField] Camera cinemachineCam; // the cinemachine cam that activates when the player dies
     [SerializeField] Camera normalCam;
-    [SerializeField] CinemachineVirtualCamera virtualCam;
-
-    //[SerializeField] GameObject killTextNotification; // a kill (player killed player) that instantiates whenever a victim dies
-    //GameObject killTextNotificationHolder; // kill text notification holder empty gameobject
-    //[SerializeField] GameObject deathPanel; // death panel with respawn button
-
-    //GameObject killTextNotificationGameObject; // a gameobject that I assign later in the script
+    [SerializeField] CinemachineVirtualCamera virtualCam;    
 
     bool hasDeathPanelActivated = false;
 
@@ -82,6 +76,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public BuildingSystem buildingSystem; 
 
     GameObject mapViewerCamera; // a camera that overlooks the map
+
+    public float footstepRate;
+    private float nextFootstep;
 
     private void Awake()
     {
@@ -129,7 +126,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         scoreBoard = GameObject.Find("ScoreBoard");
         micToggleText = GameObject.Find("MicToggleText");
         mapViewerCamera = GameObject.Find("RoomViewerCamera");
-        //killTextNotificationGameObject = GameObject.Find("KillTextNotificationHolder");
 
         // if you click escape and the death panel hasn't been instantiated, then unlock cursor
         if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked && hasDeathPanelActivated == false)
@@ -254,10 +250,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         // if the transform.y is < -10 and the PV is mine
         if (transform.position.y < -10f && PV.IsMine)
         {
-            Die(); // die
-            //killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform); // instantiate a new kill text notif
-            //killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: The Void"; // set the text of that to you were killed by the void
-            //Destroy(killTextNotificationGameObject, 5); // destroy that in 5 secs       
+            Die(); // die  
         }
     }
 
@@ -285,7 +278,30 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
 
+
         moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
+
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+            {
+                footstepRate = 0.25f;
+                if (Time.time > nextFootstep)
+                {
+                    nextFootstep = Time.time + footstepRate;
+                    GetComponent<SmartFootstepSystem>().Footstep();
+                }
+            }
+            else
+            {
+                footstepRate = 0.5f;
+                if (Time.time > nextFootstep)
+                {
+                    nextFootstep = Time.time + footstepRate;
+                    GetComponent<SmartFootstepSystem>().Footstep();
+                }
+            }
+        }
     }
 
     // jump function from the tutorial
