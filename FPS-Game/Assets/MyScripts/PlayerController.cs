@@ -77,8 +77,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     GameObject mapViewerCamera; // a camera that overlooks the map
 
-    public float footstepRate;
-    private float nextFootstep;
+    public AudioClip walkSound;
+    public AudioClip runSound;
+    public float footstepDelay;
 
     private void Awake()
     {
@@ -281,27 +282,27 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
 
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
-        {
-            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
-            {
-                footstepRate = 0.25f;
-                if (Time.time > nextFootstep)
-                {
-                    nextFootstep = Time.time + footstepRate;
-                    GetComponent<SmartFootstepSystem>().Footstep();
-                }
-            }
-            else
-            {
-                footstepRate = 0.5f;
-                if (Time.time > nextFootstep)
-                {
-                    nextFootstep = Time.time + footstepRate;
-                    GetComponent<SmartFootstepSystem>().Footstep();
-                }
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
+        //{
+        //    if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+        //    {
+        //        footstepRate = 0.25f;
+        //        if (Time.time > nextFootstep)
+        //        {
+        //            nextFootstep = Time.time + footstepRate;
+        //            GetComponent<SmartFootstepSystem>().Footstep();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        footstepRate = 0.5f;
+        //        if (Time.time > nextFootstep)
+        //        {
+        //            nextFootstep = Time.time + footstepRate;
+        //            GetComponent<SmartFootstepSystem>().Footstep();
+        //        }
+        //    }
+        //}
     }
 
     // jump function from the tutorial
