@@ -140,23 +140,23 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Cursor.lockState = CursorLockMode.Locked;
         }        
 
-        string _deviceName = Microphone.devices[0]; // find the first device and log the name
+        //string _deviceName = Microphone.devices[0]; // find the first device and log the name
 
-        // if you press M
-        if (Input.GetKeyDown(KeyCode.M)) 
-        {
-            micIsOn = !micIsOn; // is mic on changes
-            if (micIsOn)
-            {
-                Microphone.End(_deviceName); // NOTE: THIS ISN'T REALLY WORKING. ITS SUPPOSED TO DISABLE THE ACTIVE MIC 
-            }
-            else
-            {                
-                Microphone.Start(_deviceName, true, 10, AudioSettings.outputSampleRate); // NOTE: THIS ISN'T REALLY WORKING. ITS SUPPOSED TO ENABLE THE ACTIVE MIC 
-            }
-        }
-        if (micIsOn) micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic on"; // if the mic is on, set the mic UI text to "on"
-        else micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic off"; // if the mic is on, set the mic UI text to "off"
+        //// if you press M
+        //if (Input.GetKeyDown(KeyCode.M)) 
+        //{
+        //    micIsOn = !micIsOn; // is mic on changes
+        //    if (micIsOn)
+        //    {
+        //        Microphone.End(_deviceName); // NOTE: THIS ISN'T REALLY WORKING. ITS SUPPOSED TO DISABLE THE ACTIVE MIC 
+        //    }
+        //    else
+        //    {                
+        //        Microphone.Start(_deviceName, true, 10, AudioSettings.outputSampleRate); // NOTE: THIS ISN'T REALLY WORKING. ITS SUPPOSED TO ENABLE THE ACTIVE MIC 
+        //    }
+        //}
+        //if (micIsOn) micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic on"; // if the mic is on, set the mic UI text to "on"
+        //else micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic off"; // if the mic is on, set the mic UI text to "off"
 
         scoreBoard.GetComponent<ScoreBoard>().OpenLeaveConfirmation(); // call OpenLeaveConfirmation function from ScoreBoard class
 
@@ -255,6 +255,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Die(); // die
         }
 
+        PV.RPC(nameof(ProcessFootstepSFX), RpcTarget.All);
+    }
+
+   [PunRPC]
+    void ProcessFootstepSFX()
+    {
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             if (grounded)
@@ -267,7 +273,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 {
                     StartCoroutine(nameof(WalkSFX));
                 }
-            }                
+            }
+            Debug.Log("Footstep");
         }
         else
         {
