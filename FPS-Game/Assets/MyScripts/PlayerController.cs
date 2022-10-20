@@ -256,10 +256,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
 
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-        {                    
+        {
             if (grounded)
-                StartCoroutine(nameof(WalkSFX));
-
+            {
+                if (Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift))
+                {
+                    StartCoroutine(nameof(RunSFX));
+                }
+                else if (!Input.GetKey(KeyCode.RightShift) && !Input.GetKey(KeyCode.LeftShift))
+                {
+                    StartCoroutine(nameof(WalkSFX));
+                }
+            }                
         }
         else
         {
@@ -274,6 +282,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (footstepAudioSource.isPlaying == false)
         {
             footstepAudioSource.PlayOneShot(walkSound, 0.25f);
+        }
+    }
+    IEnumerator RunSFX()
+    {
+        yield return new WaitForSeconds(0.05f);
+        footstepAudioSource.enabled = true;
+        if (footstepAudioSource.isPlaying == false)
+        {
+            footstepAudioSource.PlayOneShot(runSound, 0.25f);
         }
     }
 
