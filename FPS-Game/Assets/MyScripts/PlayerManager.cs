@@ -98,12 +98,10 @@ public class PlayerManager : MonoBehaviour
         if (!PV.IsMine)
             return;
 
-        cinemachineCamInstantiation = Instantiate(cinemachineCam, this.transform.position, Quaternion.identity);
-        GameObject virtualCamera = Instantiate(virtualCam, this.transform.position, Quaternion.identity);
-
-        virtualCamera.GetComponent<CinemachineVirtualCamera>().LookAt = Find(killer).transform;
-
-        virtualCamInstantiation = virtualCamera;
+        if (controller.GetComponent<PlayerController>().hasDiedFromFallDamage == false)
+        {
+            EnableCinemachineKillerTracker();
+        }
 
         PhotonNetwork.Destroy(controller);
 
@@ -116,6 +114,19 @@ public class PlayerManager : MonoBehaviour
         Hashtable hash = new Hashtable();
         hash.Add("deaths", deaths);
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+    }
+
+    void EnableCinemachineKillerTracker()
+    {
+        cinemachineCamInstantiation = Instantiate(cinemachineCam, this.transform.position, Quaternion.identity);
+        GameObject virtualCamera = Instantiate(virtualCam, this.transform.position, Quaternion.identity);
+
+        if (Find(killer).transform.gameObject != null)
+        {
+            virtualCamera.GetComponent<CinemachineVirtualCamera>().LookAt = Find(killer).transform;
+        }
+
+        virtualCamInstantiation = virtualCamera;
     }
 
     public void GetKill()

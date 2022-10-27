@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public AudioClip runSound;
     public float footstepDelay;
     public AudioSource footstepAudioSource;
+    public bool hasDiedFromFallDamage = false;
 
     private void Awake()
     {
@@ -252,7 +253,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         // if the transform.y is < -10 and the PV is mine
         if (transform.position.y < -10f && PV.IsMine)
         {
+            hasDiedFromFallDamage = true;
             Die(); // die
+            
         }
 
         PV.RPC(nameof(ProcessFootstepSFX), RpcTarget.All);
@@ -525,20 +528,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             if (isDead || !PV.IsMine) // if isDead OR if PV isn't mine, return 
                 return;
 
+            if (PlayerManager.Find(info.Sender).transform.gameObject == null)
+                return;
+
+
             playerManager.killer = info.Sender;
 
             PlayerManager.Find(info.Sender).GetKill(); // find info.Sender's playermanager and call GetKill
 
             PV.RPC(nameof(RPC_PlayKillDingSFX), info.Sender); // play ding sfx to info.sender
-
-            //killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform); // instantiate a new kill notification
-            //killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: " + info.Sender.NickName.ToString(); // set the text of that notification to you were killed by killer
-            //Destroy(killTextNotificationGameObject, 5); // destroy that in 5 seconds
-
-            //cinemachineCam.gameObject.SetActive(true); // set the cinemachine cam active
-            //normalCam.gameObject.SetActive(false); // set the normal cam disabled
-            //virtualCam.gameObject.SetActive(true); // set the virtual cam active
-            //virtualCam.LookAt = PlayerManager.Find(info.Sender).transform; // set the look at target of the virtual camera to the transform of the killer
 
             Die(); // die
         }
@@ -593,6 +591,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             }
             hash.Add("beanColor", PlayerPrefs.GetString("BeanPlayerColor")); // add "beanColor" with a value of PlayerPrefs.GetString("BeanPlayerColor")
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash); // set custom properties
+
+            if (isDead)
+                return;
 
             if (playerHealth == 3) // if player health is 3
                 SetHealthyNewMaterial(); // set HEALTHY new material function
