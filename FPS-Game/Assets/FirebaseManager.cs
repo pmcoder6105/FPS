@@ -54,6 +54,16 @@ public class FirebaseManager : MonoBehaviour
         });
     }
 
+    private void Update()
+    {
+        if (auth.CurrentUser != null)
+        {
+            menuCanvas.SetActive(true);
+            accountCanvas.SetActive(false);
+        }
+        Debug.Log(auth.CurrentUser);
+    }
+
     private void InitializeFirebase()
     {
         Debug.Log("Setting up Firebase Auth");

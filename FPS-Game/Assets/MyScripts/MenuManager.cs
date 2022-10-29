@@ -61,13 +61,4 @@ public class MenuManager : MonoBehaviour
         firebase.accountCanvas.SetActive(true);
         firebase.mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(false);
     }
-
-    private void Update()
-    {
-        if (firebase.User.UserId == null)
-        {
-            firebase.menuCanvas.SetActive(true);
-            firebase.accountCanvas.SetActive(false);
-        }
-    }
 }
