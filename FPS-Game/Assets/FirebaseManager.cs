@@ -4,6 +4,7 @@ using UnityEngine;
 using Firebase;
 using Firebase.Auth;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 
 public class FirebaseManager : MonoBehaviour
@@ -29,6 +30,11 @@ public class FirebaseManager : MonoBehaviour
     public TMP_InputField passwordRegisterField;
     public TMP_InputField passwordRegisterVerifyField;
     public TMP_Text warningRegisterText;
+
+    public GameObject menuCanvas;
+    public GameObject accountCanvas;
+    public GameObject mainCamera;
+
 
     private void Awake()
     {
@@ -111,6 +117,14 @@ public class FirebaseManager : MonoBehaviour
             Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
             warningLoginText.text = "";
             confirmLoginText.text = "Logged In";
+
+            yield return new WaitForSeconds(2);
+
+            //SceneManager.LoadScene(1);
+            menuCanvas.SetActive(true);
+            accountCanvas.SetActive(false);
+            mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(true);
+            confirmLoginText.text = "";
         }
     }
 

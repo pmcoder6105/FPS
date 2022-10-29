@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
@@ -8,9 +9,12 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] Menu[] menus;
 
+    FirebaseManager firebase;
+
     private void Awake()
     {
         Instance = this;
+        firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
     }
 
     public void OpenMenu(string menuName)
@@ -48,5 +52,22 @@ public class MenuManager : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+
+    public void SignOut()
+    {
+        firebase.auth.SignOut();
+        firebase.menuCanvas.SetActive(false);
+        firebase.accountCanvas.SetActive(true);
+        firebase.mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (firebase.User.UserId == null)
+        {
+            firebase.menuCanvas.SetActive(true);
+            firebase.accountCanvas.SetActive(false);
+        }
     }
 }
