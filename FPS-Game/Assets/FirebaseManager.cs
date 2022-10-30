@@ -37,6 +37,8 @@ public class FirebaseManager : MonoBehaviour
     public GameObject accountCanvas;
     public GameObject mainCamera;
 
+    public TMP_InputField usernameInputField;
+
 
     private void Awake()
     {
@@ -64,6 +66,12 @@ public class FirebaseManager : MonoBehaviour
             accountCanvas.SetActive(false);
         }
         Debug.Log(auth.CurrentUser);
+    }
+
+    public void SaveData()
+    {
+        StartCoroutine(UpdateUsernameAuth(usernameInputField.text));
+        StartCoroutine(UpdateUsernameDatabase(usernameInputField.text));
     }
 
     private void InitializeFirebase()
