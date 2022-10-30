@@ -102,6 +102,12 @@ public class PlayerManager : MonoBehaviour
         {
             EnableCinemachineKillerTracker();
         }
+        else
+        {
+            //GameObject fallCamera = Instantiate(fallDamageCamera, (new Vector3(controller.transform.position.x, controller.transform.position.y + 0.5f, controller.transform.position.z)), controller.transform.rotation);
+            transform.GetChild(0).transform.position = new Vector3(controller.transform.position.x, controller.transform.position.y + 0.5f, controller.transform.position.z);
+            transform.GetChild(0).transform.rotation = controller.transform.rotation;
+        }
 
         PhotonNetwork.Destroy(controller);
 

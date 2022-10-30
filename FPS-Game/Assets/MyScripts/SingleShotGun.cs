@@ -108,6 +108,21 @@ public class SingleShotGun : Gun
         buildingSystem = transform.root.transform.gameObject.GetComponent<BuildingSystem>();
     }
 
+    private void Update()
+    {
+        if (transform.GetChild(0).gameObject.activeInHierarchy == true)
+        {
+            if (playerController.inventoryEnabled == true)
+            {
+                transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(true);
+            }
+            if (playerController.inventoryEnabled == false)
+            {
+                transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
+            }
+        }        
+    }
+
     public override void Use()
     {
         if (PV.IsMine == false)

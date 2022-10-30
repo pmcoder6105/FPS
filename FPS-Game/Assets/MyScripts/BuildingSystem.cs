@@ -68,7 +68,10 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
                 blockCrosshair.GetComponent<SpriteRenderer>().enabled = true;
                 handHeldBlock.SetActive(true);
                 PV.RPC(nameof(DisplayHandHeldBlockColour), RpcTarget.All);
-                blockIndictorUIImage.SetActive(true);
+                if (controller.inventoryEnabled == true)
+                {
+                    blockIndictorUIImage.SetActive(true);
+                }                
             }
         }
         else if (isInBuildMode == false && controller.isDead == false)
@@ -77,7 +80,10 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
             {
                 blockCrosshair.GetComponent<SpriteRenderer>().enabled = false;
                 handHeldBlock.SetActive(false);
-                blockIndictorUIImage.SetActive(false);
+                if (controller.inventoryEnabled == false)
+                {
+                    blockIndictorUIImage.SetActive(false);
+                }
             }            
         }              
     }

@@ -83,6 +83,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public AudioSource footstepAudioSource;
     public bool hasDiedFromFallDamage = false;
 
+    public GameObject inventory;
+    public GameObject inventoryNumbers;
+    public bool inventoryEnabled = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -149,7 +153,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             micIsOn = !micIsOn; // is mic on changes
             if (micIsOn)
             {
-                Microphone.End(_deviceName); // NOTE: THIS ISN'T REALLY WORKING. ITS SUPPOSED TO DISABLE THE ACTIVE MIC 
+                Microphone.End(_deviceName); // NOTE: THIS ISN'T REALLY WORKING. ITS SUPPOSED TO DISABLE THE ACTIVE 
             }
             else
             {                
@@ -158,6 +162,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
         if (micIsOn) micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic on"; // if the mic is on, set the mic UI text to "on"
         else micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic off"; // if the mic is on, set the mic UI text to "off"
+
+        Debug.Log(micIsOn);
 
         scoreBoard.GetComponent<ScoreBoard>().OpenLeaveConfirmation(); // call OpenLeaveConfirmation function from ScoreBoard class
 
@@ -259,6 +265,23 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
 
         PV.RPC(nameof(ProcessFootstepSFX), RpcTarget.All);
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            inventoryEnabled = !inventoryEnabled; // is mic on changes
+            if (inventoryEnabled)
+            {
+                inventory.SetActive(true);
+                inventoryNumbers.SetActive(true);
+                inventoryEnabled = true;
+            }
+            else
+            {
+                inventory.SetActive(false);
+                inventoryNumbers.SetActive(false);
+                inventoryEnabled = false;
+            }
+        }
     }
 
    [PunRPC]
@@ -336,28 +359,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
 
         moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
-
-        //if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
-        //{
-        //    if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
-        //    {
-        //        footstepRate = 0.25f;
-        //        if (Time.time > nextFootstep)
-        //        {
-        //            nextFootstep = Time.time + footstepRate;
-        //            GetComponent<SmartFootstepSystem>().Footstep();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        footstepRate = 0.5f;
-        //        if (Time.time > nextFootstep)
-        //        {
-        //            nextFootstep = Time.time + footstepRate;
-        //            GetComponent<SmartFootstepSystem>().Footstep();
-        //        }
-        //    }
-        //}
     }
 
     // jump function from the tutorial
