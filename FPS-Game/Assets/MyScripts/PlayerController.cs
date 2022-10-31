@@ -153,11 +153,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             micIsOn = !micIsOn; // is mic on changes
             if (micIsOn)
             {
-                Microphone.End(_deviceName); // NOTE: THIS ISN'T REALLY WORKING. ITS SUPPOSED TO DISABLE THE ACTIVE 
+                VoiceChatManager.Instance.OnJoinedRoom();
             }
             else
-            {                
-                Microphone.Start(_deviceName, true, 10, AudioSettings.outputSampleRate); // NOTE: THIS ISN'T REALLY WORKING. ITS SUPPOSED TO ENABLE THE ACTIVE MIC 
+            {
+                VoiceChatManager.Instance.OnLeftRoom();
             }
         }
         if (micIsOn) micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic on"; // if the mic is on, set the mic UI text to "on"

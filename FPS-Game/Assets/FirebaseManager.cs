@@ -6,6 +6,7 @@ using Firebase.Auth;
 using TMPro;
 using UnityEngine.SceneManagement;
 using Firebase.Database;
+using Photon.Pun;
 
 
 public class FirebaseManager : MonoBehaviour
@@ -15,7 +16,7 @@ public class FirebaseManager : MonoBehaviour
     [Header("Firebase")]
     public DependencyStatus dependencyStatus;
     public FirebaseAuth auth;
-    public FirebaseUser User;
+    public static FirebaseUser User;
     public DatabaseReference DBReference;
 
     //Login variables
@@ -58,20 +59,50 @@ public class FirebaseManager : MonoBehaviour
         });
     }
 
+    //private void Update()
+    //{
+    //    if (Time.time > 3)
+    //    {
+    //        if (User == null)
+    //        {
+    //            menuCanvas.SetActive(false);
+    //            accountCanvas.SetActive(true);
+    //        }
+    //        else if (User != null)
+    //        {
+    //            User = auth.CurrentUser;
+    //            menuCanvas.SetActive(true);
+    //            accountCanvas.SetActive(false);
+    //        }
+    //        Debug.Log(User);
+
+    //    }
+    //    Debug.Log("Time is: " + Time.time);
+    //}
+
     private void Update()
     {
-        if (auth.CurrentUser != null)
+        if (User == null)
         {
+           menuCanvas.SetActive(false);
+           accountCanvas.SetActive(true);
+        }
+        else if (User != null)
+        {
+            User = auth.CurrentUser;
             menuCanvas.SetActive(true);
             accountCanvas.SetActive(false);
         }
-        Debug.Log(auth.CurrentUser);
+        Debug.Log(User);
+        //usernameInputField.text = PhotonNetwork.NickName;
+        PhotonNetwork.NickName = usernameInputField.text;
     }
 
-    public void SaveData()
+    public void SaveUsernameData()
     {
         StartCoroutine(UpdateUsernameAuth(usernameInputField.text));
         StartCoroutine(UpdateUsernameDatabase(usernameInputField.text));
+        
     }
 
     private void InitializeFirebase()
@@ -80,6 +111,8 @@ public class FirebaseManager : MonoBehaviour
         //Set the authentication instance object
         auth = FirebaseAuth.DefaultInstance;
         DBReference = FirebaseDatabase.DefaultInstance.RootReference;
+
+        StartCoroutine(CheckAutoLogin());
     }
 
     //Function for the login button
@@ -93,6 +126,29 @@ public class FirebaseManager : MonoBehaviour
     {
         //Call the register coroutine passing the email, password, and username
         StartCoroutine(Register(emailRegisterField.text, passwordRegisterField.text, usernameRegisterField.text));
+    }
+
+    private IEnumerator CheckAutoLogin()
+    {
+        yield return new WaitForEndOfFrame();
+        if (User != null)
+        {
+            var reloadUserTask = User.ReloadAsync();
+            yield return new WaitUntil(predicate: () => reloadUserTask.IsCompleted);
+            AutoLogin();
+        }
+        else
+        {
+            AccountUIManager.instance.LoginScreen();
+        }
+    }
+
+    private void AutoLogin()
+    {
+        if (User == null)
+        {
+            AccountUIManager.instance.LoginScreen();
+        }
     }
 
     private IEnumerator Login(string _email, string _password)
@@ -138,6 +194,7 @@ public class FirebaseManager : MonoBehaviour
             Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
             warningLoginText.text = "";
             confirmLoginText.text = "Logged In";
+            StartCoroutine(LoadUsernameData());
 
             yield return new WaitForSeconds(2);
 
@@ -146,6 +203,8 @@ public class FirebaseManager : MonoBehaviour
             accountCanvas.SetActive(false);
             mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(true);
             confirmLoginText.text = "";
+            emailLoginField.text = "";
+            passwordLoginField.text = "";
         }
     }
 
@@ -261,6 +320,29 @@ public class FirebaseManager : MonoBehaviour
         else
         {
             //Auth username is now updated
+        }
+    }
+
+    public  IEnumerator LoadUsernameData()
+    {
+        var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Value == null)
+        {
+            usernameInputField.text = "Guest " + Random.Range(0, 1000).ToString("000");
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+
+            usernameInputField.text = snapshot.Child("username").Value.ToString();
+            
         }
     }
 }
