@@ -4649,7 +4649,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter Username...
+  m_text: Change Username...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
   m_sharedMaterial: {fileID: 7472722706876977885, guid: d33d88fb613042a4f978e5f4582bf7f9, type: 2}
@@ -22884,6 +22884,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loginUI: {fileID: 294340917}
   registerUI: {fileID: 294340918}
+  emailLoginField: {fileID: 294340928}
+  passwordLoginField: {fileID: 294340927}
+  warningLoginText: {fileID: 294340926}
+  confirmLoginText: {fileID: 294340925}
+  usernameRegisterField: {fileID: 294340924}
+  emailRegisterField: {fileID: 294340923}
+  passwordRegisterField: {fileID: 294340922}
+  passwordRegisterVerifyField: {fileID: 294340921}
+  warningRegisterText: {fileID: 294340914}
+  menuCanvas: {fileID: 1892620189}
+  accountCanvas: {fileID: 509280371}
+  mainCamera: {fileID: 1687258581}
+  usernameInputField: {fileID: 975646900}
 --- !u!4 &804293629
 Transform:
   m_ObjectHideFlags: 0
@@ -26253,19 +26266,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dependencyStatus: 0
-  emailLoginField: {fileID: 294340928}
-  passwordLoginField: {fileID: 294340927}
-  warningLoginText: {fileID: 294340926}
-  confirmLoginText: {fileID: 294340925}
-  usernameRegisterField: {fileID: 294340924}
-  emailRegisterField: {fileID: 294340923}
-  passwordRegisterField: {fileID: 294340922}
-  passwordRegisterVerifyField: {fileID: 294340921}
-  warningRegisterText: {fileID: 294340914}
-  menuCanvas: {fileID: 1892620189}
-  accountCanvas: {fileID: 509280371}
-  mainCamera: {fileID: 1687258581}
-  usernameInputField: {fileID: 975646900}
 --- !u!4 &937149741
 Transform:
   m_ObjectHideFlags: 0

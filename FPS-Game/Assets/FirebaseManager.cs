@@ -19,26 +19,9 @@ public class FirebaseManager : MonoBehaviour
     public static FirebaseUser User;
     public DatabaseReference DBReference;
 
-    //Login variables
-    [Header("Login")]
-    public TMP_InputField emailLoginField;
-    public TMP_InputField passwordLoginField;
-    public TMP_Text warningLoginText;
-    public TMP_Text confirmLoginText;
+    
 
-    //Register variables
-    [Header("Register")]
-    public TMP_InputField usernameRegisterField;
-    public TMP_InputField emailRegisterField;
-    public TMP_InputField passwordRegisterField;
-    public TMP_InputField passwordRegisterVerifyField;
-    public TMP_Text warningRegisterText;
-
-    public GameObject menuCanvas;
-    public GameObject accountCanvas;
-    public GameObject mainCamera;
-
-    public TMP_InputField usernameInputField;
+    private static FirebaseManager _singleton;
 
 
     private void Awake()
@@ -57,51 +40,70 @@ public class FirebaseManager : MonoBehaviour
                 Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
             }
         });
-    }
 
-    //private void Update()
-    //{
-    //    if (Time.time > 3)
-    //    {
-    //        if (User == null)
-    //        {
-    //            menuCanvas.SetActive(false);
-    //            accountCanvas.SetActive(true);
-    //        }
-    //        else if (User != null)
-    //        {
-    //            User = auth.CurrentUser;
-    //            menuCanvas.SetActive(true);
-    //            accountCanvas.SetActive(false);
-    //        }
-    //        Debug.Log(User);
-
-    //    }
-    //    Debug.Log("Time is: " + Time.time);
-    //}
-
-    private void Update()
-    {
         if (User == null)
         {
-           menuCanvas.SetActive(false);
-           accountCanvas.SetActive(true);
+            AccountUIManager.instance.menuCanvas.SetActive(false);
+            AccountUIManager.instance.accountCanvas.SetActive(true);
         }
         else if (User != null)
         {
+            //StartCoroutine(LoadUsernameData());
             User = auth.CurrentUser;
-            menuCanvas.SetActive(true);
-            accountCanvas.SetActive(false);
+            AccountUIManager.instance.menuCanvas.SetActive(true);
+            AccountUIManager.instance.accountCanvas.SetActive(false);
         }
-        Debug.Log(User);
+        Debug.Log(PhotonNetwork.NickName);
         //usernameInputField.text = PhotonNetwork.NickName;
-        PhotonNetwork.NickName = usernameInputField.text;
+        //PhotonNetwork.NickName = usernameInputField.text;
+        // && accountCanvas.transform.GetChild(1).gameObject.activeInHierarchy == true
+
+        Singleton = this;
+
+        DontDestroyOnLoad(this.gameObject);
+
+    }
+
+    public static FirebaseManager Singleton
+    {
+        get => _singleton;
+        private set
+        {
+            if (_singleton == null)
+            {
+                _singleton = value;
+            }
+            else if (_singleton != value)
+            {
+                Debug.Log($"{nameof(FirebaseManager)} instance already exists, destroying object!");
+                Destroy(value.gameObject);
+            }
+        }
+    }
+
+    private void Update()
+    {
+        //if (User == null && accountCanvas.transform.GetChild(1).gameObject.activeInHierarchy == true)
+        //{
+        //   menuCanvas.SetActive(false);
+        //   accountCanvas.SetActive(true);
+        //}
+        //else if (User != null && accountCanvas.transform.GetChild(1).gameObject.activeInHierarchy == true)
+        //{
+        //    StartCoroutine(LoadUsernameData());
+        //    User = auth.CurrentUser;
+        //    menuCanvas.SetActive(true);
+        //    accountCanvas.SetActive(false);
+        //}
+        //Debug.Log(PhotonNetwork.NickName);
+        ////usernameInputField.text = PhotonNetwork.NickName;
+        //PhotonNetwork.NickName = usernameInputField.text;
     }
 
     public void SaveUsernameData()
     {
-        StartCoroutine(UpdateUsernameAuth(usernameInputField.text));
-        StartCoroutine(UpdateUsernameDatabase(usernameInputField.text));
+        StartCoroutine(UpdateUsernameAuth(AccountUIManager.instance.usernameInputField.text));
+        StartCoroutine(UpdateUsernameDatabase(AccountUIManager.instance.usernameInputField.text));
         
     }
 
@@ -112,20 +114,20 @@ public class FirebaseManager : MonoBehaviour
         auth = FirebaseAuth.DefaultInstance;
         DBReference = FirebaseDatabase.DefaultInstance.RootReference;
 
-        StartCoroutine(CheckAutoLogin());
+        //StartCoroutine(CheckAutoLogin());
     }
 
     //Function for the login button
     public void LoginButton()
     {
         //Call the login coroutine passing the email and password
-        StartCoroutine(Login(emailLoginField.text, passwordLoginField.text));
+        StartCoroutine(Login(AccountUIManager.instance.emailLoginField.text, AccountUIManager.instance.passwordLoginField.text));
     }
     //Function for the register button
     public void RegisterButton()
     {
         //Call the register coroutine passing the email, password, and username
-        StartCoroutine(Register(emailRegisterField.text, passwordRegisterField.text, usernameRegisterField.text));
+        StartCoroutine(Register(AccountUIManager.instance.emailRegisterField.text, AccountUIManager.instance.passwordRegisterField.text, AccountUIManager.instance.usernameRegisterField.text));
     }
 
     private IEnumerator CheckAutoLogin()
@@ -184,7 +186,7 @@ public class FirebaseManager : MonoBehaviour
                     message = "Account does not exist";
                     break;
             }
-            warningLoginText.text = message;
+            AccountUIManager.instance.warningLoginText.text = message;
         }
         else
         {
@@ -192,19 +194,19 @@ public class FirebaseManager : MonoBehaviour
             //Now get the result
             User = LoginTask.Result;
             Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
-            warningLoginText.text = "";
-            confirmLoginText.text = "Logged In";
+            AccountUIManager.instance.warningLoginText.text = "";
+            AccountUIManager.instance.confirmLoginText.text = "Logged In";
             StartCoroutine(LoadUsernameData());
 
             yield return new WaitForSeconds(2);
 
             //SceneManager.LoadScene(1);
-            menuCanvas.SetActive(true);
-            accountCanvas.SetActive(false);
-            mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(true);
-            confirmLoginText.text = "";
-            emailLoginField.text = "";
-            passwordLoginField.text = "";
+            AccountUIManager.instance.menuCanvas.SetActive(true);
+            AccountUIManager.instance.accountCanvas.SetActive(false);
+            AccountUIManager.instance.mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(true);
+            AccountUIManager.instance.confirmLoginText.text = "";
+            AccountUIManager.instance.emailLoginField.text = "";
+            AccountUIManager.instance.passwordLoginField.text = "";
         }
     }
 
@@ -213,12 +215,12 @@ public class FirebaseManager : MonoBehaviour
         if (_username == "")
         {
             //If the username field is blank show a warning
-            warningRegisterText.text = "Missing Username";
+            AccountUIManager.instance.warningRegisterText.text = "Missing Username";
         }
-        else if (passwordRegisterField.text != passwordRegisterVerifyField.text)
+        else if (AccountUIManager.instance.passwordRegisterField.text != AccountUIManager.instance.passwordRegisterVerifyField.text)
         {
             //If the password does not match show a warning
-            warningRegisterText.text = "Password Does Not Match!";
+            AccountUIManager.instance.warningRegisterText.text = "Password Does Not Match!";
         }
         else
         {
@@ -250,7 +252,7 @@ public class FirebaseManager : MonoBehaviour
                         message = "Email Already In Use";
                         break;
                 }
-                warningRegisterText.text = message;
+                AccountUIManager.instance.warningRegisterText.text = message;
             }
             else
             {
@@ -274,14 +276,14 @@ public class FirebaseManager : MonoBehaviour
                         Debug.LogWarning(message: $"Failed to register task with {ProfileTask.Exception}");
                         FirebaseException firebaseEx = ProfileTask.Exception.GetBaseException() as FirebaseException;
                         AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
-                        warningRegisterText.text = "Username Set Failed!";
+                        AccountUIManager.instance.warningRegisterText.text = "Username Set Failed!";
                     }
                     else
                     {
                         //Username is now set
                         //Now return to login screen
                         AccountUIManager.instance.LoginScreen();
-                        warningRegisterText.text = "";
+                        AccountUIManager.instance.warningRegisterText.text = "";
                     }
                 }
             }
@@ -335,14 +337,14 @@ public class FirebaseManager : MonoBehaviour
         }
         else if (DBTask.Result.Value == null)
         {
-            usernameInputField.text = "Guest " + Random.Range(0, 1000).ToString("000");
+            AccountUIManager.instance.usernameInputField.text = "Guest " + Random.Range(0, 1000).ToString("000");
         }
         else
         {
             DataSnapshot snapshot = DBTask.Result;
 
-            usernameInputField.text = snapshot.Child("username").Value.ToString();
-            
+            AccountUIManager.instance.usernameInputField.text = snapshot.Child("username").Value.ToString();
+            PhotonNetwork.NickName = snapshot.Child("username").Value.ToString();
         }
     }
 }

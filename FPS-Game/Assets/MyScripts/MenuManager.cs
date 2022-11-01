@@ -57,8 +57,8 @@ public class MenuManager : MonoBehaviour
     public void SignOut()
     {
         firebase.auth.SignOut();
-        firebase.menuCanvas.SetActive(false);
-        firebase.accountCanvas.SetActive(true);
-        firebase.mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(false);
+        AccountUIManager.instance.menuCanvas.SetActive(false);
+        AccountUIManager.instance.accountCanvas.SetActive(true);
+        AccountUIManager.instance.mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(false);
     }
 }
