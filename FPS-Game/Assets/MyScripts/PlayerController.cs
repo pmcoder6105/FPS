@@ -184,6 +184,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         Jump(); // jump
 
+        Debug.Log(grounded);
+
         SetPlayerHealthShader(); // set player health shader
 
         healthBarImage.fillAmount = currentHealth / maxHealth; // set the fill amount of the health bar
@@ -338,7 +340,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     void SetGlowIntensitity()
     {
         playerVisuals.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.SetFloat("_FresnelGlowIntensity", 2.5f);
-        playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetFloat("_FresnelGlowIntensity", 2.5f);
+        //playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetFloat("_FresnelGlowIntensity", 2.5f);
     }
 
     // look function from the tutorial
@@ -453,7 +455,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             {
                 healthyMat.SetColor("_MaterialColor", healthyColor); // set the "_MaterialColor" value in healthyMat to the newly made healthyColor
                 playerVisuals.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = healthyMat; // get the mesh renderer of the player visual and set the material to healthyMat
-                playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = healthyMat; // get the mesh renderer of the player visual and set the material to healthyMat
+                //playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = healthyMat; // get the mesh renderer of the player visual and set the material to healthyMat
             }        
        }
 
@@ -464,21 +466,21 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             if ((int)changedProps["healthColor"] == 3)
             {
                 playerVisuals.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.green); // set the "_FresnelColor" variable in the player visual's material to green
-                playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.green); // set the "_FresnelColor" variable in the player visual's material to green
+                //playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.green); // set the "_FresnelColor" variable in the player visual's material to green
             }
 
             // if the changed props ["healthColor"] == 2
             else if ((int)changedProps["healthColor"] == 2)
             {
                 playerVisuals.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.yellow); // set the "_FresnelColor" variable in the player visual's material to yellow
-                playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.yellow); // set the "_FresnelColor" variable in the player visual's material to yellow
+                //playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.yellow); // set the "_FresnelColor" variable in the player visual's material to yellow
             }
 
             // if the changed props ["healthColor"] == 1
             else if ((int)changedProps["healthColor"] == 1)
             {
                 playerVisuals.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.red); // set the "_FresnelColor" variable in the player visual's material to red
-                playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.red); // set the "_FresnelColor" variable in the player visual's material to red
+                //playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material.SetColor("_FresnelColor", Color.red); // set the "_FresnelColor" variable in the player visual's material to red
             }
        }
     }
@@ -618,7 +620,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             healthyMat.SetColor("_MaterialColor", healthyColor); // healthymat's "_MaterialColor" should be set to the converted healthyColor
             healthyMat.SetColor("_FresnelColor", Color.green); // set "_FresnelColor" color to green
             playerVisuals.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = healthyMat; // get player visual gameobject and set the material to healthyMat
-            playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = healthyMat; // get player visual gameobject and set the material to healthyMat
+            //playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = healthyMat; // get player visual gameobject and set the material to healthyMat
         }
 
     }
@@ -634,7 +636,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             normalMat.SetColor("_MaterialColor", normalColor); // normalmat's "_MaterialColor" should be set to the converted normalColor
             normalMat.SetColor("_FresnelColor", Color.yellow); // set "_FresnelColor" color to yellow
             playerVisuals.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = normalMat; // get player visual gameobject and set the material to normalMat
-            playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = normalMat; // get player visual gameobject and set the material to normalMat
+            //playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = normalMat; // get player visual gameobject and set the material to normalMat
         }
     }
 
@@ -649,7 +651,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             hurtMat.SetColor("_MaterialColor", hurtColor); // normalmat's "_MaterialColor" should be set to the converted hurtColor
             hurtMat.SetColor("_FresnelColor", Color.red); // set "_FresnelColor" color to red
             playerVisuals.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = hurtMat; // get player visual gameobject and set the material to hurtMat
-            playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = hurtMat; // get player visual gameobject and set the material to hurtMat
+            //playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = hurtMat; // get player visual gameobject and set the material to hurtMat
         }
     }
 

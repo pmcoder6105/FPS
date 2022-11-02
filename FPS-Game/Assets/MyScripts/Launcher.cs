@@ -68,8 +68,8 @@ public class Launcher : MonoBehaviourPunCallbacks
         if (titleMenu.activeInHierarchy == true)
         {
             playerModelSkin.SetActive(true);
-            playerModelSkin.transform.GetChild(0).GetChild(0).transform.gameObject.GetComponent<MeshRenderer>().material = colorChosen;
-            playerModelSkin.transform.GetChild(0).GetChild(1).transform.gameObject.GetComponent<MeshRenderer>().material = colorChosen;
+            playerModelSkin.transform.GetChild(0).transform.gameObject.GetComponent<MeshRenderer>().material = colorChosen;
+            //playerModelSkin.transform.GetChild(0).GetChild(1).transform.gameObject.GetComponent<MeshRenderer>().material = colorChosen;
         }
         else
         {

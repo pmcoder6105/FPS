@@ -18,14 +18,13 @@ public class FirebaseManager : MonoBehaviour
     public FirebaseAuth auth;
     public static FirebaseUser User;
     public DatabaseReference DBReference;
-
-    
-
     private static FirebaseManager _singleton;
-
-
     private void Awake()
     {
+        Singleton = this;
+
+        DontDestroyOnLoad(this.gameObject);
+
         //Check that all of the necessary dependencies for Firebase are present on the system
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
@@ -57,11 +56,6 @@ public class FirebaseManager : MonoBehaviour
         //usernameInputField.text = PhotonNetwork.NickName;
         //PhotonNetwork.NickName = usernameInputField.text;
         // && accountCanvas.transform.GetChild(1).gameObject.activeInHierarchy == true
-
-        Singleton = this;
-
-        DontDestroyOnLoad(this.gameObject);
-
     }
 
     public static FirebaseManager Singleton
