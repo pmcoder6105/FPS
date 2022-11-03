@@ -19,6 +19,7 @@ public class FirebaseManager : MonoBehaviour
     public static FirebaseUser User;
     public DatabaseReference DBReference;
     private static FirebaseManager _singleton;
+
     private void Awake()
     {
         Singleton = this;
@@ -40,18 +41,18 @@ public class FirebaseManager : MonoBehaviour
             }
         });
 
-        if (User == null)
-        {
-            AccountUIManager.instance.menuCanvas.SetActive(false);
-            AccountUIManager.instance.accountCanvas.SetActive(true);
-        }
-        else if (User != null)
-        {
-            //StartCoroutine(LoadUsernameData());
-            User = auth.CurrentUser;
-            AccountUIManager.instance.menuCanvas.SetActive(true);
-            AccountUIManager.instance.accountCanvas.SetActive(false);
-        }
+        //if (User == null)
+        //{
+        //    AccountUIManager.instance.menuCanvas.SetActive(false);
+        //    AccountUIManager.instance.accountCanvas.SetActive(true);
+        //}
+        //else if (User != null)
+        //{
+        //    //StartCoroutine(LoadUsernameData());
+        //    User = auth.CurrentUser;
+        //    AccountUIManager.instance.menuCanvas.SetActive(true);
+        //    AccountUIManager.instance.accountCanvas.SetActive(false);
+        //}
         Debug.Log(PhotonNetwork.NickName);
         //usernameInputField.text = PhotonNetwork.NickName;
         //PhotonNetwork.NickName = usernameInputField.text;
@@ -72,6 +73,7 @@ public class FirebaseManager : MonoBehaviour
                 Debug.Log($"{nameof(FirebaseManager)} instance already exists, destroying object!");
                 Destroy(value.gameObject);
             }
+            Debug.Log("Singleton called");
         }
     }
 
@@ -92,6 +94,7 @@ public class FirebaseManager : MonoBehaviour
         //Debug.Log(PhotonNetwork.NickName);
         ////usernameInputField.text = PhotonNetwork.NickName;
         //PhotonNetwork.NickName = usernameInputField.text;
+        Debug.Log(auth.CurrentUser);
     }
 
     public void SaveUsernameData()
