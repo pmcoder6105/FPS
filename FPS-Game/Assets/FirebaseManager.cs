@@ -20,6 +20,10 @@ public class FirebaseManager : MonoBehaviour
     public DatabaseReference DBReference;
     private static FirebaseManager _singleton;
 
+    static int hasLaunched = 0;
+
+    //SceneTracker sceneTracker;
+
     private void Awake()
     {
         Singleton = this;
@@ -49,7 +53,7 @@ public class FirebaseManager : MonoBehaviour
         //else if (User != null)
         //{
         //    //StartCoroutine(LoadUsernameData());
-        //    User = auth.CurrentUser;
+        //    
         //    AccountUIManager.instance.menuCanvas.SetActive(true);
         //    AccountUIManager.instance.accountCanvas.SetActive(false);
         //}
@@ -57,6 +61,14 @@ public class FirebaseManager : MonoBehaviour
         //usernameInputField.text = PhotonNetwork.NickName;
         //PhotonNetwork.NickName = usernameInputField.text;
         // && accountCanvas.transform.GetChild(1).gameObject.activeInHierarchy == true
+    }
+
+    private void Start()
+    {
+
+        
+
+        //SceneManager.
     }
 
     public static FirebaseManager Singleton
@@ -94,7 +106,36 @@ public class FirebaseManager : MonoBehaviour
         //Debug.Log(PhotonNetwork.NickName);
         ////usernameInputField.text = PhotonNetwork.NickName;
         //PhotonNetwork.NickName = usernameInputField.text;
-        Debug.Log(auth.CurrentUser);
+        //Debug.Log(auth.CurrentUser);
+
+
+
+
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            //hasLaunched++;
+            //SceneTracker sceneTrackerGO = GameObject.Find("SceneTracker").GetComponent<SceneTracker>();
+            if (SceneTracker.hasLoggedIn == false)
+            {
+                AccountUIManager.instance.menuCanvas.SetActive(false);
+                AccountUIManager.instance.accountCanvas.SetActive(true);
+            }
+            else
+            {
+                User = auth.CurrentUser;
+                AccountUIManager.instance.menuCanvas.SetActive(true);
+                AccountUIManager.instance.accountCanvas.SetActive(false);
+            }
+            Debug.Log(SceneTracker.hasLoggedIn);
+        }
+
+        
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("OnSceneLoaded: " + scene.name);
+        Debug.Log(mode);
     }
 
     public void SaveUsernameData()
