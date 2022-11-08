@@ -26,7 +26,7 @@ public class ApplyColor : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void SavePlayerColor()
     {
         if (!PV.IsMine)
             return;
@@ -41,5 +41,13 @@ public class ApplyColor : MonoBehaviour
         //fcp.TypeHex(PlayerPrefs.GetString("BeanPlayerColor"));
 
         firebaseManager.UpdatePlayerColor(ColorUtility.ToHtmlStringRGB(matHealthy.GetColor("_MaterialColor")));
+
+        //LOAD DATA HERE
+        //fcp.TypeHex()
+    }
+
+    private void OnEnable()
+    {
+        firebaseManager.LoadPlayerColorData(this.gameObject, fcp, matHealthy);
     }
 }

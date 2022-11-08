@@ -6,6 +6,13 @@ public class CustomizeManager : MonoBehaviour
 {
     public GameObject customizeBeanModel;
 
+    FirebaseManager firebaseManager;
+
+    private void Start()
+    {
+        firebaseManager = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
+    }
+
     void Update()
     {
 

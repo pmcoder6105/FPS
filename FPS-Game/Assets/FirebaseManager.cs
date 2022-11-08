@@ -400,4 +400,32 @@ public class FirebaseManager : MonoBehaviour
             //Auth username is now updated
         }
     }
+
+    public IEnumerator LoadPlayerColorData(GameObject beanModel, FlexibleColorPicker fcp, Material healthyMat)
+    {
+        var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Value == null)
+        {
+            AccountUIManager.instance.usernameInputField.text = "Guest " + Random.Range(0, 1000).ToString("000");
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+
+            //AccountUIManager.instance.usernameInputField.text = snapshot.Child("username").Value.ToString();
+
+            if (ColorUtility.TryParseHtmlString("#" + snapshot.Child("playerColor"), out Color playerColor))
+            {
+                beanModel.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.gameObject.GetComponent<MeshRenderer>().material.color = playerColor;
+                fcp.TypeHex(ColorUtility.ToHtmlStringRGB(healthyMat.GetColor("_MaterialColor")));
+            }                
+        }
+    }
 }
