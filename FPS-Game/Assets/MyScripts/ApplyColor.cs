@@ -18,6 +18,13 @@ public class ApplyColor : MonoBehaviour
 
     public Shader glowShader;
 
+    FirebaseManager firebaseManager;
+
+    private void Start()
+    {
+        firebaseManager = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -30,7 +37,9 @@ public class ApplyColor : MonoBehaviour
 
         blockColor.color = fcp.color;
 
-        PlayerPrefs.SetString("BeanPlayerColor", ColorUtility.ToHtmlStringRGB(matHealthy.GetColor("_MaterialColor")));
-        fcp.TypeHex(PlayerPrefs.GetString("BeanPlayerColor"));
+        //PlayerPrefs.SetString("BeanPlayerColor", ColorUtility.ToHtmlStringRGB(matHealthy.GetColor("_MaterialColor")));
+        //fcp.TypeHex(PlayerPrefs.GetString("BeanPlayerColor"));
+
+        firebaseManager.UpdatePlayerColor(ColorUtility.ToHtmlStringRGB(matHealthy.GetColor("_MaterialColor")));
     }
 }

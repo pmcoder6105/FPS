@@ -141,8 +141,7 @@ public class FirebaseManager : MonoBehaviour
     public void SaveUsernameData()
     {
         StartCoroutine(UpdateUsernameAuth(AccountUIManager.instance.usernameInputField.text));
-        StartCoroutine(UpdateUsernameDatabase(AccountUIManager.instance.usernameInputField.text));
-        
+        StartCoroutine(UpdateUsernameDatabase(AccountUIManager.instance.usernameInputField.text));        
     }
 
     private void InitializeFirebase()
@@ -383,6 +382,22 @@ public class FirebaseManager : MonoBehaviour
 
             AccountUIManager.instance.usernameInputField.text = snapshot.Child("username").Value.ToString();
             PhotonNetwork.NickName = snapshot.Child("username").Value.ToString();
+        }
+    }
+
+    public IEnumerator UpdatePlayerColor(string _playerColorHexadecimal)
+    {
+        //Call the Firebase auth update user profile function passing the profile with the username
+        var DBTask = DBReference.Child("users").Child(User.UserId).Child("playerColor").SetValueAsync(_playerColorHexadecimal);
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else
+        {
+            //Auth username is now updated
         }
     }
 }
