@@ -2555,6 +2555,10 @@ PrefabInstance:
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2130943084915617136, guid: 4214b57e615806c448ba9d993d629531, type: 3}
+      propertyPath: onColorChange.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2130943084915617136, guid: 4214b57e615806c448ba9d993d629531, type: 3}
       propertyPath: onColorChange.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
@@ -3243,7 +3247,8 @@ MonoBehaviour:
   matHurt: {fileID: 2100000, guid: 14cb237d04ead3446911c47556c59b8b, type: 2}
   blockColor: {fileID: 2100000, guid: 625ed3f5f0a6f8042b2c12fd7f60f4b1, type: 2}
   customizeMenuBeanModelGameObject: {fileID: 0}
-  glowShader: {fileID: 0}
+  glowShader: {fileID: -6465566751694194690, guid: 6ad2dabf2acfce943a062f5e7878dd92, type: 3}
+  saveButton: {fileID: 0}
 --- !u!95 &109604514
 Animator:
   serializedVersion: 4
@@ -11460,7 +11465,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &376245427
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11479,8 +11484,8 @@ RectTransform:
   - {fileID: 1264735289}
   - {fileID: 687526439}
   - {fileID: 481666677}
-  - {fileID: 867644777}
   - {fileID: 404276419}
+  - {fileID: 867644777}
   m_Father: {fileID: 1892620193}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12218,15 +12223,15 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 109604513}
+        m_TargetAssemblyTypeName: ApplyColor, Assembly-CSharp
+        m_MethodName: SavePlayerColor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -12284,12 +12289,12 @@ RectTransform:
   m_Children:
   - {fileID: 1892703095}
   m_Father: {fileID: 376245427}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 507.6, y: 496.8}
-  m_SizeDelta: {x: 344.3, y: 70}
+  m_AnchoredPosition: {x: 0, y: 74.999985}
+  m_SizeDelta: {x: 600, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &408460820
 GameObject:
@@ -36059,7 +36064,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh49976
+  m_Name: pb_Mesh33170
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -46018,7 +46023,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1892620190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46137,6 +46142,8 @@ MonoBehaviour:
   playerModelSkin: {fileID: 1849329857}
   colorChosen: {fileID: 2100000, guid: d0474e32081b0ee48ba0e742382ca5b7, type: 2}
   titleMenu: {fileID: 2134621396}
+  fcp: {fileID: 867644778}
+  customizeBeanModel: {fileID: 109604508}
 --- !u!114 &1892620195
 MonoBehaviour:
   m_ObjectHideFlags: 0

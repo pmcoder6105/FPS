@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
+using UnityEngine.UI;
 
 public class ApplyColor : MonoBehaviour
 {
@@ -20,13 +22,33 @@ public class ApplyColor : MonoBehaviour
 
     FirebaseManager firebaseManager;
 
-    private void Start()
-    {
-        firebaseManager = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
-    }
+    List<Material> customizeBeanMaterialsList = new List<Material>();
+
+    public Button saveButton;
 
     // Update is called once per frame
-    void SavePlayerColor()
+    
+
+    private void Update()
+    {
+        int number = customizeBeanMaterialsList.Count;
+        if (customizeBeanMaterialsList.Count <= 0)
+        {
+            Material materialItem = customizeBeanMaterialsList[0];
+            materialItem.SetColor("_MaterialColor", fcp.color);
+            this.gameObject.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<MeshRenderer>().material = materialItem;
+        } else
+        {
+            Material item = customizeBeanMaterialsList[number - 1];
+            item.SetColor("_MaterialColor", fcp.color);
+            this.gameObject.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<MeshRenderer>().material = item;
+        }
+
+        
+    }
+
+
+    public void SavePlayerColor()
     {
         if (!PV.IsMine)
             return;
@@ -40,14 +62,15 @@ public class ApplyColor : MonoBehaviour
         //PlayerPrefs.SetString("BeanPlayerColor", ColorUtility.ToHtmlStringRGB(matHealthy.GetColor("_MaterialColor")));
         //fcp.TypeHex(PlayerPrefs.GetString("BeanPlayerColor"));
 
-        firebaseManager.UpdatePlayerColor(ColorUtility.ToHtmlStringRGB(matHealthy.GetColor("_MaterialColor")));
-
-        //LOAD DATA HERE
-        //fcp.TypeHex()
+        StartCoroutine(firebaseManager.UpdatePlayerColor(ColorUtility.ToHtmlStringRGB(this.gameObject.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<MeshRenderer>().material.GetColor("_MaterialColor"))));
     }
 
     private void OnEnable()
     {
-        firebaseManager.LoadPlayerColorData(this.gameObject, fcp, matHealthy);
+        firebaseManager = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
+        StartCoroutine(firebaseManager.LoadPlayerColorData(gameObject, fcp, matHealthy));
+
+        Material newMat = new Material(glowShader);
+        customizeBeanMaterialsList.Add(newMat);
     }
 }

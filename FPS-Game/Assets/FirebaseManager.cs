@@ -129,17 +129,13 @@ public class FirebaseManager : MonoBehaviour
             Debug.Log(SceneTracker.hasLoggedIn);
         }
 
-        
-    }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        Debug.Log("OnSceneLoaded: " + scene.name);
-        Debug.Log(mode);
     }
 
     public void SaveUsernameData()
     {
+        if (AccountUIManager.instance.usernameInputField.text == null)
+            return;
         StartCoroutine(UpdateUsernameAuth(AccountUIManager.instance.usernameInputField.text));
         StartCoroutine(UpdateUsernameDatabase(AccountUIManager.instance.usernameInputField.text));        
     }
@@ -413,19 +409,21 @@ public class FirebaseManager : MonoBehaviour
         }
         else if (DBTask.Result.Value == null)
         {
-            AccountUIManager.instance.usernameInputField.text = "Guest " + Random.Range(0, 1000).ToString("000");
+            fcp.SetColor(Color.red);
+            healthyMat.SetColor(("_MaterialColor"), Color.red);
+            UpdatePlayerColor(ColorUtility.ToHtmlStringRGB(healthyMat.GetColor("_MaterialColor")));
         }
         else
         {
             DataSnapshot snapshot = DBTask.Result;
 
-            //AccountUIManager.instance.usernameInputField.text = snapshot.Child("username").Value.ToString();
+            Debug.Log("User's player color is..." + snapshot.Child("playerColor").Value.ToString());
 
-            if (ColorUtility.TryParseHtmlString("#" + snapshot.Child("playerColor"), out Color playerColor))
+            if (ColorUtility.TryParseHtmlString("#" + snapshot.Child("playerColor").Value.ToString(), out Color playerColor))
             {
-                beanModel.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.gameObject.GetComponent<MeshRenderer>().material.color = playerColor;
-                fcp.TypeHex(ColorUtility.ToHtmlStringRGB(healthyMat.GetColor("_MaterialColor")));
-            }                
+                beanModel.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.gameObject.GetComponent<MeshRenderer>().material.color = playerColor;                
+            }
+            fcp.TypeHex(ColorUtility.ToHtmlStringRGB(healthyMat.GetColor("_MaterialColor")));
         }
     }
 }
