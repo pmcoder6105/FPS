@@ -67,8 +67,11 @@ public class ApplyColor : MonoBehaviour
 
     private void OnEnable()
     {
+        if (!PV.IsMine)
+            return;
+
         firebaseManager = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
-        StartCoroutine(firebaseManager.LoadPlayerColorData(gameObject, fcp, matHealthy));
+        StartCoroutine(firebaseManager.LoadPlayerColorDataCustomizeBeanModel(gameObject, fcp, matHealthy));
 
         Material newMat = new Material(glowShader);
         customizeBeanMaterialsList.Add(newMat);

@@ -397,7 +397,7 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
-    public IEnumerator LoadPlayerColorData(GameObject beanModel, FlexibleColorPicker fcp, Material healthyMat)
+    public IEnumerator LoadPlayerColorDataCustomizeBeanModel(GameObject beanModel, FlexibleColorPicker fcp, Material healthyMat)
     {
         var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
 
@@ -421,9 +421,42 @@ public class FirebaseManager : MonoBehaviour
 
             if (ColorUtility.TryParseHtmlString("#" + snapshot.Child("playerColor").Value.ToString(), out Color playerColor))
             {
-                beanModel.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.gameObject.GetComponent<MeshRenderer>().material.color = playerColor;                
+                beanModel.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.gameObject.GetComponent<MeshRenderer>().material.color = playerColor;
+                healthyMat.SetColor(("_MaterialColor"), playerColor);
             }
-            fcp.TypeHex(ColorUtility.ToHtmlStringRGB(healthyMat.GetColor("_MaterialColor")));
+            
+            fcp.TypeHex(snapshot.Child("playerColor").Value.ToString());
+        }
+    }
+
+    public IEnumerator LoadPlayerColorDataMainMenuBeanModel(GameObject beanModel, FlexibleColorPicker fcp, Material healthyMat)
+    {
+        var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Value == null)
+        {
+            fcp.SetColor(Color.red);
+            healthyMat.SetColor(("_MaterialColor"), Color.red);
+            UpdatePlayerColor("FF0000");
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+
+            Debug.Log("User's player color is..." + snapshot.Child("playerColor").Value.ToString());
+
+            if (ColorUtility.TryParseHtmlString("#" + snapshot.Child("playerColor").Value.ToString(), out Color playerColor))
+            {
+                beanModel.transform.GetChild(0).transform.GetChild(0).transform.gameObject.GetComponent<MeshRenderer>().material.color = playerColor;
+                healthyMat.SetColor(("_MaterialColor"), playerColor);
+            }
+            fcp.TypeHex(snapshot.Child("playerColor").Value.ToString());
         }
     }
 }

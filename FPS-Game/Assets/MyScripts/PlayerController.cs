@@ -87,6 +87,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public GameObject inventoryNumbers;
     public bool inventoryEnabled = false;
 
+    public ParticleSystem dustTrailParticleSystem;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -100,9 +102,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (PV.IsMine) // if PV is mine
         {
             EquipItem(0); // equip with int of 0
-            scoreBoard = GameObject.Find("ScoreBoard");
-            micToggleText = GameObject.Find("MicToggleText");
-            mapViewerCamera = GameObject.Find("RoomViewerCamera");
+            
         }
         else // if PV isn't mine
         {
@@ -131,9 +131,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         if (!PV.IsMine) // if PV isn't mine
             return;
-        
+
         // assign following variables to objects found in each scene
-        
+        scoreBoard = GameObject.Find("ScoreBoard");
+        micToggleText = GameObject.Find("MicToggleText");
+        mapViewerCamera = GameObject.Find("RoomViewerCamera");
 
         // if you click escape and the death panel hasn't been instantiated, then unlock cursor
         if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked && hasDeathPanelActivated == false)
@@ -302,13 +304,31 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 {
                     StartCoroutine(nameof(WalkSFX));
                 }
+                if (!PV.IsMine)
+                    return;
+                PV.RPC(nameof(RPC_DisplayDustTrail), RpcTarget.All);
             }
             Debug.Log("Footstep");
         }
         else
         {
             StartCoroutine(nameof(StopWalkSFX));
+            if (!PV.IsMine)
+                return;
+            PV.RPC(nameof(RPC_StopDustTrail), RpcTarget.All);
         }
+    }
+
+    [PunRPC]
+    void RPC_DisplayDustTrail()
+    {
+        dustTrailParticleSystem.GetComponent<ParticleSystem>().Emit(1);
+    }
+
+    [PunRPC]
+    void RPC_StopDustTrail()
+    {
+        dustTrailParticleSystem.GetComponent<ParticleSystem>().Emit(0);
     }
 
     IEnumerator WalkSFX()
