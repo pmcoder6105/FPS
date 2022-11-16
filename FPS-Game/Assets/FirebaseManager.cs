@@ -24,6 +24,8 @@ public class FirebaseManager : MonoBehaviour
 
     //SceneTracker sceneTracker;
 
+    public string playerColorValue;
+
     private void Awake()
     {
         Singleton = this;
@@ -463,13 +465,15 @@ public class FirebaseManager : MonoBehaviour
             }
             fcp.TypeHex(snapshot.Child("playerColor").Value.ToString());
 
-            GetBeanColor(snapshot.Child("playerColor").Value.ToString());
+            playerColorValue = snapshot.Child("playerColor").Value.ToString();
+
+            //GetBeanColor(snapshot.Child("playerColor").Value.ToString());
         }
     }    
 
-    public string GetBeanColor(string value)
-    {
-        string _value = value;
-        return _value;
-    }
+    //public string GetBeanColor(string value)
+    //{
+    //    string _value = value;
+    //    return _value;
+    //}
 }

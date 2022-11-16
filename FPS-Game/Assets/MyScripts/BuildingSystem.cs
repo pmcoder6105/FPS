@@ -142,7 +142,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
     {
 
         Material blockMaterial = new Material(lit);
-        if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("BeanPlayerColor"), out Color beanColor))
+        if (ColorUtility.TryParseHtmlString("#" + controller.firebase.playerColorValue, out Color beanColor))
         {
             blockMaterial.color = beanColor;
         }
@@ -155,7 +155,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
         if (PV.IsMine)
         {
             Hashtable hash = new();
-            hash.Add("blockColour", PlayerPrefs.GetString("BeanPlayerColor"));
+            hash.Add("blockColour", controller.firebase.playerColorValue);
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
         }
 
@@ -168,7 +168,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
     {
 
         Material blockMaterial = new Material(lit);
-        if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("BeanPlayerColor"), out Color beanColor))
+        if (ColorUtility.TryParseHtmlString("#" + controller.firebase.playerColorValue, out Color beanColor))
         {
             blockMaterial.color = beanColor;
         }
@@ -178,7 +178,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
         if (PV.IsMine)
         {
             Hashtable hash = new();
-            hash.Add("handHeldBlockColour", PlayerPrefs.GetString("BeanPlayerColor"));
+            hash.Add("handHeldBlockColour", controller.firebase.playerColorValue);
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
         }
     }

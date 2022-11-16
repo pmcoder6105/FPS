@@ -619,7 +619,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             //hash.Add("beanColor", PlayerPrefs.GetString("BeanPlayerColor")); // add "beanColor" with a value of PlayerPrefs.GetString("BeanPlayerColor")
             //PhotonNetwork.LocalPlayer.SetCustomProperties(hash); // set custom properties
 
-            hash.Add("beanColor", firebase.GetBeanColor()); // add "beanColor" with a value of PlayerPrefs.GetString("BeanPlayerColor")
+            hash.Add("beanColor", firebase.playerColorValue); // add "beanColor" with a value of PlayerPrefs.GetString("BeanPlayerColor")
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash); // set custom properties
 
             if (isDead)
@@ -642,7 +642,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Material healthyMat = new Material(glowShader); // new material with glowshader
         
         // get player hexadecimal that was saved in player prefs and convert that into a color
-        if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("BeanPlayerColor"), out Color healthyColor))
+        if (ColorUtility.TryParseHtmlString("#" + firebase.playerColorValue, out Color healthyColor))
         {
             healthyMat.SetColor("_MaterialColor", healthyColor); // healthymat's "_MaterialColor" should be set to the converted healthyColor
             healthyMat.SetColor("_FresnelColor", Color.green); // set "_FresnelColor" color to green
@@ -658,7 +658,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Material normalMat = new Material(glowShader); // new material with glowshader
 
         // get player hexadecimal that was saved in player prefs and convert that into a color
-        if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("BeanPlayerColor"), out Color normalColor))
+        if (ColorUtility.TryParseHtmlString("#" + firebase.playerColorValue, out Color normalColor))
         {
             normalMat.SetColor("_MaterialColor", normalColor); // normalmat's "_MaterialColor" should be set to the converted normalColor
             normalMat.SetColor("_FresnelColor", Color.yellow); // set "_FresnelColor" color to yellow
@@ -673,7 +673,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Material hurtMat = new Material(glowShader); // new material with glowshader
 
         // get player hexadecimal that was saved in player prefs and convert that into a color
-        if (ColorUtility.TryParseHtmlString("#" + PlayerPrefs.GetString("BeanPlayerColor"), out Color hurtColor))
+        if (ColorUtility.TryParseHtmlString("#" + firebase.playerColorValue, out Color hurtColor))
         {
             hurtMat.SetColor("_MaterialColor", hurtColor); // normalmat's "_MaterialColor" should be set to the converted hurtColor
             hurtMat.SetColor("_FresnelColor", Color.red); // set "_FresnelColor" color to red

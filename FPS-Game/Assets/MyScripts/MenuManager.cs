@@ -70,5 +70,6 @@ public class MenuManager : MonoBehaviour
         AccountUIManager.instance.accountCanvas.SetActive(true);
         AccountUIManager.instance.mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(false);
         //PhotonNetwork.Disconnect();
+        FirebaseManager.Singleton.playerColorValue = "";
     }
 }
