@@ -35,6 +35,12 @@ public class AccountUIManager : MonoBehaviour
 
     public TMP_InputField usernameInputField;
 
+    public GameObject titleMenu;
+
+    public GameObject mainMenuBeanObject;
+    public Material healthyMat;
+    public FlexibleColorPicker fcp;
+
     private void Awake()
     {
         if (instance == null)

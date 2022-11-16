@@ -230,16 +230,21 @@ public class FirebaseManager : MonoBehaviour
             AccountUIManager.instance.warningLoginText.text = "";
             AccountUIManager.instance.confirmLoginText.text = "Logged In";
             StartCoroutine(LoadUsernameData());
+            StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
 
             yield return new WaitForSeconds(2);
 
             //SceneManager.LoadScene(1);
             AccountUIManager.instance.menuCanvas.SetActive(true);
             AccountUIManager.instance.accountCanvas.SetActive(false);
+            AccountUIManager.instance.titleMenu.SetActive(true);
             AccountUIManager.instance.mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(true);
             AccountUIManager.instance.confirmLoginText.text = "";
             AccountUIManager.instance.emailLoginField.text = "";
             AccountUIManager.instance.passwordLoginField.text = "";
+            
+            //if (PhotonNetwork.IsConnectedAndReady)
+            //    Debug.Log("Connected TEST DEBUG");
         }
     }
 
@@ -457,6 +462,14 @@ public class FirebaseManager : MonoBehaviour
                 healthyMat.SetColor(("_MaterialColor"), playerColor);
             }
             fcp.TypeHex(snapshot.Child("playerColor").Value.ToString());
+
+            GetBeanColor(snapshot.Child("playerColor").Value.ToString());
         }
+    }    
+
+    public string GetBeanColor(string value)
+    {
+        string _value = value;
+        return _value;
     }
 }

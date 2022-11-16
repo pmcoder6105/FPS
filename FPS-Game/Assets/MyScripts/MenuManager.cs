@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class MenuManager : MonoBehaviour
 {
@@ -10,6 +10,9 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Menu[] menus;
 
     FirebaseManager firebase;
+
+    public GameObject titleMenu;
+    public GameObject loadingMenu;
 
     private void Awake()
     {
@@ -30,6 +33,12 @@ public class MenuManager : MonoBehaviour
                 CloseMenu(menus[i]);
             }
         }
+    }
+
+    private void Update()
+    {
+        if (titleMenu.activeInHierarchy == true)
+            loadingMenu.SetActive(false);
     }
 
     public void OpenMenu(Menu menu)
@@ -60,5 +69,6 @@ public class MenuManager : MonoBehaviour
         AccountUIManager.instance.menuCanvas.SetActive(false);
         AccountUIManager.instance.accountCanvas.SetActive(true);
         AccountUIManager.instance.mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(false);
+        //PhotonNetwork.Disconnect();
     }
 }

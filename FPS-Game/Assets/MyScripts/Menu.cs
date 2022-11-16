@@ -14,6 +14,13 @@ public class Menu : MonoBehaviour
 
     public Material healthyMat;
 
+    private void Awake()
+    {
+        //firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
+        //GameObject.FindObjectsOfType(FirebaseManager);
+        firebase = GameObject.FindObjectOfType<FirebaseManager>();
+    }
+
     private void Update()
     {
         firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();

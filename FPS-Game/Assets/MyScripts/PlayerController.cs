@@ -89,6 +89,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public ParticleSystem dustTrailParticleSystem;
 
+    public FirebaseManager firebase;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -102,7 +104,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (PV.IsMine) // if PV is mine
         {
             EquipItem(0); // equip with int of 0
-            
+            scoreBoard = GameObject.Find("ScoreBoard");
+            micToggleText = GameObject.Find("MicToggleText");
+            mapViewerCamera = GameObject.Find("RoomViewerCamera");
+            firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
         }
         else // if PV isn't mine
         {
@@ -133,9 +138,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             return;
 
         // assign following variables to objects found in each scene
-        scoreBoard = GameObject.Find("ScoreBoard");
-        micToggleText = GameObject.Find("MicToggleText");
-        mapViewerCamera = GameObject.Find("RoomViewerCamera");
+        
 
         // if you click escape and the death panel hasn't been instantiated, then unlock cursor
         if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked && hasDeathPanelActivated == false)
@@ -718,5 +721,5 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Destroy(overheadUsernameText); // destroy overhead username text
         Destroy(healthBar); // destroy health bar
         GetComponent<CapsuleCollider>().enabled = false; // disable capsule collider
-    }
+    }    
 }
