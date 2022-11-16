@@ -616,7 +616,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             {
                 hash.Remove("beanColor"); // make sure to not remove a custom property when changing it
             }
-            hash.Add("beanColor", PlayerPrefs.GetString("BeanPlayerColor")); // add "beanColor" with a value of PlayerPrefs.GetString("BeanPlayerColor")
+            //hash.Add("beanColor", PlayerPrefs.GetString("BeanPlayerColor")); // add "beanColor" with a value of PlayerPrefs.GetString("BeanPlayerColor")
+            //PhotonNetwork.LocalPlayer.SetCustomProperties(hash); // set custom properties
+
+            hash.Add("beanColor", firebase.GetBeanColor()); // add "beanColor" with a value of PlayerPrefs.GetString("BeanPlayerColor")
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash); // set custom properties
 
             if (isDead)
