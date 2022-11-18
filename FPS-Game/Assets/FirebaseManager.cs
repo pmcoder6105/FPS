@@ -152,6 +152,26 @@ public class FirebaseManager : MonoBehaviour
         //StartCoroutine(CheckAutoLogin());
     }
 
+    private void AuthStateChanged(object sender, System.EventArgs eventArgs)
+    {
+        if (auth.CurrentUser != User)
+        {
+            bool signedIn = User != auth.CurrentUser && auth.CurrentUser != null;
+
+            if (!signedIn && User != null)
+            {
+                Debug.Log("signed out");
+            }
+
+            User = auth.CurrentUser;
+
+            if (signedIn)
+            {
+                Debug.Log($"Signed In: { User.DisplayName }");
+            }
+        }
+    }
+
     //Function for the login button
     public void LoginButton()
     {
@@ -165,20 +185,7 @@ public class FirebaseManager : MonoBehaviour
         StartCoroutine(Register(AccountUIManager.instance.emailRegisterField.text, AccountUIManager.instance.passwordRegisterField.text, AccountUIManager.instance.usernameRegisterField.text));
     }
 
-    private IEnumerator CheckAutoLogin()
-    {
-        yield return new WaitForEndOfFrame();
-        if (User != null)
-        {
-            var reloadUserTask = User.ReloadAsync();
-            yield return new WaitUntil(predicate: () => reloadUserTask.IsCompleted);
-            AutoLogin();
-        }
-        else
-        {
-            AccountUIManager.instance.LoginScreen();
-        }
-    }
+
 
     private void AutoLogin()
     {
@@ -190,9 +197,11 @@ public class FirebaseManager : MonoBehaviour
 
     private IEnumerator Login(string _email, string _password)
     {
-        //Call the Firebase auth signin function passing the email and password
-        var LoginTask = auth.SignInWithEmailAndPasswordAsync(_email, _password);
-        //Wait until the task completes
+        Credential credential = EmailAuthProvider.GetCredential(_email, _password);
+
+        var LoginTask = auth.SignInWithCredentialAsync(credential);
+
+        //var LoginTask = auth.SignInWithEmailAndPasswordAsync(_email, _password);
         yield return new WaitUntil(predicate: () => LoginTask.IsCompleted);
 
         if (LoginTask.Exception != null)
@@ -225,28 +234,50 @@ public class FirebaseManager : MonoBehaviour
         }
         else
         {
-            //User is now logged in
-            //Now get the result
-            User = LoginTask.Result;
-            Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
-            AccountUIManager.instance.warningLoginText.text = "";
-            AccountUIManager.instance.confirmLoginText.text = "Logged In";
-            StartCoroutine(LoadUsernameData());
-            StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
+            if (User.IsEmailVerified)
+            {
+                //User is now logged in
+                //Now get the result
+                User = LoginTask.Result;
+                Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
+                AccountUIManager.instance.warningLoginText.text = "";
+                AccountUIManager.instance.confirmLoginText.text = "Logged In";
+                StartCoroutine(LoadUsernameData());
+                StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
 
-            yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(2);
 
-            //SceneManager.LoadScene(1);
-            AccountUIManager.instance.menuCanvas.SetActive(true);
-            AccountUIManager.instance.accountCanvas.SetActive(false);
-            AccountUIManager.instance.titleMenu.SetActive(true);
-            AccountUIManager.instance.mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(true);
-            AccountUIManager.instance.confirmLoginText.text = "";
-            AccountUIManager.instance.emailLoginField.text = "";
-            AccountUIManager.instance.passwordLoginField.text = "";
-            
-            //if (PhotonNetwork.IsConnectedAndReady)
-            //    Debug.Log("Connected TEST DEBUG");
+                //SceneManager.LoadScene(1);
+                AccountUIManager.instance.menuCanvas.SetActive(true);
+                AccountUIManager.instance.accountCanvas.SetActive(false);
+                AccountUIManager.instance.titleMenu.SetActive(true);
+                AccountUIManager.instance.mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(true);
+                AccountUIManager.instance.confirmLoginText.text = "";
+                AccountUIManager.instance.emailLoginField.text = "";
+                AccountUIManager.instance.passwordLoginField.text = "";
+
+                //if (PhotonNetwork.IsConnectedAndReady)
+                //    Debug.Log("Connected TEST DEBUG");
+            }
+            else
+            {
+                User = LoginTask.Result;
+                Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
+                AccountUIManager.instance.warningLoginText.text = "";
+                AccountUIManager.instance.confirmLoginText.text = "Logged In";
+                StartCoroutine(LoadUsernameData());
+                StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
+
+                yield return new WaitForSeconds(2);
+
+                AccountUIManager.instance.menuCanvas.SetActive(true);
+                AccountUIManager.instance.accountCanvas.SetActive(false);
+                AccountUIManager.instance.titleMenu.SetActive(true);
+                AccountUIManager.instance.mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(true);
+                AccountUIManager.instance.confirmLoginText.text = "";
+                AccountUIManager.instance.emailLoginField.text = "";
+                AccountUIManager.instance.passwordLoginField.text = "";
+            }
         }
     }
 
@@ -264,9 +295,8 @@ public class FirebaseManager : MonoBehaviour
         }
         else
         {
-            //Call the Firebase auth signin function passing the email and password
             var RegisterTask = auth.CreateUserWithEmailAndPasswordAsync(_email, _password);
-            //Wait until the task completes
+
             yield return new WaitUntil(predicate: () => RegisterTask.IsCompleted);
 
             if (RegisterTask.Exception != null)
@@ -296,18 +326,12 @@ public class FirebaseManager : MonoBehaviour
             }
             else
             {
-                //User has now been created
-                //Now get the result
                 User = RegisterTask.Result;
 
                 if (User != null)
                 {
-                    //Create a user profile and set the username
                     UserProfile profile = new UserProfile { DisplayName = _username };
-
-                    //Call the Firebase auth update user profile function passing the profile with the username
                     var ProfileTask = User.UpdateUserProfileAsync(profile);
-                    //Wait until the task completes
                     yield return new WaitUntil(predicate: () => ProfileTask.IsCompleted);
 
                     if (ProfileTask.Exception != null)
@@ -316,19 +340,31 @@ public class FirebaseManager : MonoBehaviour
                         Debug.LogWarning(message: $"Failed to register task with {ProfileTask.Exception}");
                         FirebaseException firebaseEx = ProfileTask.Exception.GetBaseException() as FirebaseException;
                         AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
-                        AccountUIManager.instance.warningRegisterText.text = "Username Set Failed!";
+
+                        string output = "Unknown Error, Please Try Again";
+                        switch (errorCode)
+                        {
+                            case AuthError.Cancelled:
+                                output = "Update User Cancelled";
+                                break;
+                            case AuthError.EmailAlreadyInUse:
+                                output = "Email Already In Use";
+                                break;
+                        }
+
+                        AccountUIManager.instance.warningRegisterText.text = output;
                     }
                     else
                     {
-                        //Username is now set
-                        //Now return to login screen
                         AccountUIManager.instance.LoginScreen();
+                        //SendUserVerificationEmail();
                         AccountUIManager.instance.warningRegisterText.text = "";
                     }
                 }
             }
         }
     }
+
 
     private IEnumerator UpdateUsernameAuth(string _username)
     {
