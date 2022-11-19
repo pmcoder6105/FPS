@@ -29,46 +29,13 @@ public class FirebaseManager : MonoBehaviour
     private void Awake()
     {
         Singleton = this;
-
         DontDestroyOnLoad(this.gameObject);
-
-        //Check that all of the necessary dependencies for Firebase are present on the system
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
-        {
-            dependencyStatus = task.Result;
-            if (dependencyStatus == DependencyStatus.Available)
-            {
-                //If they are avalible Initialize Firebase
-                InitializeFirebase();
-            }
-            else
-            {
-                Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
-            }
-        });
-
-        //if (User == null)
-        //{
-        //    AccountUIManager.instance.menuCanvas.SetActive(false);
-        //    AccountUIManager.instance.accountCanvas.SetActive(true);
-        //}
-        //else if (User != null)
-        //{
-        //    //StartCoroutine(LoadUsernameData());
-        //    
-        //    AccountUIManager.instance.menuCanvas.SetActive(true);
-        //    AccountUIManager.instance.accountCanvas.SetActive(false);
-        //}
         Debug.Log(PhotonNetwork.NickName);
-        //usernameInputField.text = PhotonNetwork.NickName;
-        //PhotonNetwork.NickName = usernameInputField.text;
-        // && accountCanvas.transform.GetChild(1).gameObject.activeInHierarchy == true
     }
 
     private void Start()
     {
-
-        
+        StartCoroutine(CheckAndFixDependencies());
 
         //SceneManager.
     }
@@ -91,55 +58,22 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    private IEnumerator CheckAndFixDependencies()
     {
-        //if (User == null && accountCanvas.transform.GetChild(1).gameObject.activeInHierarchy == true)
-        //{
-        //   menuCanvas.SetActive(false);
-        //   accountCanvas.SetActive(true);
-        //}
-        //else if (User != null && accountCanvas.transform.GetChild(1).gameObject.activeInHierarchy == true)
-        //{
-        //    StartCoroutine(LoadUsernameData());
-        //    User = auth.CurrentUser;
-        //    menuCanvas.SetActive(true);
-        //    accountCanvas.SetActive(false);
-        //}
-        //Debug.Log(PhotonNetwork.NickName);
-        ////usernameInputField.text = PhotonNetwork.NickName;
-        //PhotonNetwork.NickName = usernameInputField.text;
-        //Debug.Log(auth.CurrentUser);
+        var checkAndFixDependenciesTask = FirebaseApp.CheckAndFixDependenciesAsync();
 
+        yield return new WaitUntil(predicate: () => checkAndFixDependenciesTask.IsCompleted);
 
+        var dependencyResult = checkAndFixDependenciesTask.Result;
 
-
-        if (SceneManager.GetActiveScene().buildIndex == 0)
+        if (dependencyResult == DependencyStatus.Available)
         {
-            //hasLaunched++;
-            //SceneTracker sceneTrackerGO = GameObject.Find("SceneTracker").GetComponent<SceneTracker>();
-            if (SceneTracker.hasLoggedIn == false)
-            {
-                AccountUIManager.instance.menuCanvas.SetActive(false);
-                AccountUIManager.instance.accountCanvas.SetActive(true);
-            }
-            else
-            {
-                User = auth.CurrentUser;
-                AccountUIManager.instance.menuCanvas.SetActive(true);
-                AccountUIManager.instance.accountCanvas.SetActive(false);
-            }
-            Debug.Log(SceneTracker.hasLoggedIn);
+            InitializeFirebase();
         }
-
-
-    }
-
-    public void SaveUsernameData()
-    {
-        if (AccountUIManager.instance.usernameInputField.text == null)
-            return;
-        StartCoroutine(UpdateUsernameAuth(AccountUIManager.instance.usernameInputField.text));
-        StartCoroutine(UpdateUsernameDatabase(AccountUIManager.instance.usernameInputField.text));        
+        else
+        {
+            Debug.LogError($"Couldn't resolve all Firebase Dependencies: {dependencyResult}");
+        }
     }
 
     private void InitializeFirebase()
@@ -148,8 +82,82 @@ public class FirebaseManager : MonoBehaviour
         //Set the authentication instance object
         auth = FirebaseAuth.DefaultInstance;
         DBReference = FirebaseDatabase.DefaultInstance.RootReference;
+        StartCoroutine(CheckAutoLogin());
 
-        //StartCoroutine(CheckAutoLogin());
+        auth.StateChanged += AuthStateChanged;
+        AuthStateChanged(this, null);
+
+        
+    }
+
+    IEnumerator CheckAutoLogin()
+    {
+        yield return new WaitForEndOfFrame();
+        if (User != null)
+        {
+            var reloadTask = User.ReloadAsync();
+
+            yield return new WaitUntil(predicate: () => reloadTask.IsCompleted);
+
+            AutoLogin();
+        }
+        else
+        {
+            AccountUIManager.instance.accountCanvas.SetActive(true);
+            AccountUIManager.instance.LoginScreen();
+        }
+    }
+
+    void AutoLogin()
+    {
+        if (User != null)
+        {
+            if (User.IsEmailVerified)
+            {
+                AccountUIManager.instance.menuCanvas.SetActive(true);
+                AccountUIManager.instance.accountCanvas.SetActive(false);
+                Debug.Log("Should be logged in...");
+                StartCoroutine(LoadUsernameData());
+                StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
+            }
+            else
+            {
+                StartCoroutine(SendVerificationEmail());
+            }
+        }
+        else
+        {
+            AccountUIManager.instance.accountCanvas.SetActive(true);
+            AccountUIManager.instance.LoginScreen();
+            Debug.Log("Shoud NOT be logged in...");
+        }
+    }
+
+    private void Update()
+    {
+        //if (SceneManager.GetActiveScene().buildIndex == 0)
+        //{
+        //    if (SceneTracker.hasLoggedIn == false)
+        //    {
+        //        AccountUIManager.instance.menuCanvas.SetActive(false);
+        //        AccountUIManager.instance.accountCanvas.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        User = auth.CurrentUser;
+        //        AccountUIManager.instance.menuCanvas.SetActive(true);
+        //        AccountUIManager.instance.accountCanvas.SetActive(false);
+        //    }
+        //    Debug.Log(SceneTracker.hasLoggedIn);
+        //}
+    }
+
+    public void SaveUsernameData()
+    {
+        if (AccountUIManager.instance.usernameInputField.text == null)
+            return;
+        StartCoroutine(UpdateUsernameAuth(AccountUIManager.instance.usernameInputField.text));
+        StartCoroutine(UpdateUsernameDatabase(AccountUIManager.instance.usernameInputField.text));        
     }
 
     private void AuthStateChanged(object sender, System.EventArgs eventArgs)
@@ -184,17 +192,6 @@ public class FirebaseManager : MonoBehaviour
         //Call the register coroutine passing the email, password, and username
         StartCoroutine(Register(AccountUIManager.instance.emailRegisterField.text, AccountUIManager.instance.passwordRegisterField.text, AccountUIManager.instance.usernameRegisterField.text));
     }
-
-
-
-    private void AutoLogin()
-    {
-        if (User == null)
-        {
-            AccountUIManager.instance.LoginScreen();
-        }
-    }
-
     private IEnumerator Login(string _email, string _password)
     {
         Credential credential = EmailAuthProvider.GetCredential(_email, _password);
@@ -261,22 +258,7 @@ public class FirebaseManager : MonoBehaviour
             }
             else
             {
-                User = LoginTask.Result;
-                Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
-                AccountUIManager.instance.warningLoginText.text = "";
-                AccountUIManager.instance.confirmLoginText.text = "Logged In";
-                StartCoroutine(LoadUsernameData());
-                StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
-
-                yield return new WaitForSeconds(2);
-
-                AccountUIManager.instance.menuCanvas.SetActive(true);
-                AccountUIManager.instance.accountCanvas.SetActive(false);
-                AccountUIManager.instance.titleMenu.SetActive(true);
-                AccountUIManager.instance.mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(true);
-                AccountUIManager.instance.confirmLoginText.text = "";
-                AccountUIManager.instance.emailLoginField.text = "";
-                AccountUIManager.instance.passwordLoginField.text = "";
+                StartCoroutine(SendVerificationEmail());
             }
         }
     }
@@ -356,8 +338,8 @@ public class FirebaseManager : MonoBehaviour
                     }
                     else
                     {
-                        AccountUIManager.instance.LoginScreen();
-                        //SendUserVerificationEmail();
+                        //AccountUIManager.instance.LoginScreen();
+                        StartCoroutine(SendVerificationEmail());
                         AccountUIManager.instance.warningRegisterText.text = "";
                     }
                 }
@@ -421,6 +403,7 @@ public class FirebaseManager : MonoBehaviour
 
             AccountUIManager.instance.usernameInputField.text = snapshot.Child("username").Value.ToString();
             PhotonNetwork.NickName = snapshot.Child("username").Value.ToString();
+            Debug.Log("Retrieved player username");
         }
     }
 
@@ -512,4 +495,43 @@ public class FirebaseManager : MonoBehaviour
     //    string _value = value;
     //    return _value;
     //}
+
+
+    private IEnumerator SendVerificationEmail()
+    {
+        if (User!= null)
+        {
+            var emailTask = User.SendEmailVerificationAsync();
+
+            yield return new WaitUntil(predicate: () => emailTask.IsCompleted);
+
+            if (emailTask.Exception != null)
+            {
+                FirebaseException firebaseException = (FirebaseException)emailTask.Exception.GetBaseException();
+                AuthError error = (AuthError)firebaseException.ErrorCode;
+
+                string output = "Unknown Error, Try Again!";
+
+                switch (error)
+                {
+                    case AuthError.Cancelled:
+                        output = "Verification Task was Cancelled";
+                        break;
+                    case AuthError.InvalidRecipientEmail:
+                        output = "Invalid Email";
+                        break;
+                    case AuthError.TooManyRequests:
+                        output = "Too Many Requests";
+                        break;
+                }
+
+                AccountUIManager.instance.AwaitVerification(false, User.Email, output);                
+            }
+            else
+            {
+                AccountUIManager.instance.AwaitVerification(true, User.Email, null);
+                Debug.Log("Email Sent Successfuly");
+            }
+        }
+    }
 }

@@ -41,6 +41,9 @@ public class AccountUIManager : MonoBehaviour
     public Material healthyMat;
     public FlexibleColorPicker fcp;
 
+    public GameObject verifyEmailUI;
+    public TMP_Text verifyEmailText;
+
     private void Awake()
     {
         if (instance == null)
@@ -59,10 +62,39 @@ public class AccountUIManager : MonoBehaviour
     {
         loginUI.SetActive(true);
         registerUI.SetActive(false);
+        verifyEmailUI.SetActive(false);
     }
     public void RegisterScreen() // Regester button
     {
         loginUI.SetActive(false);
+        verifyEmailUI.SetActive(false);
+
         registerUI.SetActive(true);
+    }
+
+    public void AwaitVerification(bool _emailSent, string _email, string _output)
+    {
+        loginUI.SetActive(false);
+        registerUI.SetActive(false);
+        accountCanvas.SetActive(true);
+        emailLoginField.text = "";
+        passwordLoginField.text = "";
+        warningLoginText.text = "";
+        confirmLoginText.text = "";
+        usernameRegisterField.text = "";
+        emailRegisterField.text = "";
+        passwordRegisterField.text = "";
+        passwordRegisterVerifyField.text = "";
+        warningRegisterText.text = "";
+
+        verifyEmailUI.SetActive(true);
+        if (_emailSent)
+        {
+            verifyEmailText.text = $"Sent Email!\nPlease Verify {_email}. Make sure to check the Spam Folder if you can't find it";
+        }
+        else
+        {
+            verifyEmailText.text = $"Email Not Send: {_output}\nPlease Verify {_email}. Make sure to check the Spam Folder if you can't find it";
+        }
     }
 }
