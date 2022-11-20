@@ -47,6 +47,9 @@ public class AccountUIManager : MonoBehaviour
     public GameObject resetPassword_UI;
     public TMP_Text resetPasswordOutputText;
     public TMP_InputField resetPasswordEmailText;
+
+    public TMP_Text accountDetailsEmail;
+    public TMP_Text accountDetailsUsername;
     
 
     private void Awake()

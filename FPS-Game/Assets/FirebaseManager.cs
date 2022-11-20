@@ -138,7 +138,18 @@ public class FirebaseManager : MonoBehaviour
         if (AccountUIManager.instance.usernameInputField.text == null)
             return;
         StartCoroutine(UpdateUsernameAuth(AccountUIManager.instance.usernameInputField.text));
-        StartCoroutine(UpdateUsernameDatabase(AccountUIManager.instance.usernameInputField.text));        
+        StartCoroutine(UpdateUsernameDatabase(AccountUIManager.instance.usernameInputField.text));
+        StartCoroutine(LoadUsernameData());
+    }
+
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            if (User == null)
+                return;
+            AccountUIManager.instance.accountDetailsEmail.text = "Your email is: " + User.Email;
+        }
     }
 
     private void AuthStateChanged(object sender, System.EventArgs eventArgs)
@@ -385,6 +396,7 @@ public class FirebaseManager : MonoBehaviour
             AccountUIManager.instance.usernameInputField.text = snapshot.Child("username").Value.ToString();
             PhotonNetwork.NickName = snapshot.Child("username").Value.ToString();
             Debug.Log("Retrieved player username");
+            AccountUIManager.instance.accountDetailsUsername.text = "Your username is: " + snapshot.Child("username").Value.ToString();
         }
     }
 
@@ -465,17 +477,9 @@ public class FirebaseManager : MonoBehaviour
             }
             fcp.TypeHex(snapshot.Child("playerColor").Value.ToString());
 
-            playerColorValue = snapshot.Child("playerColor").Value.ToString();
-
-            //GetBeanColor(snapshot.Child("playerColor").Value.ToString());
+            playerColorValue = snapshot.Child("playerColor").Value.ToString();            
         }
     }
-
-    //public string GetBeanColor(string value)
-    //{
-    //    string _value = value;
-    //    return _value;
-    //}
 
 
     private IEnumerator SendVerificationEmail()
