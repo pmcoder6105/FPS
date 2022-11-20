@@ -44,6 +44,11 @@ public class AccountUIManager : MonoBehaviour
     public GameObject verifyEmailUI;
     public TMP_Text verifyEmailText;
 
+    public GameObject resetPassword_UI;
+    public TMP_Text resetPasswordOutputText;
+    public TMP_InputField resetPasswordEmailText;
+    
+
     private void Awake()
     {
         if (instance == null)
@@ -63,6 +68,8 @@ public class AccountUIManager : MonoBehaviour
         loginUI.SetActive(true);
         registerUI.SetActive(false);
         verifyEmailUI.SetActive(false);
+        resetPassword_UI.SetActive(false);
+        resetPasswordOutputText.text = "";
     }
     public void RegisterScreen() // Regester button
     {
@@ -86,6 +93,8 @@ public class AccountUIManager : MonoBehaviour
         passwordRegisterField.text = "";
         passwordRegisterVerifyField.text = "";
         warningRegisterText.text = "";
+        resetPasswordOutputText.text = "";
+        resetPasswordEmailText.text = "";
 
         verifyEmailUI.SetActive(true);
         if (_emailSent)
@@ -94,7 +103,36 @@ public class AccountUIManager : MonoBehaviour
         }
         else
         {
-            verifyEmailText.text = $"Email Not Send: {_output}\nPlease Verify {_email}. Make sure to check the Spam Folder if you can't find it";
+            verifyEmailText.text = $"Email Not Send: {_output}\nPlease Verify {_email}.";
+        }
+    }
+
+    public void AwaitReset(bool _emailSent, string _email, string _output)
+    {
+        loginUI.SetActive(false);
+        registerUI.SetActive(false);
+        accountCanvas.SetActive(true);
+        emailLoginField.text = "";
+        passwordLoginField.text = "";
+        warningLoginText.text = "";
+        confirmLoginText.text = "";
+        usernameRegisterField.text = "";
+        emailRegisterField.text = "";
+        passwordRegisterField.text = "";
+        passwordRegisterVerifyField.text = "";
+        warningRegisterText.text = "";
+        resetPasswordOutputText.text = "";
+        resetPasswordEmailText.text = "";
+
+        resetPassword_UI.SetActive(true);
+
+        if (_emailSent)
+        {
+            resetPasswordOutputText.text = $"Sent Email!\nPlease Reset at {_email}. Make sure to check the Spam Folder if you can't find it";
+        }
+        else
+        {
+            resetPasswordOutputText.text = $"Email Not Send: {_output}";
         }
     }
 }

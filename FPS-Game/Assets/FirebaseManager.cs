@@ -133,25 +133,6 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        //if (SceneManager.GetActiveScene().buildIndex == 0)
-        //{
-        //    if (SceneTracker.hasLoggedIn == false)
-        //    {
-        //        AccountUIManager.instance.menuCanvas.SetActive(false);
-        //        AccountUIManager.instance.accountCanvas.SetActive(true);
-        //    }
-        //    else
-        //    {
-        //        User = auth.CurrentUser;
-        //        AccountUIManager.instance.menuCanvas.SetActive(true);
-        //        AccountUIManager.instance.accountCanvas.SetActive(false);
-        //    }
-        //    Debug.Log(SceneTracker.hasLoggedIn);
-        //}
-    }
-
     public void SaveUsernameData()
     {
         if (AccountUIManager.instance.usernameInputField.text == null)
@@ -488,7 +469,7 @@ public class FirebaseManager : MonoBehaviour
 
             //GetBeanColor(snapshot.Child("playerColor").Value.ToString());
         }
-    }    
+    }
 
     //public string GetBeanColor(string value)
     //{
@@ -499,7 +480,7 @@ public class FirebaseManager : MonoBehaviour
 
     private IEnumerator SendVerificationEmail()
     {
-        if (User!= null)
+        if (User != null)
         {
             var emailTask = User.SendEmailVerificationAsync();
 
@@ -522,16 +503,61 @@ public class FirebaseManager : MonoBehaviour
                         break;
                     case AuthError.TooManyRequests:
                         output = "Too Many Requests";
-                        break;
-                }
+                        break;                    
+                }                
 
-                AccountUIManager.instance.AwaitVerification(false, User.Email, output);                
+                AccountUIManager.instance.AwaitVerification(false, User.Email, output);
             }
             else
             {
                 AccountUIManager.instance.AwaitVerification(true, User.Email, null);
                 Debug.Log("Email Sent Successfuly");
             }
+        }
+    }
+
+    public void SendPasswordResetEmailButton()
+    {
+        StartCoroutine(SendPasswordResetEmail());
+    }
+
+    private IEnumerator SendPasswordResetEmail()
+    {
+        User = auth.CurrentUser;
+        Debug.Log("Reset Password Has been Sent");
+        var emailTask = auth.SendPasswordResetEmailAsync(AccountUIManager.instance.resetPasswordEmailText.text);
+
+        yield return new WaitUntil(predicate: () => emailTask.IsCompleted);
+
+        if (emailTask.Exception != null)
+        {
+            FirebaseException firebaseException = (FirebaseException)emailTask.Exception.GetBaseException();
+            AuthError error = (AuthError)firebaseException.ErrorCode;
+
+            string output = "Unknown Error, Try Again!";
+
+            switch (error)
+            {
+                case AuthError.Cancelled:
+                    output = "Verification Task was Cancelled";
+                    break;
+                case AuthError.InvalidRecipientEmail:
+                    output = "Invalid Email";
+                    break;
+                case AuthError.TooManyRequests:
+                    output = "Too Many Requests";
+                    break;
+            }
+
+            //TODO: CALL FUNCTION IN ACCOUNTUIMANAGER THAT WILL SET THE TEXT CHILD WITH ERROR OUTPUT
+            AccountUIManager.instance.AwaitReset(false, AccountUIManager.instance.resetPasswordEmailText.text, output);
+            Debug.Log("Email Not Sent Successfuly");
+        }
+        else
+        {
+            //TODO: CALL FUNCTION IN ACCOUNTUIMANAGER THAT WILL SET THE TEXT CHILD WITH SUCESS OUTPUT
+            AccountUIManager.instance.AwaitReset(true, AccountUIManager.instance.resetPasswordEmailText.text, null);
+            Debug.Log("Email Sent Successfuly");
         }
     }
 }
