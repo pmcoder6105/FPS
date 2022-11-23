@@ -100,7 +100,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
     {
         BuildBlock();
         canBuild = false;
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         canBuild = true;
     }    
 
@@ -197,6 +197,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
     IEnumerator DisplayDestroyVFX(int _hitID)
     {
         GameObject destroyVFX = Instantiate(blockDestructionVFX, PhotonView.Find(_hitID).gameObject.transform.position, Quaternion.identity);
+        Debug.Log(_hitID);
         yield return new WaitForSeconds(2);
         Destroy(destroyVFX);
     }
