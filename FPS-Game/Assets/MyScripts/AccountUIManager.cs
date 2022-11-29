@@ -50,7 +50,18 @@ public class AccountUIManager : MonoBehaviour
 
     public TMP_Text accountDetailsEmail;
     public TMP_Text accountDetailsUsername;
-    
+
+    public TMP_InputField resetEmailVerifyEmail;
+    public TMP_InputField resetEmailVerifyPassword;
+    public TMP_Text resetEmailErrorText;
+
+    public TMP_InputField resetEmailNewEmail;
+    public TMP_Text resetEmailNewEmailErrorText;
+
+    public GameObject resetEmailNewEmailMenu;
+    public GameObject reauthenticateUserForEmailResetMenu;
+
+
 
     private void Awake()
     {

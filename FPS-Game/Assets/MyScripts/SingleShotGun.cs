@@ -110,6 +110,10 @@ public class SingleShotGun : Gun
 
     private void Update()
     {
+        if (PV.IsMine == false)
+            return;
+
+
         if (transform.GetChild(0).gameObject.activeInHierarchy == true)
         {
             if (playerController.inventoryEnabled == true)

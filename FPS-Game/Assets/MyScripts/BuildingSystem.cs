@@ -204,7 +204,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
     IEnumerator AutoDestructCountdownTimer(int __blockInstantiatedViewID)
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(8);
         isDestroyed = true;
         if (PhotonView.Find(__blockInstantiatedViewID).gameObject.activeInHierarchy == true)
         {

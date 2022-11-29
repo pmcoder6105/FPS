@@ -564,4 +564,100 @@ public class FirebaseManager : MonoBehaviour
             Debug.Log("Email Sent Successfuly");
         }
     }
+
+    public void CheckUserCredentialsButton()
+    {
+        StartCoroutine(CheckUserCredentials(AccountUIManager.instance.resetEmailVerifyEmail, AccountUIManager.instance.resetEmailVerifyPassword, AccountUIManager.instance.resetEmailErrorText));
+    }
+
+
+    public IEnumerator CheckUserCredentials(TMP_InputField _email, TMP_InputField _password, TMP_Text errorText)
+    {
+        User = auth.CurrentUser;
+        Credential credential = EmailAuthProvider.GetCredential(_email.text, _password.text);
+
+        var reverifyTask = User.ReauthenticateAsync(credential);
+
+        yield return new WaitUntil(predicate: () => reverifyTask.IsCompleted);
+
+        if (reverifyTask.Exception != null)
+        {
+            FirebaseException firebaseException = (FirebaseException)reverifyTask.Exception.GetBaseException();
+            AuthError error = (AuthError)firebaseException.ErrorCode;
+
+            string message = "Verification Failed!";
+            switch (error)
+            {
+                case AuthError.MissingEmail:
+                    message = "Missing Email";
+                    break;
+                case AuthError.MissingPassword:
+                    message = "Missing Password";
+                    break;
+                case AuthError.InvalidEmail:
+                    message = "Invalid Email";
+                    break;
+            }
+
+            errorText.text = message;
+        }
+        else
+        {
+            //TODO: MAKE EMAIL RESET SCREEN AND TAKE THE PLAYER THERE
+            AccountUIManager.instance.reauthenticateUserForEmailResetMenu.SetActive(false);
+            AccountUIManager.instance.resetEmailNewEmailMenu.SetActive(true);
+            _email.text = "";
+            _password.text = "";
+            errorText.text = "";
+        }
+    }
+
+    public void ResetEmailButton()
+    {
+        StartCoroutine(ResetEmail(AccountUIManager.instance.resetEmailNewEmail, AccountUIManager.instance.resetEmailNewEmailErrorText));
+    }
+
+    public IEnumerator ResetEmail(TMP_InputField _newEmail, TMP_Text errorText)
+    {
+        User = auth.CurrentUser; 
+
+        var changeEmailTask = User.UpdateEmailAsync(_newEmail.text);
+
+        yield return new WaitUntil(predicate: () => changeEmailTask.IsCompleted);
+
+        if (changeEmailTask.Exception != null)
+        {
+            FirebaseException firebaseException = (FirebaseException)changeEmailTask.Exception.GetBaseException();
+            AuthError error = (AuthError)firebaseException.ErrorCode;
+
+            string message = "Verification Failed!";
+            switch (error)
+            {
+                case AuthError.MissingEmail:
+                    message = "Missing Email";
+                    break;                
+                case AuthError.InvalidEmail:
+                    message = "Invalid Email";
+                    break;
+                case AuthError.EmailAlreadyInUse:
+                    message = "Email Already in Use!";
+                    break;
+            }
+            errorText.color = Color.red;
+            errorText.text = message;
+        }
+        else
+        {
+            errorText.color = Color.green;
+            errorText.text = "Reset Email Sucessfully!";
+            yield return new WaitForSeconds(2);
+            _newEmail.text = "";
+
+            errorText.text = "";
+            errorText.color = Color.red;
+            AccountUIManager.instance.resetEmailNewEmailMenu.SetActive(false);
+            AccountUIManager.instance.resetEmailNewEmailMenu.SetActive(false);
+            AccountUIManager.instance.titleMenu.SetActive(true);
+        }
+    }
 }
