@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         PV = GetComponent<PhotonView>();
 
         playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>(); // HONESTLY I DONT KNOW HOW THIS WORKS BUT THIS IS FROM THE TUTORIAL
-        Cursor.lockState = CursorLockMode.Locked; // lock cursor
+        Cursor.lockState = CursorLockMode.Locked;
     }
     private void Start()
     {
@@ -192,8 +192,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         Jump(); // jump
 
-        Debug.Log(grounded);
-
         SetPlayerHealthShader(); // set player health shader
 
         healthBarImage.fillAmount = currentHealth / maxHealth; // set the fill amount of the health bar
@@ -270,8 +268,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (transform.position.y < -10f && PV.IsMine)
         {
             hasDiedFromFallDamage = true;
-            Die(); // die
-            
+            Die(); // die            
         }
 
         PV.RPC(nameof(ProcessFootstepSFX), RpcTarget.All);
@@ -402,7 +399,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     // a leave ienumerator
     IEnumerator Leave()
     {
-        if (PV.IsMine && PV.isActiveAndEnabled) // if PV is mine and is active
+        if (PV.IsMine) // if PV is mine and is active
         {
             yield return new WaitForSeconds(0.01f); // wait for 0.01 seconds
 

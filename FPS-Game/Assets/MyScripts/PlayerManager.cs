@@ -91,6 +91,7 @@ public class PlayerManager : MonoBehaviour
         Destroy(virtualCamInstantiation);
         Destroy(cinemachineCamInstantiation);
         CreateController();
+        hasDeathPanelActivated = false;
     }
 
     public void Die()
@@ -98,21 +99,25 @@ public class PlayerManager : MonoBehaviour
         if (!PV.IsMine)
             return;
 
+        killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform); // instantiate a new kill text notif
+         
+        Destroy(killTextNotificationGameObject, 5); // destroy that in 5 secs
+
         if (controller.GetComponent<PlayerController>().hasDiedFromFallDamage == false)
         {
             EnableCinemachineKillerTracker();
+            killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: " + Find(killer).GetComponent<PhotonView>().Owner.NickName; // set the text of that to you were killed by the player
         }
         else
         {
             //GameObject fallCamera = Instantiate(fallDamageCamera, (new Vector3(controller.transform.position.x, controller.transform.position.y + 0.5f, controller.transform.position.z)), controller.transform.rotation);
             transform.GetChild(0).transform.SetPositionAndRotation(new Vector3(controller.transform.position.x, controller.transform.position.y + 0.5f, controller.transform.position.z), controller.transform.rotation);
+            killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: The Void"; // set the text of that to you were killed by the void
         }
 
         PhotonNetwork.Destroy(controller);
 
-        killTextNotificationGameObject = Instantiate(killTextNotification, killTextNotificationHolder.transform); // instantiate a new kill text notif
-        killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: The Void"; // set the text of that to you were killed by the void
-        Destroy(killTextNotificationGameObject, 5); // destroy that in 5 secs
+        
 
         deaths++;
 
