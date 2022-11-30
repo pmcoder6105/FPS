@@ -19,7 +19,7 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
 
     public bool isOpen = false;
 
-    Dictionary<Player, ScoreBoardItem> scoreBoardItems = new Dictionary<Player, ScoreBoardItem>();
+    Dictionary<Player, ScoreBoardItem> scoreBoardItems = new();
 
     private void Start()
     {

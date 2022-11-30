@@ -109,15 +109,15 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
     {
         if (Physics.Raycast(blockShootingPoint.position, blockShootingPoint.forward, out RaycastHit hitInfo, 10)) 
         {
-            if (hitInfo.transform.tag == "BuildingBlock")
+            if (hitInfo.transform.CompareTag("BuildingBlock"))
             {
-                Vector3 spawnPosition = new Vector3(Mathf.RoundToInt(hitInfo.point.x + hitInfo.normal.x/2), Mathf.RoundToInt(hitInfo.point.y + hitInfo.normal.y/2), Mathf.RoundToInt(hitInfo.point.z + hitInfo.normal.z/2));                
+                Vector3 spawnPosition = new(Mathf.RoundToInt(hitInfo.point.x + hitInfo.normal.x/2), Mathf.RoundToInt(hitInfo.point.y + hitInfo.normal.y/2), Mathf.RoundToInt(hitInfo.point.z + hitInfo.normal.z/2));                
                 blockInstantiated = PhotonNetwork.Instantiate("BuildingBlockPrefab", spawnPosition, Quaternion.identity);
                 PV.RPC(nameof(DisplayBlockConstruction), RpcTarget.All, blockInstantiated.GetComponent<PhotonView>().ViewID);
             }
             else //if is the ground
             {
-                Vector3 spawnPosition = new Vector3(Mathf.RoundToInt(hitInfo.point.x), Mathf.RoundToInt(hitInfo.point.y) + 0.001f, Mathf.RoundToInt(hitInfo.point.z));
+                Vector3 spawnPosition = new(Mathf.RoundToInt(hitInfo.point.x), Mathf.RoundToInt(hitInfo.point.y) + 0.001f, Mathf.RoundToInt(hitInfo.point.z));
                 blockInstantiated = PhotonNetwork.Instantiate("BuildingBlockPrefab", spawnPosition, Quaternion.identity);
                 PV.RPC(nameof(DisplayBlockConstruction), RpcTarget.All, blockInstantiated.GetComponent<PhotonView>().ViewID);
             }
@@ -129,7 +129,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
     {
         if (Physics.Raycast(blockShootingPoint.position, blockShootingPoint.forward, out RaycastHit hitInfo, 10) && canDestroy)
         {
-            if (hitInfo.transform.tag == "BuildingBlock")
+            if (hitInfo.transform.CompareTag("BuildingBlock"))
             {
                 PV.RPC(nameof(DisplayBlockDestruction), RpcTarget.All, hitInfo.transform.gameObject.GetComponent<PhotonView>().ViewID);
             }            
@@ -141,7 +141,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
     void DisplayBlockConstruction(int _blockInstantiatedViewID)
     {
 
-        Material blockMaterial = new Material(lit);
+        Material blockMaterial = new(lit);
         if (ColorUtility.TryParseHtmlString("#" + controller.firebase.playerColorValue, out Color beanColor))
         {
             blockMaterial.color = beanColor;
@@ -167,13 +167,13 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
     void DisplayHandHeldBlockColour()
     {
 
-        Material blockMaterial = new Material(lit);
+        Material blockMaterial = new(lit);
         if (ColorUtility.TryParseHtmlString("#" + controller.firebase.playerColorValue, out Color beanColor))
         {
             blockMaterial.color = beanColor;
         }
         blockMaterial.mainTexture = proBuilderTexture;
-        handHeldBlock.gameObject.GetComponent<MeshRenderer>().material = blockMaterial;      
+        handHeldBlock.GetComponent<MeshRenderer>().material = blockMaterial;      
 
         if (PV.IsMine)
         {
@@ -218,7 +218,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
     {
         if (changedProps.ContainsKey("blockColour") && !PV.IsMine && targetPlayer == PV.Owner)
         {
-            Material blockMaterial = new Material(lit);
+            Material blockMaterial = new(lit);
             if (ColorUtility.TryParseHtmlString("#" + changedProps["blockColour"], out Color beanColor))
             {
                 blockMaterial.color = beanColor;
@@ -229,14 +229,14 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
         if (changedProps.ContainsKey("handHeldBlockColour") && !PV.IsMine && targetPlayer == PV.Owner)
         {
-            Material blockMaterial = new Material(lit);
+            Material blockMaterial = new(lit);
             if (ColorUtility.TryParseHtmlString("#" + changedProps["blockColour"], out Color beanColor))
             {
                 blockMaterial.color = beanColor;
             }
             blockMaterial.mainTexture = proBuilderTexture;
-            handHeldBlock.gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
-            handHeldBlock.gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
+            handHeldBlock.GetComponent<MeshRenderer>().material = blockMaterial;
+            handHeldBlock.GetComponent<MeshRenderer>().material = blockMaterial;
         }
     }
 }

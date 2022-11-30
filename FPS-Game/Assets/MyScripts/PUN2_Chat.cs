@@ -19,7 +19,7 @@ public class PUN2_Chat : MonoBehaviourPun
         public float timer = 0;
     }
 
-    List<ChatMessage> chatMessages = new List<ChatMessage>();
+    List<ChatMessage> chatMessages = new();
 
     // Start is called before the first frame update
     void Start()
@@ -105,7 +105,7 @@ public class PUN2_Chat : MonoBehaviourPun
     [PunRPC]
     void SendChat(Player sender, string message)
     {
-        ChatMessage m = new ChatMessage();
+        ChatMessage m = new();
         m.sender = sender.NickName;
         m.message = message;
         m.timer = 15.0f;

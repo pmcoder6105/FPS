@@ -474,7 +474,7 @@ public class SingleShotGun : Gun
         if (isDagger)
             return;
 
-        Vector2 mouseAxis = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        Vector2 mouseAxis = new(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
         transform.localPosition += (Vector3)mouseAxis * weaponSwayAmount / 1000;
     }

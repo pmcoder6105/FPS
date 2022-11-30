@@ -27,10 +27,8 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject titleMenu;
 
 
-    List<RoomInfo> fullRoomList = new List<RoomInfo>();
-    List<RoomListItem> roomListItems = new List<RoomListItem>();
-
-    FirebaseManager firebaseManager;
+    List<RoomInfo> fullRoomList = new();
+    List<RoomListItem> roomListItems = new();
 
     public FlexibleColorPicker fcp;
 
@@ -46,14 +44,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connecting to Master");
         PhotonNetwork.ConnectUsingSettings();
-        //colorSystem = applyColorGameObject.GetComponent<ApplyColor>();
     }
-
-    //public override void OnEnable()
-    //{
-    //    firebaseManager = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
-    //    StartCoroutine(firebaseManager.LoadPlayerColorData(customizeBeanModel, fcp, colorChosen));
-    //}
 
     public override void OnConnectedToMaster()
     {

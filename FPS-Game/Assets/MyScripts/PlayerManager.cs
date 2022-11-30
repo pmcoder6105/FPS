@@ -105,8 +105,7 @@ public class PlayerManager : MonoBehaviour
         else
         {
             //GameObject fallCamera = Instantiate(fallDamageCamera, (new Vector3(controller.transform.position.x, controller.transform.position.y + 0.5f, controller.transform.position.z)), controller.transform.rotation);
-            transform.GetChild(0).transform.position = new Vector3(controller.transform.position.x, controller.transform.position.y + 0.5f, controller.transform.position.z);
-            transform.GetChild(0).transform.rotation = controller.transform.rotation;
+            transform.GetChild(0).transform.SetPositionAndRotation(new Vector3(controller.transform.position.x, controller.transform.position.y + 0.5f, controller.transform.position.z), controller.transform.rotation);
         }
 
         PhotonNetwork.Destroy(controller);
@@ -117,7 +116,7 @@ public class PlayerManager : MonoBehaviour
 
         deaths++;
 
-        Hashtable hash = new Hashtable();
+        Hashtable hash = new();
         hash.Add("deaths", deaths);
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
     }
@@ -146,7 +145,7 @@ public class PlayerManager : MonoBehaviour
     {
         kills++;
 
-        Hashtable hash = new Hashtable();
+        Hashtable hash = new();
         hash.Add("kills", kills);
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
     }

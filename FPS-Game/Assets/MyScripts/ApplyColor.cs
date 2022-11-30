@@ -22,7 +22,7 @@ public class ApplyColor : MonoBehaviour
 
     FirebaseManager firebaseManager;
 
-    List<Material> customizeBeanMaterialsList = new List<Material>();
+    List<Material> customizeBeanMaterialsList = new();
 
     public Button saveButton;
 
@@ -73,7 +73,7 @@ public class ApplyColor : MonoBehaviour
         firebaseManager = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
         StartCoroutine(firebaseManager.LoadPlayerColorDataCustomizeBeanModel(gameObject, fcp, matHealthy));
 
-        Material newMat = new Material(glowShader);
+        Material newMat = new(glowShader);
         customizeBeanMaterialsList.Add(newMat);
     }
 }

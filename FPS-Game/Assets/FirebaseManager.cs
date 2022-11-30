@@ -304,7 +304,7 @@ public class FirebaseManager : MonoBehaviour
 
                 if (User != null)
                 {
-                    UserProfile profile = new UserProfile { DisplayName = _username };
+                    UserProfile profile = new() { DisplayName = _username };
                     var ProfileTask = User.UpdateUserProfileAsync(profile);
                     yield return new WaitUntil(predicate: () => ProfileTask.IsCompleted);
 
@@ -343,7 +343,7 @@ public class FirebaseManager : MonoBehaviour
     private IEnumerator UpdateUsernameAuth(string _username)
     {
         //Create a user profile and set the username
-        UserProfile profile = new UserProfile { DisplayName = _username };
+        UserProfile profile = new() { DisplayName = _username };
 
         //Call the Firebase auth update user profile function passing the profile with the username
         var ProfileTask = User.UpdateUserProfileAsync(profile);
@@ -430,7 +430,7 @@ public class FirebaseManager : MonoBehaviour
         {
             fcp.SetColor(Color.red);
             healthyMat.SetColor(("_MaterialColor"), Color.red);
-            UpdatePlayerColor(ColorUtility.ToHtmlStringRGB(healthyMat.GetColor("_MaterialColor")));
+            StartCoroutine(UpdatePlayerColor(ColorUtility.ToHtmlStringRGB(healthyMat.GetColor("_MaterialColor"))));
         }
         else
         {
@@ -462,7 +462,7 @@ public class FirebaseManager : MonoBehaviour
         {
             fcp.SetColor(Color.red);
             healthyMat.SetColor(("_MaterialColor"), Color.red);
-            UpdatePlayerColor("FF0000");
+            StartCoroutine(UpdatePlayerColor("FF0000"));
         }
         else
         {

@@ -108,6 +108,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             micToggleText = GameObject.Find("MicToggleText");
             mapViewerCamera = GameObject.Find("RoomViewerCamera");
             firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
+            Debug.Log("Start has been called on the player controller");
+            Debug.Log(scoreBoard);
         }
         else // if PV isn't mine
         {
@@ -215,7 +217,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         //if PV is mine and I'm connected to the servers
         if (PV.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
-            Hashtable hash = new Hashtable(); // new hash
+            Hashtable hash = new(); // new hash
             if (hash.ContainsKey("healthColor"))
             {
                 hash.Remove("healthColor"); // make sure to not remove a custom property when changing it
@@ -421,7 +423,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Destroy(RoomManager.Instance.gameObject); // destroy room manager.instance
 
             normalCam.gameObject.SetActive(false); // disable the normal cam
-            gunClippingCam.gameObject.SetActive(false); // disable the gun clipping cam
+            gunClippingCam.SetActive(false); // disable the gun clipping cam
             mapViewerCamera.SetActive(true); // enable the map viewer camera
 
             while (PhotonNetwork.InRoom) // while in a room, yield
@@ -450,7 +452,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         if (PV.IsMine)
         {
-            Hashtable hash = new Hashtable();
+            Hashtable hash = new();
             if (hash.ContainsKey("itemIndex"))
             {
                 hash.Remove("itemIndex");
@@ -472,7 +474,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
        // if the changed props is "beanColor"
        if (changedProps.ContainsKey("beanColor") && !PV.IsMine && targetPlayer == PV.Owner)
        {
-            Material healthyMat = new Material(glowShader); // make a new material healthyMat and set the shader of that as glowShader
+            Material healthyMat = new(glowShader); // make a new material healthyMat and set the shader of that as glowShader
 
             // convert a hexadecimal string to a color value
             if (ColorUtility.TryParseHtmlString("#" + changedProps["beanColor"], out Color healthyColor))
@@ -611,7 +613,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         // if the PV is mine
         if (PV.IsMine)
         {
-            Hashtable hash = new Hashtable(); // new hash
+            Hashtable hash = new(); // new hash
             if (hash.ContainsKey("beanColor"))
             {
                 hash.Remove("beanColor"); // make sure to not remove a custom property when changing it
@@ -639,7 +641,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     // function set player health material
     void SetHealthyNewMaterial()
     {
-        Material healthyMat = new Material(glowShader); // new material with glowshader
+        Material healthyMat = new(glowShader); // new material with glowshader
         
         // get player hexadecimal that was saved in player prefs and convert that into a color
         if (ColorUtility.TryParseHtmlString("#" + firebase.playerColorValue, out Color healthyColor))
@@ -655,7 +657,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     // function set player normal material
     void SetNormalNewMaterial()
     {
-        Material normalMat = new Material(glowShader); // new material with glowshader
+        Material normalMat = new(glowShader); // new material with glowshader
 
         // get player hexadecimal that was saved in player prefs and convert that into a color
         if (ColorUtility.TryParseHtmlString("#" + firebase.playerColorValue, out Color normalColor))
@@ -670,7 +672,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     // function set player hurt material
     void SetHurtNewMaterial()
     {
-        Material hurtMat = new Material(glowShader); // new material with glowshader
+        Material hurtMat = new(glowShader); // new material with glowshader
 
         // get player hexadecimal that was saved in player prefs and convert that into a color
         if (ColorUtility.TryParseHtmlString("#" + firebase.playerColorValue, out Color hurtColor))
