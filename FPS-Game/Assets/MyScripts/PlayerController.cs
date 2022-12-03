@@ -108,8 +108,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             micToggleText = GameObject.Find("MicToggleText");
             mapViewerCamera = GameObject.Find("RoomViewerCamera");
             firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
-            Debug.Log("Start has been called on the player controller");
-            Debug.Log(scoreBoard);
         }
         else // if PV isn't mine
         {

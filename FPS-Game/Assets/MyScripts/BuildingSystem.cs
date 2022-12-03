@@ -187,31 +187,29 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
     [PunRPC]
     void DisplayBlockDestruction(int hitID)
     {
+        StartCoroutine(nameof(DisplayDestroyVFX), hitID);
         PhotonNetwork.Destroy(PhotonView.Find(hitID).gameObject);
         this.gameObject.GetComponent<AudioSource>().Stop();
         this.gameObject.GetComponent<AudioSource>().PlayOneShot(destroyBlock);
-
-        StartCoroutine(nameof(DisplayDestroyVFX), hitID);
     }
 
-    IEnumerator DisplayDestroyVFX(int _hitID)
-    {
-        GameObject destroyVFX = Instantiate(blockDestructionVFX, PhotonView.Find(_hitID).gameObject.transform.position, Quaternion.identity);
-        Debug.Log(_hitID);
-        yield return new WaitForSeconds(2);
-        Destroy(destroyVFX);
-    }
+    
 
     IEnumerator AutoDestructCountdownTimer(int __blockInstantiatedViewID)
     {
         yield return new WaitForSeconds(8);
         isDestroyed = true;
+        StartCoroutine(nameof(DisplayDestroyVFX), __blockInstantiatedViewID);
         if (PhotonView.Find(__blockInstantiatedViewID).gameObject.activeInHierarchy == true)
         {
             Destroy(PhotonView.Find(__blockInstantiatedViewID).gameObject);
-        }        
-
-        StartCoroutine(nameof(DisplayDestroyVFX), __blockInstantiatedViewID);
+        }                
+    }
+    IEnumerator DisplayDestroyVFX(int _hitID)
+    {
+        GameObject destroyVFX = Instantiate(blockDestructionVFX, PhotonView.Find(_hitID).gameObject.transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(2);
+        Destroy(destroyVFX);
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)

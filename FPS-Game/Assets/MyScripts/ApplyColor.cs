@@ -24,7 +24,7 @@ public class ApplyColor : MonoBehaviour
 
     List<Material> customizeBeanMaterialsList = new();
 
-    public Button saveButton;
+    //public Button saveButton;
 
     // Update is called once per frame
     
