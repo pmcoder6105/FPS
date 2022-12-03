@@ -49,9 +49,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [SerializeField] GameObject itemHolder; 
     [SerializeField] GameObject healthBar; // health bar from tutorial
 
-    [SerializeField] Camera cinemachineCam; // the cinemachine cam that activates when the player dies
-    [SerializeField] Camera normalCam;
-    [SerializeField] CinemachineVirtualCamera virtualCam;    
+    [SerializeField] Camera normalCam;   
 
     bool hasDeathPanelActivated = false;
 
@@ -107,11 +105,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             scoreBoard = GameObject.Find("ScoreBoard");
             micToggleText = GameObject.Find("MicToggleText");
             mapViewerCamera = GameObject.Find("RoomViewerCamera");
-            firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
+            firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();            
         }
         else // if PV isn't mine
         {
-            Destroy(GetComponentInChildren<Camera>().gameObject); // destroy camera's children *ayo*
+            Destroy(GetComponentInChildren<Camera>().gameObject); // destroy camera's children
             Destroy(rb); // destroy rigidbody
             Destroy(ui); // destroy ui
             Destroy(buildingSystem.handHeldBlock); // destroy hand held block gameobject from the buildingsystem class
@@ -137,8 +135,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (!PV.IsMine) // if PV isn't mine
             return;
 
+        normalCam.enabled = true;
+
         // assign following variables to objects found in each scene
-        
+
 
         // if you click escape and the death panel hasn't been instantiated, then unlock cursor
         if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked && hasDeathPanelActivated == false)
@@ -721,5 +721,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Destroy(overheadUsernameText); // destroy overhead username text
         Destroy(healthBar); // destroy health bar
         GetComponent<CapsuleCollider>().enabled = false; // disable capsule collider
-    }    
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log(newPlayer);
+        if (PV.IsMine)
+        {
+            normalCam.enabled = false;
+            normalCam.enabled = true;
+        }
+    }
 }

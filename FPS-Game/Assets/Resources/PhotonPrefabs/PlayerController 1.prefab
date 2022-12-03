@@ -2149,6 +2149,7 @@ GameObject:
   - component: {fileID: 4593207813660433441}
   - component: {fileID: 9209597007893392388}
   - component: {fileID: 7952799843421940460}
+  - component: {fileID: 6172498967194595947}
   m_Layer: 0
   m_Name: Dagger
   m_TagString: Untagged
@@ -2252,7 +2253,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 6172498967194595947}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -2352,6 +2354,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6172498967194595947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2269273011868575498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2360727632697178600
 GameObject:
   m_ObjectHideFlags: 0
@@ -2683,7 +2701,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2511184436295150312}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -3635,6 +3653,7 @@ GameObject:
   - component: {fileID: 2971969791767809099}
   - component: {fileID: 4454856278380405542}
   - component: {fileID: 4135902534383793385}
+  - component: {fileID: 7824715154146039050}
   m_Layer: 0
   m_Name: Rifle
   m_TagString: Untagged
@@ -3842,6 +3861,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7824715154146039050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3129871717099874505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &3770202940064729131
 GameObject:
   m_ObjectHideFlags: 0
@@ -4046,6 +4081,7 @@ GameObject:
   - component: {fileID: 5374563860937809632}
   - component: {fileID: 2816010621069780856}
   - component: {fileID: 8786427023694913072}
+  - component: {fileID: 1957435269823870635}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Untagged
@@ -4253,6 +4289,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1957435269823870635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4208938082162220871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &4852459695501899741
 GameObject:
   m_ObjectHideFlags: 0
@@ -4787,6 +4839,7 @@ GameObject:
   - component: {fileID: 4277642062194922114}
   - component: {fileID: 4855853581015313852}
   - component: {fileID: 6658943969797146815}
+  - component: {fileID: 6730016764691850203}
   m_Layer: 0
   m_Name: ShotGun
   m_TagString: Untagged
@@ -4991,6 +5044,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6730016764691850203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530043618254519267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &5705690230848472547
 GameObject:
   m_ObjectHideFlags: 0
@@ -5399,6 +5468,7 @@ GameObject:
   - component: {fileID: 2471543789871672640}
   - component: {fileID: 4235356016196635108}
   - component: {fileID: 3655982602380629654}
+  - component: {fileID: 3950889463321742540}
   m_Layer: 0
   m_Name: Sniper
   m_TagString: Untagged
@@ -5614,6 +5684,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3950889463321742540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5913065518625492571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &6551576143157204460
 GameObject:
   m_ObjectHideFlags: 0

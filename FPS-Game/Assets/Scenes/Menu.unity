@@ -3796,7 +3796,6 @@ MonoBehaviour:
   blockColor: {fileID: 2100000, guid: 625ed3f5f0a6f8042b2c12fd7f60f4b1, type: 2}
   customizeMenuBeanModelGameObject: {fileID: 0}
   glowShader: {fileID: -6465566751694194690, guid: 6ad2dabf2acfce943a062f5e7878dd92, type: 3}
-  saveButton: {fileID: 0}
 --- !u!95 &109604514
 Animator:
   serializedVersion: 4
@@ -49830,7 +49829,6 @@ GameObject:
   - component: {fileID: 1687258582}
   - component: {fileID: 1687258586}
   - component: {fileID: 1687258587}
-  - component: {fileID: 1687258588}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -49964,18 +49962,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1687258588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1687258581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ee01e66702087b4798e633ca34c7956, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1689491946
 GameObject:
   m_ObjectHideFlags: 0
@@ -52800,7 +52786,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh33656
+  m_Name: pb_Mesh72556
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
