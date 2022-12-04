@@ -89,6 +89,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public FirebaseManager firebase;
 
+    public Shader toonShader;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -181,6 +183,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         if (isDead == true) // if dead, return
             return;
+
+        normalCam.RenderWithShader(toonShader, "");
 
         playerManager.transform.position = this.gameObject.transform.position;
 
@@ -726,10 +730,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log(newPlayer);
-        if (PV.IsMine)
-        {
-            normalCam.enabled = false;
-            normalCam.enabled = true;
-        }
+        normalCam.enabled = false;
+        normalCam.enabled = true;
     }
 }

@@ -2930,9 +2930,7 @@ MonoBehaviour:
   overheadUsernameText: {fileID: 7480224287480394087}
   itemHolder: {fileID: 5084062447775689742}
   healthBar: {fileID: 7419847586430249810}
-  cinemachineCam: {fileID: 0}
   normalCam: {fileID: 2511184436295150316}
-  virtualCam: {fileID: 0}
   gunClippingCam: {fileID: 2429949987780874682}
   canSwitchWeapons: 1
   scoreBoard: {fileID: 0}
@@ -2956,6 +2954,9 @@ MonoBehaviour:
   inventory: {fileID: 808464061308908827}
   inventoryNumbers: {fileID: 4938921565505195445}
   inventoryEnabled: 0
+  dustTrailParticleSystem: {fileID: 0}
+  firebase: {fileID: 0}
+  toonShader: {fileID: 0}
 --- !u!54 &2567718919365197072
 Rigidbody:
   m_ObjectHideFlags: 0

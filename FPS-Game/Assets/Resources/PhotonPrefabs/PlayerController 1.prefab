@@ -2757,7 +2757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
+  m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
@@ -2949,9 +2949,7 @@ MonoBehaviour:
   overheadUsernameText: {fileID: 7480224287480394087}
   itemHolder: {fileID: 5084062447775689742}
   healthBar: {fileID: 7419847586430249810}
-  cinemachineCam: {fileID: 0}
   normalCam: {fileID: 2511184436295150316}
-  virtualCam: {fileID: 0}
   gunClippingCam: {fileID: 2429949987780874682}
   canSwitchWeapons: 1
   scoreBoard: {fileID: 0}
@@ -2977,6 +2975,7 @@ MonoBehaviour:
   inventoryEnabled: 0
   dustTrailParticleSystem: {fileID: 7317072522588978674}
   firebase: {fileID: 0}
+  toonShader: {fileID: 4800000, guid: 1aa979b233181c14398935f2c30c03cd, type: 3}
 --- !u!54 &2567718919365197072
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -111,6 +111,7 @@ public class PlayerManager : MonoBehaviour
         else
         {
             //GameObject fallCamera = Instantiate(fallDamageCamera, (new Vector3(controller.transform.position.x, controller.transform.position.y + 0.5f, controller.transform.position.z)), controller.transform.rotation);
+            transform.GetChild(0).gameObject.SetActive(true);
             transform.GetChild(0).transform.SetPositionAndRotation(new Vector3(controller.transform.position.x, controller.transform.position.y + 0.5f, controller.transform.position.z), controller.transform.rotation);
             killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: The Void"; // set the text of that to you were killed by the void
         }
