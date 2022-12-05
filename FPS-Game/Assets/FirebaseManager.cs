@@ -40,6 +40,7 @@ public class FirebaseManager : MonoBehaviour
         //SceneManager.
     }
 
+
     public static FirebaseManager Singleton
     {
         get => _singleton;
@@ -146,6 +147,11 @@ public class FirebaseManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
+            if (Time.timeSinceLevelLoad < Mathf.Epsilon) 
+            {
+                StartCoroutine(CheckAndFixDependencies());
+            }
+
             if (User == null)
                 return;
             AccountUIManager.instance.accountDetailsEmail.text = "Your email is: " + User.Email;

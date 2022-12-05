@@ -165,18 +165,22 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
     [PunRPC]
     void DisplayHandHeldBlockColour()
-    {
-
-        Material blockMaterial = new(lit);
-        if (ColorUtility.TryParseHtmlString("#" + controller.firebase.playerColorValue, out Color beanColor))
-        {
-            blockMaterial.color = beanColor;
-        }
-        blockMaterial.mainTexture = proBuilderTexture;
-        handHeldBlock.GetComponent<MeshRenderer>().material = blockMaterial;      
-
+    {            
         if (PV.IsMine)
         {
+            Material blockMaterial = new(lit);
+            if (ColorUtility.TryParseHtmlString("#" + controller.firebase.playerColorValue, out Color beanColor))
+            {
+                blockMaterial.color = beanColor;
+            }
+            blockMaterial.mainTexture = proBuilderTexture;
+            handHeldBlock.GetComponent<MeshRenderer>().material = blockMaterial;
+
+            Debug.Log("Controller: " + controller);
+            Debug.Log("Controller's firebase: " + controller.firebase);
+            Debug.Log("Controller's color value: " + controller.firebase.playerColorValue);
+
+
             Hashtable hash = new();
             hash.Add("handHeldBlockColour", controller.firebase.playerColorValue);
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);

@@ -184,8 +184,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (isDead == true) // if dead, return
             return;
 
-        normalCam.RenderWithShader(toonShader, "");
-
         playerManager.transform.position = this.gameObject.transform.position;
 
         Look(); // look
