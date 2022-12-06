@@ -25,7 +25,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
     GameObject blockInstantiated;
 
-    int blockID;
+    int[] blockID;
 
     public AudioClip placeBlock;
 
@@ -140,20 +140,24 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
     [PunRPC]
     void DisplayBlockConstruction(int _blockInstantiatedViewID)
     {
-
-        Material blockMaterial = new(lit);
-        if (ColorUtility.TryParseHtmlString("#" + controller.firebase.playerColorValue, out Color beanColor))
-        {
-            blockMaterial.color = beanColor;
-        }
-        blockMaterial.mainTexture = proBuilderTexture;
-        PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
-        PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<AudioSource>().PlayOneShot(placeBlock);
-        PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<Animator>().SetBool("isActive", true);
-        blockID = _blockInstantiatedViewID;
-
         if (PV.IsMine)
         {
+            Material blockMaterial = new(lit);
+            if (ColorUtility.TryParseHtmlString("#" + controller.firebase.playerColorValue, out Color beanColor))
+            {
+                blockMaterial.color = beanColor;
+            }
+            blockMaterial.mainTexture = proBuilderTexture;
+            PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
+            PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<AudioSource>().PlayOneShot(placeBlock);
+            PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<Animator>().SetBool("isActive", true);
+            blockID[blockID.Length+1] = _blockInstantiatedViewID;
+
+        
+            Debug.Log("Controller: " + controller);
+            Debug.Log("Controller's firebase: " + controller.firebase);
+            Debug.Log("Controller's color value: " + controller.firebase.playerColorValue);
+
             Hashtable hash = new();
             hash.Add("blockColour", controller.firebase.playerColorValue);
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
@@ -174,11 +178,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
                 blockMaterial.color = beanColor;
             }
             blockMaterial.mainTexture = proBuilderTexture;
-            handHeldBlock.GetComponent<MeshRenderer>().material = blockMaterial;
-
-            Debug.Log("Controller: " + controller);
-            Debug.Log("Controller's firebase: " + controller.firebase);
-            Debug.Log("Controller's color value: " + controller.firebase.playerColorValue);
+            handHeldBlock.GetComponent<MeshRenderer>().material = blockMaterial;            
 
 
             Hashtable hash = new();
@@ -226,7 +226,10 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
                 blockMaterial.color = beanColor;
             }
             blockMaterial.mainTexture = proBuilderTexture;
-            PhotonView.Find(blockID).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
+            for (int i = 0; i < blockID.Length; i++)
+            {
+                PhotonView.Find(i).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
+            }            
         }
 
         if (changedProps.ContainsKey("handHeldBlockColour") && !PV.IsMine && targetPlayer == PV.Owner)

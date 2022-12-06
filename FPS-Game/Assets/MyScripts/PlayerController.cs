@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Destroy(GetComponentInChildren<Camera>().gameObject); // destroy camera's children
             Destroy(rb); // destroy rigidbody
             Destroy(ui); // destroy ui
-            Destroy(buildingSystem.handHeldBlock); // destroy hand held block gameobject from the buildingsystem class
+            //Destroy(buildingSystem.handHeldBlock); // destroy hand held block gameobject from the buildingsystem class
             Destroy(buildingSystem.blockCrosshair); // destroy block crosshair gameobject from the buildingsystem class
             for (int i = 0; i < canvas.Count(); i++)
             {
