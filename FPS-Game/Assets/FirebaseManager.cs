@@ -35,7 +35,7 @@ public class FirebaseManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(CheckAndFixDependencies());
+        //StartCoroutine(CheckAndFixDependencies());
 
         //SceneManager.
     }

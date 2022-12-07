@@ -228,7 +228,8 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
             blockMaterial.mainTexture = proBuilderTexture;
             for (int i = 0; i < blockID.Length; i++)
             {
-                PhotonView.Find(i).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
+                if (PhotonView.Find(i).gameObject != null)
+                    PhotonView.Find(i).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
             }            
         }
 
