@@ -20,7 +20,7 @@ public class FirebaseManager : MonoBehaviour
     public DatabaseReference DBReference;
     private static FirebaseManager _singleton;
 
-    static int hasLaunched = 0;
+    //static int hasLaunched = 0;
 
     //SceneTracker sceneTracker;
 
@@ -31,13 +31,6 @@ public class FirebaseManager : MonoBehaviour
         Singleton = this;
         DontDestroyOnLoad(this.gameObject);
         Debug.Log(PhotonNetwork.NickName);
-    }
-
-    private void Start()
-    {
-        //StartCoroutine(CheckAndFixDependencies());
-
-        //SceneManager.
     }
 
 
