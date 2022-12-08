@@ -160,4 +160,17 @@ public class PlayerManager : MonoBehaviour
     {
         return FindObjectsOfType<PlayerManager>().SingleOrDefault(x => x.PV.Owner == player);
     }
+
+    [PunRPC]
+    public void GetBulletDamageInfo(Player player)
+    {
+        //return controller.gameObject.GetComponent<PlayerController>().itemIndex;
+        PV.RPC(nameof(ReturnBulletDamageInfo), player, controller.GetComponent<PlayerController>().itemIndex);
+    }
+
+    [PunRPC]
+    public void ReturnBulletDamageInfo(int itemIndex)
+    {
+        controller.GetComponent<PlayerController>().itemGlobal = itemIndex;
+    }
 }

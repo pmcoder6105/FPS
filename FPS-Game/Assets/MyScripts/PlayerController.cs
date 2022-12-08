@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     [SerializeField] Item[] items;
 
-    int itemIndex;
+    public int itemIndex;
     int previousItemIndex = -1;
 
     float verticalLookRotation; 
@@ -91,6 +91,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public FirebaseManager firebase;
 
     public Shader toonShader;
+
+    public int itemGlobal;
 
     private void Awake()
     {
@@ -529,6 +531,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         PV.RPC(nameof(RPC_TakeDamage), PV.Owner, damage); // call RPC Take Damage to me with a parameter of damage
         PV.RPC(nameof(RPC_DisplayDamage), RpcTarget.All); // call RPC DisplayDamage to all players
+        PV.RPC(nameof(RPC_DisplayDamageText), RpcTarget.All);
     }
 
     // DisplayDamage function
@@ -538,6 +541,45 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         GameObject playerHitEffect = Instantiate(playerHitParticleEffect, this.gameObject.transform.position, Quaternion.identity); // instantiate a player hit particle effect when you take damage
         playerHitEffect.GetComponent<ParticleSystem>().Emit(15); // emit 15 particles
         Destroy(playerHitEffect, 2f); // destroy this in 2 secs
+    }
+
+    [PunRPC]
+    void RPC_DisplayDamageText(PhotonMessageInfo info)
+    {
+        if (PV.IsMine == false)
+            return;
+        GameObject damagePrefab = (GameObject)Resources.Load("Assets/Resources/DamageNumber");
+        PlayerManager.Find(info.Sender).GetBulletDamageInfo(PV.Owner);
+        float damageInfo = itemGlobal;
+        float damageAmount;
+
+        if (damageInfo == 0)
+        {
+            damageAmount = 10f;
+            DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+        }
+        if (damageInfo == 1)
+        {
+            damageAmount = 10f;
+            DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+        }
+        if (damageInfo == 2)
+        {
+            damageAmount = 14f;
+            DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+        }
+        if (damageInfo == 3)
+        {
+            damageAmount = 100f;
+            DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+        }
+        if (damageInfo == 4)
+        {
+            damageAmount = 40f;
+            DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+        }
+
+        
     }
 
     // TakeDamage function with parameters damage and info
@@ -550,9 +592,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Invoke(nameof(StartRegen), 5f); // then, start invoking StartRegen in 5 secs
         canRegenerateHealth = false; // set canRegenerateHealth to false
 
-        GameObject damagePrefab = (GameObject)Resources.Load("Assets/Resources/DamageNumber");
-        DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damage); 
-
+        
         // if current health <= 0
         if (currentHealth <= 0)
         {

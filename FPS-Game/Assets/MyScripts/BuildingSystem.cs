@@ -230,6 +230,8 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
             {
                 if (PhotonView.Find(i).gameObject != null)
                     PhotonView.Find(i).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
+                if (PhotonView.Find(i).gameObject == null)
+                    blockID.Remove(i);
             }            
         }
 
