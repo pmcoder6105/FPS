@@ -25,7 +25,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
     GameObject blockInstantiated;
 
-    int[] blockID;
+    List<int> blockID = new();
 
     public AudioClip placeBlock;
 
@@ -151,7 +151,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
             PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
             PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<AudioSource>().PlayOneShot(placeBlock);
             PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<Animator>().SetBool("isActive", true);
-            blockID[blockID.Length+1] = _blockInstantiatedViewID;
+            blockID.Add(_blockInstantiatedViewID);
 
         
             Debug.Log("Controller: " + controller);
@@ -226,7 +226,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
                 blockMaterial.color = beanColor;
             }
             blockMaterial.mainTexture = proBuilderTexture;
-            for (int i = 0; i < blockID.Length; i++)
+            for (int i = 0; i < blockID.Count; i++)
             {
                 if (PhotonView.Find(i).gameObject != null)
                     PhotonView.Find(i).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;

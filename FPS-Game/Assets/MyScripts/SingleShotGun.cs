@@ -95,6 +95,8 @@ public class SingleShotGun : Gun
 
     BuildingSystem buildingSystem;
 
+    public float bulletBloomAmount;
+
     private void Start()
     {
         _currentAmmoInClip = clipSize;
@@ -163,8 +165,6 @@ public class SingleShotGun : Gun
 
     void Shoot()
     {
-
-
         if (isDagger == false)
         {
             DetermineAim();
@@ -194,7 +194,7 @@ public class SingleShotGun : Gun
 
                 StartCoroutine(ShootGun());
                 Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-                ray.origin = new Vector3((cam.transform.position.x + Random.Range(-0.2f, 0.2f)), (cam.transform.position.y + Random.Range(-0.2f, 0.2f)), (cam.transform.position.z + Random.Range(0, 0)));
+                ray.origin = new Vector3((cam.transform.position.x + Random.Range(-bulletBloomAmount, bulletBloomAmount)), (cam.transform.position.y + Random.Range(-bulletBloomAmount, bulletBloomAmount)), (cam.transform.position.z + Random.Range(0, 0)));
                 if (Physics.Raycast(ray, out RaycastHit hit))
                 {
                     hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
@@ -261,7 +261,7 @@ public class SingleShotGun : Gun
                 if (isShotGun == false && isDagger == false)
                 {
                     Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-                    ray.origin = new Vector3((cam.transform.position.x + Random.Range(-0.1f, 0.1f)), (cam.transform.position.y + Random.Range(-0.1f, 0.1f)), (cam.transform.position.z + Random.Range(0, 0)));
+                    ray.origin = new Vector3((cam.transform.position.x + Random.Range(-bulletBloomAmount, bulletBloomAmount)), (cam.transform.position.y + Random.Range(-bulletBloomAmount, bulletBloomAmount)), (cam.transform.position.z + Random.Range(0, 0)));
 
                     if (Physics.Raycast(ray, out RaycastHit hit))
                     {
@@ -496,8 +496,17 @@ public class SingleShotGun : Gun
         {
             if (isSniper)
                 isSniperScoped = false;
-        }          
-       
+        }   
+        
+        if (Input.GetMouseButtonDown(1))
+        {
+            bulletBloomAmount /= 2;
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            bulletBloomAmount *= 2;
+        }
+
 
         if (isSniper)
         {

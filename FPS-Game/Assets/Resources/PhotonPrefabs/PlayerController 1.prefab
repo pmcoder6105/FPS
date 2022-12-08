@@ -2235,6 +2235,7 @@ MonoBehaviour:
   isDagger: 1
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 8757865083568207718}
+  bulletBloomAmount: 0
 --- !u!114 &9209597007893392388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3742,6 +3743,7 @@ MonoBehaviour:
   isDagger: 0
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 8757865083568207718}
+  bulletBloomAmount: 0.2
 --- !u!114 &4454856278380405542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3760,7 +3762,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 7824715154146039050}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -4170,6 +4173,7 @@ MonoBehaviour:
   isDagger: 0
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 8757865083568207718}
+  bulletBloomAmount: 0.1
 --- !u!114 &2816010621069780856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4188,7 +4192,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 1957435269823870635}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -4925,6 +4930,7 @@ MonoBehaviour:
   isDagger: 0
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 8757865083568207718}
+  bulletBloomAmount: 0
 --- !u!114 &4855853581015313852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4943,7 +4949,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 6730016764691850203}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -5565,6 +5572,7 @@ MonoBehaviour:
   isDagger: 0
   scopeSFX: {fileID: 8300000, guid: 2843658595b9ac44d8d5a41fa5bb664a, type: 3}
   otherGunScopeReference: {fileID: 0}
+  bulletBloomAmount: 0.6
 --- !u!114 &4235356016196635108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5583,7 +5591,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 3950889463321742540}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

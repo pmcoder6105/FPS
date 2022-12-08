@@ -8,6 +8,7 @@ using TMPro;
 using Cinemachine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using DamageNumbersPro;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
@@ -101,6 +102,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
     private void Start()
     {
+
         if (PV.IsMine) // if PV is mine
         {
             EquipItem(0); // equip with int of 0
@@ -547,6 +549,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         CancelInvoke(nameof(StartRegen)); // first, cancel the StartRegen function invoke
         Invoke(nameof(StartRegen), 5f); // then, start invoking StartRegen in 5 secs
         canRegenerateHealth = false; // set canRegenerateHealth to false
+
+        GameObject damagePrefab = (GameObject)Resources.Load("Assets/Resources/DamageNumber");
+        DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damage); 
 
         // if current health <= 0
         if (currentHealth <= 0)
