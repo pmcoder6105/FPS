@@ -10,12 +10,12 @@ public class DamageNumber : MonoBehaviour
     [SerializeField] private Vector3 randomizeOffset;
     [SerializeField] Color color;
 
-    TextMeshPro textMeshPro;
+    public TextMeshPro textMeshPro;
 
     // Start is called before the first frame update
     void Start()
     {
-        textMeshPro = GetComponent<TextMeshPro>();
+        //textMeshPro = GetComponent<TextMeshPro>();
         transform.localPosition += offset;
         transform.localPosition += new Vector3(Random.Range(-randomizeOffset.x, randomizeOffset.x), Random.Range(-randomizeOffset.y, randomizeOffset.y), Random.Range(-randomizeOffset.z, randomizeOffset.z));
         Destroy(gameObject, destroyTime);

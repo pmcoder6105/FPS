@@ -559,29 +559,38 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             damageAmount = 10f;
             //DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
             damagePrefab.Initialize(damageAmount);
+            Debug.Log("Gun");
         }
         if (damageInfo == 1)
         {
             damageAmount = 10f;
             //DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
             damagePrefab.Initialize(damageAmount);
+            Debug.Log("Gun");
+
         }
         if (damageInfo == 2)
         {
             damageAmount = 14f;
             //DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
             damagePrefab.Initialize(damageAmount);
+            Debug.Log("Gun");
+
         }
         if (damageInfo == 3)
         {
             damageAmount = 100f;
             //DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
             damagePrefab.Initialize(damageAmount);
+            Debug.Log("Gun");
+
         }
         if (damageInfo == 4)
         {
             damageAmount = 40f;
             //DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+            Debug.Log("Gun");
+
             damagePrefab.Initialize(damageAmount);
         }
 

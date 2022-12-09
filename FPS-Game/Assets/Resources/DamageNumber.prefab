@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 4279441486117263839}
   - component: {fileID: 3734688142597659325}
   - component: {fileID: 7065135990232887174}
+  - component: {fileID: 1411942772204896316}
+  - component: {fileID: 709163622991829090}
   m_Layer: 0
   m_Name: DamageNumber
   m_TagString: Untagged
@@ -203,6 +205,7 @@ MonoBehaviour:
   offset: {x: 0, y: 1.5, z: 0}
   randomizeOffset: {x: 0.5, y: 0.1, z: 0}
   color: {r: 1, g: 0, b: 0, a: 0}
+  textMeshPro: {fileID: 1654455074820660912}
 --- !u!95 &7065135990232887174
 Animator:
   serializedVersion: 4
@@ -223,3 +226,44 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1411942772204896316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4250319609010949178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 709163622991829090}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &709163622991829090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4250319609010949178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters: []
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
