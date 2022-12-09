@@ -40,6 +40,8 @@ public class PlayerManager : MonoBehaviour
 
     public Player killer;
 
+    int itemIndex;
+
 
     private void Awake()
     {
@@ -63,6 +65,8 @@ public class PlayerManager : MonoBehaviour
     {
         if (!PV.IsMine)
             return;
+
+        itemIndex = controller.GetComponent<PlayerController>().itemIndex;
 
         if (killTextNotificationGameObject == null && controller == null && hasDeathPanelActivated == false)
         {
@@ -165,12 +169,22 @@ public class PlayerManager : MonoBehaviour
     public void GetBulletDamageInfo(Player player)
     {
         //return controller.gameObject.GetComponent<PlayerController>().itemIndex;
-        PV.RPC(nameof(ReturnBulletDamageInfo), player, controller.GetComponent<PlayerController>().itemIndex);
+        PV.RPC(nameof(ReturnBulletDamageInfo), player, GetControllerItemIndex(), player);
     }
 
     [PunRPC]
-    public void ReturnBulletDamageInfo(int itemIndex)
+    public void ReturnBulletDamageInfo(int itemIndex, Player player)
     {
-        controller.GetComponent<PlayerController>().itemGlobal = itemIndex;
+        if (PV.IsMine)
+        {
+            //controller.GetComponent<PlayerController>().itemGlobal = itemIndex;
+            Find(player).controller.GetComponent<PlayerController>().itemGlobal = itemIndex;
+        }        
+    }
+
+    public int GetControllerItemIndex()
+    {
+
+        return itemIndex;
     }
 }

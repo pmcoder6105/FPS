@@ -8,7 +8,6 @@ using TMPro;
 using Cinemachine;
 using System.Linq;
 using UnityEngine.SceneManagement;
-using DamageNumbersPro;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {
@@ -548,37 +547,45 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         if (PV.IsMine == false)
             return;
-        GameObject damagePrefab = (GameObject)Resources.Load("Assets/Resources/DamageNumber");
+        
         PlayerManager.Find(info.Sender).GetBulletDamageInfo(PV.Owner);
         float damageInfo = itemGlobal;
         float damageAmount;
 
+        DamageNumber damagePrefab = PhotonNetwork.Instantiate("DamageNumber", new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity).GetComponent<DamageNumber>();
+
         if (damageInfo == 0)
         {
             damageAmount = 10f;
-            DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+            //DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+            damagePrefab.Initialize(damageAmount);
         }
         if (damageInfo == 1)
         {
             damageAmount = 10f;
-            DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+            //DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+            damagePrefab.Initialize(damageAmount);
         }
         if (damageInfo == 2)
         {
             damageAmount = 14f;
-            DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+            //DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+            damagePrefab.Initialize(damageAmount);
         }
         if (damageInfo == 3)
         {
             damageAmount = 100f;
-            DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+            //DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+            damagePrefab.Initialize(damageAmount);
         }
         if (damageInfo == 4)
         {
             damageAmount = 40f;
-            DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+            //DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+            damagePrefab.Initialize(damageAmount);
         }
 
+        
         
     }
 
