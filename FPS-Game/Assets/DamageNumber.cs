@@ -7,6 +7,7 @@ public class DamageNumber : MonoBehaviour
 {
     [SerializeField] private float destroyTime;
     [SerializeField] private Vector3 offset;
+    [SerializeField] private Vector3 randomizeOffset;
     [SerializeField] Color color;
 
     TextMeshPro textMeshPro;
@@ -16,6 +17,7 @@ public class DamageNumber : MonoBehaviour
     {
         textMeshPro = GetComponent<TextMeshPro>();
         transform.localPosition += offset;
+        transform.localPosition += new Vector3(Random.Range(-randomizeOffset.x, randomizeOffset.x), Random.Range(-randomizeOffset.y, randomizeOffset.y), Random.Range(-randomizeOffset.z, randomizeOffset.z));
         Destroy(gameObject, destroyTime);
     }
 
