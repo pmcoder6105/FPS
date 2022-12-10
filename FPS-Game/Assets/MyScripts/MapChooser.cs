@@ -65,4 +65,11 @@ public class MapChooser : MonoBehaviour
         mapName = "PillBox";
         mapChooseContinueButton.SetActive(true);
     }
+
+    public void ClearRoom()
+    {
+        mapChosen = 0;
+        mapName = "";
+        mapChooseContinueButton.SetActive(false);
+    }
 }
