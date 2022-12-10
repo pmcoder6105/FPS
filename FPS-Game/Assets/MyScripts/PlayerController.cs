@@ -93,6 +93,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public int itemGlobal;
 
+    public GameObject damageNumber;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -110,7 +112,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             scoreBoard = GameObject.Find("ScoreBoard");
             micToggleText = GameObject.Find("MicToggleText");
             mapViewerCamera = GameObject.Find("RoomViewerCamera");
-            firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();            
+            firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
+            normalCam.gameObject.tag = "Untagged";
         }
         else // if PV isn't mine
         {
@@ -545,57 +548,50 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [PunRPC]
     void RPC_DisplayDamageText(PhotonMessageInfo info)
     {
-        if (PV.IsMine == false)
-            return;
-        
         PlayerManager.Find(info.Sender).GetBulletDamageInfo(PV.Owner);
         float damageInfo = itemGlobal;
         float damageAmount;
 
-        DamageNumber damagePrefab = PhotonNetwork.Instantiate("DamageNumber", new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity).GetComponent<DamageNumber>();
+        GameObject damagePrefab = Instantiate(damageNumber, transform);
+        damagePrefab.transform.position = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
+        damagePrefab.transform.position += new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.05f, 0.05f), 0);
+        damagePrefab.gameObject.GetComponent<TextMeshPro>().color = Color.red;
+        Destroy(damagePrefab, 2f);
+        Debug.Log("This is the itemGlobal: " + itemGlobal);
 
         if (damageInfo == 0)
         {
             damageAmount = 10f;
-            //DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
-            damagePrefab.Initialize(damageAmount);
+            damagePrefab.GetComponent<TextMeshPro>().text = damageAmount.ToString();
             Debug.Log("Gun");
         }
         if (damageInfo == 1)
         {
             damageAmount = 10f;
-            //DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
-            damagePrefab.Initialize(damageAmount);
+            damagePrefab.GetComponent<TextMeshPro>().text = damageAmount.ToString();
             Debug.Log("Gun");
 
         }
         if (damageInfo == 2)
         {
             damageAmount = 14f;
-            //DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
-            damagePrefab.Initialize(damageAmount);
+            damagePrefab.GetComponent<TextMeshPro>().text = damageAmount.ToString();
             Debug.Log("Gun");
 
         }
         if (damageInfo == 3)
         {
             damageAmount = 100f;
-            //DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
-            damagePrefab.Initialize(damageAmount);
+            damagePrefab.GetComponent<TextMeshPro>().text = damageAmount.ToString();
             Debug.Log("Gun");
 
         }
         if (damageInfo == 4)
         {
             damageAmount = 40f;
-            //DamageNumber damageNumber = damagePrefab.GetComponent<DamageNumber>().Spawn(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damageAmount);
+            damagePrefab.GetComponent<TextMeshPro>().text = damageAmount.ToString();
             Debug.Log("Gun");
-
-            damagePrefab.Initialize(damageAmount);
         }
-
-        
-        
     }
 
     // TakeDamage function with parameters damage and info

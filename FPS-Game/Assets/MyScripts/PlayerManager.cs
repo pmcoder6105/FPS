@@ -179,6 +179,7 @@ public class PlayerManager : MonoBehaviour
         {
             //controller.GetComponent<PlayerController>().itemGlobal = itemIndex;
             Find(player).controller.GetComponent<PlayerController>().itemGlobal = itemIndex;
+            Debug.Log(player + "The Player!");
         }        
     }
 
