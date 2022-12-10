@@ -533,7 +533,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         PV.RPC(nameof(RPC_TakeDamage), PV.Owner, damage); // call RPC Take Damage to me with a parameter of damage
         PV.RPC(nameof(RPC_DisplayDamage), RpcTarget.All); // call RPC DisplayDamage to all players
-        PV.RPC(nameof(RPC_DisplayDamageText), RpcTarget.Others);
+        PV.RPC(nameof(RPC_DisplayDamageText), RpcTarget.All);
     }
 
     // DisplayDamage function

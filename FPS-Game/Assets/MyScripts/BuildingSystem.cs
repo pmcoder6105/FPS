@@ -43,6 +43,16 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
 
     public PlayerController controller;
 
+    public string playerColorValue;
+
+    private void Start()
+    {
+        if (PV.IsMine)
+        {
+            playerColorValue = controller.firebase.playerColorValue;
+        }        
+    }
+
     void Update()
     {
         if (!PV.IsMine || controller.isDead)
@@ -113,12 +123,15 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
             {
                 Vector3 spawnPosition = new(Mathf.RoundToInt(hitInfo.point.x + hitInfo.normal.x/2), Mathf.RoundToInt(hitInfo.point.y + hitInfo.normal.y/2), Mathf.RoundToInt(hitInfo.point.z + hitInfo.normal.z/2));                
                 blockInstantiated = PhotonNetwork.Instantiate("BuildingBlockPrefab", spawnPosition, Quaternion.identity);
+                blockID.Add(blockInstantiated.GetComponent<PhotonView>().ViewID);
                 PV.RPC(nameof(DisplayBlockConstruction), RpcTarget.All, blockInstantiated.GetComponent<PhotonView>().ViewID);
+                
             }
             else //if is the ground
             {
                 Vector3 spawnPosition = new(Mathf.RoundToInt(hitInfo.point.x), Mathf.RoundToInt(hitInfo.point.y) + 0.001f, Mathf.RoundToInt(hitInfo.point.z));
                 blockInstantiated = PhotonNetwork.Instantiate("BuildingBlockPrefab", spawnPosition, Quaternion.identity);
+                blockID.Add(blockInstantiated.GetComponent<PhotonView>().ViewID);
                 PV.RPC(nameof(DisplayBlockConstruction), RpcTarget.All, blockInstantiated.GetComponent<PhotonView>().ViewID);
             }
         }
@@ -132,59 +145,82 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
             if (hitInfo.transform.CompareTag("BuildingBlock"))
             {
                 PV.RPC(nameof(DisplayBlockDestruction), RpcTarget.All, hitInfo.transform.gameObject.GetComponent<PhotonView>().ViewID);
+                blockID.Remove(hitInfo.transform.gameObject.GetComponent<PhotonView>().ViewID);
             }            
         }
     }
 
 
+    //[PunRPC]
+    //void DisplayBlockConstruction()
+    //{
+    //    Debug.Log("Test1");
+    //    if (PV.IsMine)
+    //    {
+    //        Debug.Log("Test2");
+    //        Material blockMaterial = new(lit);
+    //        if (ColorUtility.TryParseHtmlString("#" + controller.firebase.playerColorValue, out Color beanColor))
+    //        {
+    //            blockMaterial.color = beanColor;
+    //        }
+    //        blockMaterial.mainTexture = proBuilderTexture;
+
+    //        int id = blockID.Count;
+
+    //        PhotonView.Find(blockID[id-1]).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
+    //        PhotonView.Find(blockID[id - 1]).gameObject.GetComponent<AudioSource>().PlayOneShot(placeBlock);
+    //        PhotonView.Find(blockID[id - 1]).gameObject.GetComponent<Animator>().SetBool("isActive", true);
+    //        blockID.Add(blockID[id - 1]);
+
+    //        Hashtable hash = new();
+    //        hash.Add("blockColour", controller.firebase.playerColorValue);
+    //        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+
+    //        StartCoroutine(nameof(AutoDestructCountdownTimer), blockID[id - 1]);
+    //    }
+    //}
+
     [PunRPC]
     void DisplayBlockConstruction(int _blockInstantiatedViewID)
     {
-        if (PV.IsMine)
+        Material blockMaterial = new(lit);
+        if (ColorUtility.TryParseHtmlString("#" + playerColorValue, out Color beanColor))
         {
-            Material blockMaterial = new(lit);
-            if (ColorUtility.TryParseHtmlString("#" + controller.firebase.playerColorValue, out Color beanColor))
-            {
-                blockMaterial.color = beanColor;
-            }
-            blockMaterial.mainTexture = proBuilderTexture;
-            PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
-            PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<AudioSource>().PlayOneShot(placeBlock);
-            PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<Animator>().SetBool("isActive", true);
-            blockID.Add(_blockInstantiatedViewID);
-
-        
-            Debug.Log("Controller: " + controller);
-            Debug.Log("Controller's firebase: " + controller.firebase);
-            Debug.Log("Controller's color value: " + controller.firebase.playerColorValue);
-
-            Hashtable hash = new();
-            hash.Add("blockColour", controller.firebase.playerColorValue);
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+            blockMaterial.color = beanColor;
         }
+        blockMaterial.mainTexture = proBuilderTexture;
+
+        PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
+        PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<AudioSource>().PlayOneShot(placeBlock);
+        PhotonView.Find(_blockInstantiatedViewID).gameObject.GetComponent<Animator>().SetBool("isActive", true);
+            
+        blockID.Add(_blockInstantiatedViewID);
+        Debug.Log(_blockInstantiatedViewID);
+        Debug.Log(playerColorValue);
+        Hashtable hash = new();
+        hash.Add("blockColour", playerColorValue);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 
         StartCoroutine(nameof(AutoDestructCountdownTimer), _blockInstantiatedViewID);
+               
     }
 
 
     [PunRPC]
     void DisplayHandHeldBlockColour()
-    {            
-        if (PV.IsMine)
+    {
+        Material blockMaterial = new(lit);
+        if (ColorUtility.TryParseHtmlString("#" + playerColorValue, out Color beanColor))
         {
-            Material blockMaterial = new(lit);
-            if (ColorUtility.TryParseHtmlString("#" + controller.firebase.playerColorValue, out Color beanColor))
-            {
-                blockMaterial.color = beanColor;
-            }
-            blockMaterial.mainTexture = proBuilderTexture;
-            handHeldBlock.GetComponent<MeshRenderer>().material = blockMaterial;            
-
-
-            Hashtable hash = new();
-            hash.Add("handHeldBlockColour", controller.firebase.playerColorValue);
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+            blockMaterial.color = beanColor;
         }
+        blockMaterial.mainTexture = proBuilderTexture;
+        handHeldBlock.GetComponent<MeshRenderer>().material = blockMaterial;
+
+
+        Hashtable hash = new();
+        hash.Add("handHeldBlockColour", playerColorValue);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
     }
 
 
@@ -207,6 +243,7 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
         if (PhotonView.Find(__blockInstantiatedViewID).gameObject.activeInHierarchy == true)
         {
             Destroy(PhotonView.Find(__blockInstantiatedViewID).gameObject);
+            blockID.Remove(__blockInstantiatedViewID);
         }                
     }
     IEnumerator DisplayDestroyVFX(int _hitID)
@@ -226,19 +263,19 @@ public class BuildingSystem : MonoBehaviourPunCallbacks
                 blockMaterial.color = beanColor;
             }
             blockMaterial.mainTexture = proBuilderTexture;
+            Debug.Log("The Changed Props: " + changedProps["blockColour"]);
             for (int i = 0; i < blockID.Count; i++)
             {
-                if (PhotonView.Find(i).gameObject != null)
-                    PhotonView.Find(i).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
-                if (PhotonView.Find(i).gameObject == null)
-                    blockID.Remove(i);
+                Debug.Log("The Block ID:" + blockID[i]);
+                Debug.Log("The Block GameObject: " + PhotonView.Find(i).gameObject);
+                PhotonView.Find(i).gameObject.GetComponent<MeshRenderer>().material = blockMaterial;
             }            
         }
 
         if (changedProps.ContainsKey("handHeldBlockColour") && !PV.IsMine && targetPlayer == PV.Owner)
         {
             Material blockMaterial = new(lit);
-            if (ColorUtility.TryParseHtmlString("#" + changedProps["blockColour"], out Color beanColor))
+            if (ColorUtility.TryParseHtmlString("#" + changedProps["handHeldBlockColour"], out Color beanColor))
             {
                 blockMaterial.color = beanColor;
             }
