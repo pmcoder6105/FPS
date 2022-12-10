@@ -63,7 +63,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        if (!PV.IsMine)
+        if (!PV.IsMine || controller == null)
             return;
 
         itemIndex = controller.GetComponent<PlayerController>().itemIndex;

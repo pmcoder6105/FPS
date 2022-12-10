@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             micToggleText = GameObject.Find("MicToggleText");
             mapViewerCamera = GameObject.Find("RoomViewerCamera");
             firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
-            normalCam.gameObject.tag = "Untagged";
+            //normalCam.gameObject.tag = "Untagged";
         }
         else // if PV isn't mine
         {
@@ -533,7 +533,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         PV.RPC(nameof(RPC_TakeDamage), PV.Owner, damage); // call RPC Take Damage to me with a parameter of damage
         PV.RPC(nameof(RPC_DisplayDamage), RpcTarget.All); // call RPC DisplayDamage to all players
-        PV.RPC(nameof(RPC_DisplayDamageText), RpcTarget.All);
+        PV.RPC(nameof(RPC_DisplayDamageText), RpcTarget.Others);
     }
 
     // DisplayDamage function
@@ -552,7 +552,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         float damageInfo = itemGlobal;
         float damageAmount;
 
-        GameObject damagePrefab = Instantiate(damageNumber, transform);
+        GameObject damagePrefab = Instantiate(damageNumber, transform, true);
         damagePrefab.transform.position = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
         damagePrefab.transform.position += new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.05f, 0.05f), 0);
         damagePrefab.gameObject.GetComponent<TextMeshPro>().color = Color.red;
