@@ -447,6 +447,54 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
+    public IEnumerator LoadKills()
+    {
+        var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Value == null)
+        {
+            LevelUpManager.Singleton.currentLevel = 0;
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+
+            LevelUpManager.Singleton.currentLevel = (int)snapshot.Child("kills").Value;
+
+            //Do all the stuff with the main menu level up bar (hint: check if the current scene is 0, if so, do the mathf.epsilon pattern
+        }
+    }
+
+    public IEnumerator LoadExperience()
+    {
+        var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Value == null)
+        {
+            LevelUpManager.Singleton.currentLevel = 0;
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+
+            LevelUpManager.Singleton.currentExperience = (int)snapshot.Child("xp").Value;
+
+            //Do all the stuff with the main menu level up bar (hint: check if the current scene is 0, if so, do the mathf.epsilon pattern
+        }
+    }
+
 
     public IEnumerator LoadPlayerColorDataCustomizeBeanModel(GameObject beanModel, FlexibleColorPicker fcp, Material healthyMat)
     {

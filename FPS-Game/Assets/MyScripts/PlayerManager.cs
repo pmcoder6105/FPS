@@ -50,6 +50,7 @@ public class PlayerManager : MonoBehaviour
         PV = GetComponent<PhotonView>();
 
         //Load currentExperience from firebase
+        StartCoroutine(FirebaseManager.Singleton.LoadExperience());
     }
 
     // Start is called before the first frame update

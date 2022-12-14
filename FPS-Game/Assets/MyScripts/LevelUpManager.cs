@@ -6,9 +6,9 @@ public class LevelUpManager : MonoBehaviour
 {
     private static LevelUpManager _singleton;
 
-    int currentLevel;
+    public int currentLevel;
 
-    int currentExperience;
+    public int currentExperience;
     int experienceToNextLevel;
 
     private void Awake()
@@ -43,6 +43,9 @@ public class LevelUpManager : MonoBehaviour
         {
             //LoadLevel
             //LoadExperience
+
+            StartCoroutine(FirebaseManager.Singleton.LoadExperience());
+            StartCoroutine(FirebaseManager.Singleton.LoadKills());
         }
     }
 
