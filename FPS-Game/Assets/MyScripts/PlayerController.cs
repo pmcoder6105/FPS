@@ -95,6 +95,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public GameObject damageNumber;
 
+    public bool needToClearFog = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -114,6 +116,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             mapViewerCamera = GameObject.Find("RoomViewerCamera");
             firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
             //normalCam.gameObject.tag = "Untagged";
+            needToClearFog = true;
         }
         else // if PV isn't mine
         {
@@ -191,6 +194,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             return;
 
         playerManager.transform.position = this.gameObject.transform.position;
+
+        if (needToClearFog == true)
+        {
+            StartCoroutine(nameof(ClearFog));            
+        }
 
         Look(); // look
 
@@ -337,6 +345,20 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     void RPC_StopDustTrail()
     {
         dustTrailParticleSystem.GetComponent<ParticleSystem>().Emit(0);
+    }
+
+    IEnumerator ClearFog()
+    {
+        float elapsedTime = 0f;
+        elapsedTime += Time.timeSinceLevelLoad;
+        float percentComplete = elapsedTime / 1;
+        float lerpTime = Mathf.Lerp(0.2f, 0f, percentComplete);
+
+        RenderSettings.fogDensity = lerpTime;
+
+        yield return new WaitUntil(predicate: () => lerpTime == 0);
+
+        needToClearFog = false;
     }
 
     IEnumerator WalkSFX()

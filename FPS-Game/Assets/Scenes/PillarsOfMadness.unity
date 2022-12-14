@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.2
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -43245,6 +43245,7 @@ MonoBehaviour:
   isDagger: 0
   scopeSFX: {fileID: 8300000, guid: 2843658595b9ac44d8d5a41fa5bb664a, type: 3}
   otherGunScopeReference: {fileID: 0}
+  bulletBloomAmount: 0
 --- !u!224 &2509712507726776675
 RectTransform:
   m_ObjectHideFlags: 0
@@ -43746,6 +43747,7 @@ MonoBehaviour:
   isDagger: 0
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 8757865082874749986}
+  bulletBloomAmount: 0
 --- !u!222 &2995205600962619814
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -45422,6 +45424,7 @@ MonoBehaviour:
   isDagger: 0
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 8757865082874749986}
+  bulletBloomAmount: 0
 --- !u!223 &4368000240291610246
 Canvas:
   m_ObjectHideFlags: 0
@@ -45975,6 +45978,7 @@ MonoBehaviour:
   isDagger: 1
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 8757865082874749986}
+  bulletBloomAmount: 0
 --- !u!224 &4626242197470475386
 RectTransform:
   m_ObjectHideFlags: 0
@@ -46509,6 +46513,7 @@ MonoBehaviour:
   isDagger: 0
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 8757865082874749986}
+  bulletBloomAmount: 0
 --- !u!1 &5530043618566547623
 GameObject:
   m_ObjectHideFlags: 0
