@@ -42,10 +42,14 @@ public class PlayerManager : MonoBehaviour
 
     int itemIndex;
 
+    public int currentExperience;
+
 
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
+
+        //Load currentExperience from firebase
     }
 
     // Start is called before the first frame update
@@ -147,6 +151,8 @@ public class PlayerManager : MonoBehaviour
     public void GetKill()
     {
         PV.RPC(nameof(RPC_GetKill), PV.Owner);
+
+        
     }
 
 
@@ -154,6 +160,10 @@ public class PlayerManager : MonoBehaviour
     void RPC_GetKill()
     {
         kills++;
+
+        LevelUpManager.Singleton.AddExperiencePoints();
+        LevelUpManager.Singleton.CheckLevelUp(currentExperience);
+
 
         Hashtable hash = new();
         hash.Add("kills", kills);

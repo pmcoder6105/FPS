@@ -415,6 +415,39 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
+    public IEnumerator UpdateKills(int newAmount)
+    {
+        //Call the Firebase auth update user profile function passing the profile with the username
+        var DBTask = DBReference.Child("users").Child(User.UserId).Child("kills").SetValueAsync(newAmount);
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else
+        {
+            //Auth username is now updated
+        }
+    }
+
+    public IEnumerator UpdateExperience(int newAmount)
+    {
+        //Call the Firebase auth update user profile function passing the profile with the username
+        var DBTask = DBReference.Child("users").Child(User.UserId).Child("xp").SetValueAsync(newAmount);
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else
+        {
+            //Auth username is now updated
+        }
+    }
+
+
     public IEnumerator LoadPlayerColorDataCustomizeBeanModel(GameObject beanModel, FlexibleColorPicker fcp, Material healthyMat)
     {
         var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
