@@ -501,10 +501,15 @@ public class SingleShotGun : Gun
         if (Input.GetMouseButtonDown(1))
         {
             bulletBloomAmount /= 2;
+            playerController.walkSpeed /= 2;
+            playerController.sprintSpeed /= 2;
+
         }
         if (Input.GetMouseButtonUp(1))
         {
             bulletBloomAmount *= 2;
+            playerController.walkSpeed *= 2;
+            playerController.sprintSpeed *= 2;
         }
 
 
