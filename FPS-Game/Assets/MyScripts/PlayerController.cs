@@ -208,7 +208,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         SetPlayerHealthShader(); // set player health shader
 
-        healthBarImage.fillAmount = currentHealth / maxHealth; // set the fill amount of the health bar
+        //healthBarImage.fillAmount = currentHealth / maxHealth; // set the fill amount of the health bar
 
         // if the current health is <= 100 and >= 50
         if (currentHealth <= 100 && currentHealth >= 50)
