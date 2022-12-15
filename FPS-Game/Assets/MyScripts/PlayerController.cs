@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     int previousItemIndex = -1;
 
     float verticalLookRotation; 
-    bool grounded; 
+    public bool grounded; 
     Vector3 smoothMoveVelocity; 
     Vector3 moveAmount; 
 
@@ -96,6 +96,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public GameObject damageNumber;
 
     public bool needToClearFog = false;
+
+    public bool isMoving = false;
 
     private void Awake()
     {

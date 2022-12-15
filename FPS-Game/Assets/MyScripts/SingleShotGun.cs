@@ -115,6 +115,11 @@ public class SingleShotGun : Gun
         if (PV.IsMine == false)
             return;
 
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        {
+            bulletBloomAmount *= 2;
+        } if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) bulletBloomAmount /= 2;
+
 
         if (transform.GetChild(0).gameObject.activeInHierarchy == true)
         {
@@ -501,6 +506,8 @@ public class SingleShotGun : Gun
         if (Input.GetMouseButtonDown(1))
         {
             bulletBloomAmount /= 2;
+            if (isDagger)
+                return;
             playerController.walkSpeed /= 2;
             playerController.sprintSpeed /= 2;
 
@@ -508,6 +515,8 @@ public class SingleShotGun : Gun
         if (Input.GetMouseButtonUp(1))
         {
             bulletBloomAmount *= 2;
+            if (isDagger)
+                return;
             playerController.walkSpeed *= 2;
             playerController.sprintSpeed *= 2;
         }
