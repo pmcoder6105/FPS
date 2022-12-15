@@ -54,16 +54,23 @@ public class Reticle : MonoBehaviour
             //    else
             //        return false;
 
+            if (Input.GetMouseButton(1))
+            {
+                return false;
+            }
+
             // If not rigidbody is assigned, check Input axis' instead.
             if (
                 Input.GetAxis("Horizontal") != 0 ||
-                Input.GetAxis("Vertical") != 0 //||
-                //Input.GetAxis("Mouse X") != 0 ||
-                //Input.GetAxis("Mouse Y") != 0
+                Input.GetAxis("Vertical") != 0 ||
+                //Input.GetMouseButton(1) ||
+                Input.GetMouseButton(0)
                     )
                 return true;
             else
                 return false;
+
+            
 
         }
 
