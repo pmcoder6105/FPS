@@ -3609,6 +3609,7 @@ GameObject:
   - component: {fileID: 3036645135522511440}
   - component: {fileID: 5824856212842597629}
   - component: {fileID: 2918023864005975165}
+  - component: {fileID: 3141517849836887114}
   m_Layer: 0
   m_Name: PlayerController 1
   m_TagString: Untagged
@@ -3929,7 +3930,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2511184437448133935}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 583b5db771ea6e34aad490768ff2e67e, type: 3}
   m_Name: 
@@ -3950,6 +3951,18 @@ MonoBehaviour:
   blockIndictorUIImage: {fileID: 5340953337472002079}
   controller: {fileID: 3069946463937519793}
   playerColorValue: 
+--- !u!114 &3141517849836887114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2511184437448133935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 312a5b7594b1ad341aa73b9e9130e203, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2518113245493053348
 GameObject:
   m_ObjectHideFlags: 0

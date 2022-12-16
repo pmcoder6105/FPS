@@ -170,14 +170,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (Input.GetKeyDown(KeyCode.M)) 
         {
             micIsOn = !micIsOn; // is mic on changes
-            if (micIsOn)
-            {
-                VoiceChatManager.Instance.OnJoinedRoom();
-            }
-            else
-            {
-                VoiceChatManager.Instance.OnLeftRoom();
-            }
+            //if (micIsOn)
+            //{
+            //    VoiceChatManager.Instance.OnJoinedRoom();
+            //}
+            //else
+            //{
+            //    VoiceChatManager.Instance.OnLeftRoom();
+            //}
+
+            GetComponent<MicrophoneToggle>().ToggleMicrophone();
         }
         if (micIsOn) micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic on"; // if the mic is on, set the mic UI text to "on"
         else micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic off"; // if the mic is on, set the mic UI text to "off"

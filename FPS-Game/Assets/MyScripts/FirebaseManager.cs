@@ -113,6 +113,8 @@ public class FirebaseManager : MonoBehaviour
                 Debug.Log("Should be logged in...");
                 StartCoroutine(LoadUsernameData());
                 StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
+                StartCoroutine(LoadExperience());
+                StartCoroutine(LoadKills());
             }
             else
             {
@@ -374,7 +376,7 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
-    public  IEnumerator LoadUsernameData()
+    public IEnumerator LoadUsernameData()
     {
         var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
 
@@ -391,6 +393,17 @@ public class FirebaseManager : MonoBehaviour
         else
         {
             DataSnapshot snapshot = DBTask.Result;
+
+            if (snapshot.Child("username").Value == null)
+            {
+                string random = "Guest " + Random.Range(0, 1000).ToString("000");
+
+                UpdateUsernameDatabase(random);
+                UpdateUsernameAuth(random);
+                PhotonNetwork.NickName = random;
+                AccountUIManager.instance.usernameInputField.text = random;
+            }
+                
 
             AccountUIManager.instance.usernameInputField.text = snapshot.Child("username").Value.ToString();
             PhotonNetwork.NickName = snapshot.Child("username").Value.ToString();
@@ -460,6 +473,7 @@ public class FirebaseManager : MonoBehaviour
         else if (DBTask.Result.Value == null)
         {
             LevelUpManager.Singleton.currentLevel = 0;
+            StartCoroutine(UpdateKills(0));
         }
         else
         {
@@ -483,13 +497,18 @@ public class FirebaseManager : MonoBehaviour
         }
         else if (DBTask.Result.Value == null)
         {
-            LevelUpManager.Singleton.currentLevel = 0;
+            LevelUpManager.Singleton.currentExperience = 0;
+            StartCoroutine(UpdateExperience(0));
         }
         else
         {
             DataSnapshot snapshot = DBTask.Result;
 
+            Debug.Log("My current experience" + (int)snapshot.Child("xp").Value);
+
             LevelUpManager.Singleton.currentExperience = (int)snapshot.Child("xp").Value;
+
+            
 
             //Do all the stuff with the main menu level up bar (hint: check if the current scene is 0, if so, do the mathf.epsilon pattern
         }

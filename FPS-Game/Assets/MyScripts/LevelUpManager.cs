@@ -11,11 +11,13 @@ public class LevelUpManager : MonoBehaviour
     public int currentExperience;
     int experienceToNextLevel;
 
+    FirebaseManager firebase;
+
     private void Awake()
     {
         Singleton = this;
         DontDestroyOnLoad(this.gameObject);
-        
+        firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
     }
 
 
@@ -30,7 +32,7 @@ public class LevelUpManager : MonoBehaviour
             }
             else if (_singleton != value)
             {
-                Debug.Log($"{nameof(FirebaseManager)} instance already exists, destroying object!");
+                Debug.Log($"{nameof(LevelUpManager)} instance already exists, destroying object!");
                 Destroy(value.gameObject);
             }
             Debug.Log("Singleton called");
@@ -44,8 +46,8 @@ public class LevelUpManager : MonoBehaviour
             //LoadLevel
             //LoadExperience
 
-            StartCoroutine(FirebaseManager.Singleton.LoadExperience());
-            StartCoroutine(FirebaseManager.Singleton.LoadKills());
+            StartCoroutine(firebase.LoadExperience());
+            StartCoroutine(firebase.LoadKills());
         }
     }
 
@@ -55,19 +57,19 @@ public class LevelUpManager : MonoBehaviour
         {
             LevelUp();
             currentExperience = 0;
-            StartCoroutine(FirebaseManager.Singleton.UpdateExperience(0));
+            StartCoroutine(firebase.UpdateExperience(0));
         }
     }
 
     public void LevelUp()
     {
         currentLevel++;
-        StartCoroutine(FirebaseManager.Singleton.UpdateKills(currentLevel));
+        StartCoroutine(firebase.UpdateKills(currentLevel));
     }
 
     public void AddExperiencePoints()
     {
         currentExperience++;
-        StartCoroutine(FirebaseManager.Singleton.UpdateExperience(currentExperience));
+        StartCoroutine(firebase.UpdateExperience(currentExperience));
     }
 }
