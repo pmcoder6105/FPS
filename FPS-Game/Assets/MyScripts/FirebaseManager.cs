@@ -386,24 +386,17 @@ public class FirebaseManager : MonoBehaviour
         {
             Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
         }
-        else if (DBTask.Result.Value == null)
+        else if (DBTask.Result.Value == null || DBTask.Result.Child("username") == null)
         {
-            AccountUIManager.instance.usernameInputField.text = "Guest " + Random.Range(0, 1000).ToString("000");
+            string random = "Guest " + Random.Range(0, 1000).ToString("000");
+            AccountUIManager.instance.usernameInputField.text = random;
+            StartCoroutine(UpdateUsernameAuth(random));
+            StartCoroutine(UpdateUsernameDatabase(random));
+            PhotonNetwork.NickName = random;
         }
         else
         {
-            DataSnapshot snapshot = DBTask.Result;
-
-            if (snapshot.Child("username").Value == null)
-            {
-                string random = "Guest " + Random.Range(0, 1000).ToString("000");
-
-                UpdateUsernameDatabase(random);
-                UpdateUsernameAuth(random);
-                PhotonNetwork.NickName = random;
-                AccountUIManager.instance.usernameInputField.text = random;
-            }
-                
+            DataSnapshot snapshot = DBTask.Result; 
 
             AccountUIManager.instance.usernameInputField.text = snapshot.Child("username").Value.ToString();
             PhotonNetwork.NickName = snapshot.Child("username").Value.ToString();
@@ -470,7 +463,7 @@ public class FirebaseManager : MonoBehaviour
         {
             Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
         }
-        else if (DBTask.Result.Value == null)
+        else if (DBTask.Result.Value == null || DBTask.Result.Child("kills") == null)
         {
             LevelUpManager.Singleton.currentLevel = 0;
             StartCoroutine(UpdateKills(0));
@@ -495,7 +488,7 @@ public class FirebaseManager : MonoBehaviour
         {
             Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
         }
-        else if (DBTask.Result.Value == null)
+        else if (DBTask.Result.Value == null || DBTask.Result.Child("xp") == null)
         {
             LevelUpManager.Singleton.currentExperience = 0;
             StartCoroutine(UpdateExperience(0));
@@ -525,7 +518,7 @@ public class FirebaseManager : MonoBehaviour
         {
             Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
         }
-        else if (DBTask.Result.Value == null)
+        else if (DBTask.Result.Value == null || DBTask.Result.Child("playerColor") == null)
         {
             fcp.SetColor(Color.red);
             healthyMat.SetColor(("_MaterialColor"), Color.red);
@@ -557,7 +550,7 @@ public class FirebaseManager : MonoBehaviour
         {
             Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
         }
-        else if (DBTask.Result.Value == null)
+        else if (DBTask.Result.Value == null || DBTask.Result.Child("playerColor") == null)
         {
             fcp.SetColor(Color.red);
             healthyMat.SetColor(("_MaterialColor"), Color.red);

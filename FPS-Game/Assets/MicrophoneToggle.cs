@@ -18,7 +18,7 @@ public class MicrophoneToggle : MonoBehaviour
         activeMicrophone = Microphone.devices[0];
 
         // Add a listener to the button's OnClick event
-        //toggleButton.onClick.AddListener(ToggleMicrophone);
+        //toggleButton.onClick.AddListener(ToggleMicrophone
     }
 
     public void ToggleMicrophone()

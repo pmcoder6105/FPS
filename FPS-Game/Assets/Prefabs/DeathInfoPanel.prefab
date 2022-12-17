@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 7745335684966515860}
   - component: {fileID: 4472719366066713388}
   - component: {fileID: 4142868398377069866}
+  - component: {fileID: 7056758383586867802}
   m_Layer: 5
   m_Name: Replay
   m_TagString: Untagged
@@ -618,3 +619,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7056758383586867802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3714018869329167796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.35686275, g: 0.35686275, b: 0.35686275, a: 1}
+  m_EffectDistance: {x: -7.5, y: -5}
+  m_UseGraphicAlpha: 1
