@@ -6865,6 +6865,7 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+  fadeIn: 1
 --- !u!225 &180627939
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -13238,6 +13239,7 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+  fadeIn: 1
 --- !u!114 &376245429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14749,6 +14751,7 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+  fadeIn: 1
 --- !u!225 &423717935
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -21177,6 +21180,7 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+  fadeIn: 1
 --- !u!225 &589498053
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -22423,6 +22427,7 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+  fadeIn: 1
 --- !u!225 &628154439
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -26375,19 +26380,20 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "-Added an account system with account system features\r\n-Made new player
-    models that have more similarities to an actual kidney bean\r\n-Added Damage
-    Number texts which spawns when a player takes damage and is visible to all the
-    players in the room\r\n-Added a better healthbar with health text\r\n-Added gun
-    crosshairs to all the guns\r\n-Added player dust trails\r\n-Added a new separate
-    PatchNotes Menu because the amount of patchnotes were getting to large to just
-    be placed in the Main Menu.\r\n-Added button hover animations\r\n-Added information
-    below the visible screen in the Main Menu that can now be accessed via the new
-    scrollbar functionality\r\n-Designed a new BeanBox logo\r\n-Added a clean fog
-    clear animation effect that plays whenever you load the match\r\n-Added an FPS
-    Counter which is found on the top right corner of the screen\r\n-Added new skyboxes
-    for all maps\r\n-Player will now slow down when aiming\r\n-Added button outlines
-    to all the buttons in the game\r\n-Fixed dagger viewer bug in weapon viewer\r\n-Fixed
+  m_text: "-Added an account system with login, register, verification and reset
+    systems\n-Made new player models that have more similarities to an actual kidney
+    bean\r\n-Added some map post process to improve graphics\n-Added Damage Number
+    texts which spawns when a player takes damage and is visible to all the players
+    in the room\r\n-Added a better healthbar with health text\r\n-Added gun crosshairs
+    to all the guns\r\n-Added player dust trails\r\n-Added a new separate PatchNotes
+    Menu because the amount of patchnotes were getting to large to just be placed
+    in the Main Menu.\r\n-Added button hover animations\r\n-Added information below
+    the visible screen in the Main Menu that can now be accessed via the new scrollbar
+    functionality\r\n-Designed a new BeanBox logo\r\n-Added a clean fog clear animation
+    effect that plays whenever you load the match\r\n-Added an FPS Counter which
+    is found on the top right corner of the screen\r\n-Added new skyboxes for all
+    maps\r\n-Player will now slow down when aiming\r\n-Added button outlines to all
+    the buttons in the game\r\n-Fixed dagger viewer bug in weapon viewer\r\n-Fixed
     Microphone Toggle Bug\r\n-Added inventory system for InGame weapon icons instead
     of keeping all weapon icons on the right side of the screen\r\n-Fixed camera
     bug for when the player dies from falling off the side of the map\r\n-Fixed leaderboard
@@ -33297,6 +33303,7 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+  fadeIn: 1
 --- !u!225 &935533898
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -35616,6 +35623,7 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+  fadeIn: 1
 --- !u!225 &1017716820
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -41202,6 +41210,7 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+  fadeIn: 1
 --- !u!225 &1185850490
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -41659,6 +41668,7 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+  fadeIn: 1
 --- !u!225 &1213137838
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -50430,6 +50440,7 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+  fadeIn: 1
 --- !u!225 &1500710249
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -51833,6 +51844,7 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+  fadeIn: 1
 --- !u!114 &1568827095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66879,6 +66891,7 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 1444309916}
   fcp: {fileID: 867644778}
   healthyMat: {fileID: 2100000, guid: d0474e32081b0ee48ba0e742382ca5b7, type: 2}
+  fadeIn: 1
 --- !u!114 &2134621399
 MonoBehaviour:
   m_ObjectHideFlags: 0
