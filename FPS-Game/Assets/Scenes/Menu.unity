@@ -6818,6 +6818,7 @@ GameObject:
   m_Component:
   - component: {fileID: 180627937}
   - component: {fileID: 180627938}
+  - component: {fileID: 180627939}
   m_Layer: 5
   m_Name: ErrorMenu
   m_TagString: Untagged
@@ -6864,6 +6865,18 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+--- !u!225 &180627939
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180627936}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &181963862
 GameObject:
   m_ObjectHideFlags: 0
@@ -13172,6 +13185,7 @@ GameObject:
   - component: {fileID: 376245427}
   - component: {fileID: 376245428}
   - component: {fileID: 376245429}
+  - component: {fileID: 376245430}
   m_Layer: 5
   m_Name: CustomizeBeanMenu
   m_TagString: Untagged
@@ -13237,6 +13251,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customizeBeanModel: {fileID: 109604508}
+--- !u!225 &376245430
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376245426}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &388195022
 GameObject:
   m_ObjectHideFlags: 0
@@ -14675,6 +14701,7 @@ GameObject:
   m_Component:
   - component: {fileID: 423717933}
   - component: {fileID: 423717934}
+  - component: {fileID: 423717935}
   m_Layer: 5
   m_Name: FindRoomMenu
   m_TagString: Untagged
@@ -14722,6 +14749,18 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+--- !u!225 &423717935
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423717932}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &434576629
 GameObject:
   m_ObjectHideFlags: 0
@@ -21087,6 +21126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 589498051}
   - component: {fileID: 589498052}
+  - component: {fileID: 589498053}
   m_Layer: 5
   m_Name: WeaponViewerMenu
   m_TagString: Untagged
@@ -21137,6 +21177,18 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+--- !u!225 &589498053
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589498050}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &592740597
 GameObject:
   m_ObjectHideFlags: 0
@@ -22379,7 +22431,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 628154436}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -33197,6 +33249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 935533895}
   - component: {fileID: 935533897}
+  - component: {fileID: 935533898}
   m_Layer: 5
   m_Name: ChooseCustomizeMenu
   m_TagString: Untagged
@@ -33244,6 +33297,18 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+--- !u!225 &935533898
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935533894}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &935761262
 GameObject:
   m_ObjectHideFlags: 0
@@ -35501,6 +35566,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017716818}
   - component: {fileID: 1017716819}
+  - component: {fileID: 1017716820}
   m_Layer: 5
   m_Name: TutorialMenu
   m_TagString: Untagged
@@ -35550,6 +35616,18 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+--- !u!225 &1017716820
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017716817}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1019902355
 GameObject:
   m_ObjectHideFlags: 0
@@ -41073,6 +41151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1185850488}
   - component: {fileID: 1185850489}
+  - component: {fileID: 1185850490}
   m_Layer: 5
   m_Name: RoomMenu
   m_TagString: Untagged
@@ -41123,6 +41202,18 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+--- !u!225 &1185850490
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185850487}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1186747509
 GameObject:
   m_ObjectHideFlags: 0
@@ -41521,6 +41612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1213137836}
   - component: {fileID: 1213137837}
+  - component: {fileID: 1213137838}
   m_Layer: 5
   m_Name: CreateRoomMenu
   m_TagString: Untagged
@@ -41567,6 +41659,18 @@ MonoBehaviour:
   mainMenuBeanModel: {fileID: 0}
   fcp: {fileID: 0}
   healthyMat: {fileID: 0}
+--- !u!225 &1213137838
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213137835}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1217535502
 GameObject:
   m_ObjectHideFlags: 0
@@ -50278,6 +50382,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1500710247}
+  - component: {fileID: 1500710248}
+  - component: {fileID: 1500710249}
   m_Layer: 5
   m_Name: ChangeEmailMenu
   m_TagString: Untagged
@@ -50307,6 +50413,35 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1500710248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500710246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cce6441ea504e584dac3ec7941bdf23a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuName: change
+  open: 0
+  mainMenuBeanModel: {fileID: 0}
+  fcp: {fileID: 0}
+  healthyMat: {fileID: 0}
+--- !u!225 &1500710249
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500710246}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1508637667
 GameObject:
   m_ObjectHideFlags: 0
@@ -51651,6 +51786,7 @@ GameObject:
   - component: {fileID: 1568827093}
   - component: {fileID: 1568827094}
   - component: {fileID: 1568827095}
+  - component: {fileID: 1568827096}
   m_Layer: 5
   m_Name: PatchNotesMenu
   m_TagString: Untagged
@@ -51727,6 +51863,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &1568827096
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568827092}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1570101829
 GameObject:
   m_ObjectHideFlags: 0
@@ -57499,7 +57647,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34040
+  m_Name: pb_Mesh34158
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -59692,12 +59840,16 @@ MonoBehaviour:
   menus:
   - {fileID: 628154438}
   - {fileID: 2134621398}
+  - {fileID: 1568827094}
   - {fileID: 1213137837}
   - {fileID: 1185850489}
   - {fileID: 180627938}
   - {fileID: 423717934}
   - {fileID: 376245428}
+  - {fileID: 935533897}
   - {fileID: 589498052}
+  - {fileID: 1017716819}
+  - {fileID: 1500710248}
   titleMenu: {fileID: 2134621396}
   loadingMenu: {fileID: 628154436}
 --- !u!114 &1892620196
@@ -59828,7 +59980,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1892620189}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: c3bcff1c6a1c1384cb44e9d2e165c924, type: 2}
   m_CullingMode: 0
@@ -66773,7 +66925,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2134621396}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

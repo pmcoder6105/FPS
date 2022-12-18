@@ -40,7 +40,7 @@ AnimatorStateMachine:
     m_Position: {x: 700, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5701760709799983735}
-    m_Position: {x: 443.52966, y: 172.99373, z: 0}
+    m_Position: {x: 440, y: 170, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -60,13 +60,13 @@ AnimatorController:
   m_Name: HomeMenuUITransitions
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: home_open
+  - m_Name: title_open
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: home_close
+  - m_Name: title_close
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
