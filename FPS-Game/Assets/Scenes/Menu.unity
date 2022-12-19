@@ -6819,6 +6819,7 @@ GameObject:
   - component: {fileID: 180627937}
   - component: {fileID: 180627938}
   - component: {fileID: 180627939}
+  - component: {fileID: 180627940}
   m_Layer: 5
   m_Name: ErrorMenu
   m_TagString: Untagged
@@ -6874,10 +6875,24 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 180627936}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &180627940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180627936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4d5c95b4087a64388313235ef1256a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationName: TitleMenuTransition
+  animatorParent: {fileID: 1892620189}
 --- !u!1 &181963862
 GameObject:
   m_ObjectHideFlags: 0
@@ -13187,6 +13202,7 @@ GameObject:
   - component: {fileID: 376245428}
   - component: {fileID: 376245429}
   - component: {fileID: 376245430}
+  - component: {fileID: 376245431}
   m_Layer: 5
   m_Name: CustomizeBeanMenu
   m_TagString: Untagged
@@ -13261,10 +13277,24 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 376245426}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &376245431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376245426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4d5c95b4087a64388313235ef1256a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationName: TitleMenuTransition
+  animatorParent: {fileID: 1892620189}
 --- !u!1 &388195022
 GameObject:
   m_ObjectHideFlags: 0
@@ -14704,6 +14734,7 @@ GameObject:
   - component: {fileID: 423717933}
   - component: {fileID: 423717934}
   - component: {fileID: 423717935}
+  - component: {fileID: 423717936}
   m_Layer: 5
   m_Name: FindRoomMenu
   m_TagString: Untagged
@@ -14760,10 +14791,24 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423717932}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &423717936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423717932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4d5c95b4087a64388313235ef1256a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationName: TitleMenuTransition
+  animatorParent: {fileID: 1892620189}
 --- !u!1 &434576629
 GameObject:
   m_ObjectHideFlags: 0
@@ -21130,6 +21175,7 @@ GameObject:
   - component: {fileID: 589498051}
   - component: {fileID: 589498052}
   - component: {fileID: 589498053}
+  - component: {fileID: 589498054}
   m_Layer: 5
   m_Name: WeaponViewerMenu
   m_TagString: Untagged
@@ -21189,10 +21235,24 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 589498050}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &589498054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589498050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4d5c95b4087a64388313235ef1256a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationName: TitleMenuTransition
+  animatorParent: {fileID: 1892620189}
 --- !u!1 &592740597
 GameObject:
   m_ObjectHideFlags: 0
@@ -22382,6 +22442,7 @@ GameObject:
   - component: {fileID: 628154437}
   - component: {fileID: 628154438}
   - component: {fileID: 628154439}
+  - component: {fileID: 628154440}
   m_Layer: 5
   m_Name: LoadingMenu
   m_TagString: Untagged
@@ -22436,10 +22497,24 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 628154436}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &628154440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628154436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4d5c95b4087a64388313235ef1256a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationName: TitleMenuTransition
+  animatorParent: {fileID: 1892620189}
 --- !u!1 &630369052
 GameObject:
   m_ObjectHideFlags: 0
@@ -33256,6 +33331,7 @@ GameObject:
   - component: {fileID: 935533895}
   - component: {fileID: 935533897}
   - component: {fileID: 935533898}
+  - component: {fileID: 935533899}
   m_Layer: 5
   m_Name: ChooseCustomizeMenu
   m_TagString: Untagged
@@ -33312,10 +33388,24 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 935533894}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &935533899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935533894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4d5c95b4087a64388313235ef1256a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationName: TitleMenuTransition
+  animatorParent: {fileID: 1892620189}
 --- !u!1 &935761262
 GameObject:
   m_ObjectHideFlags: 0
@@ -35574,6 +35664,7 @@ GameObject:
   - component: {fileID: 1017716818}
   - component: {fileID: 1017716819}
   - component: {fileID: 1017716820}
+  - component: {fileID: 1017716821}
   m_Layer: 5
   m_Name: TutorialMenu
   m_TagString: Untagged
@@ -35632,10 +35723,24 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1017716817}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1017716821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017716817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4d5c95b4087a64388313235ef1256a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationName: TitleMenuTransition
+  animatorParent: {fileID: 1892620189}
 --- !u!1 &1019902355
 GameObject:
   m_ObjectHideFlags: 0
@@ -41160,6 +41265,7 @@ GameObject:
   - component: {fileID: 1185850488}
   - component: {fileID: 1185850489}
   - component: {fileID: 1185850490}
+  - component: {fileID: 1185850491}
   m_Layer: 5
   m_Name: RoomMenu
   m_TagString: Untagged
@@ -41219,10 +41325,24 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185850487}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1185850491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185850487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4d5c95b4087a64388313235ef1256a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationName: TitleMenuTransition
+  animatorParent: {fileID: 1892620189}
 --- !u!1 &1186747509
 GameObject:
   m_ObjectHideFlags: 0
@@ -41622,6 +41742,7 @@ GameObject:
   - component: {fileID: 1213137836}
   - component: {fileID: 1213137837}
   - component: {fileID: 1213137838}
+  - component: {fileID: 1213137839}
   m_Layer: 5
   m_Name: CreateRoomMenu
   m_TagString: Untagged
@@ -41677,10 +41798,24 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1213137835}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1213137839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213137835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4d5c95b4087a64388313235ef1256a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationName: TitleMenuTransition
+  animatorParent: {fileID: 1892620189}
 --- !u!1 &1217535502
 GameObject:
   m_ObjectHideFlags: 0
@@ -43040,6 +43175,170 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1261252774}
   m_CullTransparentMesh: 1
+--- !u!43 &1264715153
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: pb_Mesh34184
+  serializedVersion: 10
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 24
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 9
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 16.5, y: 0, z: 16.5}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 000001000200010003000200010004000300040005000300020003000600030007000600030005000700050008000700
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 9
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 12
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 24
+      format: 0
+      dimension: 4
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 40
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 432
+    _typelessdata: 000084c100000000000084c1000000000000803f000000000000803f0000000000000000000080bf000084c1000084c1000084c10000000000000000000000000000803f000000000000803f0000000000000000000080bf000084c1000000000000000000000000000084c1000000000000803f000000000000803f0000000000000000000080bf00000000000084c1000000000000000000000000000000000000803f000000000000803f0000000000000000000080bf0000000000000000000084c10000000000008441000000000000803f000000000000803f0000000000000000000080bf000084c100008441000000000000000000008441000000000000803f000000000000803f0000000000000000000080bf00000000000084410000844100000000000084c1000000000000803f000000000000803f0000000000000000000080bf00008441000084c1000084410000000000000000000000000000803f000000000000803f0000000000000000000080bf0000844100000000000084410000000000008441000000000000803f000000000000803f0000000000000000000080bf0000844100008441
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 16.5, y: 0, z: 16.5}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &1264735288
 GameObject:
   m_ObjectHideFlags: 0
@@ -50394,6 +50693,7 @@ GameObject:
   - component: {fileID: 1500710247}
   - component: {fileID: 1500710248}
   - component: {fileID: 1500710249}
+  - component: {fileID: 1500710250}
   m_Layer: 5
   m_Name: ChangeEmailMenu
   m_TagString: Untagged
@@ -50449,10 +50749,24 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500710246}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1500710250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500710246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4d5c95b4087a64388313235ef1256a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationName: TitleMenuTransition
+  animatorParent: {fileID: 1892620189}
 --- !u!1 &1508637667
 GameObject:
   m_ObjectHideFlags: 0
@@ -51798,6 +52112,7 @@ GameObject:
   - component: {fileID: 1568827094}
   - component: {fileID: 1568827095}
   - component: {fileID: 1568827096}
+  - component: {fileID: 1568827097}
   m_Layer: 5
   m_Name: PatchNotesMenu
   m_TagString: Untagged
@@ -51883,10 +52198,24 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1568827092}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1568827097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568827092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4d5c95b4087a64388313235ef1256a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationName: TitleMenuTransition
+  animatorParent: {fileID: 1892620189}
 --- !u!1 &1570101829
 GameObject:
   m_ObjectHideFlags: 0
@@ -53341,7 +53670,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1633260755}
-  m_Mesh: {fileID: 1808750297}
+  m_Mesh: {fileID: 1264715153}
 --- !u!23 &1633260759
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -53568,8 +53897,8 @@ MonoBehaviour:
     m_AreaError: 15
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
-  m_Mesh: {fileID: 1808750297}
-  m_VersionIndex: 511
+  m_Mesh: {fileID: 1264715153}
+  m_VersionIndex: 514
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -57653,170 +57982,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1806299859}
   m_CullTransparentMesh: 1
---- !u!43 &1808750297
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34158
-  serializedVersion: 10
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 24
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 9
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 16.5, y: 0, z: 16.5}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 000001000200010003000200010004000300040005000300020003000600030007000600030005000700050008000700
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 9
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 12
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 24
-      format: 0
-      dimension: 4
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 40
-      format: 0
-      dimension: 2
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 432
-    _typelessdata: 000084c100000000000084c1000000000000803f000000000000803f0000000000000000000080bf000084c1000084c1000084c10000000000000000000000000000803f000000000000803f0000000000000000000080bf000084c1000000000000000000000000000084c1000000000000803f000000000000803f0000000000000000000080bf00000000000084c1000000000000000000000000000000000000803f000000000000803f0000000000000000000080bf0000000000000000000084c10000000000008441000000000000803f000000000000803f0000000000000000000080bf000084c100008441000000000000000000008441000000000000803f000000000000803f0000000000000000000080bf00000000000084410000844100000000000084c1000000000000803f000000000000803f0000000000000000000080bf00008441000084c1000084410000000000000000000000000000803f000000000000803f0000000000000000000080bf0000844100000000000084410000000000008441000000000000803f000000000000803f0000000000000000000080bf0000844100008441
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 16.5, y: 0, z: 16.5}
-  m_MeshUsageFlags: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshMetrics[0]: 1
-  m_MeshMetrics[1]: 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &1811654400
 GameObject:
   m_ObjectHideFlags: 0
@@ -59992,7 +60157,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1892620189}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: c3bcff1c6a1c1384cb44e9d2e165c924, type: 2}
   m_CullingMode: 0
@@ -66844,6 +67009,7 @@ GameObject:
   - component: {fileID: 2134621400}
   - component: {fileID: 2134621399}
   - component: {fileID: 2134621401}
+  - component: {fileID: 2134621403}
   m_Layer: 5
   m_Name: TitleMenu
   m_TagString: Untagged
@@ -66938,10 +67104,24 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2134621396}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2134621403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134621396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4d5c95b4087a64388313235ef1256a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationName: TitleMenuTransition
+  animatorParent: {fileID: 1892620189}
 --- !u!1 &2138677391
 GameObject:
   m_ObjectHideFlags: 0

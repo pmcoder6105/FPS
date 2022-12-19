@@ -137,6 +137,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             Physics.gravity = new Vector3(0, -2, 0); // set gravity lower
             jumpForce = 500; // increase jump force
+        } else
+        {
+            Physics.gravity = new Vector3(0, -9.81f, 0);
+            jumpForce = 300f;
         }
     }
 

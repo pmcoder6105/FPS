@@ -27,7 +27,7 @@ public class Menu : MonoBehaviour
     {
         if (fadeIn)
         {
-            StartCoroutine(nameof(FadeMenuIn));
+            //StartCoroutine(nameof(FadeMenuIn));
         }
         
     }
