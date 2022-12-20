@@ -59,6 +59,7 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             canvasGroup.alpha = 1;
+            transform.root.GetComponent<Animator>().Play("ScoreBoardTransition", 0, 0f);
             isOpen = true;
             scoreBoardTitle.alpha = 1;
             holdTabForScoreBoardText.color = new Color(holdTabForScoreBoardText.color.r, holdTabForScoreBoardText.color.g, holdTabForScoreBoardText.color.b, 0);
