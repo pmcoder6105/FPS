@@ -152,6 +152,8 @@ GameObject:
   - component: {fileID: 3827948871946759372}
   - component: {fileID: 3400350475349529266}
   - component: {fileID: 289184918098198876}
+  - component: {fileID: 3599624136740360000}
+  - component: {fileID: 6235464482962173220}
   m_Layer: 5
   m_Name: RoomListItem
   m_TagString: Untagged
@@ -448,3 +450,29 @@ MonoBehaviour:
   m_EffectColor: {r: 0.35686275, g: 0.35686275, b: 0.35686275, a: 1}
   m_EffectDistance: {x: -7.5, y: -5}
   m_UseGraphicAlpha: 1
+--- !u!225 &3599624136740360000
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537334632677856367}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &6235464482962173220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537334632677856367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4d5c95b4087a64388313235ef1256a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationName: 
+  animatorParent: {fileID: 0}
