@@ -79,6 +79,7 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             leaveConfirmation.alpha = 1;
+            leaveConfirmation.GetComponent<Animator>().Play("LeaveConfirmationTransition");
             Cursor.lockState = CursorLockMode.None;
             isOpen = true;
         }        
