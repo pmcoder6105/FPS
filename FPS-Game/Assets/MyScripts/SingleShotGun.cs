@@ -97,6 +97,8 @@ public class SingleShotGun : Gun
 
     public float bulletBloomAmount;
 
+    [SerializeField] GameObject shield;
+
     private void Start()
     {
         _currentAmmoInClip = clipSize;
@@ -131,7 +133,22 @@ public class SingleShotGun : Gun
             {
                 transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
             }
-        }        
+        }
+
+        if (shield.GetComponent<ShieldManager>().hasOpenedShield && shield.GetComponent<ShieldManager>().hasClosedShield == false)
+        {
+            playerController.canSwitchWeapons = false;
+            gameObject.SetActive(false);
+            canAim = false;
+            _canShoot = false;
+
+        } if (shield.GetComponent<ShieldManager>().hasClosedShield && shield.GetComponent<ShieldManager>().hasOpenedShield == false)
+        {
+            playerController.canSwitchWeapons = true;
+            gameObject.SetActive(true);
+            canAim = true;
+            _canShoot = true;
+        }
     }
 
     public override void Use()

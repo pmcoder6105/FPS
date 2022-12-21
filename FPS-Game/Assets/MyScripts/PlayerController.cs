@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
 
-    [SerializeField] Item[] items;
+    public Item[] items;
 
     public int itemIndex;
     int previousItemIndex = -1;
