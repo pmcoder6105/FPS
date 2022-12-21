@@ -15,6 +15,10 @@ public class ShieldManager : MonoBehaviour
 
     public GameObject[] weapons;
 
+    public AudioClip equip;
+    public AudioClip unequip;
+
+
 
     private void Awake()
     {
@@ -46,7 +50,9 @@ public class ShieldManager : MonoBehaviour
             }
         }
 
-        
+        Vector2 mouseAxis = new(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+
+        transform.localPosition += (Vector3)mouseAxis * -5 / 1000;
     }
 
     [PunRPC]
@@ -62,6 +68,7 @@ public class ShieldManager : MonoBehaviour
         controller.walkSpeed /= 2;
         controller.sprintSpeed /= 2;
 
+        GetComponent<AudioSource>().PlayOneShot(equip);
     }
 
     [PunRPC]
@@ -75,6 +82,8 @@ public class ShieldManager : MonoBehaviour
 
         controller.walkSpeed = 5;
         controller.sprintSpeed = 10;
+        GetComponent<AudioSource>().PlayOneShot(unequip);
+
     }
 
     void EnableGun()
