@@ -142,9 +142,10 @@ public class SingleShotGun : Gun
             canAim = false;
             _canShoot = false;
 
-        } if (shield.GetComponent<ShieldManager>().hasClosedShield && shield.GetComponent<ShieldManager>().hasOpenedShield == false)
+        } if (shield.GetComponent<ShieldManager>().hasClosedShield)
         {
             playerController.canSwitchWeapons = true;
+            Debug.Log("Has closed shield");
             gameObject.SetActive(true);
             canAim = true;
             _canShoot = true;
