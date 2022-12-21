@@ -472,7 +472,13 @@ public class FirebaseManager : MonoBehaviour
         {
             DataSnapshot snapshot = DBTask.Result;
 
-            LevelUpManager.Singleton.currentLevel = (int)snapshot.Child("kills").Value;
+            if (snapshot.Child("kills") != null)
+            {
+
+                LevelUpManager.Singleton.currentLevel = (int)snapshot.Child("kills").Value;
+
+            }
+
 
             //Do all the stuff with the main menu level up bar (hint: check if the current scene is 0, if so, do the mathf.epsilon pattern
         }
@@ -497,11 +503,16 @@ public class FirebaseManager : MonoBehaviour
         {
             DataSnapshot snapshot = DBTask.Result;
 
-            Debug.Log("My current experience" + (int)snapshot.Child("xp").Value);
-
-            LevelUpManager.Singleton.currentExperience = (int)snapshot.Child("xp").Value;
-
             
+
+            if (snapshot.Child("xp") != null)
+            {
+
+                Debug.Log("My current experience" + (int)snapshot.Child("xp").Value);
+
+                LevelUpManager.Singleton.currentExperience = (int)snapshot.Child("xp").Value;
+
+            }
 
             //Do all the stuff with the main menu level up bar (hint: check if the current scene is 0, if so, do the mathf.epsilon pattern
         }
