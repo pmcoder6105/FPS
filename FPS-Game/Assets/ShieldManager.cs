@@ -10,6 +10,11 @@ public class ShieldManager : MonoBehaviour
     public bool hasOpenedShield = false;
     public bool hasClosedShield = false;
 
+    public PlayerController controller;
+
+
+    public GameObject[] weapons;
+
 
     private void Awake()
     {
@@ -27,14 +32,14 @@ public class ShieldManager : MonoBehaviour
         if (PV.IsMine == false)
             return;
 
-        if (Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift) && canUseShield)
+        if (Input.GetKeyDown(KeyCode.Q) && canUseShield)
         {
             PV.RPC(nameof(Open), RpcTarget.All);
         }
 
         if (hasOpenedShield)
         {
-            if (Input.GetKeyUp(KeyCode.RightShift) || Input.GetKeyUp(KeyCode.LeftShift) && canUseShield)
+            if (Input.GetKeyDown(KeyCode.Q) && canUseShield)
             {
                 PV.RPC(nameof(Close), RpcTarget.All);
 
@@ -50,9 +55,13 @@ public class ShieldManager : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(true);
         GetComponent<Animator>().Play("ShieldOpen");
         //transform.root.GetComponent<PlayerController>().items[GetComponent<PlayerController>().itemIndex].itemGameObject.SetActive(false);
-        hasOpenedShield = true;
+        //hasOpenedShield = true;
         //hasClosedShield = false;
-        
+
+        weapons[controller.itemIndex].transform.gameObject.GetComponent<SingleShotGun>().DisableGun();
+        controller.walkSpeed /= 2;
+        controller.sprintSpeed /= 2;
+
     }
 
     [PunRPC]
@@ -60,7 +69,21 @@ public class ShieldManager : MonoBehaviour
     {
         GetComponent<Animator>().Play("ShieldClose");
         //transform.root.GetComponent<PlayerController>().items[GetComponent<PlayerController>().itemIndex].itemGameObject.SetActive(true);
-        hasOpenedShield = false;
+        //hasOpenedShield = false;
         //hasClosedShield = true;
+        EnableGun();
+
+        controller.walkSpeed = 5;
+        controller.sprintSpeed = 10;
+    }
+
+    void EnableGun()
+    {
+        int index = controller.itemIndex;
+        controller.canSwitchWeapons = false;
+        weapons[index].transform.GetChild(0).gameObject.SetActive(true);
+        weapons[index].transform.GetComponent<SingleShotGun>().canAim = true;
+        weapons[index].transform.GetComponent<SingleShotGun>()._canShoot = true;
+        weapons[index].transform.GetComponent<SingleShotGun>().enabled = true;
     }
 }

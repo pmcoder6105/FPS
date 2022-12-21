@@ -76,7 +76,7 @@ public class SingleShotGun : Gun
     public GameObject scope;
 
     public Vector2 _currentRotation;
-    bool canAim = true;
+    public bool canAim = true;
 
     public float shotGunRange;
 
@@ -98,6 +98,8 @@ public class SingleShotGun : Gun
     public float bulletBloomAmount;
 
     [SerializeField] GameObject shield;
+
+    public GameObject[] weapons;
 
     private void Start()
     {
@@ -135,21 +137,29 @@ public class SingleShotGun : Gun
             }
         }
 
-        if (shield.GetComponent<ShieldManager>().hasOpenedShield && shield.GetComponent<ShieldManager>().hasClosedShield == false)
-        {
-            playerController.canSwitchWeapons = false;
-            gameObject.SetActive(false);
-            canAim = false;
-            _canShoot = false;
+        //if (shield.GetComponent<ShieldManager>().hasOpenedShield && shield.GetComponent<ShieldManager>().hasClosedShield == false)
+        //{
+            
 
-        } if (shield.GetComponent<ShieldManager>().hasClosedShield)
-        {
-            playerController.canSwitchWeapons = true;
-            Debug.Log("Has closed shield");
-            gameObject.SetActive(true);
-            canAim = true;
-            _canShoot = true;
-        }
+        //} else if (shield.GetComponent<ShieldManager>().hasClosedShield && transform.GetChild(0).gameObject.activeInHierarchy == false)
+        //{
+        //    int index = playerController.itemIndex;
+        //    playerController.canSwitchWeapons = true;
+        //    Debug.Log("Has closed shield");
+        //    weapons[index].transform.GetChild(0).gameObject.SetActive(true);
+        //    canAim = true;
+        //    _canShoot = true;
+        //}
+    }
+
+    public void DisableGun()
+    {
+        playerController.canSwitchWeapons = false;
+        transform.GetChild(0).gameObject.SetActive(false);
+        canAim = false;
+        _canShoot = false;
+        this.gameObject.GetComponent<SingleShotGun>().enabled = false;
+        //return this.GetComponent<SingleShotGun>();
     }
 
     public override void Use()

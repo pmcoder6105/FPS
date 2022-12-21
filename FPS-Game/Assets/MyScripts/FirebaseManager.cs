@@ -474,8 +474,9 @@ public class FirebaseManager : MonoBehaviour
 
             if (snapshot.Child("kills") != null)
             {
-
+                Debug.Log("Looks like kills is not null");
                 LevelUpManager.Singleton.currentLevel = (int)snapshot.Child("kills").Value;
+                
 
             }
 
@@ -508,7 +509,8 @@ public class FirebaseManager : MonoBehaviour
             if (snapshot.Child("xp") != null)
             {
 
-                Debug.Log("My current experience" + (int)snapshot.Child("xp").Value);
+                Debug.Log("Looks like kills is not null");
+
 
                 LevelUpManager.Singleton.currentExperience = (int)snapshot.Child("xp").Value;
 
