@@ -101,6 +101,8 @@ public class SingleShotGun : Gun
 
     public GameObject[] weapons;
 
+    public KeyCode inputKey;
+
     private void Start()
     {
         _currentAmmoInClip = clipSize;
@@ -216,6 +218,38 @@ public class SingleShotGun : Gun
             bulletCount.text = _currentAmmoInClip + " / " + clipSize;
         }
 
+        if (Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            Debug.Log("Mouse scroll");
+            foreach (GameObject gun in weapons)
+            {
+                gun.GetComponent<SingleShotGun>().StopCoroutine("Reload");
+                audioSource.Stop();
+
+                canAim = true;
+                isReloading = false;
+                _canShoot = true;
+            }          
+        }
+
+        if (Input.anyKeyDown)
+        {
+            if (Input.GetKeyDown(inputKey))
+            {
+            }
+            else
+            {
+                foreach (GameObject gun in weapons)
+                {
+                    gun.GetComponent<SingleShotGun>().StopCoroutine("Reload");
+                    audioSource.Stop();
+                    canAim = true;
+                    isReloading = false;
+                    _canShoot = true;
+                }
+            }
+        }
+
         if (isAutomatic)
         {
             if (Input.GetMouseButton(0) && _canShoot && _currentAmmoInClip > 0)
@@ -244,11 +278,11 @@ public class SingleShotGun : Gun
                 if (_canShoot == false)
                     return;
 
-                if (isReloading == false)
-                {
-                    playerController.canSwitchWeapons = false;
+                //if (isReloading == false)
+                //{
+                    //playerController.canSwitchWeapons = false;
 
-                    StartCoroutine(Reload());
+                    StartCoroutine("Reload");
                     if (isShotGun == false)
                     {
                         audioSource.Stop();
@@ -278,7 +312,7 @@ public class SingleShotGun : Gun
                         }
                     }
                     
-                }                
+                //}                
             }
         } else if (!isAutomatic)
         {
@@ -381,41 +415,42 @@ public class SingleShotGun : Gun
                 if (_canShoot == false)
                     return;
 
-                if (isReloading == false)
+                //if (isReloading == false)
+                //{
+                    //playerController.canSwitchWeapons = false;
+
+                    StartCoroutine("Reload");
+
+                if (isShotGun == false)
                 {
-                    playerController.canSwitchWeapons = false;
-
-                    StartCoroutine(Reload());
-
-                    if (isShotGun == false)
+                    audioSource.Stop();
+                    audioSource.PlayOneShot(reloadSFX);
+                }
+                else if (isShotGun)
+                {
+                    audioSource.Stop();
+                    if (_currentAmmoInClip == 4)
                     {
-                        audioSource.Stop();
+                        audioSource.PlayOneShot(reloadSFX1);
+                    }
+                    if (_currentAmmoInClip == 3)
+                    {
+                        audioSource.PlayOneShot(reloadSFX2);
+                    }
+                    if (_currentAmmoInClip == 2)
+                    {
+                        audioSource.PlayOneShot(reloadSFX3);
+                    }
+                    if (_currentAmmoInClip == 1)
+                    {
+                        audioSource.PlayOneShot(reloadSFX4);
+                    }
+                    if (_currentAmmoInClip == 0)
+                    {
                         audioSource.PlayOneShot(reloadSFX);
-                    } else if (isShotGun)
-                    {
-                        audioSource.Stop();
-                        if (_currentAmmoInClip == 4)
-                        {
-                            audioSource.PlayOneShot(reloadSFX1);
-                        }
-                        if (_currentAmmoInClip == 3)
-                        {
-                            audioSource.PlayOneShot(reloadSFX2);
-                        }
-                        if (_currentAmmoInClip == 2)
-                        {
-                            audioSource.PlayOneShot(reloadSFX3);
-                        }
-                        if (_currentAmmoInClip == 1)
-                        {
-                            audioSource.PlayOneShot(reloadSFX4);
-                        }
-                        if (_currentAmmoInClip == 0)
-                        {
-                            audioSource.PlayOneShot(reloadSFX);
-                        }
                     }
                 }
+                //}
             }
         }
 
@@ -478,7 +513,8 @@ public class SingleShotGun : Gun
                 reloadTime = 4.35f;
                 animator.Play("ShotGunReload5", 0, 0.0f);
             }
-        }        
+        }  
+        
         if (isSniper)
         {
             scope.SetActive(false);
