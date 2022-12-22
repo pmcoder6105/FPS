@@ -231,6 +231,7 @@ public class SingleShotGun : Gun
                 if (Physics.Raycast(ray, out RaycastHit hit))
                 {
                     hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                    hit.collider.transform.GetComponentInParent<ShieldManager>()?.TakeHit();
                     PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
                 }
                 if (doesHaveAnimationForShooting)
