@@ -398,10 +398,21 @@ public class FirebaseManager : MonoBehaviour
         {
             DataSnapshot snapshot = DBTask.Result; 
 
-            AccountUIManager.instance.usernameInputField.text = snapshot.Child("username").Value.ToString();
-            PhotonNetwork.NickName = snapshot.Child("username").Value.ToString();
-            Debug.Log("Retrieved player username");
-            AccountUIManager.instance.accountDetailsUsername.text = "Your username is: " + snapshot.Child("username").Value.ToString();
+            if (snapshot.HasChild("username"))
+            {
+                AccountUIManager.instance.usernameInputField.text = snapshot.Child("username").Value.ToString();
+                PhotonNetwork.NickName = snapshot.Child("username").Value.ToString();
+                Debug.Log("Retrieved player username");
+                AccountUIManager.instance.accountDetailsUsername.text = "Your username is: " + snapshot.Child("username").Value.ToString();
+            }
+            else
+            {
+                string random = "Guest " + Random.Range(0, 1000).ToString("000");
+                AccountUIManager.instance.usernameInputField.text = random;
+                StartCoroutine(UpdateUsernameAuth(random));
+                StartCoroutine(UpdateUsernameDatabase(random));
+                PhotonNetwork.NickName = random;
+            }
         }
     }
 
@@ -472,12 +483,16 @@ public class FirebaseManager : MonoBehaviour
         {
             DataSnapshot snapshot = DBTask.Result;
 
-            if (snapshot.Child("kills") != null)
+            if (snapshot.HasChild("kills"))
             {
                 Debug.Log("Looks like kills is not null");
                 LevelUpManager.Singleton.currentLevel = (int)snapshot.Child("kills").Value;
                 
 
+            }
+            else
+            {
+                LevelUpManager.Singleton.currentLevel = 0;
             }
 
 
@@ -506,7 +521,7 @@ public class FirebaseManager : MonoBehaviour
 
             
 
-            if (snapshot.Child("xp") != null)
+            if (snapshot.HasChild("xp"))
             {
 
                 Debug.Log("Looks like kills is not null");
@@ -514,6 +529,10 @@ public class FirebaseManager : MonoBehaviour
 
                 LevelUpManager.Singleton.currentExperience = (int)snapshot.Child("xp").Value;
 
+            }
+            else
+            {
+                LevelUpManager.Singleton.currentExperience = 0;
             }
 
             //Do all the stuff with the main menu level up bar (hint: check if the current scene is 0, if so, do the mathf.epsilon pattern
