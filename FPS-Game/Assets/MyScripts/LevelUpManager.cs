@@ -46,9 +46,16 @@ public class LevelUpManager : MonoBehaviour
             //LoadLevel
             //LoadExperience
 
-            StartCoroutine(firebase.LoadExperience());
-            StartCoroutine(firebase.LoadKills());
+            StartCoroutine(LoadXPAndKills());
         }
+    }
+
+    IEnumerator LoadXPAndKills()
+    {
+        yield return new WaitUntil(predicate: () => firebase.hasFixedDependencies == true);
+
+        StartCoroutine(firebase.LoadExperience());
+        StartCoroutine(firebase.LoadKills());
     }
 
     public void CheckLevelUp(int _currentExperience)

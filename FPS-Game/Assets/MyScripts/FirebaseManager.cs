@@ -20,6 +20,8 @@ public class FirebaseManager : MonoBehaviour
     public DatabaseReference DBReference;
     private static FirebaseManager _singleton;
 
+    public bool hasFixedDependencies = false;
+
     //static int hasLaunched = 0;
 
     //SceneTracker sceneTracker;
@@ -127,6 +129,7 @@ public class FirebaseManager : MonoBehaviour
             AccountUIManager.instance.LoginScreen();
             Debug.Log("Shoud NOT be logged in...");
         }
+                
     }
 
     public void SaveUsernameData()
@@ -150,6 +153,11 @@ public class FirebaseManager : MonoBehaviour
             if (User == null)
                 return;
             AccountUIManager.instance.accountDetailsEmail.text = "Your email is: " + User.Email;
+        }
+
+        if (User != null)
+        {
+            hasFixedDependencies = true;
         }
     }
 
@@ -378,7 +386,7 @@ public class FirebaseManager : MonoBehaviour
 
     public IEnumerator LoadUsernameData()
     {
-        var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
+        var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();        
 
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 
@@ -503,6 +511,10 @@ public class FirebaseManager : MonoBehaviour
     public IEnumerator LoadExperience()
     {
         var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
+
+        Debug.Log("The Database: " + DBReference);
+        Debug.Log("The user: " + DBReference.Child("users"));
+        Debug.Log("The ID: " + DBReference.Child("users").Child(User.UserId));
 
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 
