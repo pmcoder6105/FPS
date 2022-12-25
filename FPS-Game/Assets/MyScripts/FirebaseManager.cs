@@ -140,7 +140,7 @@ public class FirebaseManager : MonoBehaviour
 
     private void Update()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 0)
+        if (SceneManager.GetActiveScene().name == "Menu")
         {
             if (Time.timeSinceLevelLoad < Mathf.Epsilon) 
             {

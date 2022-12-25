@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             }
         }
 
-        if (SceneManager.GetActiveScene().buildIndex == 6) // if the active scene is the low gravity scene
+        if (SceneManager.GetActiveScene().name == "Sky-Beans") // if the active scene is the low gravity scene
         {
             Physics.gravity = new Vector3(0, -2, 0); // set gravity lower
             jumpForce = 500; // increase jump force
@@ -462,7 +462,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             while (PhotonNetwork.InRoom) // while in a room, yield
                 yield return null;
 
-            SceneManager.LoadScene(0); // load scene 0 (main menu)
+            SceneManager.LoadScene("Menu"); // load scene 0 (main menu)
         }
     }
 

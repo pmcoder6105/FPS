@@ -10,58 +10,58 @@ public class MapChooser : MonoBehaviour
 
     public void OpposingPills()
     {
-        mapChosen = 1;
+        mapChosen = 2;
         mapName = "OpposingBeans";
         mapChooseContinueButton.SetActive(true);
     }
     public void PillArena()
     {
-        mapChosen = 2;
+        mapChosen = 3;
         mapName = "BeanArena";
         mapChooseContinueButton.SetActive(true);
     }
     public void Pillars()
     {
-        mapChosen = 3;
+        mapChosen = 4;
         mapName = "PillarsOfMadness";
         mapChooseContinueButton.SetActive(true);
     }
     public void Trials()
     {
-        mapChosen = 4;
+        mapChosen = 5;
         mapName = "BeanTrials";
         mapChooseContinueButton.SetActive(true);
     }
     public void UnderGround()
     {
-        mapChosen = 5;
+        mapChosen = 6;
         mapName = "UndergroundPyramid";
         mapChooseContinueButton.SetActive(true);
     }
     public void Sky()
     {
-        mapChosen = 6;
+        mapChosen = 7;
         mapName = "Sky-Beans";
         mapChooseContinueButton.SetActive(true);
     }
 
     public void FightingGround()
     {
-        mapChosen = 7;
+        mapChosen = 8;
         mapName = "BeanFightingGround";
         mapChooseContinueButton.SetActive(true);
     }
 
     public void CloseCombat()
     {
-        mapChosen = 8;
+        mapChosen = 9;
         mapName = "CloseBeanCombat";
         mapChooseContinueButton.SetActive(true);
     }
 
     public void PillBox()
     {
-        mapChosen = 9;
+        mapChosen = 10;
         mapName = "PillBox";
         mapChooseContinueButton.SetActive(true);
     }
