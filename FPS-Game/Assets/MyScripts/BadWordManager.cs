@@ -7,7 +7,7 @@ public class BadWordManager : MonoBehaviour
 {
     InputField inFieldText;
     string myString;
-    [SerializeField] string[] badWords = { "fuck", "shit", "cock", "tit", "pussy", "asshole", "cunt", "nigg"};
+    [SerializeField] string[] badWords = { "fuck", "shit", "cock", "tit", "pussy", "asshole", "cunt", "nigg", "stupid", "bastard", "idiot", "penis", "vagina", "dick", "turd", "crap", "retard", "jerk", "scum", "bitch"};
 
 
     // Start is called before the first frame update
