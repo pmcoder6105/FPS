@@ -99,6 +99,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public bool isMoving = false;
 
+    public GameObject levelUpAnimation;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -561,9 +563,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     //TakeDamage with parameter damage from tutorial
     public void TakeDamage(float damage)
     {
-        PV.RPC(nameof(RPC_TakeDamage), PV.Owner, damage); // call RPC Take Damage to me with a parameter of damage
-        PV.RPC(nameof(RPC_DisplayDamage), RpcTarget.All); // call RPC DisplayDamage to all players
         PV.RPC(nameof(RPC_DisplayDamageText), RpcTarget.All);
+        PV.RPC(nameof(RPC_TakeDamage), PV.Owner, damage); // call RPC Take Damage to me with a parameter of damage
+        PV.RPC(nameof(RPC_DisplayDamage), RpcTarget.All); // call RPC DisplayDamage to all players        
     }
 
     // DisplayDamage function
@@ -578,6 +580,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [PunRPC]
     void RPC_DisplayDamageText(PhotonMessageInfo info)
     {
+        if (isDead)
+            return;
+
         PlayerManager.Find(info.Sender).GetBulletDamageInfo(PV.Owner);
         float damageInfo = itemGlobal;
         float damageAmount;

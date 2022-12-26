@@ -29,6 +29,8 @@ public class FirebaseManager : MonoBehaviour
 
     public string playerColorValue;
 
+    public int currentXP;
+
     private void Awake()
     {
         Singleton = this;
@@ -542,6 +544,8 @@ public class FirebaseManager : MonoBehaviour
             {
                 LevelUpManager.Singleton.currentExperience = int.Parse(snapshot.Child("xp").Value.ToString());
 
+                currentXP = int.Parse(snapshot.Child("xp").Value.ToString());
+
                 if (SceneManager.GetActiveScene().name == "Menu")
                 {
                     int level = int.Parse(snapshot.Child("xp").Value.ToString());
@@ -554,6 +558,8 @@ public class FirebaseManager : MonoBehaviour
             else
             {
                 LevelUpManager.Singleton.currentExperience = 0;
+
+                currentXP = 0;
 
                 if (SceneManager.GetActiveScene().name == "Menu")
                 {

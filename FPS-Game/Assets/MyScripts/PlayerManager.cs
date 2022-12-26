@@ -73,6 +73,8 @@ public class PlayerManager : MonoBehaviour
 
         itemIndex = controller.GetComponent<PlayerController>().itemIndex;
 
+        
+
         if (killTextNotificationGameObject == null && controller == null && hasDeathPanelActivated == false)
         {
             deathPanelGameObject = Instantiate(deathPanel, canvas.transform); // new gameobject called deathPanelGameObject with a prefab of deathPanel and the ui.transform
@@ -160,16 +162,22 @@ public class PlayerManager : MonoBehaviour
     [PunRPC]
     void RPC_GetKill()
     {
+        //currentExperience = ;
+
         kills++;
 
-        LevelUpManager.Singleton.AddExperiencePoints();
-        LevelUpManager.Singleton.CheckLevelUp(currentExperience);
+        GameObject levelUpEmpty = controller.GetComponent<PlayerController>().levelUpAnimation;
 
+        LevelUpManager.Singleton.AddExperiencePoints();
+        LevelUpManager.Singleton.CheckLevelUp(LevelUpManager.Singleton.currentExperience, levelUpEmpty);
+
+        //Play XP Level UP animation        
 
         Hashtable hash = new();
         hash.Add("kills", kills);
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
     }
+
 
     public static PlayerManager Find(Player player)
     {
