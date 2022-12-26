@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using Firebase.Database;
 using Photon.Pun;
+using UnityEngine.UI;
 
 
 public class FirebaseManager : MonoBehaviour
@@ -494,13 +495,21 @@ public class FirebaseManager : MonoBehaviour
             if (snapshot.HasChild("kills"))
             {
                 Debug.Log("Looks like kills is not null");
-                LevelUpManager.Singleton.currentLevel = (int)snapshot.Child("kills").Value;
-                
+                LevelUpManager.Singleton.currentLevel = int.Parse(snapshot.Child("kills").Value.ToString());
 
+                if (SceneManager.GetActiveScene().name == "Menu")
+                {
+                    int level = int.Parse(snapshot.Child("kills").Value.ToString());
+                    AccountUIManager.instance.levelText.text = "You're at level " + level + "!";
+                }
             }
             else
             {
                 LevelUpManager.Singleton.currentLevel = 0;
+                if (SceneManager.GetActiveScene().name == "Menu")
+                {
+                    AccountUIManager.instance.levelText.text = "You're at level 0!";
+                }
             }
 
 
@@ -511,10 +520,6 @@ public class FirebaseManager : MonoBehaviour
     public IEnumerator LoadExperience()
     {
         var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
-
-        Debug.Log("The Database: " + DBReference);
-        Debug.Log("The user: " + DBReference.Child("users"));
-        Debug.Log("The ID: " + DBReference.Child("users").Child(User.UserId));
 
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 
@@ -535,19 +540,26 @@ public class FirebaseManager : MonoBehaviour
 
             if (snapshot.HasChild("xp"))
             {
+                LevelUpManager.Singleton.currentExperience = int.Parse(snapshot.Child("xp").Value.ToString());
 
-                Debug.Log("Looks like kills is not null");
-
-
-                LevelUpManager.Singleton.currentExperience = (int)snapshot.Child("xp").Value;
-
+                if (SceneManager.GetActiveScene().name == "Menu")
+                {
+                    int level = int.Parse(snapshot.Child("xp").Value.ToString());
+                    AccountUIManager.instance.levelBar.value = level * 1.0f / 20;
+                    AccountUIManager.instance.XPText.text = 20 - level + " more XP until you level up!"; 
+                    Debug.Log(AccountUIManager.instance.levelBar);
+                    Debug.Log(level * 1.0f / 20);
+                }                
             }
             else
             {
                 LevelUpManager.Singleton.currentExperience = 0;
-            }
 
-            //Do all the stuff with the main menu level up bar (hint: check if the current scene is 0, if so, do the mathf.epsilon pattern
+                if (SceneManager.GetActiveScene().name == "Menu")
+                {
+                    AccountUIManager.instance.levelBar.value = 0;
+                }
+            }            
         }
     }
 

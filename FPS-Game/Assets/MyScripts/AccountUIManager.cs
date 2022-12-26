@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class AccountUIManager : MonoBehaviour
 {
@@ -61,7 +62,9 @@ public class AccountUIManager : MonoBehaviour
     public GameObject resetEmailNewEmailMenu;
     public GameObject reauthenticateUserForEmailResetMenu;
 
-
+    public Slider levelBar;
+    public TMP_Text XPText;
+    public TMP_Text levelText;
 
     private void Awake()
     {
