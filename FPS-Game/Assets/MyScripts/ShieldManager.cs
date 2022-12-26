@@ -27,6 +27,7 @@ public class ShieldManager : MonoBehaviour
     public GameObject shieldBar;
 
     public TMP_Text shieldHealthText;
+    public GameObject glowFade;
 
     private void Awake()
     {
@@ -45,6 +46,8 @@ public class ShieldManager : MonoBehaviour
             return;
 
         shieldBar.GetComponent<Image>().fillAmount = (shieldHealth * 1 / 20);
+        glowFade.GetComponent<Image>().fillAmount = (shieldHealth * 1 / 20);
+
 
         shieldHealthText.text = (shieldHealth * 5).ToString();
 

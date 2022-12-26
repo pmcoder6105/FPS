@@ -14,6 +14,7 @@ public class HealthBarManager : MonoBehaviour
     public PlayerController controller;
 
     public TMP_Text healthText;
+    public GameObject glowFade;
 
     //public Material globalHealthyMat;
 
@@ -39,6 +40,8 @@ public class HealthBarManager : MonoBehaviour
         Debug.Log("current mat: " + this.GetComponent<Image>().material);
         //this.GetComponent<Image>().material.SetFloat("_RemovedSegments", controller.currentHealth / 10);
         this.gameObject.GetComponent<Image>().fillAmount = controller.currentHealth / 100f;
+        glowFade.gameObject.GetComponent<Image>().fillAmount = controller.currentHealth / 100f;
+
 
         healthText.text = controller.currentHealth.ToString();
 
