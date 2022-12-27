@@ -168,6 +168,10 @@ public class PlayerManager : MonoBehaviour
 
         GameObject levelUpEmpty = controller.GetComponent<PlayerController>().levelUpAnimation;
 
+        controller.GetComponent<PlayerController>().xpAnimation.SetActive(true);
+        controller.GetComponent<PlayerController>().xpAnimation.GetComponent<Animator>().Play("XPAnimation");
+        StartCoroutine(nameof(DisableXPAnimation));
+
         LevelUpManager.Singleton.AddExperiencePoints();
         LevelUpManager.Singleton.CheckLevelUp(LevelUpManager.Singleton.currentExperience, levelUpEmpty);
 
@@ -176,6 +180,13 @@ public class PlayerManager : MonoBehaviour
         Hashtable hash = new();
         hash.Add("kills", kills);
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+    }
+
+    IEnumerator DisableXPAnimation()
+    {
+        yield return new WaitForSeconds(4f);
+
+        controller.GetComponent<PlayerController>().xpAnimation.SetActive(false);
     }
 
 

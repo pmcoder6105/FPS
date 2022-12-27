@@ -62,7 +62,7 @@ public class LevelUpManager : MonoBehaviour
     {
         Debug.Log(_currentExperience);
 
-        if (_currentExperience >= 1) //JUST FOR PLAYTESTING! MAKE SURE TO REVERT BACK TO 20 AFTER PLAYTESTING
+        if (_currentExperience >= 20) //JUST FOR PLAYTESTING! MAKE SURE TO REVERT BACK TO 20 AFTER PLAYTESTING
         {
             LevelUp();
             currentExperience = 0;

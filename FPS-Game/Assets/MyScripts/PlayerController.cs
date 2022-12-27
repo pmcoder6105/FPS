@@ -101,6 +101,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public GameObject levelUpAnimation;
 
+    public GameObject xpAnimation;
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
