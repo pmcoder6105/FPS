@@ -514,7 +514,13 @@ public class FirebaseManager : MonoBehaviour
 
                 Hashtable hash = new();
                 //hash.Set("playerValue", int.Parse(snapshot.Child("kills").Value.ToString()));
-                PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] = int.Parse(snapshot.Child("kills").Value.ToString());
+                if (PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] == null)
+                {
+                    Hashtable hash1 = new();
+                    hash1.Add("playerLevel", int.Parse(snapshot.Child("kills").Value.ToString()));
+                    PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+                }
+                else PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] = 0;
             }
             else
             {
@@ -522,7 +528,14 @@ public class FirebaseManager : MonoBehaviour
 
                 currentLVL = 0;
 
-                PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] = 0;
+                
+
+                if (PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] == null)
+                {
+                    Hashtable hash = new();
+                    hash.Add("playerLevel", 0);
+                    PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+                } else PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] = 0;
 
                 if (SceneManager.GetActiveScene().name == "Menu")
                 {

@@ -97,9 +97,13 @@ public class LevelUpManager : MonoBehaviour
         currentLevel++;
         StartCoroutine(FirebaseManager.Singleton.UpdateKills(currentLevel));
 
-        Hashtable hash = new();
-        hash.Add("playerLevel", currentLevel);
-        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+        if (PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] == null)
+        {
+            Hashtable hash = new();
+            hash.Add("playerLevel", currentLevel);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+        }
+        else PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] = currentLevel;
     }
 
     public void AddExperiencePoints()
