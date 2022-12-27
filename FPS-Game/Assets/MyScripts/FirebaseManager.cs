@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 using Firebase.Database;
 using Photon.Pun;
 using UnityEngine.UI;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Photon.Realtime;
 
 
 public class FirebaseManager : MonoBehaviour
@@ -509,12 +511,19 @@ public class FirebaseManager : MonoBehaviour
                     int level = int.Parse(snapshot.Child("kills").Value.ToString());
                     AccountUIManager.instance.levelText.text = "You're at level " + level + "!";
                 }
+
+                Hashtable hash = new();
+                //hash.Set("playerValue", int.Parse(snapshot.Child("kills").Value.ToString()));
+                PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] = int.Parse(snapshot.Child("kills").Value.ToString());
             }
             else
             {
                 LevelUpManager.Singleton.currentLevel = 0;
 
                 currentLVL = 0;
+
+                PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] = 0;
+
                 if (SceneManager.GetActiveScene().name == "Menu")
                 {
                     AccountUIManager.instance.levelText.text = "You're at level 0!";

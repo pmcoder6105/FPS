@@ -44,7 +44,7 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
     void AddScoreBoardItem(Player player)
     {
         ScoreBoardItem item = Instantiate(scoreBoardItemPrefab, container).GetComponent<ScoreBoardItem>();
-        item.Initialize(player);
+        item.Initialize(player, FirebaseManager.Singleton.currentLVL);
         scoreBoardItems[player] = item;
     }
 

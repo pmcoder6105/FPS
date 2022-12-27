@@ -15,16 +15,16 @@ public class LevelUpManager : MonoBehaviour
     public int currentExperience;
     int experienceToNextLevel;
 
-    FirebaseManager firebase;
+    //FirebaseManager firebase;
 
-    PhotonView PV;
+    //PhotonView PV;
 
     private void Awake()
     {
         Singleton = this;
         DontDestroyOnLoad(this.gameObject);
-        firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
-        PV = GetComponent<PhotonView>();
+        //firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
+        //PV = GetComponent<PhotonView>();
     }
 
 
@@ -59,10 +59,10 @@ public class LevelUpManager : MonoBehaviour
 
     IEnumerator LoadXPAndKills()
     {
-        yield return new WaitUntil(predicate: () => firebase.hasFixedDependencies == true);
+        yield return new WaitUntil(predicate: () => FirebaseManager.Singleton.hasFixedDependencies == true);
 
-        StartCoroutine(firebase.LoadExperience());
-        StartCoroutine(firebase.LoadKills());
+        StartCoroutine(FirebaseManager.Singleton.LoadExperience());
+        StartCoroutine(FirebaseManager.Singleton.LoadKills());
     }
 
     public void CheckLevelUp(int _currentExperience, GameObject _empty)
@@ -73,7 +73,9 @@ public class LevelUpManager : MonoBehaviour
         {
             LevelUp();
             currentExperience = 0;
-            StartCoroutine(firebase.UpdateExperience(0));
+            StartCoroutine(FirebaseManager.Singleton.UpdateExperience(0));
+
+            Debug.Log("should level up now!");
 
             _empty.SetActive(true);
             _empty.GetComponent<Animator>().Play("LevelUpAnimation", 0, 0f);
@@ -86,26 +88,23 @@ public class LevelUpManager : MonoBehaviour
 
     private IEnumerator DisableLevelUpAnimation(GameObject __empty)
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(3f);
         __empty.SetActive(false);
     }
 
     public void LevelUp()
     {
         currentLevel++;
-        StartCoroutine(firebase.UpdateKills(currentLevel));
+        StartCoroutine(FirebaseManager.Singleton.UpdateKills(currentLevel));
 
-        if (PV.IsMine)
-        {
-            Hashtable hash = new();
-            hash.Add("playerLevel", currentLevel);
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-        }
+        Hashtable hash = new();
+        hash.Add("playerLevel", currentLevel);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
     }
 
     public void AddExperiencePoints()
     {
         currentExperience++;
-        StartCoroutine(firebase.UpdateExperience(currentExperience));
+        StartCoroutine(FirebaseManager.Singleton.UpdateExperience(currentExperience));
     }
 }

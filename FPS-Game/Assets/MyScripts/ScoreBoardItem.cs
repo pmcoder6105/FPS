@@ -15,12 +15,13 @@ public class ScoreBoardItem : MonoBehaviourPunCallbacks
 
     Player player;
 
-    public void Initialize(Player player)
+    public void Initialize(Player player, int level)
     {
         this.player = player;
 
 
         usernameText.text = player.NickName;
+        playerLevelText.text = level.ToString();
         UpdateStats();
     }
 

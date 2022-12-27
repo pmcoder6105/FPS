@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 7613786619221488063}
   - component: {fileID: 2756554937001390275}
   - component: {fileID: 2268622100910236610}
+  - component: {fileID: 4207732019152129264}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -195,6 +196,7 @@ MonoBehaviour:
   cinemachineCam: {fileID: 4334715287364845485, guid: 65aafbfa949410543a748dcc9e5f2139, type: 3}
   virtualCam: {fileID: 2551413021220593261, guid: d2ae97d64fe9c5d4dbe8f2e3938fca7a, type: 3}
   currentExperience: 0
+  currentLVL: 0
 --- !u!114 &2268622100910236610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,3 +213,16 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &4207732019152129264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7613786619221488061}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d19c227116eb7f40904625a6ec0eb7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 0
