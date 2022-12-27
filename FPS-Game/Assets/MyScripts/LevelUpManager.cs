@@ -57,7 +57,7 @@ public class LevelUpManager : MonoBehaviour
         }
     }
 
-    IEnumerator LoadXPAndKills()
+    public IEnumerator LoadXPAndKills()
     {
         yield return new WaitUntil(predicate: () => FirebaseManager.Singleton.hasFixedDependencies == true);
 
