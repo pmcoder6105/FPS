@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+using System.Linq;
 
 public class LevelUpManager : MonoBehaviour
 {
@@ -13,11 +17,14 @@ public class LevelUpManager : MonoBehaviour
 
     FirebaseManager firebase;
 
+    PhotonView PV;
+
     private void Awake()
     {
         Singleton = this;
         DontDestroyOnLoad(this.gameObject);
         firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
+        PV = GetComponent<PhotonView>();
     }
 
 
@@ -62,7 +69,7 @@ public class LevelUpManager : MonoBehaviour
     {
         Debug.Log(_currentExperience);
 
-        if (_currentExperience >= 20) //JUST FOR PLAYTESTING! MAKE SURE TO REVERT BACK TO 20 AFTER PLAYTESTING
+        if (_currentExperience >= 1) //JUST FOR PLAYTESTING! MAKE SURE TO REVERT BACK TO 20 AFTER PLAYTESTING
         {
             LevelUp();
             currentExperience = 0;
@@ -72,6 +79,8 @@ public class LevelUpManager : MonoBehaviour
             _empty.GetComponent<Animator>().Play("LevelUpAnimation", 0, 0f);
             StartCoroutine(nameof(DisableLevelUpAnimation), _empty);
         }
+
+        
     }
 
 
@@ -85,6 +94,13 @@ public class LevelUpManager : MonoBehaviour
     {
         currentLevel++;
         StartCoroutine(firebase.UpdateKills(currentLevel));
+
+        if (PV.IsMine)
+        {
+            Hashtable hash = new();
+            hash.Add("playerLevel", currentLevel);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+        }
     }
 
     public void AddExperiencePoints()

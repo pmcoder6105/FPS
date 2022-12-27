@@ -13499,7 +13499,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -614, y: -6}
+  m_AnchoredPosition: {x: -539.4, y: -6}
   m_SizeDelta: {x: 326.0867, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &479953158
@@ -41074,7 +41074,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 244, y: -6}
+  m_AnchoredPosition: {x: 318, y: -6}
   m_SizeDelta: {x: 326.0867, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1148309974
@@ -41873,7 +41873,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 666, y: -6}
+  m_AnchoredPosition: {x: 708.99994, y: -6}
   m_SizeDelta: {x: 326.0867, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1258087445
@@ -80308,6 +80308,7 @@ MonoBehaviour:
   isShotGun: 0
   scope: {fileID: 0}
   _currentRotation: {x: 0, y: 0}
+  canAim: 1
   shotGunRange: 25
   bulletCount: {fileID: 3845723402555056091}
   shootSFX:
@@ -80317,6 +80318,9 @@ MonoBehaviour:
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 5536312536999737467}
   bulletBloomAmount: 0
+  shield: {fileID: 0}
+  weapons: []
+  inputKey: 0
 --- !u!114 &840821321271461553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80551,6 +80555,7 @@ MonoBehaviour:
   isShotGun: 1
   scope: {fileID: 0}
   _currentRotation: {x: 0, y: 0}
+  canAim: 1
   shotGunRange: 25
   bulletCount: {fileID: 3845723402555056091}
   shootSFX:
@@ -80560,6 +80565,9 @@ MonoBehaviour:
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 5536312536999737467}
   bulletBloomAmount: 0
+  shield: {fileID: 0}
+  weapons: []
+  inputKey: 0
 --- !u!1001 &1038477650598972640
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -81119,6 +81127,7 @@ MonoBehaviour:
   isShotGun: 0
   scope: {fileID: 5536312536999737467}
   _currentRotation: {x: 0, y: 0}
+  canAim: 1
   shotGunRange: 0
   bulletCount: {fileID: 3845723402555056091}
   shootSFX:
@@ -81128,6 +81137,9 @@ MonoBehaviour:
   scopeSFX: {fileID: 8300000, guid: 2843658595b9ac44d8d5a41fa5bb664a, type: 3}
   otherGunScopeReference: {fileID: 0}
   bulletBloomAmount: 0
+  shield: {fileID: 0}
+  weapons: []
+  inputKey: 0
 --- !u!23 &1695400750040859184
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -81310,6 +81322,7 @@ MonoBehaviour:
   isShotGun: 0
   scope: {fileID: 0}
   _currentRotation: {x: 0, y: 0}
+  canAim: 1
   shotGunRange: 0
   bulletCount: {fileID: 3845723402555056091}
   shootSFX:
@@ -81322,6 +81335,9 @@ MonoBehaviour:
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 5536312536999737467}
   bulletBloomAmount: 0
+  shield: {fileID: 0}
+  weapons: []
+  inputKey: 0
 --- !u!1 &2155627806217294413
 GameObject:
   m_ObjectHideFlags: 0
@@ -85440,6 +85456,7 @@ MonoBehaviour:
   isShotGun: 0
   scope: {fileID: 0}
   _currentRotation: {x: 0, y: 0}
+  canAim: 1
   shotGunRange: 0
   bulletCount: {fileID: 3845723402555056091}
   shootSFX:
@@ -85452,3 +85469,6 @@ MonoBehaviour:
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 5536312536999737467}
   bulletBloomAmount: 0
+  shield: {fileID: 0}
+  weapons: []
+  inputKey: 0

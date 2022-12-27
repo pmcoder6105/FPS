@@ -44,6 +44,8 @@ public class PlayerManager : MonoBehaviour
 
     public int currentExperience;
 
+    public int currentLVL;
+
 
     private void Awake()
     {

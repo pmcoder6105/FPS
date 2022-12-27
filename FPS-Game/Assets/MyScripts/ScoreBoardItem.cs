@@ -11,6 +11,7 @@ public class ScoreBoardItem : MonoBehaviourPunCallbacks
     public TMP_Text usernameText;
     public TMP_Text deathsText;
     public TMP_Text killsText;
+    public TMP_Text playerLevelText;
 
     Player player;
 
@@ -33,13 +34,18 @@ public class ScoreBoardItem : MonoBehaviourPunCallbacks
         {
             deathsText.text = deaths.ToString();
         }
+        if (player.CustomProperties.TryGetValue("playerLevel", out object level))
+        {
+            //MAKE A NEW TEXT AND SET THE TEXT TO OBJECT LEVEL.TOSTRING();
+            playerLevelText.text = deaths.ToString();
+        }
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
         if (targetPlayer == player)
         {
-            if (changedProps.ContainsKey("kills") || changedProps.ContainsKey("deaths"))
+            if (changedProps.ContainsKey("kills") || changedProps.ContainsKey("deaths") || changedProps.ContainsKey("playerLevel"))
             {
                 UpdateStats();
             }

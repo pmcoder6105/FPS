@@ -30,6 +30,8 @@ public class FirebaseManager : MonoBehaviour
     public string playerColorValue;
 
     public int currentXP;
+    public int currentLVL;
+
 
     private void Awake()
     {
@@ -456,6 +458,7 @@ public class FirebaseManager : MonoBehaviour
         else
         {
             //Auth username is now updated
+            currentLVL = newAmount;
         }
     }
 
@@ -472,6 +475,7 @@ public class FirebaseManager : MonoBehaviour
         else
         {
             //Auth username is now updated
+            currentXP = newAmount;
         }
     }
 
@@ -498,6 +502,7 @@ public class FirebaseManager : MonoBehaviour
             {
                 Debug.Log("Looks like kills is not null");
                 LevelUpManager.Singleton.currentLevel = int.Parse(snapshot.Child("kills").Value.ToString());
+                currentLVL = int.Parse(snapshot.Child("kills").Value.ToString());
 
                 if (SceneManager.GetActiveScene().name == "Menu")
                 {
@@ -508,6 +513,8 @@ public class FirebaseManager : MonoBehaviour
             else
             {
                 LevelUpManager.Singleton.currentLevel = 0;
+
+                currentLVL = 0;
                 if (SceneManager.GetActiveScene().name == "Menu")
                 {
                     AccountUIManager.instance.levelText.text = "You're at level 0!";
