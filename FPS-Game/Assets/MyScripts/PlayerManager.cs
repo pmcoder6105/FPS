@@ -175,7 +175,7 @@ public class PlayerManager : MonoBehaviour
         StartCoroutine(nameof(DisableXPAnimation));
 
         LevelUpManager.Singleton.AddExperiencePoints();
-        LevelUpManager.Singleton.CheckLevelUp(int.Parse(PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"].ToString()), levelUpEmpty);
+        LevelUpManager.Singleton.CheckLevelUp(int.Parse(PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"].ToString()), levelUpEmpty, PV);
 
         //Play XP Level UP animation        
 

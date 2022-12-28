@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 using Firebase.Database;
 using Photon.Pun;
 using UnityEngine.UI;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
 
 
@@ -34,6 +33,7 @@ public class FirebaseManager : MonoBehaviour
     public int currentXP;
     public int currentLVL;
 
+    private ExitGames.Client.Photon.Hashtable _customProps = new ExitGames.Client.Photon.Hashtable();
 
     private void Awake()
     {
@@ -512,15 +512,10 @@ public class FirebaseManager : MonoBehaviour
                     AccountUIManager.instance.levelText.text = "You're at level " + level + "!";
                 }
 
-                Hashtable hash = new();
-                //hash.Set("playerValue", int.Parse(snapshot.Child("kills").Value.ToString()));
-                if (PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] == null)
-                {
-                    Hashtable hash1 = new();
-                    hash1.Add("playerLevel", int.Parse(snapshot.Child("kills").Value.ToString()));
-                    PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-                }
-                else PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] = 0;
+                _customProps["playerLevel"] = int.Parse(snapshot.Child("kills").Value.ToString());
+                PhotonNetwork.LocalPlayer.CustomProperties = _customProps;
+
+                Debug.Log("player " + PhotonNetwork.LocalPlayer);
             }
             else
             {
@@ -528,14 +523,10 @@ public class FirebaseManager : MonoBehaviour
 
                 currentLVL = 0;
 
-                
 
-                if (PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] == null)
-                {
-                    Hashtable hash = new();
-                    hash.Add("playerLevel", 0);
-                    PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-                } else PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] = 0;
+
+                _customProps["playerLevel"] = 0;
+                PhotonNetwork.LocalPlayer.CustomProperties = _customProps;
 
                 if (SceneManager.GetActiveScene().name == "Menu")
                 {

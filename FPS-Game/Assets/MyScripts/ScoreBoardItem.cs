@@ -15,13 +15,18 @@ public class ScoreBoardItem : MonoBehaviourPunCallbacks
 
     Player player;
 
-    public void Initialize(Player player, int level)
+    public void Initialize(Player player)
     {
         this.player = player;
 
 
         usernameText.text = player.NickName;
-        playerLevelText.text = level.ToString();
+
+        if (player.CustomProperties.TryGetValue("playerLevel", out object level))
+        {
+            //MAKE A NEW TEXT AND SET THE TEXT TO OBJECT LEVEL.TOSTRING();
+            playerLevelText.text = level.ToString();
+        }
         UpdateStats();
     }
 
@@ -38,7 +43,7 @@ public class ScoreBoardItem : MonoBehaviourPunCallbacks
         if (player.CustomProperties.TryGetValue("playerLevel", out object level))
         {
             //MAKE A NEW TEXT AND SET THE TEXT TO OBJECT LEVEL.TOSTRING();
-            playerLevelText.text = deaths.ToString();
+            playerLevelText.text = level.ToString();
         }
     }
 

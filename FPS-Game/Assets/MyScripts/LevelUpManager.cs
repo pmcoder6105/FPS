@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 using System.Linq;
 
 public class LevelUpManager : MonoBehaviour
@@ -14,6 +13,8 @@ public class LevelUpManager : MonoBehaviour
 
     public int currentExperience;
     int experienceToNextLevel;
+
+    private ExitGames.Client.Photon.Hashtable _props = new ExitGames.Client.Photon.Hashtable();
 
     //FirebaseManager firebase;
 
@@ -65,8 +66,11 @@ public class LevelUpManager : MonoBehaviour
         StartCoroutine(FirebaseManager.Singleton.LoadKills());
     }
 
-    public void CheckLevelUp(int _currentExperience, GameObject _empty)
+    public void CheckLevelUp(int _currentExperience, GameObject _empty, PhotonView pv)
     {
+        if (pv.IsMine == false)
+            return;
+
         Debug.Log(_currentExperience);
 
         if (_currentExperience >= 1) //JUST FOR PLAYTESTING! MAKE SURE TO REVERT BACK TO 20 AFTER PLAYTESTING
@@ -97,13 +101,10 @@ public class LevelUpManager : MonoBehaviour
         currentLevel++;
         StartCoroutine(FirebaseManager.Singleton.UpdateKills(currentLevel));
 
-        if (PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] == null)
-        {
-            Hashtable hash = new();
-            hash.Add("playerLevel", currentLevel);
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-        }
-        else PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"] = currentLevel;
+        _props["playerLevel"] = currentLevel;
+        PhotonNetwork.LocalPlayer.CustomProperties = _props;
+
+        Debug.Log("Manager's properties " + PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"]);
     }
 
     public void AddExperiencePoints()
