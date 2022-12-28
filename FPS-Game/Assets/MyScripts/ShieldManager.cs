@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using RayFire;
 using UnityEngine.UI;
 
 public class ShieldManager : MonoBehaviour
@@ -36,7 +37,7 @@ public class ShieldManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -71,7 +72,7 @@ public class ShieldManager : MonoBehaviour
             }
         }
 
-        
+
 
         float mouseX = Input.GetAxisRaw("Mouse X") * 2;
         float mouseY = Input.GetAxisRaw("Mouse Y") * 2;
@@ -135,15 +136,42 @@ public class ShieldManager : MonoBehaviour
     public void TakeHit()
     {
         PV.RPC(nameof(RPC_TakeHit), PV.Owner);
+        PV.RPC(nameof(RPC_VisualizeShieldDamage), RpcTarget.All);
     }
 
     [PunRPC]
     public void RPC_TakeHit()
     {
         shieldHealth--;
+
         if (shieldHealth <= 0)
         {
             StartCoroutine(nameof(WaitUntilPlayCanReopenShield));
+        }
+    }
+
+    [PunRPC]
+    void RPC_VisualizeShieldDamage()
+    {
+        if (shieldHealth <= 19 && shieldHealth >= 15)
+        {
+            transform.GetChild(0).GetChild(6).gameObject.SetActive(false);
+            transform.GetChild(0).GetChild(7).gameObject.SetActive(true);
+        }
+        if (shieldHealth <= 14 && shieldHealth >= 10)
+        {
+            transform.GetChild(0).GetChild(7).gameObject.SetActive(false);
+            transform.GetChild(0).GetChild(8).gameObject.SetActive(true);
+        }
+        if (shieldHealth <= 6 && shieldHealth >= 2)
+        {
+            transform.GetChild(0).GetChild(8).gameObject.SetActive(false);
+            transform.GetChild(0).GetChild(9).gameObject.SetActive(true);
+        }
+        if (shieldHealth <= 1 && shieldHealth >= 0)
+        {
+            transform.GetChild(0).GetChild(9).gameObject.SetActive(false);
+            transform.GetChild(0).GetChild(10).gameObject.SetActive(true);
         }
     }
 
@@ -159,6 +187,12 @@ public class ShieldManager : MonoBehaviour
         shieldHealthText.text = "Shield Fixing...";
 
         yield return new WaitForSeconds(6.6f);
+
+        transform.GetChild(0).GetChild(6).gameObject.SetActive(true);
+        transform.GetChild(0).GetChild(7).gameObject.SetActive(false);
+        transform.GetChild(0).GetChild(8).gameObject.SetActive(false);
+        transform.GetChild(0).GetChild(9).gameObject.SetActive(false);
+        transform.GetChild(0).GetChild(10).gameObject.SetActive(false);
 
         lockShield = false;
     }
