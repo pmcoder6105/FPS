@@ -55,7 +55,7 @@ public class MapChooser : MonoBehaviour
     public void CloseCombat()
     {
         mapChosen = 9;
-        mapName = "CloseBeanCombat";
+        mapName = "FunArena";
         mapChooseContinueButton.SetActive(true);
     }
 
