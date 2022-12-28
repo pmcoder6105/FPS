@@ -101,8 +101,8 @@ public class LevelUpManager : MonoBehaviour
         currentLevel++;
         StartCoroutine(FirebaseManager.Singleton.UpdateKills(currentLevel));
 
-        _props["playerLevel"] = currentLevel;
-        PhotonNetwork.LocalPlayer.CustomProperties = _props;
+        FirebaseManager.Singleton._customProps["playerLevel"] = currentLevel;
+        PhotonNetwork.LocalPlayer.CustomProperties = FirebaseManager.Singleton._customProps;
 
         Debug.Log("Manager's properties " + PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"]);
     }

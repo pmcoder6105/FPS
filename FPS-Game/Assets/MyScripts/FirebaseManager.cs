@@ -33,7 +33,7 @@ public class FirebaseManager : MonoBehaviour
     public int currentXP;
     public int currentLVL;
 
-    private ExitGames.Client.Photon.Hashtable _customProps = new ExitGames.Client.Photon.Hashtable();
+    public ExitGames.Client.Photon.Hashtable _customProps = new ExitGames.Client.Photon.Hashtable();
 
     private void Awake()
     {
