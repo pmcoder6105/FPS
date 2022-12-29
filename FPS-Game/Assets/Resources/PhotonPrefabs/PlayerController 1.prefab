@@ -13822,6 +13822,7 @@ GameObject:
   - component: {fileID: 2511184436295150316}
   - component: {fileID: 2511184436295150319}
   - component: {fileID: 2511184436295150318}
+  - component: {fileID: 106356982142510674}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCam
@@ -13931,6 +13932,26 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!95 &106356982142510674
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2511184436295150312}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8c6ca6baf78391e42bd13b438b6bad6f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2511184437448133935
 GameObject:
   m_ObjectHideFlags: 0
@@ -43014,7 +43035,6 @@ GameObject:
   - component: {fileID: 9004175448906483152}
   - component: {fileID: 6406058572726034150}
   - component: {fileID: 1405989669330329666}
-  - component: {fileID: 4748541798925212207}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -43087,20 +43107,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &4748541798925212207
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8309035140981667018}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &8317031096178607156
 GameObject:
   m_ObjectHideFlags: 0

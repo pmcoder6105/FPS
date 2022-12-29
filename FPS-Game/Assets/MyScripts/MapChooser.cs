@@ -29,7 +29,7 @@ public class MapChooser : MonoBehaviour
     public void Trials()
     {
         mapChosen = 5;
-        mapName = "BeanTrials";
+        mapName = "Portals";
         mapChooseContinueButton.SetActive(true);
     }
     public void UnderGround()
