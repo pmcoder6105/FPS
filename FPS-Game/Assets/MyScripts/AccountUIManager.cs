@@ -66,6 +66,10 @@ public class AccountUIManager : MonoBehaviour
     public TMP_Text XPText;
     public TMP_Text levelText;
 
+    public Toggle quality, music;
+
+    public Toggle[] settings;
+
     private void Awake()
     {
         if (instance == null)

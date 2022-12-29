@@ -9,6 +9,7 @@ using Firebase.Database;
 using Photon.Pun;
 using UnityEngine.UI;
 using Photon.Realtime;
+using UnityEngine.Rendering.PostProcessing;
 
 
 public class FirebaseManager : MonoBehaviour
@@ -34,6 +35,14 @@ public class FirebaseManager : MonoBehaviour
     public int currentLVL;
 
     public ExitGames.Client.Photon.Hashtable _customProps = new ExitGames.Client.Photon.Hashtable();
+
+    string settingsString;
+    List<string> settingsArray = new();
+
+    PostProcessVolume volume;
+
+    public bool isMusicOn;
+    public bool lowQuality;
 
     private void Awake()
     {
@@ -121,9 +130,10 @@ public class FirebaseManager : MonoBehaviour
                 AccountUIManager.instance.accountCanvas.SetActive(false);
                 Debug.Log("Should be logged in...");
                 StartCoroutine(LoadUsernameData());
+                StartCoroutine(LoadSettings());
                 StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
                 StartCoroutine(LoadExperience());
-                StartCoroutine(LoadKills());
+                StartCoroutine(LoadKills());                
             }
             else
             {
@@ -160,6 +170,13 @@ public class FirebaseManager : MonoBehaviour
             if (User == null)
                 return;
             AccountUIManager.instance.accountDetailsEmail.text = "Your email is: " + User.Email;
+        }
+        if (SceneManager.GetActiveScene().name != "Menu")
+        {
+            if (Time.timeSinceLevelLoad < Mathf.Epsilon)
+            {
+                StartCoroutine(LoadSettings());
+            }
         }
 
         if (User != null)
@@ -248,6 +265,9 @@ public class FirebaseManager : MonoBehaviour
                 AccountUIManager.instance.warningLoginText.text = "";
                 AccountUIManager.instance.confirmLoginText.text = "Logged In";
                 StartCoroutine(LoadUsernameData());
+                StartCoroutine(LoadSettings());
+                StartCoroutine(LoadExperience());
+                StartCoroutine(LoadKills());                
                 StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
 
                 yield return new WaitForSeconds(2);
@@ -463,6 +483,106 @@ public class FirebaseManager : MonoBehaviour
             currentLVL = newAmount;
         }
     }
+
+    public IEnumerator UpdateSettings()
+    {
+        //Call the Firebase auth update user profile function passing the profile with the username
+        
+        if (settingsString != "")
+        {
+            var DBTask = DBReference.Child("users").Child(User.UserId).Child("settings").SetValueAsync(settingsString);
+
+            yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+            if (DBTask.Exception != null)
+            {
+                Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+            }
+            else
+            {
+                //Auth username is now updated
+                StartCoroutine(nameof(LoadSettings));
+            }
+        }        
+    }
+
+    public void Btn_GetSettingsCharString()
+    {
+        List<string> arr = new();
+
+        foreach (Toggle setting in AccountUIManager.instance.settings)
+        {
+            if (setting.isOn == true)
+                arr.Add("t");
+            else
+                arr.Add("f");
+        }
+
+        settingsString = ListToText(arr);
+
+        settingsArray = arr;
+
+        StartCoroutine(nameof(UpdateSettings));
+    }
+
+    private string ListToText(List<string> list)
+    {
+        string settings = string.Join(",", list);
+        Debug.Log(settings);
+        return settings;
+    }
+
+
+    public IEnumerator LoadSettings()
+    {
+        var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Value == null || DBTask.Result.Child("settings") == null)
+        {
+            settingsArray.Clear();
+            settingsArray.Add("f");
+            settingsArray.Add("t");
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+
+            if (snapshot.HasChild("settings"))
+            {
+                Debug.Log(settingsArray[0]);
+                if (settingsArray[0] == "t")
+                    GameObject.Find("Post-process Volume").SetActive(false);
+                else
+                    GameObject.Find("Post-process Volume").SetActive(true);
+
+                if (settingsArray[1] == "t")
+                {
+                    AccountUIManager.instance.accountCanvas.GetComponent<AudioSource>().enabled = true;
+                    AccountUIManager.instance.menuCanvas.GetComponent<AudioSource>().enabled = true;
+                    isMusicOn = true;
+                } else
+                {
+                    AccountUIManager.instance.accountCanvas.GetComponent<AudioSource>().enabled = false;
+                    AccountUIManager.instance.menuCanvas.GetComponent<AudioSource>().enabled = false;
+                    isMusicOn = false;
+                }
+
+            }
+            else
+            {
+                settingsArray.Clear();
+                settingsArray.Add("f");
+                settingsArray.Add("t");
+            }
+        }
+    }
+
 
     public IEnumerator UpdateExperience(int newAmount)
     {
