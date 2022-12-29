@@ -93,8 +93,6 @@ public class SingleShotGun : Gun
 
     public GameObject otherGunScopeReference;
 
-    BuildingSystem buildingSystem;
-
     public float bulletBloomAmount;
 
     [SerializeField] GameObject shield;
@@ -113,7 +111,13 @@ public class SingleShotGun : Gun
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
-        buildingSystem = transform.root.transform.gameObject.GetComponent<BuildingSystem>();
+        if (FirebaseManager.Singleton.crosshairs == false)
+        {
+            if (transform.GetChild(0).GetChild(2).gameObject.activeSelf)
+            {
+                transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+            }
+        }
     }
 
     private void Update()
@@ -168,12 +172,6 @@ public class SingleShotGun : Gun
     {
         if (PV.IsMine == false)
             return;
-
-        if (buildingSystem.isInBuildMode)
-        {
-            Debug.Log("You are in build mode, so no shooting");
-            return;
-        }
             
 
         Shoot();

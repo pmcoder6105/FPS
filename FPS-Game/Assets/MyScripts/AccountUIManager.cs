@@ -66,9 +66,11 @@ public class AccountUIManager : MonoBehaviour
     public TMP_Text XPText;
     public TMP_Text levelText;
 
-    public Toggle quality, music;
+    public Toggle quality, music, fullscreenMode, crosshair;
 
     public Toggle[] settings;
+
+    [HideInInspector] public GameObject process;
 
     private void Awake()
     {
@@ -81,6 +83,12 @@ public class AccountUIManager : MonoBehaviour
             Debug.Log("Instance already exists, destroying object!");
             Destroy(this);
         }
+    }
+
+    private void Update()
+    {
+        if (Time.timeSinceLevelLoad <= Mathf.Epsilon)
+            process = GameObject.Find("Post-process Volume");
     }
 
     //Functions to change the login screen UI

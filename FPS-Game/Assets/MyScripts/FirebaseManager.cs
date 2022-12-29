@@ -43,6 +43,7 @@ public class FirebaseManager : MonoBehaviour
 
     public bool isMusicOn;
     public bool lowQuality;
+    public bool crosshairs;
 
     private void Awake()
     {
@@ -527,7 +528,7 @@ public class FirebaseManager : MonoBehaviour
 
     private string ListToText(List<string> list)
     {
-        string settings = string.Join(",", list);
+        string settings = string.Join("", list);
         Debug.Log(settings);
         return settings;
     }
@@ -546,8 +547,14 @@ public class FirebaseManager : MonoBehaviour
         else if (DBTask.Result.Value == null || DBTask.Result.Child("settings") == null)
         {
             settingsArray.Clear();
-            settingsArray.Add("f");
             settingsArray.Add("t");
+            settingsArray.Add("t");
+            settingsArray.Add("t");
+            settingsArray.Add("t");
+            GameObject.Find("Post-process Volume").SetActive(true);
+            AccountUIManager.instance.accountCanvas.GetComponent<AudioSource>().enabled = true;
+            AccountUIManager.instance.menuCanvas.GetComponent<AudioSource>().enabled = true;
+            isMusicOn = true;
         }
         else
         {
@@ -555,31 +562,69 @@ public class FirebaseManager : MonoBehaviour
 
             if (snapshot.HasChild("settings"))
             {
-                Debug.Log(settingsArray[0]);
-                if (settingsArray[0] == "t")
-                    GameObject.Find("Post-process Volume").SetActive(false);
-                else
-                    GameObject.Find("Post-process Volume").SetActive(true);
-
-                if (settingsArray[1] == "t")
-                {
-                    AccountUIManager.instance.accountCanvas.GetComponent<AudioSource>().enabled = true;
-                    AccountUIManager.instance.menuCanvas.GetComponent<AudioSource>().enabled = true;
-                    isMusicOn = true;
-                } else
-                {
-                    AccountUIManager.instance.accountCanvas.GetComponent<AudioSource>().enabled = false;
-                    AccountUIManager.instance.menuCanvas.GetComponent<AudioSource>().enabled = false;
-                    isMusicOn = false;
-                }
+                ProcessSettings(snapshot.Child("settings").Value.ToString());
 
             }
             else
             {
                 settingsArray.Clear();
-                settingsArray.Add("f");
                 settingsArray.Add("t");
+                settingsArray.Add("t");
+                settingsArray.Add("t");
+                settingsArray.Add("t");
+                GameObject.Find("Post-process Volume").SetActive(true);
+                AccountUIManager.instance.accountCanvas.GetComponent<AudioSource>().enabled = true;
+                AccountUIManager.instance.menuCanvas.GetComponent<AudioSource>().enabled = true;
+                isMusicOn = true;
             }
+        }
+    }
+
+    void ProcessSettings(string settings)
+    {
+        char[] myChars = settings.ToCharArray();
+
+        if (myChars[0] == 't')
+        {
+            AccountUIManager.instance.process.SetActive(true);
+
+        }
+        if (myChars[0] == 'f')
+        {
+            AccountUIManager.instance.process.SetActive(false);
+
+        }
+        if (myChars[1] == 't')
+        {
+            AccountUIManager.instance.accountCanvas.GetComponent<AudioSource>().enabled = true;
+            AccountUIManager.instance.menuCanvas.GetComponent<AudioSource>().enabled = true;
+            isMusicOn = true;
+
+        }
+        if (myChars[1] == 'f')
+        {
+            AccountUIManager.instance.accountCanvas.GetComponent<AudioSource>().enabled = false;
+            AccountUIManager.instance.menuCanvas.GetComponent<AudioSource>().enabled = false;
+            isMusicOn = false;
+
+        }
+        if (myChars[2] == 't')
+        {
+            Screen.fullScreen = true;
+
+        }
+        if (myChars[2] == 'f')
+        {
+            Screen.fullScreen = false;
+
+        }
+        if (myChars[3] == 't')
+        {
+            crosshairs = true;
+        }
+        if (myChars[3] == 'f')
+        {
+            crosshairs = false;
         }
     }
 
