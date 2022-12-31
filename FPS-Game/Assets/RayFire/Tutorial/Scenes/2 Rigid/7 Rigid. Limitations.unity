@@ -38,12 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 11
+  serializedVersion: 12
   m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
@@ -54,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 10
+    serializedVersion: 12
     m_Resolution: 2
     m_BakeResolution: 10
     m_AtlasSize: 512
@@ -62,6 +62,7 @@ LightmapSettings:
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
     m_CompAOExponentDirect: 0
+    m_ExtractAmbientOcclusion: 0
     m_Padding: 2
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
@@ -76,10 +77,16 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 256
     m_PVRBounces: 2
+    m_PVREnvironmentSampleCount: 256
+    m_PVREnvironmentReferencePointCount: 2048
+    m_PVRFilteringMode: 2
+    m_PVRDenoiserTypeDirect: 0
+    m_PVRDenoiserTypeIndirect: 0
+    m_PVRDenoiserTypeAO: 0
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
-    m_PVRFilteringMode: 1
+    m_PVREnvironmentMIS: 0
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
@@ -87,9 +94,11 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaDirect: 0.5
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
-    m_ShowResolutionOverlay: 1
+    m_ExportTrainingData: 0
+    m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_LightingSettings: {fileID: 4890085278179872738, guid: b333447341064274ca319a405d6d2538, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -109,6 +118,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
@@ -141,6 +152,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.91, y: 11.47, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1174400860}
   m_RootOrder: 1
@@ -176,16 +188,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -206,6 +225,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -214,7 +234,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -223,9 +247,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -291,6 +314,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -339,13 +363,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -353,6 +380,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -365,6 +393,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &43325590
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -402,6 +431,7 @@ Transform:
   m_LocalRotation: {x: -0.2337299, y: 0.69786304, z: 0.64861387, w: 0.19405568}
   m_LocalPosition: {x: 0, y: 14.54, z: -0.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 756469939}
   m_RootOrder: 0
@@ -437,16 +467,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -467,6 +504,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -475,7 +513,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -484,9 +526,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -552,6 +593,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -600,13 +642,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -614,6 +659,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -626,6 +672,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &57227001
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -663,6 +710,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.99, y: 7.87, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1114662382}
   m_RootOrder: 2
@@ -698,16 +746,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -728,6 +783,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -736,7 +792,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -745,9 +805,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -813,6 +872,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -861,13 +921,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -875,6 +938,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -887,6 +951,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &103883074
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -921,6 +986,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 16.41, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 830246980}
   - {fileID: 1703796873}
@@ -954,6 +1020,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10.2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1956765049}
   - {fileID: 2102178638}
@@ -990,6 +1057,7 @@ Transform:
   m_LocalRotation: {x: -0.2337299, y: 0.69786304, z: 0.64861387, w: 0.19405568}
   m_LocalPosition: {x: -0.03, y: 19.53, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1094265757}
   m_RootOrder: 0
@@ -1025,16 +1093,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -1055,6 +1130,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -1063,7 +1139,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -1072,9 +1152,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -1140,6 +1219,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -1188,13 +1268,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1202,6 +1285,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1214,6 +1298,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &188948043
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1248,6 +1333,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -10, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 863229838}
   - {fileID: 1435265848}
@@ -1284,6 +1370,7 @@ Transform:
   m_LocalRotation: {x: -0.031684395, y: 0.65088683, z: 0.3804296, w: 0.6562133}
   m_LocalPosition: {x: -2.4300003, y: 17.32, z: 0}
   m_LocalScale: {x: 1.0000005, y: 1, z: 1.0000005}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 341544940}
   m_RootOrder: 2
@@ -1319,16 +1406,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -1349,6 +1443,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -1357,7 +1452,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -1366,9 +1465,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -1434,6 +1532,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -1482,13 +1581,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1496,6 +1598,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1508,6 +1611,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &261440897
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1545,6 +1649,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.91, y: 11.47, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 809626244}
   m_RootOrder: 1
@@ -1580,16 +1685,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -1610,6 +1722,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -1618,7 +1731,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -1627,9 +1744,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -1695,6 +1811,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -1743,13 +1860,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1757,6 +1877,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1769,6 +1890,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &307367698
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1806,6 +1928,7 @@ Transform:
   m_LocalRotation: {x: -0.2337299, y: 0.69786304, z: 0.64861387, w: 0.19405568}
   m_LocalPosition: {x: 0, y: 14.54, z: -0.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1980723834}
   m_RootOrder: 0
@@ -1841,16 +1964,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -1871,6 +2001,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -1879,7 +2010,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -1888,9 +2023,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -1956,6 +2090,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -2004,13 +2139,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2018,6 +2156,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2030,6 +2169,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &320266112
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2068,6 +2208,7 @@ Transform:
   m_LocalRotation: {x: 0.55338514, y: 0.08208827, z: 0.22822973, w: 0.79682976}
   m_LocalPosition: {x: 3.3, y: 7.1, z: -0}
   m_LocalScale: {x: 1, y: 5.596225, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1207407138}
   m_RootOrder: 1
@@ -2090,6 +2231,7 @@ MonoBehaviour:
   force: 1
   affectInactive: 0
   damage: 0.01
+  skin: 0
   cooldown: 2
   mask: -1
   tagFilter: Untagged
@@ -2099,6 +2241,7 @@ MonoBehaviour:
   enterPlane: []
   exitPlane: []
   colLider: {fileID: 0}
+  slicePlanes: []
   coolDownState: 0
 --- !u!64 &340595173
 MeshCollider:
@@ -2110,9 +2253,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 1
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &340595174
 MeshRenderer:
@@ -2125,13 +2268,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2139,6 +2285,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2151,6 +2298,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &340595175
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2162,14 +2310,14 @@ MeshFilter:
 --- !u!4 &341544940
 Transform:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 4457399236234274, guid: 5a41fb5a7e4974f49a2856ac4096e821,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 4457399236234274, guid: 5a41fb5a7e4974f49a2856ac4096e821, type: 3}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1172104127}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 552865442}
   - {fileID: 1165565985}
@@ -2208,6 +2356,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.91, y: 11.47, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1660854828}
   m_RootOrder: 1
@@ -2243,16 +2392,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -2273,6 +2429,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -2281,7 +2438,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -2290,9 +2451,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -2358,6 +2518,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -2406,13 +2567,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2420,6 +2584,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2432,6 +2597,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &447943512
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2469,6 +2635,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.99, y: 7.87, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 186470117}
   m_RootOrder: 2
@@ -2504,16 +2671,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -2534,6 +2708,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -2542,7 +2717,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -2551,9 +2730,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -2619,6 +2797,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -2667,13 +2846,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2681,6 +2863,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2693,6 +2876,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &506148598
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2730,6 +2914,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.91, y: 11.47, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1114662382}
   m_RootOrder: 1
@@ -2765,16 +2950,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -2795,6 +2987,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -2803,7 +2996,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -2812,9 +3009,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -2880,6 +3076,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -2928,13 +3125,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2942,6 +3142,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2954,6 +3155,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &547950734
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2991,6 +3193,7 @@ Transform:
   m_LocalRotation: {x: -0.031684395, y: 0.65088683, z: 0.3804296, w: 0.6562133}
   m_LocalPosition: {x: -8.18, y: 11.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 341544940}
   m_RootOrder: 0
@@ -3026,16 +3229,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -3056,6 +3266,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -3064,7 +3275,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -3073,9 +3288,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -3141,6 +3355,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -3189,13 +3404,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3203,6 +3421,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3215,6 +3434,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &552865445
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3252,6 +3472,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.99, y: 7.87, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 147768758}
   m_RootOrder: 2
@@ -3287,16 +3508,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -3317,6 +3545,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -3325,7 +3554,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -3334,9 +3567,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -3402,6 +3634,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -3450,13 +3683,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3464,6 +3700,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3476,6 +3713,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &637496568
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3513,6 +3751,7 @@ Transform:
   m_LocalRotation: {x: -0.2337299, y: 0.69786304, z: 0.64861387, w: 0.19405568}
   m_LocalPosition: {x: 0, y: 18.11, z: -0.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1114662382}
   m_RootOrder: 0
@@ -3548,16 +3787,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -3578,6 +3824,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -3586,7 +3833,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -3595,9 +3846,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -3663,6 +3913,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -3711,13 +3962,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3725,6 +3979,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3737,6 +3992,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &656572631
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3771,6 +4027,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.059999466, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 57226998}
   - {fileID: 816186550}
@@ -3804,6 +4061,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1650499381}
   - {fileID: 307367695}
@@ -3840,6 +4098,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.91, y: 11.47, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 756469939}
   m_RootOrder: 1
@@ -3875,16 +4134,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -3905,6 +4171,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -3913,7 +4180,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -3922,9 +4193,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -3990,6 +4260,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -4038,13 +4309,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4052,6 +4326,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -4064,6 +4339,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &816186553
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4101,6 +4377,7 @@ Transform:
   m_LocalRotation: {x: -0.2337299, y: 0.69786304, z: 0.64861387, w: 0.19405568}
   m_LocalPosition: {x: -0.07, y: 20.72, z: -0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 147768758}
   m_RootOrder: 0
@@ -4136,16 +4413,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -4166,6 +4450,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -4174,7 +4459,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -4183,9 +4472,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -4251,6 +4539,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -4299,13 +4588,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4313,6 +4605,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -4325,6 +4618,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &830246983
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4362,6 +4656,7 @@ Transform:
   m_LocalRotation: {x: -0.2337299, y: 0.69786304, z: 0.64861387, w: 0.19405568}
   m_LocalPosition: {x: 0, y: 14.54, z: -0.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1174400860}
   m_RootOrder: 0
@@ -4397,16 +4692,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -4427,6 +4729,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -4435,7 +4738,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -4444,9 +4751,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -4512,6 +4818,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -4560,13 +4867,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4574,6 +4884,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -4586,6 +4897,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &855663024
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4623,6 +4935,7 @@ Transform:
   m_LocalRotation: {x: -0.2337299, y: 0.69786304, z: 0.64861387, w: 0.19405568}
   m_LocalPosition: {x: 0, y: 15.88, z: -0.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 207169171}
   m_RootOrder: 0
@@ -4658,16 +4971,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -4688,6 +5008,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -4696,7 +5017,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -4705,9 +5030,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -4773,6 +5097,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -4821,13 +5146,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4835,6 +5163,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -4847,6 +5176,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &863229841
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4884,6 +5214,7 @@ Transform:
   m_LocalRotation: {x: -0.031684395, y: 0.65088683, z: 0.3804296, w: 0.6562133}
   m_LocalPosition: {x: 4.66, y: 10.38, z: 0}
   m_LocalScale: {x: 1.0000005, y: 1, z: 1.0000005}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 341544940}
   m_RootOrder: 4
@@ -4919,16 +5250,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -4949,6 +5287,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -4957,7 +5296,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -4966,9 +5309,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -5034,6 +5376,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -5082,13 +5425,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5096,6 +5442,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -5108,6 +5455,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &877872081
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5118,14 +5466,12 @@ MeshFilter:
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &878347430 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1742102081341672, guid: c0cb72a37d202fd4a8c90d16dfd52432,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 1742102081341672, guid: c0cb72a37d202fd4a8c90d16dfd52432, type: 3}
   m_PrefabInstance: {fileID: 1484838898}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &878347431 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 4789674431876064, guid: c0cb72a37d202fd4a8c90d16dfd52432,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 4789674431876064, guid: c0cb72a37d202fd4a8c90d16dfd52432, type: 3}
   m_PrefabInstance: {fileID: 1484838898}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &878347432
@@ -5159,16 +5505,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -5189,6 +5542,7 @@ MonoBehaviour:
     contactBias: 0.75
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -5197,7 +5551,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -5206,9 +5564,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -5274,6 +5631,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -5340,6 +5698,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.99, y: 7.87, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1094265757}
   m_RootOrder: 2
@@ -5375,16 +5734,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -5405,6 +5771,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -5413,7 +5780,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -5422,9 +5793,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -5490,6 +5860,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -5538,13 +5909,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5552,6 +5926,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -5564,6 +5939,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1008729495
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5598,6 +5974,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 5.09, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 188948040}
   - {fileID: 1407659143}
@@ -5631,6 +6008,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -5.66, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 656572628}
   - {fileID: 547950731}
@@ -5667,6 +6045,7 @@ Transform:
   m_LocalRotation: {x: -0.031684395, y: 0.65088683, z: 0.3804296, w: 0.6562133}
   m_LocalPosition: {x: -5.54, y: 11.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 341544940}
   m_RootOrder: 1
@@ -5702,16 +6081,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -5732,6 +6118,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -5740,7 +6127,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -5749,9 +6140,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -5817,6 +6207,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -5865,13 +6256,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5879,6 +6273,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -5891,6 +6286,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1165565988
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5902,8 +6298,7 @@ MeshFilter:
 --- !u!1 &1172104127
 GameObject:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 1542823542913228, guid: 5a41fb5a7e4974f49a2856ac4096e821,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 1542823542913228, guid: 5a41fb5a7e4974f49a2856ac4096e821, type: 3}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
@@ -5942,6 +6337,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 10.14, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 855663021}
   - {fileID: 43325587}
@@ -5975,6 +6371,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.4, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 878347431}
   - {fileID: 340595171}
@@ -6010,6 +6407,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.82, y: 7.87, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 809626244}
   m_RootOrder: 2
@@ -6045,16 +6443,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -6075,6 +6480,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -6083,7 +6489,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -6092,9 +6502,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -6160,6 +6569,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -6208,13 +6618,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6222,6 +6635,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -6234,6 +6648,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1301631735
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6245,8 +6660,7 @@ MeshFilter:
 --- !u!1 &1362467382
 GameObject:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 1542823542913228, guid: 5a41fb5a7e4974f49a2856ac4096e821,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 1542823542913228, guid: 5a41fb5a7e4974f49a2856ac4096e821, type: 3}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
@@ -6262,14 +6676,14 @@ GameObject:
 --- !u!4 &1362467383
 Transform:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 4457399236234274, guid: 5a41fb5a7e4974f49a2856ac4096e821,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 4457399236234274, guid: 5a41fb5a7e4974f49a2856ac4096e821, type: 3}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362467382}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 186470117}
   - {fileID: 756469939}
@@ -6306,6 +6720,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.91, y: 11.47, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1094265757}
   m_RootOrder: 1
@@ -6341,16 +6756,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -6371,6 +6793,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -6379,7 +6802,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -6388,9 +6815,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -6456,6 +6882,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -6504,13 +6931,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6518,6 +6948,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -6530,6 +6961,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1407659146
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6567,6 +6999,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.91, y: 11.47, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 207169171}
   m_RootOrder: 1
@@ -6602,16 +7035,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -6632,6 +7072,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -6640,7 +7081,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -6649,9 +7094,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -6717,6 +7161,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -6765,13 +7210,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6779,6 +7227,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -6791,6 +7240,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1435265851
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6819,6 +7269,10 @@ PrefabInstance:
       value: 22.2
       objectReference: {fileID: 0}
     - target: {fileID: 4289062719471492, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4289062719471492, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16.36
       objectReference: {fileID: 0}
@@ -6829,6 +7283,10 @@ PrefabInstance:
     - target: {fileID: 4289062719471492, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
       propertyPath: m_LocalPosition.z
       value: 20.90508
+      objectReference: {fileID: 0}
+    - target: {fileID: 4289062719471492, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4289062719471492, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
       propertyPath: m_LocalRotation.x
@@ -6842,29 +7300,21 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4289062719471492, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4289062719471492, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
+    - target: {fileID: 4352528364258364, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 34.9
       objectReference: {fileID: 0}
     - target: {fileID: 4352528364258364, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
       propertyPath: m_LocalPosition.z
       value: -39.48
       objectReference: {fileID: 0}
     - target: {fileID: 4352528364258364, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 34.9
+      propertyPath: m_LocalRotation.w
+      value: 0.98553336
       objectReference: {fileID: 0}
     - target: {fileID: 4352528364258364, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.16948168
-      objectReference: {fileID: 0}
-    - target: {fileID: 4352528364258364, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.98553336
       objectReference: {fileID: 0}
     - target: {fileID: 4352528364258364, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6874,25 +7324,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -40.18
       objectReference: {fileID: 0}
-    - target: {fileID: 23019430021055472, guid: 0f7b67bc08186d14ba66630d8e7527ef,
-        type: 3}
+    - target: {fileID: 23019430021055472, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 18c5c2169b9f5bd439ca94baa6e8e7ec, type: 2}
-    - target: {fileID: 114689447726362688, guid: 0f7b67bc08186d14ba66630d8e7527ef,
-        type: 3}
-      propertyPath: simulationType
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114689447726362688, guid: 0f7b67bc08186d14ba66630d8e7527ef,
-        type: 3}
+    - target: {fileID: 114689447726362688, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
       propertyPath: atStart
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114689447726362688, guid: 0f7b67bc08186d14ba66630d8e7527ef,
-        type: 3}
+    - target: {fileID: 114689447726362688, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
       propertyPath: initialization
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114689447726362688, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
+      propertyPath: simulationType
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f7b67bc08186d14ba66630d8e7527ef, type: 3}
@@ -6925,6 +7371,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.99, y: 7.87, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 207169171}
   m_RootOrder: 2
@@ -6960,16 +7407,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -6990,6 +7444,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -6998,7 +7453,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -7007,9 +7466,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -7075,6 +7533,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -7123,13 +7582,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7137,6 +7599,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -7149,6 +7612,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1470375094
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7165,6 +7629,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1207407138}
     m_Modifications:
     - target: {fileID: 4789674431876064, guid: c0cb72a37d202fd4a8c90d16dfd52432, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4789674431876064, guid: c0cb72a37d202fd4a8c90d16dfd52432, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -7177,6 +7645,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4789674431876064, guid: c0cb72a37d202fd4a8c90d16dfd52432, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4789674431876064, guid: c0cb72a37d202fd4a8c90d16dfd52432, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -7186,14 +7658,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4789674431876064, guid: c0cb72a37d202fd4a8c90d16dfd52432, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4789674431876064, guid: c0cb72a37d202fd4a8c90d16dfd52432, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4789674431876064, guid: c0cb72a37d202fd4a8c90d16dfd52432, type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7227,6 +7691,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.99, y: 7.87, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 756469939}
   m_RootOrder: 2
@@ -7262,16 +7727,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -7292,6 +7764,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -7300,7 +7773,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -7309,9 +7786,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -7377,6 +7853,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -7425,13 +7902,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7439,6 +7919,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -7451,6 +7932,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1528800838
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7462,8 +7944,7 @@ MeshFilter:
 --- !u!1 &1594094465
 GameObject:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 1542823542913228, guid: 5a41fb5a7e4974f49a2856ac4096e821,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 1542823542913228, guid: 5a41fb5a7e4974f49a2856ac4096e821, type: 3}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
@@ -7479,14 +7960,14 @@ GameObject:
 --- !u!4 &1594094466
 Transform:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 4457399236234274, guid: 5a41fb5a7e4974f49a2856ac4096e821,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 4457399236234274, guid: 5a41fb5a7e4974f49a2856ac4096e821, type: 3}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594094465}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 207169171}
   - {fileID: 809626244}
@@ -7522,6 +8003,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.99, y: 7.87, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1174400860}
   m_RootOrder: 2
@@ -7557,16 +8039,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -7587,6 +8076,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -7595,7 +8085,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -7604,9 +8098,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -7672,6 +8165,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -7720,13 +8214,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7734,6 +8231,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -7746,6 +8244,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1613193623
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7783,6 +8282,7 @@ Transform:
   m_LocalRotation: {x: -0.2337299, y: 0.69786304, z: 0.64861387, w: 0.19405568}
   m_LocalPosition: {x: 0, y: 15.88, z: -0.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 809626244}
   m_RootOrder: 0
@@ -7818,16 +8318,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -7848,6 +8355,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -7856,7 +8364,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -7865,9 +8377,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -7933,6 +8444,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -7981,13 +8493,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7995,6 +8510,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -8007,6 +8523,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1650499384
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8041,6 +8558,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -5.66, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1913453383}
   - {fileID: 447943509}
@@ -8077,6 +8595,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.91, y: 11.47, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 147768758}
   m_RootOrder: 1
@@ -8112,16 +8631,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -8142,6 +8668,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -8150,7 +8677,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -8159,9 +8690,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -8227,6 +8757,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -8275,13 +8806,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8289,6 +8823,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -8301,6 +8836,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1703796876
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8312,8 +8848,7 @@ MeshFilter:
 --- !u!1 &1902838032
 GameObject:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 1542823542913228, guid: 5a41fb5a7e4974f49a2856ac4096e821,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 1542823542913228, guid: 5a41fb5a7e4974f49a2856ac4096e821, type: 3}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
@@ -8329,14 +8864,14 @@ GameObject:
 --- !u!4 &1902838033
 Transform:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 4457399236234274, guid: 5a41fb5a7e4974f49a2856ac4096e821,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 4457399236234274, guid: 5a41fb5a7e4974f49a2856ac4096e821, type: 3}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1902838032}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1660854828}
   - {fileID: 1980723834}
@@ -8372,6 +8907,7 @@ Transform:
   m_LocalRotation: {x: -0.2337299, y: 0.69786304, z: 0.64861387, w: 0.19405568}
   m_LocalPosition: {x: 0, y: 14.54, z: -0.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1660854828}
   m_RootOrder: 0
@@ -8407,16 +8943,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -8437,6 +8980,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -8445,7 +8989,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -8454,9 +9002,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -8522,6 +9069,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -8570,13 +9118,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8584,6 +9135,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -8596,6 +9148,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1913453386
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8630,6 +9183,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1114662382}
   - {fileID: 1094265757}
@@ -8666,6 +9220,7 @@ Transform:
   m_LocalRotation: {x: -0.2337299, y: 0.69786304, z: 0.64861387, w: 0.19405568}
   m_LocalPosition: {x: 0, y: 13.87, z: -0.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 186470117}
   m_RootOrder: 0
@@ -8701,16 +9256,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -8731,6 +9293,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -8739,7 +9302,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -8748,9 +9315,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -8816,6 +9382,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -8864,13 +9431,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8878,6 +9448,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -8890,6 +9461,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1956765052
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8927,6 +9499,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.99, y: 7.87, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1660854828}
   m_RootOrder: 2
@@ -8962,16 +9535,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -8992,6 +9572,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -9000,7 +9581,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -9009,9 +9594,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -9077,6 +9661,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -9125,13 +9710,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9139,6 +9727,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9151,6 +9740,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1970258273
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9185,6 +9775,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 5.09, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 320266109}
   - {fileID: 2134191002}
@@ -9221,6 +9812,7 @@ Transform:
   m_LocalRotation: {x: -0.031684395, y: 0.65088683, z: 0.3804296, w: 0.6562133}
   m_LocalPosition: {x: 0.39, y: 17.28, z: 0}
   m_LocalScale: {x: 1.0000005, y: 1, z: 1.0000005}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 341544940}
   m_RootOrder: 3
@@ -9256,16 +9848,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -9286,6 +9885,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -9294,7 +9894,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -9303,9 +9907,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -9371,6 +9974,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -9419,13 +10023,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9433,6 +10040,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9445,6 +10053,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2019240305
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9482,6 +10091,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.99, y: 7.87, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1980723834}
   m_RootOrder: 2
@@ -9517,16 +10127,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -9547,6 +10164,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -9555,7 +10173,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -9564,9 +10186,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -9632,6 +10253,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -9680,13 +10302,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9694,6 +10319,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9706,6 +10332,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2096100583
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9743,6 +10370,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.91, y: 11.47, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 186470117}
   m_RootOrder: 1
@@ -9778,16 +10406,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -9808,6 +10443,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -9816,7 +10452,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -9825,9 +10465,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -9893,6 +10532,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -9941,13 +10581,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9955,6 +10598,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9967,6 +10611,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2102178641
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -10001,6 +10646,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 341544940}
   - {fileID: 1362467383}
@@ -10040,6 +10686,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.91, y: 11.47, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1980723834}
   m_RootOrder: 1
@@ -10075,16 +10722,23 @@ MonoBehaviour:
     meshCollider: {fileID: 0}
     clusterColliders: []
     ignoreList: 
+    rec: 0
+    exclude: 0
+    solidity: 1
+    destructible: 0
+    physicsDataCorState: 0
   activation:
-    byVelocity: 0
+    local: 0
     byOffset: 0
+    byVelocity: 0
     byDamage: 0
     byActivator: 0
     byImpact: 0
     byConnectivity: 0
     unyielding: 0
     activatable: 0
-    layer: 
+    l: 0
+    layer: 0
     connect: {fileID: 0}
   limitations:
     byCollision: 1
@@ -10105,6 +10759,7 @@ MonoBehaviour:
     contactBias: 0.8
     seed: 1
     useShatter: 0
+    addChildren: 1
     clusterize: 0
     simType: 4
     meshInput: 9
@@ -10113,7 +10768,11 @@ MonoBehaviour:
       sizeFilter: 0
       decompose: 0
       removeCollinear: 1
-      layer: 
+      l: 1
+      m: 0
+      layer: 0
+      t: 1
+      tag: 
     runtimeCaching:
       type: 0
       frames: 3
@@ -10122,9 +10781,8 @@ MonoBehaviour:
       inProgress: 0
       wasUsed: 0
       stop: 0
-    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
-    mesh: {fileID: 0}
     scrShatter: {fileID: 0}
+    cacheRotationStart: {x: 0, y: 0, z: 0, w: 1}
   clusterDemolition:
     connectivity: 0
     minimumArea: 0
@@ -10190,6 +10848,7 @@ MonoBehaviour:
     currentDamage: 0
     collect: 0
     multiplier: 1
+    toShards: 1
   fading:
     onDemolition: 1
     onActivation: 0
@@ -10238,13 +10897,16 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10252,6 +10914,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -10264,6 +10927,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2134191005
 MeshFilter:
   m_ObjectHideFlags: 0

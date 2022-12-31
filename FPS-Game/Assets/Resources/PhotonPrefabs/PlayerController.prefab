@@ -2226,6 +2226,7 @@ MonoBehaviour:
   isShotGun: 0
   scope: {fileID: 0}
   _currentRotation: {x: 0, y: 0}
+  canAim: 1
   shotGunRange: 25
   bulletCount: {fileID: 607867078}
   shootSFX:
@@ -2234,6 +2235,10 @@ MonoBehaviour:
   isDagger: 1
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 8757865083568207718}
+  bulletBloomAmount: 0
+  shield: {fileID: 0}
+  weapons: []
+  inputKey: 0
 --- !u!114 &9209597007893392388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2921,6 +2926,8 @@ MonoBehaviour:
   - {fileID: 4277642062194922114}
   - {fileID: 2471543789871672640}
   - {fileID: 4593207813660433441}
+  itemIndex: 0
+  grounded: 0
   PV: {fileID: 2511184437448133920}
   currentHealth: 100
   playerVisuals: {fileID: 4195023367634013940}
@@ -2957,6 +2964,12 @@ MonoBehaviour:
   dustTrailParticleSystem: {fileID: 0}
   firebase: {fileID: 0}
   toonShader: {fileID: 0}
+  itemGlobal: 0
+  damageNumber: {fileID: 0}
+  needToClearFog: 0
+  isMoving: 0
+  levelUpAnimation: {fileID: 0}
+  xpAnimation: {fileID: 0}
 --- !u!54 &2567718919365197072
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3112,6 +3125,7 @@ MonoBehaviour:
   handHeldBlock: {fileID: 4085674627049060603}
   blockIndictorUIImage: {fileID: 5340953337472002079}
   controller: {fileID: 3069946463937519793}
+  playerColorValue: 
 --- !u!1 &2518113245493053348
 GameObject:
   m_ObjectHideFlags: 0
@@ -3596,6 +3610,7 @@ MonoBehaviour:
   isShotGun: 0
   scope: {fileID: 0}
   _currentRotation: {x: 0, y: 0}
+  canAim: 1
   shotGunRange: 0
   bulletCount: {fileID: 607867078}
   shootSFX:
@@ -3607,6 +3622,10 @@ MonoBehaviour:
   isDagger: 0
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 8757865083568207718}
+  bulletBloomAmount: 0
+  shield: {fileID: 0}
+  weapons: []
+  inputKey: 0
 --- !u!114 &4454856278380405542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4008,6 +4027,7 @@ MonoBehaviour:
   isShotGun: 0
   scope: {fileID: 0}
   _currentRotation: {x: 0, y: 0}
+  canAim: 1
   shotGunRange: 0
   bulletCount: {fileID: 607867078}
   shootSFX:
@@ -4019,6 +4039,10 @@ MonoBehaviour:
   isDagger: 0
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 8757865083568207718}
+  bulletBloomAmount: 0
+  shield: {fileID: 0}
+  weapons: []
+  inputKey: 0
 --- !u!114 &2816010621069780856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4749,6 +4773,7 @@ MonoBehaviour:
   isShotGun: 1
   scope: {fileID: 0}
   _currentRotation: {x: 0, y: 0}
+  canAim: 1
   shotGunRange: 25
   bulletCount: {fileID: 607867078}
   shootSFX:
@@ -4757,6 +4782,10 @@ MonoBehaviour:
   isDagger: 0
   scopeSFX: {fileID: 0}
   otherGunScopeReference: {fileID: 8757865083568207718}
+  bulletBloomAmount: 0
+  shield: {fileID: 0}
+  weapons: []
+  inputKey: 0
 --- !u!114 &4855853581015313852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5372,6 +5401,7 @@ MonoBehaviour:
   isShotGun: 0
   scope: {fileID: 8757865083568207718}
   _currentRotation: {x: 0, y: 0}
+  canAim: 1
   shotGunRange: 0
   bulletCount: {fileID: 607867078}
   shootSFX:
@@ -5380,6 +5410,10 @@ MonoBehaviour:
   isDagger: 0
   scopeSFX: {fileID: 8300000, guid: 2843658595b9ac44d8d5a41fa5bb664a, type: 3}
   otherGunScopeReference: {fileID: 0}
+  bulletBloomAmount: 0
+  shield: {fileID: 0}
+  weapons: []
+  inputKey: 0
 --- !u!114 &4235356016196635108
 MonoBehaviour:
   m_ObjectHideFlags: 0
