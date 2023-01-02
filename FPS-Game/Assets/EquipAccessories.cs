@@ -9,6 +9,7 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
     AccessoriesManager aM;
     public GameObject[] hats;
     public GameObject[] eyeWear;
+    public GameObject[] cape;
 
     PhotonView PV;
 
@@ -31,6 +32,8 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
         {
             accessoriesParent.SetActive(false);
             PV.RPC(nameof(EquipHat), RpcTarget.All, aM.equipedHat);
+            PV.RPC(nameof(EquipEyewear), RpcTarget.All, aM.equipedEyewear);
+            PV.RPC(nameof(EquipCape), RpcTarget.All, aM.equipedCape);
         }
             
     }
@@ -41,6 +44,8 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
         if (PV.IsMine)
         {
             PV.RPC(nameof(EquipHat), newPlayer, aM.equipedHat);
+            PV.RPC(nameof(EquipEyewear), newPlayer, aM.equipedEyewear);
+            PV.RPC(nameof(EquipCape), newPlayer, aM.equipedCape);
         }
     }
 
@@ -72,6 +77,21 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
             else
             {
                 eyeWear[i].SetActive(true);
+            }
+        }
+    }
+
+    void EquipCape(int index)
+    {
+        for (int i = 0; i < cape.Length; i++)
+        {
+            if (i != index)
+            {
+                cape[i].SetActive(false);
+            }
+            else
+            {
+                cape[i].SetActive(true);
             }
         }
     }

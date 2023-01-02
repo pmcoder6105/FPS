@@ -6,6 +6,7 @@ public class AccessoriesManager : MonoBehaviour
 {
     public int equipedHat;
     public int equipedEyewear;
+    public int equipedCape;
 
     private static AccessoriesManager _singleton;
 

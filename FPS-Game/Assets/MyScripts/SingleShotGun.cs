@@ -113,10 +113,7 @@ public class SingleShotGun : Gun
         PV = GetComponent<PhotonView>();
         if (FirebaseManager.Singleton.crosshairs == false)
         {
-            if (transform.GetChild(0).GetChild(2).gameObject.activeSelf)
-            {
-                transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
-            }
+            transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
         }
     }
 
