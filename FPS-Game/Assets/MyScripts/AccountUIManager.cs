@@ -67,7 +67,7 @@ public class AccountUIManager : MonoBehaviour
     public TMP_Text XPText;
     public TMP_Text levelText;
 
-    public Toggle quality, music, fullscreenMode, crosshair;
+    public Toggle quality, music, fullscreenMode, crosshair, sprint;
 
     public Toggle[] settings;
 

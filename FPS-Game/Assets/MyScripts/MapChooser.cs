@@ -62,7 +62,7 @@ public class MapChooser : MonoBehaviour
     public void PillBox()
     {
         mapChosen = 10;
-        mapName = "PillBox";
+        mapName = "Dropper";
         mapChooseContinueButton.SetActive(true);
     }
 

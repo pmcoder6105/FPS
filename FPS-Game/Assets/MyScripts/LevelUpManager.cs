@@ -16,16 +16,10 @@ public class LevelUpManager : MonoBehaviour
 
     private ExitGames.Client.Photon.Hashtable _props = new ExitGames.Client.Photon.Hashtable();
 
-    //FirebaseManager firebase;
-
-    //PhotonView PV;
-
     private void Awake()
     {
         Singleton = this;
         DontDestroyOnLoad(this.gameObject);
-        //firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
-        //PV = GetComponent<PhotonView>();
     }
 
 
@@ -51,9 +45,6 @@ public class LevelUpManager : MonoBehaviour
     {
         if (Time.timeSinceLevelLoad <= Mathf.Epsilon)
         {
-            //LoadLevel
-            //LoadExperience
-
             StartCoroutine(LoadXPAndKills());
         }
     }
@@ -82,11 +73,9 @@ public class LevelUpManager : MonoBehaviour
             Debug.Log("should level up now!");
 
             _empty.SetActive(true);
-            _empty.GetComponent<Animator>().Play("LevelUpAnimation", 0, 0f);
+            _empty.GetComponent<Animator>().Play("LevelUpAnimation");
             StartCoroutine(nameof(DisableLevelUpAnimation), _empty);
         }
-
-        
     }
 
 

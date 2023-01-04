@@ -327,19 +327,25 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             if (grounded)
             {
-                if (Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift))
+                if (FirebaseManager.Singleton.alwaysSprint == false)
                 {
-                    StartCoroutine(nameof(RunSFX));
+                    if (Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift))
+                    {
+                        StartCoroutine(nameof(RunSFX));
+                    }
+                    else if (!Input.GetKey(KeyCode.RightShift) && !Input.GetKey(KeyCode.LeftShift))
+                    {
+                        StartCoroutine(nameof(WalkSFX));
+                    }
                 }
-                else if (!Input.GetKey(KeyCode.RightShift) && !Input.GetKey(KeyCode.LeftShift))
+                else
                 {
-                    StartCoroutine(nameof(WalkSFX));
-                }
-                if (!PV.IsMine)
-                    return;
-                PV.RPC(nameof(RPC_DisplayDustTrail), RpcTarget.All);
+                    StartCoroutine(nameof(RunSFX)); Debug.Log("running is always on");
+                }               
             }
-            Debug.Log("Footstep");
+            if (!PV.IsMine)
+                return;
+            PV.RPC(nameof(RPC_DisplayDustTrail), RpcTarget.All);
         }
         else
         {
@@ -426,8 +432,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
 
-
-        moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
+        if (FirebaseManager.Singleton.alwaysSprint == false)
+            moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
+        else
+            moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * sprintSpeed, ref smoothMoveVelocity, smoothTime);
     }
 
     // jump function from the tutorial

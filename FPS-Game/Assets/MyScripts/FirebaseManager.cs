@@ -39,11 +39,12 @@ public class FirebaseManager : MonoBehaviour
     string settingsString;
     List<string> settingsArray = new();
 
-    PostProcessVolume volume;
+    GameObject volume;
 
     public bool isMusicOn;
     public bool lowQuality;
     public bool crosshairs;
+    public bool alwaysSprint;
 
     private void Awake()
     {
@@ -168,6 +169,8 @@ public class FirebaseManager : MonoBehaviour
             if (Time.timeSinceLevelLoad < Mathf.Epsilon) 
             {
                 StartCoroutine(CheckAndFixDependencies());
+                volume = GameObject.Find("Post-process Volume");
+
             }
 
             if (User == null)
@@ -179,6 +182,7 @@ public class FirebaseManager : MonoBehaviour
             if (Time.timeSinceLevelLoad < Mathf.Epsilon)
             {
                 StartCoroutine(LoadSettings());
+                volume = GameObject.Find("Post-process Volume");
             }
         }
 
@@ -604,10 +608,12 @@ public class FirebaseManager : MonoBehaviour
             settingsArray.Add("t");
             settingsArray.Add("t");
             settingsArray.Add("t");
+            settingsArray.Add("f");
             GameObject.Find("Post-process Volume").SetActive(true);
             AccountUIManager.instance.accountCanvas.GetComponent<AudioSource>().enabled = true;
             AccountUIManager.instance.menuCanvas.GetComponent<AudioSource>().enabled = true;
             isMusicOn = true;
+            alwaysSprint = false;
         }
         else
         {
@@ -625,10 +631,12 @@ public class FirebaseManager : MonoBehaviour
                 settingsArray.Add("t");
                 settingsArray.Add("t");
                 settingsArray.Add("t");
+                settingsArray.Add("f");
                 GameObject.Find("Post-process Volume").SetActive(true);
                 AccountUIManager.instance.accountCanvas.GetComponent<AudioSource>().enabled = true;
                 AccountUIManager.instance.menuCanvas.GetComponent<AudioSource>().enabled = true;
                 isMusicOn = true;
+                alwaysSprint = true;
             }
         }
     }
@@ -639,19 +647,20 @@ public class FirebaseManager : MonoBehaviour
 
         if (myChars[0] == 't')
         {
-            AccountUIManager.instance.process.SetActive(true);
-
+            volume.SetActive(true);
+            AccountUIManager.instance.settings[0].isOn = true;
         }
         if (myChars[0] == 'f')
         {
-            AccountUIManager.instance.process.SetActive(false);
-
+            volume.SetActive(false);
+            AccountUIManager.instance.settings[0].isOn = false;
         }
         if (myChars[1] == 't')
         {
             AccountUIManager.instance.accountCanvas.GetComponent<AudioSource>().enabled = true;
             AccountUIManager.instance.menuCanvas.GetComponent<AudioSource>().enabled = true;
             isMusicOn = true;
+            AccountUIManager.instance.settings[1].isOn = true;
 
         }
         if (myChars[1] == 'f')
@@ -659,25 +668,44 @@ public class FirebaseManager : MonoBehaviour
             AccountUIManager.instance.accountCanvas.GetComponent<AudioSource>().enabled = false;
             AccountUIManager.instance.menuCanvas.GetComponent<AudioSource>().enabled = false;
             isMusicOn = false;
+            AccountUIManager.instance.settings[1].isOn = false;
 
         }
         if (myChars[2] == 't')
         {
             Screen.fullScreen = true;
+            AccountUIManager.instance.settings[2].isOn = true;
 
         }
         if (myChars[2] == 'f')
         {
             Screen.fullScreen = false;
+            AccountUIManager.instance.settings[2].isOn = false;
 
         }
         if (myChars[3] == 't')
         {
             crosshairs = true;
+            AccountUIManager.instance.settings[3].isOn = true;
+
         }
         if (myChars[3] == 'f')
         {
             crosshairs = false;
+            AccountUIManager.instance.settings[3].isOn = false;
+
+        }
+        if (myChars[4] == 't')
+        {
+            alwaysSprint = true;
+            AccountUIManager.instance.settings[4].isOn = true;
+
+        }
+        if (myChars[4] == 'f')
+        {
+            alwaysSprint = false;
+            AccountUIManager.instance.settings[4].isOn = false;
+
         }
     }
 
