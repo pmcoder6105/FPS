@@ -13,5 +13,4 @@ public class WeaponViewerController : MonoBehaviour
         transform.Rotate(Vector3.up, -rotX);
         transform.Rotate(Vector3.right, -rotY);
     }
-
 }

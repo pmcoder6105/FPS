@@ -40,12 +40,13 @@ public class ShieldManager : MonoBehaviour
         if (!PV.IsMine)
             return;
 
-        shieldBar.GetComponent<Image>().fillAmount = (shieldHealth / 20);
-        glowFade.GetComponent<Image>().fillAmount = (shieldHealth / 20);
+        DisplayUI();
+        UseShield();
+        ShieldSway();
+    }
 
-
-        shieldHealthText.text = (shieldHealth * 5).ToString();
-
+    private void UseShield()
+    {
         if (lockShield == false)
         {
             if (Input.GetKeyDown(KeyCode.Q) && canUseShield)
@@ -65,19 +66,25 @@ public class ShieldManager : MonoBehaviour
                 }
             }
         }
+    }
 
+    private void DisplayUI()
+    {
+        shieldBar.GetComponent<Image>().fillAmount = (shieldHealth / 20);
+        glowFade.GetComponent<Image>().fillAmount = (shieldHealth / 20);
+        shieldHealthText.text = (shieldHealth * 5).ToString();
+    }
 
-
+    private void ShieldSway()
+    {
         float mouseX = Input.GetAxisRaw("Mouse X") * 2;
         float mouseY = Input.GetAxisRaw("Mouse Y") * 2;
 
-        // calculate target rotation
         Quaternion rotationX = Quaternion.AngleAxis(-mouseY, Vector3.right);
         Quaternion rotationY = Quaternion.AngleAxis(mouseX, Vector3.up);
 
         Quaternion targetRotation = rotationX * rotationY;
 
-        // rotate 
         transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, 8 * Time.deltaTime);
     }
 
@@ -86,9 +93,6 @@ public class ShieldManager : MonoBehaviour
     {
         transform.GetChild(0).gameObject.SetActive(true);
         GetComponent<Animator>().Play("ShieldOpen");
-        //transform.root.GetComponent<PlayerController>().items[GetComponent<PlayerController>().itemIndex].itemGameObject.SetActive(false);
-        //hasOpenedShield = true;
-        //hasClosedShield = false;
 
         weapons[controller.itemIndex].transform.gameObject.GetComponent<SingleShotGun>().DisableGun();
         controller.walkSpeed /= 2;
@@ -101,9 +105,6 @@ public class ShieldManager : MonoBehaviour
     void Close()
     {
         GetComponent<Animator>().Play("ShieldClose");
-        //transform.root.GetComponent<PlayerController>().items[GetComponent<PlayerController>().itemIndex].itemGameObject.SetActive(true);
-        //hasOpenedShield = false;
-        //hasClosedShield = true;
         EnableGun();
 
         controller.walkSpeed = 5;

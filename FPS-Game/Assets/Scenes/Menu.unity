@@ -1829,14 +1829,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 841586118}
         m_TargetAssemblyTypeName: MapChooser, Assembly-CSharp
-        m_MethodName: Sky
-        m_Mode: 1
+        m_MethodName: ChooseMap
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Sky-Beans
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &16894924
@@ -18539,14 +18539,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 841586118}
         m_TargetAssemblyTypeName: MapChooser, Assembly-CSharp
-        m_MethodName: CloseCombat
-        m_Mode: 1
+        m_MethodName: ChooseMap
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: FunArena
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &365184548
@@ -35776,14 +35776,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 841586118}
         m_TargetAssemblyTypeName: MapChooser, Assembly-CSharp
-        m_MethodName: FightingGround
-        m_Mode: 1
+        m_MethodName: ChooseMap
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: BeanFightingGround
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &674972807
@@ -43166,14 +43166,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 841586118}
         m_TargetAssemblyTypeName: MapChooser, Assembly-CSharp
-        m_MethodName: Trials
-        m_Mode: 1
+        m_MethodName: ChooseMap
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Portals
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &837724541
@@ -43352,7 +43352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cc36403e45872747aefe0940468c3fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapChosen: 0
   mapChooseContinueButton: {fileID: 142494930}
   mapName: 
 --- !u!114 &841586119
@@ -46120,14 +46119,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 841586118}
         m_TargetAssemblyTypeName: MapChooser, Assembly-CSharp
-        m_MethodName: Pillars
-        m_Mode: 1
+        m_MethodName: ChooseMap
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: PillarsOfMadness
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &876477457
@@ -75228,14 +75227,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 841586118}
         m_TargetAssemblyTypeName: MapChooser, Assembly-CSharp
-        m_MethodName: OpposingPills
-        m_Mode: 1
+        m_MethodName: ChooseMap
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: OpposingBeans
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1469367117
@@ -95802,14 +95801,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 841586118}
         m_TargetAssemblyTypeName: MapChooser, Assembly-CSharp
-        m_MethodName: PillBox
-        m_Mode: 1
+        m_MethodName: ChooseMap
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Dropper
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1920391446
@@ -98868,14 +98867,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 841586118}
         m_TargetAssemblyTypeName: MapChooser, Assembly-CSharp
-        m_MethodName: UnderGround
-        m_Mode: 1
+        m_MethodName: ChooseMap
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: UndergroundPyramid
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1989635496
@@ -100611,14 +100610,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 841586118}
         m_TargetAssemblyTypeName: MapChooser, Assembly-CSharp
-        m_MethodName: PillArena
-        m_Mode: 1
+        m_MethodName: ChooseMap
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: BeanArena
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2025944666
