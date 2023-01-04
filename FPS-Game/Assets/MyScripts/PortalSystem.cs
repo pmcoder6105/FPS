@@ -26,13 +26,13 @@ public class PortalSystem : MonoBehaviour
         if (other.transform.gameObject.GetComponent<PhotonView>() == null)
             return;
 
+        other.gameObject.GetComponent<AudioSource>().Stop();
+        other.gameObject.GetComponent<AudioSource>().PlayOneShot(portalSound);
+
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
         tie.gameObject.GetComponent<BoxCollider>().enabled = false;
 
         other.transform.SetPositionAndRotation(new Vector3(tie.position.x, tie.position.y - 0.3f, tie.position.z), tie.rotation);
-
-        other.gameObject.GetComponent<AudioSource>().Stop();
-        other.gameObject.GetComponent<AudioSource>().PlayOneShot(portalSound);
 
         StartCoroutine(nameof(WarpCamera), other);
     }

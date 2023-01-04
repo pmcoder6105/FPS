@@ -165,12 +165,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
 
         // if you click escape and the death panel hasn't been instantiated, then unlock cursor
-        if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked && hasDeathPanelActivated == false)
+        if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked && playerManager.hasDeathPanelActivated == false)
         {
             Cursor.lockState = CursorLockMode.None;
         }
         // if you click escape and the death panel hasn't been instantiated, if the scoreboard isn't active, and if the leave confirmation is disactive, then unlock cursor
-        if (Input.GetMouseButtonDown(0) && Cursor.lockState == CursorLockMode.None && hasDeathPanelActivated == false && scoreBoard.GetComponent<ScoreBoard>().isOpen == false && scoreBoard.GetComponent<ScoreBoard>().leaveConfirmation.alpha != 1)
+        if (Input.GetMouseButtonDown(0) && Cursor.lockState == CursorLockMode.None && playerManager.hasDeathPanelActivated == false && scoreBoard.GetComponent<ScoreBoard>().isOpen == false && scoreBoard.GetComponent<ScoreBoard>().leaveConfirmation.alpha != 1)
         {
             Cursor.lockState = CursorLockMode.Locked;
         }        

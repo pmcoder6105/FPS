@@ -13,7 +13,7 @@ public class TutorialMenu : MonoBehaviour
     void Start()
     {
         panel.SetActive(true);
-        menu.enabled = false;
+        menu.volume = 0.5f;
     }
 
     public void OpenMenu(string menuName)

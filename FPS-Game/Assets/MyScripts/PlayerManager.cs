@@ -25,7 +25,7 @@ public class PlayerManager : MonoBehaviour
 
     GameObject killTextNotificationGameObject; // a gameobject that I assign later in the script
 
-    bool hasDeathPanelActivated = false;
+    public bool hasDeathPanelActivated = false;
 
     GameObject canvas;
 
@@ -73,23 +73,7 @@ public class PlayerManager : MonoBehaviour
         if (!PV.IsMine || controller == null)
             return;
 
-        itemIndex = controller.GetComponent<PlayerController>().itemIndex;
-
-        
-
-        if (killTextNotificationGameObject == null && controller == null && hasDeathPanelActivated == false)
-        {
-            deathPanelGameObject = Instantiate(deathPanel, canvas.transform); // new gameobject called deathPanelGameObject with a prefab of deathPanel and the ui.transform
-
-            //if the deathPanelGameObject isn't null
-            if (deathPanelGameObject != null)
-            {
-                //has death panel activated is true
-                hasDeathPanelActivated = true;
-            }
-            deathPanelGameObject.transform.Find("Replay").GetComponent<Button>().onClick.AddListener(Respawn); // of the deathPanelGameObject, find the button called "Replay" and add listener with the function called "Respawn"
-            Cursor.lockState = CursorLockMode.None; // unlock the cursor
-        }                
+        itemIndex = controller.GetComponent<PlayerController>().itemIndex;               
     }
 
     void CreateController()
@@ -129,6 +113,14 @@ public class PlayerManager : MonoBehaviour
             killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: The Void"; // set the text of that to you were killed by the void
         }
 
+
+        Invoke(nameof(OpenDeathPanel), 3f);
+
+        hasDeathPanelActivated = true;
+
+        deathPanelGameObject.transform.Find("Replay").GetComponent<Button>().onClick.AddListener(Respawn); // of the deathPanelGameObject, find the button called "Replay" and add listener with the function called "Respawn"
+        Cursor.lockState = CursorLockMode.None; // unlock the cursor
+
         PhotonNetwork.Destroy(controller);
 
         
@@ -138,6 +130,11 @@ public class PlayerManager : MonoBehaviour
         Hashtable hash = new();
         hash.Add("deaths", deaths);
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+    }
+
+    public void OpenDeathPanel() 
+    { 
+        deathPanelGameObject = Instantiate(deathPanel, canvas.transform);
     }
 
     void EnableCinemachineKillerTracker()
@@ -164,8 +161,6 @@ public class PlayerManager : MonoBehaviour
     [PunRPC]
     void RPC_GetKill()
     {
-        //currentExperience = ;
-
         kills++;
 
         GameObject levelUpEmpty = controller.GetComponent<PlayerController>().levelUpAnimation;
