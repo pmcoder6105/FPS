@@ -32,6 +32,7 @@ public class AccountUIManager : MonoBehaviour
 
     public GameObject menuCanvas;
     public GameObject accountCanvas;
+    public GameObject tutCanvas;
     public GameObject mainCamera;
 
     public TMP_InputField usernameInputField;

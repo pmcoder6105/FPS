@@ -134,7 +134,9 @@ public class FirebaseManager : MonoBehaviour
                 StartCoroutine(LoadSettings());
                 StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
                 StartCoroutine(LoadExperience());
-                StartCoroutine(LoadKills());                
+                StartCoroutine(LoadKills());       
+                StartCoroutine(LoadApplicationGenuinity());
+
             }
             else
             {
@@ -268,6 +270,7 @@ public class FirebaseManager : MonoBehaviour
                 StartCoroutine(LoadUsernameData());
                 StartCoroutine(LoadSettings());
                 StartCoroutine(LoadExperience());
+                StartCoroutine(LoadApplicationGenuinity());
                 StartCoroutine(LoadKills());                
                 StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
 
@@ -449,6 +452,56 @@ public class FirebaseManager : MonoBehaviour
                 StartCoroutine(UpdateUsernameDatabase(random));
                 PhotonNetwork.NickName = random;
             }
+        }
+    }
+    public IEnumerator LoadApplicationGenuinity()
+    {
+        var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Value == null || DBTask.Result.Child("playTimes") == null)
+        {
+            AccountUIManager.instance.tutCanvas.SetActive(true);
+            StartCoroutine(UpdateApplicationGenuinity(1));
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+
+            if (snapshot.HasChild("playTimes"))
+            {
+                if (int.Parse(snapshot.Child("playTimes").Value.ToString()) == 0)
+                {
+                    AccountUIManager.instance.tutCanvas.SetActive(true);
+                    StartCoroutine(UpdateApplicationGenuinity(1));
+                }
+            }
+            else
+            {
+                AccountUIManager.instance.tutCanvas.SetActive(true);
+                StartCoroutine(UpdateApplicationGenuinity(1));
+            }
+        }
+    }
+
+    public IEnumerator UpdateApplicationGenuinity(int playTime)
+    {
+        //Call the Firebase auth update user profile function passing the profile with the username
+        var DBTask = DBReference.Child("users").Child(User.UserId).Child("playTimes").SetValueAsync(playTime);
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else
+        {
+            //Auth username is now updated
         }
     }
 
