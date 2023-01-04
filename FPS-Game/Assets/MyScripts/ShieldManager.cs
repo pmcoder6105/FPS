@@ -34,20 +34,14 @@ public class ShieldManager : MonoBehaviour
     {
         PV = GetComponent<PhotonView>();
     }
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (PV.IsMine == false)
+        if (!PV.IsMine)
             return;
 
-        shieldBar.GetComponent<Image>().fillAmount = (shieldHealth * 1 / 20);
-        glowFade.GetComponent<Image>().fillAmount = (shieldHealth * 1 / 20);
+        shieldBar.GetComponent<Image>().fillAmount = (shieldHealth / 20);
+        glowFade.GetComponent<Image>().fillAmount = (shieldHealth / 20);
 
 
         shieldHealthText.text = (shieldHealth * 5).ToString();

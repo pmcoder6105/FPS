@@ -132,12 +132,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Destroy(GetComponentInChildren<Camera>().gameObject); // destroy camera's children
             Destroy(rb); // destroy rigidbody
             Destroy(ui); // destroy ui
-            //Destroy(buildingSystem.handHeldBlock); // destroy hand held block gameobject from the buildingsystem class
-            Destroy(buildingSystem.blockCrosshair); // destroy block crosshair gameobject from the buildingsystem class
             for (int i = 0; i < canvas.Count(); i++)
             {
                 Destroy(canvas[i]); // destroy all the canvases that i want destroyed
             }
+            //Destroy(buildingSystem.handHeldBlock); // destroy hand held block gameobject from the buildingsystem class
+            //Destroy(buildingSystem.blockCrosshair); // destroy block crosshair gameobject from the buildingsystem class            
         }
 
         if (SceneManager.GetActiveScene().name == "Sky-Beans") // if the active scene is the low gravity scene
@@ -602,7 +602,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         GameObject damagePrefab = Instantiate(damageNumber, transform, true);
         damagePrefab.transform.position = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
         damagePrefab.transform.position += new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.05f, 0.05f), 0);
-        damagePrefab.gameObject.GetComponent<TextMeshPro>().color = Color.red;
+        damagePrefab.GetComponent<TextMeshPro>().color = Color.red;
         Destroy(damagePrefab, 2f);
         Debug.Log("This is the itemGlobal: " + itemGlobal);
 
@@ -750,7 +750,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             healthyMat.SetColor("_MaterialColor", healthyColor); // healthymat's "_MaterialColor" should be set to the converted healthyColor
             healthyMat.SetColor("_FresnelColor", Color.green); // set "_FresnelColor" color to green
             playerVisuals.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = healthyMat; // get player visual gameobject and set the material to healthyMat
-            lilBean.gameObject.GetComponent<MeshRenderer>().material = healthyMat; // get player visual gameobject and set the material to healthyMat
+            lilBean.GetComponent<MeshRenderer>().material = healthyMat; // get player visual gameobject and set the material to healthyMat
 
             //playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = healthyMat; // get player visual gameobject and set the material to healthyMat
         }
@@ -768,7 +768,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             normalMat.SetColor("_MaterialColor", normalColor); // normalmat's "_MaterialColor" should be set to the converted normalColor
             normalMat.SetColor("_FresnelColor", Color.yellow); // set "_FresnelColor" color to yellow
             playerVisuals.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = normalMat; // get player visual gameobject and set the material to normalMat
-            lilBean.gameObject.GetComponent<MeshRenderer>().material = normalMat; // get player visual gameobject and set the material to healthyMat
+            lilBean.GetComponent<MeshRenderer>().material = normalMat; // get player visual gameobject and set the material to healthyMat
 
             //playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = normalMat; // get player visual gameobject and set the material to normalMat
         }
@@ -785,7 +785,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             hurtMat.SetColor("_MaterialColor", hurtColor); // normalmat's "_MaterialColor" should be set to the converted hurtColor
             hurtMat.SetColor("_FresnelColor", Color.red); // set "_FresnelColor" color to red
             playerVisuals.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = hurtMat; // get player visual gameobject and set the material to hurtMat
-            lilBean.gameObject.GetComponent<MeshRenderer>().material = hurtMat; // get player visual gameobject and set the material to hurtMat
+            lilBean.GetComponent<MeshRenderer>().material = hurtMat; // get player visual gameobject and set the material to hurtMat
             //playerVisuals.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = hurtMat; // get player visual gameobject and set the material to hurtMat
         }
     }

@@ -14,7 +14,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 
 public class MyOutline : MonoBehaviour {
-  private static HashSet<Mesh> registeredMeshes = new HashSet<Mesh>();
+  private static HashSet<Mesh> registeredMeshes = new();
 
   public enum Mode {
     OutlineAll,
@@ -69,10 +69,10 @@ public class MyOutline : MonoBehaviour {
   private bool precomputeOutline;
 
   [SerializeField, HideInInspector]
-  private List<Mesh> bakeKeys = new List<Mesh>();
+  private List<Mesh> bakeKeys = new();
 
   [SerializeField, HideInInspector]
-  private List<ListVector3> bakeValues = new List<ListVector3>();
+  private List<ListVector3> bakeValues = new();
 
   private Renderer[] renderers;
   private Material outlineMaskMaterial;

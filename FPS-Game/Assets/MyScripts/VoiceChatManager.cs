@@ -7,7 +7,7 @@ using Photon.Pun;
 
 public class VoiceChatManager : MonoBehaviourPunCallbacks
 {
-    string appID = "d7100fadc1fa4360a3cbd7e22bcd8c6b";
+    readonly string appID = "d7100fadc1fa4360a3cbd7e22bcd8c6b";
 
     public static VoiceChatManager Instance;
 

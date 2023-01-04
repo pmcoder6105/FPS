@@ -101,6 +101,8 @@ public class SingleShotGun : Gun
 
     public KeyCode inputKey;
 
+    [SerializeField] GameObject crosshairCanvas;
+
     private void Start()
     {
         _currentAmmoInClip = clipSize;
@@ -113,7 +115,7 @@ public class SingleShotGun : Gun
         PV = GetComponent<PhotonView>();
         if (FirebaseManager.Singleton.crosshairs == false)
         {
-            transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+            crosshairCanvas.SetActive(false);
         }
     }
 
@@ -139,20 +141,6 @@ public class SingleShotGun : Gun
                 transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
             }
         }
-
-        //if (shield.GetComponent<ShieldManager>().hasOpenedShield && shield.GetComponent<ShieldManager>().hasClosedShield == false)
-        //{
-            
-
-        //} else if (shield.GetComponent<ShieldManager>().hasClosedShield && transform.GetChild(0).gameObject.activeInHierarchy == false)
-        //{
-        //    int index = playerController.itemIndex;
-        //    playerController.canSwitchWeapons = true;
-        //    Debug.Log("Has closed shield");
-        //    weapons[index].transform.GetChild(0).gameObject.SetActive(true);
-        //    canAim = true;
-        //    _canShoot = true;
-        //}
     }
 
     public void DisableGun()
@@ -162,7 +150,6 @@ public class SingleShotGun : Gun
         canAim = false;
         _canShoot = false;
         this.gameObject.GetComponent<SingleShotGun>().enabled = false;
-        //return this.GetComponent<SingleShotGun>();
     }
 
     public override void Use()
@@ -213,37 +200,40 @@ public class SingleShotGun : Gun
             bulletCount.text = _currentAmmoInClip + " / " + clipSize;
         }
 
-        if (Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetAxis("Mouse ScrollWheel") > 0)
+        if (isReloading)
         {
-            Debug.Log("Mouse scroll");
-            foreach (GameObject gun in weapons)
+            if (Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetAxis("Mouse ScrollWheel") > 0)
             {
-                gun.GetComponent<SingleShotGun>().StopCoroutine("Reload");
-                audioSource.Stop();
-
-                canAim = true;
-                isReloading = false;
-                _canShoot = true;
-            }          
-        }
-
-        if (Input.anyKeyDown)
-        {
-            if (Input.GetKeyDown(inputKey))
-            {
-            }
-            else
-            {
+                Debug.Log("Mouse scroll");
                 foreach (GameObject gun in weapons)
                 {
                     gun.GetComponent<SingleShotGun>().StopCoroutine("Reload");
                     audioSource.Stop();
+
                     canAim = true;
                     isReloading = false;
                     _canShoot = true;
                 }
             }
-        }
+
+            if (Input.anyKeyDown)
+            {
+                if (Input.GetKeyDown(inputKey))
+                {
+                }
+                else
+                {
+                    foreach (GameObject gun in weapons)
+                    {
+                        gun.GetComponent<SingleShotGun>().StopCoroutine("Reload");
+                        audioSource.Stop();
+                        canAim = true;
+                        isReloading = false;
+                        _canShoot = true;
+                    }
+                }
+            }
+        }        
 
         if (isAutomatic)
         {
@@ -260,7 +250,10 @@ public class SingleShotGun : Gun
                 if (Physics.Raycast(ray, out RaycastHit hit))
                 {
                     hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                    hit.collider.transform.GetComponentInParent<ShieldManager>()?.TakeHit();
+                    if (hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>() != null)
+                    {
+                        hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
+                    }
                     PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
                 }
                 if (doesHaveAnimationForShooting)
@@ -273,41 +266,36 @@ public class SingleShotGun : Gun
                 if (_canShoot == false)
                     return;
 
-                //if (isReloading == false)
-                //{
-                    //playerController.canSwitchWeapons = false;
-
-                    StartCoroutine("Reload");
-                    if (isShotGun == false)
+                StartCoroutine("Reload");
+                if (isShotGun == false)
+                {
+                    audioSource.Stop();
+                    audioSource.PlayOneShot(reloadSFX);
+                }
+                else if (isShotGun)
+                {
+                    audioSource.Stop();
+                    if (_currentAmmoInClip == 4)
                     {
-                        audioSource.Stop();
-                        audioSource.PlayOneShot(reloadSFX);
-                    } else if (isShotGun)
-                    {
-                        audioSource.Stop();
-                        if (_currentAmmoInClip == 4)
-                        {
-                            audioSource.PlayOneShot(reloadSFX1);
-                        }
-                        if (_currentAmmoInClip == 3)
-                        {
-                            audioSource.PlayOneShot(reloadSFX2);
-                        }
-                        if (_currentAmmoInClip == 2)
-                        {
-                            audioSource.PlayOneShot(reloadSFX3);
-                        }
-                        if (_currentAmmoInClip == 1)
-                        {
-                            audioSource.PlayOneShot(reloadSFX4);
-                        }
-                        if (_currentAmmoInClip == 0)
-                        {
-                            audioSource.PlayOneShot(reloadSFX);
-                        }
+                        audioSource.PlayOneShot(reloadSFX1);
                     }
-                    
-                //}                
+                    if (_currentAmmoInClip == 3)
+                    {
+                        audioSource.PlayOneShot(reloadSFX2);
+                    }
+                    if (_currentAmmoInClip == 2)
+                    {
+                        audioSource.PlayOneShot(reloadSFX3);
+                    }
+                    if (_currentAmmoInClip == 1)
+                    {
+                        audioSource.PlayOneShot(reloadSFX4);
+                    }
+                    if (_currentAmmoInClip == 0)
+                    {
+                        audioSource.PlayOneShot(reloadSFX);
+                    }
+                }
             }
         } else if (!isAutomatic)
         {
@@ -329,6 +317,10 @@ public class SingleShotGun : Gun
                     if (Physics.Raycast(ray, out RaycastHit hit))
                     {
                         hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                        if (hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>() != null)
+                        {
+                            hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
+                        }
                         PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
                     }
                 } else if (isShotGun)
@@ -359,46 +351,57 @@ public class SingleShotGun : Gun
                     Vector3 directionOfRay6 = cam.transform.forward + new Vector3(x6, y6, 0);
                     Vector3 directionOfRay7 = cam.transform.forward + new Vector3(x7, y7, 0);
 
-                    if (Physics.Raycast(cam.transform.position, directionOfRay, out RaycastHit hit, shotGunRange))
+                    Vector3[] directions = { directionOfRay, directionOfRay1, directionOfRay2, directionOfRay3, directionOfRay4, directionOfRay5, directionOfRay6, directionOfRay7 };
+
+                    foreach (Vector3 dir in directions)
                     {
-                        hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                        PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
+                        if (Physics.Raycast(cam.transform.position, dir, out RaycastHit hit, shotGunRange))
+                        {
+                            hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                            PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
+                        }
                     }
-                    if (Physics.Raycast(cam.transform.position, directionOfRay1, out RaycastHit hit1, shotGunRange))
-                    {
-                        hit1.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                        PV.RPC("RPC_Shoot", RpcTarget.All, hit1.point, hit1.normal);
-                    }
-                    if (Physics.Raycast(cam.transform.position, directionOfRay2, out RaycastHit hit2, shotGunRange))
-                    {
-                        hit2.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                        PV.RPC("RPC_Shoot", RpcTarget.All, hit2.point, hit2.normal);
-                    }
-                    if (Physics.Raycast(cam.transform.position, directionOfRay3, out RaycastHit hit3, shotGunRange))
-                    {
-                        hit3.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                        PV.RPC("RPC_Shoot", RpcTarget.All, hit3.point, hit3.normal);
-                    }
-                    if (Physics.Raycast(cam.transform.position, directionOfRay4, out RaycastHit hit4, shotGunRange))
-                    {
-                        hit4.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                        PV.RPC("RPC_Shoot", RpcTarget.All, hit4.point, hit4.normal);
-                    }
-                    if (Physics.Raycast(cam.transform.position, directionOfRay5, out RaycastHit hit5, shotGunRange))
-                    {
-                        hit5.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                        PV.RPC("RPC_Shoot", RpcTarget.All, hit5.point, hit5.normal);
-                    }
-                    if (Physics.Raycast(cam.transform.position, directionOfRay6, out RaycastHit hit6, shotGunRange))
-                    {
-                        hit6.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                        PV.RPC("RPC_Shoot", RpcTarget.All, hit6.point, hit6.normal);
-                    }
-                    if (Physics.Raycast(cam.transform.position, directionOfRay7, out RaycastHit hit7, shotGunRange))
-                    {
-                        hit7.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                        PV.RPC("RPC_Shoot", RpcTarget.All, hit7.point, hit7.normal);
-                    }
+
+                    //if (Physics.Raycast(cam.transform.position, directionOfRay, out RaycastHit hit, shotGunRange))
+                    //{
+                    //    hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                    //    PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
+                    //}
+                    //if (Physics.Raycast(cam.transform.position, directionOfRay1, out RaycastHit hit1, shotGunRange))
+                    //{
+                    //    hit1.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                    //    PV.RPC("RPC_Shoot", RpcTarget.All, hit1.point, hit1.normal);
+                    //}
+                    //if (Physics.Raycast(cam.transform.position, directionOfRay2, out RaycastHit hit2, shotGunRange))
+                    //{
+                    //    hit2.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                    //    PV.RPC("RPC_Shoot", RpcTarget.All, hit2.point, hit2.normal);
+                    //}
+                    //if (Physics.Raycast(cam.transform.position, directionOfRay3, out RaycastHit hit3, shotGunRange))
+                    //{
+                    //    hit3.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                    //    PV.RPC("RPC_Shoot", RpcTarget.All, hit3.point, hit3.normal);
+                    //}
+                    //if (Physics.Raycast(cam.transform.position, directionOfRay4, out RaycastHit hit4, shotGunRange))
+                    //{
+                    //    hit4.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                    //    PV.RPC("RPC_Shoot", RpcTarget.All, hit4.point, hit4.normal);
+                    //}
+                    //if (Physics.Raycast(cam.transform.position, directionOfRay5, out RaycastHit hit5, shotGunRange))
+                    //{
+                    //    hit5.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                    //    PV.RPC("RPC_Shoot", RpcTarget.All, hit5.point, hit5.normal);
+                    //}
+                    //if (Physics.Raycast(cam.transform.position, directionOfRay6, out RaycastHit hit6, shotGunRange))
+                    //{
+                    //    hit6.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                    //    PV.RPC("RPC_Shoot", RpcTarget.All, hit6.point, hit6.normal);
+                    //}
+                    //if (Physics.Raycast(cam.transform.position, directionOfRay7, out RaycastHit hit7, shotGunRange))
+                    //{
+                    //    hit7.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                    //    PV.RPC("RPC_Shoot", RpcTarget.All, hit7.point, hit7.normal);
+                    //}
                 }                
                 if (doesHaveAnimationForShooting)
                 {
@@ -410,11 +413,7 @@ public class SingleShotGun : Gun
                 if (_canShoot == false)
                     return;
 
-                //if (isReloading == false)
-                //{
-                    //playerController.canSwitchWeapons = false;
-
-                    StartCoroutine("Reload");
+                StartCoroutine("Reload");
 
                 if (isShotGun == false)
                 {
@@ -445,7 +444,6 @@ public class SingleShotGun : Gun
                         audioSource.PlayOneShot(reloadSFX);
                     }
                 }
-                //}
             }
         }
 

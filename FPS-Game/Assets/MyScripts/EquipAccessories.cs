@@ -66,6 +66,7 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
     void EquipEyewear(int index)
     {
         for (int i = 0; i < eyeWear.Length; i++)
@@ -81,6 +82,7 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
     void EquipCape(int index)
     {
         for (int i = 0; i < cape.Length; i++)

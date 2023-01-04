@@ -13,8 +13,6 @@ public class Reticle : MonoBehaviour
     public float speed;
     private float currentSize;
 
-    PlayerController controller;
-
     private void Start()
     {
 

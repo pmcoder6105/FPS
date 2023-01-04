@@ -9,23 +9,19 @@ public class DaggerController : MonoBehaviour
     public PhotonView pV;
     public SingleShotGun daggerManager;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (daggerManager.canDaggerSwing == false && other.gameObject.transform != transform.root.gameObject && pV.IsMine)
         {
             other.gameObject.GetComponent<IDamageable>()?.TakeDamage(40);
+            StartCoroutine(nameof(DisableDagger));
         }
+    }
+
+    private IEnumerator DisableDagger()
+    {
+        boxCollider.enabled = false;
+        yield return new WaitForSeconds(2);
+        boxCollider.enabled = true;
     }
 }

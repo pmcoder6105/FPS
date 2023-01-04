@@ -50,23 +50,6 @@ public class Menu : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    
-
-    IEnumerator FadeMenuIn()
-    {
-        float elapsedTime = 0f;
-        elapsedTime += Time.timeSinceLevelLoad;
-        float percentComplete = elapsedTime / 2;
-        float lerpTime = Mathf.Lerp(0, 1, percentComplete);
-        Debug.Log(lerpTime);
-
-        GetComponent<CanvasGroup>().alpha = lerpTime;
-
-        yield return new WaitUntil(predicate: () => lerpTime == 0);
-
-        fadeIn = false;
-    }
-
     private void OnDisable()
     {
         GetComponent<CanvasGroup>().alpha = 0;
