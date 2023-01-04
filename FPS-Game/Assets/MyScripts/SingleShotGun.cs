@@ -141,6 +141,45 @@ public class SingleShotGun : Gun
                 transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
             }
         }
+
+        if (isReloading)
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetAxis("Mouse ScrollWheel") > 0)
+            {
+                Debug.Log("Mouse scroll");
+                foreach (GameObject gun in weapons)
+                {
+                    gun.GetComponent<SingleShotGun>().StopCoroutine("Reload");
+                    audioSource.Stop();
+                    canAim = true;
+                    isReloading = false;
+                    _canShoot = true;
+                }
+            }
+
+            if (Input.anyKeyDown)
+            {
+                KeyCode[] possibleGuns = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Q };
+
+                foreach (KeyCode key in possibleGuns)
+                {
+                    if (Input.GetKeyDown(key))
+                    {
+                        if (key != inputKey)
+                        {
+                            foreach (GameObject gun in weapons)
+                            {
+                                gun.GetComponent<SingleShotGun>().StopCoroutine("Reload");
+                                audioSource.Stop();
+                                canAim = true;
+                                isReloading = false;
+                                _canShoot = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void DisableGun()
@@ -198,42 +237,7 @@ public class SingleShotGun : Gun
         } else if (!isDagger)
         {
             bulletCount.text = _currentAmmoInClip + " / " + clipSize;
-        }
-
-        if (isReloading)
-        {
-            if (Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetAxis("Mouse ScrollWheel") > 0)
-            {
-                Debug.Log("Mouse scroll");
-                foreach (GameObject gun in weapons)
-                {
-                    gun.GetComponent<SingleShotGun>().StopCoroutine("Reload");
-                    audioSource.Stop();
-
-                    canAim = true;
-                    isReloading = false;
-                    _canShoot = true;
-                }
-            }
-
-            if (Input.anyKeyDown)
-            {
-                if (Input.GetKeyDown(inputKey))
-                {
-                }
-                else
-                {
-                    foreach (GameObject gun in weapons)
-                    {
-                        gun.GetComponent<SingleShotGun>().StopCoroutine("Reload");
-                        audioSource.Stop();
-                        canAim = true;
-                        isReloading = false;
-                        _canShoot = true;
-                    }
-                }
-            }
-        }        
+        }     
 
         if (isAutomatic)
         {
@@ -263,7 +267,7 @@ public class SingleShotGun : Gun
             }
             else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInClip < clipSize && _ammoInReserve > 0)
             {
-                if (_canShoot == false)
+                if (!_canShoot || isReloading)
                     return;
 
                 StartCoroutine("Reload");
@@ -410,7 +414,7 @@ public class SingleShotGun : Gun
             }            
             else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInClip < clipSize && _ammoInReserve > 0 && !isDagger)
             {
-                if (_canShoot == false)
+                if (!_canShoot || isReloading)
                     return;
 
                 StartCoroutine("Reload");
@@ -476,6 +480,8 @@ public class SingleShotGun : Gun
 
     IEnumerator Reload()
     {
+        isReloading = true;
+
         if (isShotGun == false)
         {
             animator.Play(reload.ToString(), 0, 0.0f);
@@ -519,9 +525,9 @@ public class SingleShotGun : Gun
                 scopePieces[i].SetActive(true);
             }
         }
-        canAim = false;
-        isReloading = true;
-        _canShoot = false;
+        canAim = false;        
+        _canShoot = false;        
+
         yield return new WaitForSeconds(reloadTime);
         canAim = true;
         isReloading = false;
