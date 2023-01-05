@@ -130,17 +130,17 @@ public class SingleShotGun : Gun
         } if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) bulletBloomAmount /= 2;
 
 
-        if (transform.GetChild(0).gameObject.activeInHierarchy == true)
-        {
-            if (playerController.inventoryEnabled == true)
-            {
-                transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(true);
-            }
-            if (playerController.inventoryEnabled == false)
-            {
-                transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
-            }
-        }
+        //if (transform.GetChild(0).gameObject.activeInHierarchy == true)
+        //{
+        //    if (playerController.inventoryEnabled == true)
+        //    {
+        //        transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(true);
+        //    }
+        //    if (playerController.inventoryEnabled == false)
+        //    {
+        //        transform.GetChild(0).gameObject.transform.GetChild(1).gameObject.SetActive(false);
+        //    }
+        //}
 
         if (isReloading)
         {
