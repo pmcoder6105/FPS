@@ -650,6 +650,55 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!1 &57527018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 57527020}
+  - component: {fileID: 57527019}
+  m_Layer: 0
+  m_Name: UIBlur (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &57527019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57527018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 2c0d5b6be95a0014e8ea70d44a168d89, type: 2}
+--- !u!4 &57527020
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57527018}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &87707317
 Mesh:
   m_ObjectHideFlags: 0
@@ -11096,6 +11145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   container: {fileID: 616447813}
   scoreBoardItemPrefab: {fileID: 5009729383794476323, guid: f8fb3ee6b31a39a4fafd9ea494b9a552, type: 3}
+  blur: {fileID: 57527018}
   canvasGroup: {fileID: 616447814}
   scoreBoardTitle: {fileID: 1288893959}
   holdTabForScoreBoardText: {fileID: 505079123}
@@ -43016,7 +43066,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 34725f7c2da7d6a428060665dda5dd47, type: 2}
     - target: {fileID: 4970643072608246245, guid: 817995a0b12724c47bbd982608bb2680, type: 3}
       propertyPath: sceneViewId
-      value: 8
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 8920736221338641280, guid: 817995a0b12724c47bbd982608bb2680, type: 3}
       propertyPath: m_RootOrder
@@ -43413,6 +43463,7 @@ MonoBehaviour:
   shield: {fileID: 0}
   weapons: []
   inputKey: 0
+  crosshairCanvas: {fileID: 0}
 --- !u!224 &2509712507726776675
 RectTransform:
   m_ObjectHideFlags: 0
@@ -43767,7 +43818,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 11
+  sceneViewId: 20
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!224 &2828625577891523501
@@ -43920,6 +43971,7 @@ MonoBehaviour:
   shield: {fileID: 0}
   weapons: []
   inputKey: 0
+  crosshairCanvas: {fileID: 0}
 --- !u!222 &2995205600962619814
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -45441,7 +45493,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 10
+  sceneViewId: 23
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1001 &4267064873420099769
@@ -45601,6 +45653,7 @@ MonoBehaviour:
   shield: {fileID: 0}
   weapons: []
   inputKey: 0
+  crosshairCanvas: {fileID: 0}
 --- !u!223 &4368000240291610246
 Canvas:
   m_ObjectHideFlags: 0
@@ -45649,7 +45702,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 9
+  sceneViewId: 22
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!4 &4463500640131871026
@@ -46159,6 +46212,7 @@ MonoBehaviour:
   shield: {fileID: 0}
   weapons: []
   inputKey: 0
+  crosshairCanvas: {fileID: 0}
 --- !u!224 &4626242197470475386
 RectTransform:
   m_ObjectHideFlags: 0
@@ -46348,7 +46402,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 14
+  sceneViewId: 45
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &4932345922366231891
@@ -46698,6 +46752,7 @@ MonoBehaviour:
   shield: {fileID: 0}
   weapons: []
   inputKey: 0
+  crosshairCanvas: {fileID: 0}
 --- !u!1 &5530043618566547623
 GameObject:
   m_ObjectHideFlags: 0
@@ -48250,7 +48305,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 12
+  sceneViewId: 21
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!224 &9076853601679767337
@@ -48293,6 +48348,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 13
+  sceneViewId: 46
   InstantiationId: 0
   isRuntimeInstantiated: 0

@@ -310,12 +310,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 inventory.SetActive(true);
                 inventoryNumbers.SetActive(true);
                 inventoryEnabled = true;
+                scoreBoard.GetComponent<ScoreBoard>().blur.SetActive(true);
             }
             else
             {
                 inventory.SetActive(false);
                 inventoryNumbers.SetActive(false);
                 inventoryEnabled = false;
+                scoreBoard.GetComponent<ScoreBoard>().blur.SetActive(false);
             }
         }
     }

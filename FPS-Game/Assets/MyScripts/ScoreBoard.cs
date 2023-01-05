@@ -10,6 +10,7 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
 {
     [SerializeField] Transform container;
     [SerializeField] GameObject scoreBoardItemPrefab;
+    public GameObject blur;
     [SerializeField] CanvasGroup canvasGroup;
 
     [SerializeField] CanvasGroup scoreBoardTitle;
@@ -64,6 +65,7 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
             scoreBoardTitle.alpha = 1;
             holdTabForScoreBoardText.color = new Color(holdTabForScoreBoardText.color.r, holdTabForScoreBoardText.color.g, holdTabForScoreBoardText.color.b, 0);
             Cursor.lockState = CursorLockMode.None;
+            blur.SetActive(true);
         }
         if (Input.GetKeyUp(KeyCode.Tab))
         {
@@ -71,6 +73,8 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
             transform.root.GetComponent<Animator>().Play("ScoreBoardIdleAnimation", 0, 0f);
             isOpen = false;
             scoreBoardTitle.alpha = 0;
+            blur.SetActive(false);
+
             holdTabForScoreBoardText.color = new Color(holdTabForScoreBoardText.color.r, holdTabForScoreBoardText.color.g, holdTabForScoreBoardText.color.b, 1);
         }                
     }
@@ -83,6 +87,8 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
             leaveConfirmation.GetComponent<Animator>().Play("LeaveConfirmationTransition");
             Cursor.lockState = CursorLockMode.None;
             isOpen = true;
-        }        
+            blur.SetActive(true);
+
+        }
     }
 }
