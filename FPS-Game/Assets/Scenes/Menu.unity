@@ -39336,15 +39336,17 @@ MonoBehaviour:
   m_text: "-Added an account system with login, register, verification and reset
     systems\n-Added a level up system where when you get a certain amount of kills,
     you level up\n-Made new player models that have more similarities to an actual
-    kidney bean\r\n-Added some map post process to improve graphics\n-Added GUI Transitions
-    to make the game look/feel better and more sturdy\n-Added Damage Number texts
-    which spawns when a player takes damage and is visible to all the players in
-    the room\r\n-Removed building system entirely due to excessive problems and bugs\n-Replaced
-    building system with a new shield that can be accessed by clicking \"Q\"\n-Added
-    development survey hyperlink\n-Added reload canceling\n-Added a better healthbar
-    with health text\r\n-Added Terms of Service and Privacy Policy agreements that
-    the player has to acknowledge before registering to a new account\n-Added gun
-    crosshairs to all the guns\r\n-Added player dust trails\r\n-Added a new separate
+    kidney bean\r\n-Added 3 new maps: Portals, Rags or Riches, and Battleground\n-Removed
+    3 maps: Doom's Warzone, Gauntlet, and Tunnels\n-Fixed \"Eternal Death\" and lobby
+    return bugs\n-Added some map post process to improve graphics\n-Added GUI Transitions
+    to make the game look/feel better and more sturdy\n-Added settings menu\n-Added
+    Damage Number texts which spawns when a player takes damage and is visible to
+    all the players in the room\r\n-Removed building system entirely due to excessive
+    problems and bugs\n-Replaced building system with a new shield that can be accessed
+    by clicking \"Q\"\n-Added development survey hyperlink\n-Added reload canceling\n-Added
+    a better healthbar with health text\r\n-Added Terms of Service and Privacy Policy
+    agreements that the player has to acknowledge before registering to a new account\n-Added
+    gun crosshairs to all the guns\r\n-Added player dust trails\r\n-Added a new separate
     PatchNotes Menu because the amount of patchnotes were getting to large to just
     be placed in the Main Menu.\r\n-Added button hover animations\r\n-Added information
     below the visible screen in the Main Menu that can now be accessed via the new
@@ -111985,9 +111987,9 @@ RectTransform:
   m_Father: {fileID: 6183526151473511382}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 292}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -248}
   m_SizeDelta: {x: 800, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6183526151436791389
@@ -112706,7 +112708,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3.6500244, y: -0.124996185}
+  m_AnchoredPosition: {x: -3.6500244, y: -0.125}
   m_SizeDelta: {x: 7.2999635, y: -12.250008}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6183526151560290017
