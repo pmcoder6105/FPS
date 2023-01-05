@@ -116,14 +116,7 @@ public class PlayerManager : MonoBehaviour
 
         Invoke(nameof(OpenDeathPanel), 3f);
 
-        hasDeathPanelActivated = true;
-
-        deathPanelGameObject.transform.Find("Replay").GetComponent<Button>().onClick.AddListener(Respawn); // of the deathPanelGameObject, find the button called "Replay" and add listener with the function called "Respawn"
-        Cursor.lockState = CursorLockMode.None; // unlock the cursor
-
         PhotonNetwork.Destroy(controller);
-
-        
 
         deaths++;
 
@@ -135,6 +128,12 @@ public class PlayerManager : MonoBehaviour
     public void OpenDeathPanel() 
     { 
         deathPanelGameObject = Instantiate(deathPanel, canvas.transform);
+
+
+        hasDeathPanelActivated = true;
+
+        deathPanelGameObject.transform.Find("Replay").GetComponent<Button>().onClick.AddListener(Respawn); // of the deathPanelGameObject, find the button called "Replay" and add listener with the function called "Respawn"
+        Cursor.lockState = CursorLockMode.None; // unlock the cursor
     }
 
     void EnableCinemachineKillerTracker()

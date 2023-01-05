@@ -466,7 +466,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     // Disconnect And Load ieunmerator
     IEnumerator DisconnectAndLoad()
     {
-        if (PhotonNetwork.IsConnectedAndReady) // if connected and ready
+        if (PhotonNetwork.IsConnectedAndReady && !isDead) // if connected and ready
         {
             PhotonNetwork.LeaveRoom(); // leave room
             Destroy(RoomManager.Instance.gameObject); // destroy room manager.instance
