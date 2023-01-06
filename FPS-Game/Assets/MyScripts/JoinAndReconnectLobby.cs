@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class JoinAndReconnectLobby : MonoBehaviourPunCallbacks
 {    
@@ -27,6 +28,7 @@ public class JoinAndReconnectLobby : MonoBehaviourPunCallbacks
 
     public void Btn_Reconnect()
     {
+        PhotonNetwork.LoadLevel("Menu");
         PhotonNetwork.ConnectUsingSettings();
     }
 

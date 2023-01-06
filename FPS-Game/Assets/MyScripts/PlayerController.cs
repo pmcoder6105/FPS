@@ -326,24 +326,28 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
-            if (grounded)
+            if (PV.IsMine)
             {
-                if (FirebaseManager.Singleton.alwaysSprint == false)
+                if (grounded)
                 {
-                    if (Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift))
+                    if (FirebaseManager.Singleton.alwaysSprint == false)
                     {
-                        StartCoroutine(nameof(RunSFX));
+                        if (Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift))
+                        {
+                            StartCoroutine(nameof(RunSFX));
+                        }
+                        else if (!Input.GetKey(KeyCode.RightShift) && !Input.GetKey(KeyCode.LeftShift))
+                        {
+                            StartCoroutine(nameof(WalkSFX));
+                        }
                     }
-                    else if (!Input.GetKey(KeyCode.RightShift) && !Input.GetKey(KeyCode.LeftShift))
+                    else
                     {
-                        StartCoroutine(nameof(WalkSFX));
+                        StartCoroutine(nameof(RunSFX)); Debug.Log("running is always on");
                     }
                 }
-                else
-                {
-                    StartCoroutine(nameof(RunSFX)); Debug.Log("running is always on");
-                }               
             }
+            
             if (!PV.IsMine)
                 return;
             PV.RPC(nameof(RPC_DisplayDustTrail), RpcTarget.All);
@@ -433,6 +437,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
 
+        if (!PV.IsMine)
+            return;
+
+
         if (FirebaseManager.Singleton.alwaysSprint == false)
             moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
         else
@@ -479,7 +487,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             while (PhotonNetwork.InRoom) // while in a room, yield
                 yield return null;
 
-            SceneManager.LoadScene("Menu"); // load scene 0 (main menu)
+            PhotonNetwork.LoadLevel("Menu"); // load scene 0 (main menu)
         }
     }
 
