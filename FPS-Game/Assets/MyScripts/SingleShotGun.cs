@@ -123,7 +123,7 @@ public class SingleShotGun : Gun
         
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (PV.IsMine == false)
             return;
@@ -595,8 +595,9 @@ public class SingleShotGun : Gun
         if (isDagger == false)
         {
             GameObject flash = Instantiate(muzzleFlashEffect, muzzleFlashSpawnPlace);
-            flash.GetComponent<ParticleSystem>().Emit(1);
-            flash.transform.Find("Sparks").GetComponent<ParticleSystem>().Emit(1);
+            //flash.GetComponent<ParticleSystem>().Emit(1);
+            //flash.transform.Find("Sparks").GetComponent<ParticleSystem>().Emit(1);
+            Destroy(flash, 1f);
         }
         if (isDagger)
         {
@@ -604,7 +605,7 @@ public class SingleShotGun : Gun
         }
         DetermineRecoil();
         
-        yield return new WaitForSeconds(fireRate);
+        yield return new WaitForSeconds(fireRate * Time.smoothDeltaTime);
         _canShoot = true;
         canDaggerSwing = true;
         playerController.canSwitchWeapons = true;

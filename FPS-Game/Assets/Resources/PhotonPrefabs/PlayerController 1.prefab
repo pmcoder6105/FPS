@@ -8974,7 +8974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3794649960739648134
 Transform:
   m_ObjectHideFlags: 0
@@ -8982,7 +8982,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1586931036026962694}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11008,8 +11008,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2054456805722833623}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.416, y: -0.007, z: 0.818}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.42, y: -0.009, z: 0.826}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11996,7 +11996,7 @@ MonoBehaviour:
   isAutomatic: 0
   reloadTime: 5.37
   _canShoot: 0
-  muzzleFlashEffect: {fileID: 100006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
+  muzzleFlashEffect: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
   muzzleFlashSpawnPlace: {fileID: 0}
   normalLocalPosition: {x: 0, y: 0, z: 0}
   aimingLocalPosition: {x: -0.375, y: 0.2, z: 0}
@@ -16868,7 +16868,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2933133216023928144}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.371, y: 0.14, z: 0.263}
+  m_LocalPosition: {x: 0.408, y: 0.115, z: 0.356}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17718,13 +17718,13 @@ MonoBehaviour:
   bulletImpactVFX: {fileID: 8923324794198242486, guid: 5acee24a3668e214a931fc7dc4acd0c8, type: 3}
   scopePieces: []
   playerID: 0
-  fireRate: 0.1
+  fireRate: 2
   clipSize: 30
   reservedAmmoCapacity: 270
   isAutomatic: 1
   reloadTime: 3.31
   _canShoot: 0
-  muzzleFlashEffect: {fileID: 100006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
+  muzzleFlashEffect: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
   muzzleFlashSpawnPlace: {fileID: 1417356945351635494}
   normalLocalPosition: {x: 0, y: 0, z: 0}
   aimingLocalPosition: {x: -0.403, y: 0.245, z: -0.331}
@@ -22419,16 +22419,16 @@ MonoBehaviour:
   bulletImpactVFX: {fileID: 8923324794198242486, guid: 5acee24a3668e214a931fc7dc4acd0c8, type: 3}
   scopePieces: []
   playerID: 0
-  fireRate: 0.15
+  fireRate: 3
   clipSize: 15
   reservedAmmoCapacity: 30
   isAutomatic: 0
   reloadTime: 2.3
   _canShoot: 0
-  muzzleFlashEffect: {fileID: 100006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
+  muzzleFlashEffect: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
   muzzleFlashSpawnPlace: {fileID: 7829378323093517404}
   normalLocalPosition: {x: 0, y: 0, z: 0}
-  aimingLocalPosition: {x: -0.36, y: 0.167, z: -0.4}
+  aimingLocalPosition: {x: -0.36, y: 0.167, z: -0.26}
   aimSmoothing: 10
   weaponSwayAmount: 5
   randomizeRecoil: 0
@@ -29393,13 +29393,13 @@ MonoBehaviour:
   bulletImpactVFX: {fileID: 8923324794198242486, guid: 5acee24a3668e214a931fc7dc4acd0c8, type: 3}
   scopePieces: []
   playerID: 0
-  fireRate: 1.02
+  fireRate: 21
   clipSize: 5
   reservedAmmoCapacity: 270
   isAutomatic: 0
   reloadTime: 5.37
   _canShoot: 0
-  muzzleFlashEffect: {fileID: 100006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
+  muzzleFlashEffect: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
   muzzleFlashSpawnPlace: {fileID: 6682651339321976925}
   normalLocalPosition: {x: 0, y: 0, z: 0.31}
   aimingLocalPosition: {x: -0.375, y: 0.15, z: -0.24}
@@ -31796,7 +31796,7 @@ MonoBehaviour:
   isAutomatic: 0
   reloadTime: 5.12
   _canShoot: 0
-  muzzleFlashEffect: {fileID: 100006, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
+  muzzleFlashEffect: {fileID: 7545760544398216888, guid: 6926e2ce504ef3349ae2e4de348d7ae6, type: 3}
   muzzleFlashSpawnPlace: {fileID: 8089965405699872532}
   normalLocalPosition: {x: 0, y: 0, z: 0}
   aimingLocalPosition: {x: -0.34, y: 0.17, z: -0.23}
@@ -34885,8 +34885,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6656497054032928208}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.358, y: 0.153, z: -0.108}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.361, y: 0.212, z: 0.419}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7872738739390232075}
@@ -36552,7 +36552,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6960031250723842773}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.339, y: 0.099, z: 1.198}
+  m_LocalPosition: {x: 0.339, y: 0.113, z: 1.264}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47847,6 +47847,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 34725f7c2da7d6a428060665dda5dd47, type: 2}
+    - target: {fileID: 4970643072608246245, guid: 817995a0b12724c47bbd982608bb2680, type: 3}
+      propertyPath: sceneViewId
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8920736221338641280, guid: 817995a0b12724c47bbd982608bb2680, type: 3}
       propertyPath: m_RootOrder
       value: 8

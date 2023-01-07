@@ -19,7 +19,7 @@ public class PersonalMusicManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PV.IsMine == false && FirebaseManager.Singleton.isMusicOn == false)
+        if (PV.IsMine == false)
             return;
 
         if (!audioSource.isPlaying)

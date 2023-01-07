@@ -24,7 +24,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject playerViewerParent;
     [SerializeField] GameObject playerModelSkin;
     public Material colorChosen;
-    [SerializeField] GameObject titleMenu;
+    [SerializeField] GameObject titleMenu, loadingMenu, roomMenu;
 
 
     List<RoomInfo> fullRoomList = new();
@@ -127,6 +127,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
+        loadingMenu.SetActive(true);
+        roomMenu.SetActive(false);
         PhotonNetwork.LoadLevel(mapChooseMenu.GetComponent<MapChooser>().mapName);
         //PhotonNetwork.LoadLevel(1);
     }

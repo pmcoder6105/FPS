@@ -63,8 +63,11 @@ public class PlayerManager : MonoBehaviour
             CreateController();
             killTextNotificationHolder = GameObject.Find("KillTextNotificationHolder");
             canvas = GameObject.Find("ScoreBoardCanvas");
-            GameObject musicHolderGO = Instantiate(musicHolder);
-            musicHolderGO.GetComponent<PersonalMusicManager>().PV = PV;
+            if (FirebaseManager.Singleton.isMusicOn)
+            {
+                GameObject musicHolderGO = Instantiate(musicHolder);
+                musicHolderGO.GetComponent<PersonalMusicManager>().PV = PV;
+            }            
         }
     }
 
