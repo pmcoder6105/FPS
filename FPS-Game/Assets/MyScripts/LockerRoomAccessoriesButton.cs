@@ -6,23 +6,14 @@ using UnityEngine.UI;
 public class LockerRoomAccessoriesButton : MonoBehaviour
 {
     public int modifiedHat, modifiedEyewear, modifiedCape;
-    public bool isHat, isEyeWear, isCape;
+    public bool isHat, isEyeWear, isCape, removeAllHats, removeAllEyewear, removeAllCapes;
 
     public GameObject[] hatChecks;
     public GameObject[] eyewearChecks;
     public GameObject[] capeChecks;
 
-    //public Color normalButtonColor;
-    //public Color selectedButtonColor;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
-    void Update()
+    void Start()
     {
         if (isHat)
         {
@@ -39,6 +30,21 @@ public class LockerRoomAccessoriesButton : MonoBehaviour
         {
             GetComponent<Button>().onClick.AddListener(ModifyEquipedCape);
         }
+    }
+
+    public void Btn_CancelHat()
+    {
+        AccessoriesManager.Singleton.removeHats = true;
+    }
+
+    public void Btn_CancelEyewear()
+    {
+        AccessoriesManager.Singleton.removeEyewear = true;
+    }
+
+    public void Btn_CancelCapes()
+    {
+        AccessoriesManager.Singleton.removeCapes = true;
     }
 
     public void ModifyEquipedHat()

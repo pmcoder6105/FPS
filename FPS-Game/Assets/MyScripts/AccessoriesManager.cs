@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class AccessoriesManager : MonoBehaviour
 {
-    public int equipedHat;
-    public int equipedEyewear;
-    public int equipedCape;
+    public int equipedHat, equipedEyewear, equipedCape;
+
+    public bool removeHats, removeEyewear, removeCapes;
 
     private static AccessoriesManager _singleton;
 
     private void Awake()
     {
         Singleton = this;
-        DontDestroyOnLoad(this.gameObject);        
+        DontDestroyOnLoad(this.gameObject);
     }
 
 
@@ -34,20 +34,4 @@ public class AccessoriesManager : MonoBehaviour
             Debug.Log("Singleton called");
         }
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    //TODO: MAKE VARIABLES IN THE ACCOUNT MANAGER FOR THE ACCESSORIES BUTTONS
-    //
-
 }

@@ -171,6 +171,15 @@ public class SingleShotGun : Gun
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            cam.GetComponent<Animator>().Play("CameraZoomIn");
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            cam.GetComponent<Animator>().Play("CameraZoomOut");
+        }
     }
 
     public void DisableGun()
@@ -311,11 +320,14 @@ public class SingleShotGun : Gun
 
                     if (Physics.Raycast(ray, out RaycastHit hit))
                     {
-                        hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                        if (hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>() != null)
+                        if (hit.collider.gameObject != transform.root.gameObject)
                         {
-                            hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
-                        }
+                            hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                            if (hit.collider.transform.parent.transform.Find("Shield").GetComponent<ShieldManager>().hasOpenedShield)
+                            {
+                                hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
+                            }
+                        }                        
                         PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
                     }
                 } else if (isShotGun)
@@ -352,7 +364,14 @@ public class SingleShotGun : Gun
                     {
                         if (Physics.Raycast(cam.transform.position, dir, out RaycastHit hit, shotGunRange))
                         {
-                            hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                            if (hit.collider.gameObject != transform.root.gameObject)
+                            {
+                                hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                                if (hit.collider.transform.parent.transform.Find("Shield").GetComponent<ShieldManager>().hasOpenedShield)                                        
+                                {
+                                    hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
+                                }
+                            }
                             PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
                         }
                     }                    

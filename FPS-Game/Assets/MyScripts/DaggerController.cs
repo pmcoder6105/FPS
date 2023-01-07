@@ -13,7 +13,16 @@ public class DaggerController : MonoBehaviour
     {
         if (daggerManager.canDaggerSwing == false && other.gameObject.transform != transform.root.gameObject && pV.IsMine)
         {
-            other.gameObject.GetComponent<IDamageable>()?.TakeDamage(40);
+
+            if (other.gameObject != transform.root.gameObject)
+            {
+                other.gameObject.GetComponent<IDamageable>()?.TakeDamage(40);
+                if (other.transform.parent.transform.Find("Shield").GetComponent<ShieldManager>().hasOpenedShield)
+                {
+                    other.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
+                }
+            }
+
             StartCoroutine(nameof(DisableDagger));
         }
     }
