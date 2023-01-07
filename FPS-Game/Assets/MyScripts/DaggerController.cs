@@ -17,7 +17,7 @@ public class DaggerController : MonoBehaviour
             if (other.gameObject != transform.root.gameObject)
             {
                 other.gameObject.GetComponent<IDamageable>()?.TakeDamage(40);
-                if (other.transform.parent.transform.Find("Shield").GetComponent<ShieldManager>().hasOpenedShield)
+                if (other.transform.parent.transform.parent.GetComponent<ShieldManager>().hasOpenedShield)
                 {
                     other.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
                 }

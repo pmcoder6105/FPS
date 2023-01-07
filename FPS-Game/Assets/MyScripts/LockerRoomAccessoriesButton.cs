@@ -30,6 +30,18 @@ public class LockerRoomAccessoriesButton : MonoBehaviour
         {
             GetComponent<Button>().onClick.AddListener(ModifyEquipedCape);
         }
+        if (removeAllHats)
+        {
+            GetComponent<Button>().onClick.AddListener(Btn_CancelHat);
+        }
+        if (removeAllEyewear)
+        {
+            GetComponent<Button>().onClick.AddListener(Btn_CancelEyewear);
+        }
+        if (removeAllCapes)
+        {
+            GetComponent<Button>().onClick.AddListener(Btn_CancelCapes);
+        }
     }
 
     public void Btn_CancelHat()

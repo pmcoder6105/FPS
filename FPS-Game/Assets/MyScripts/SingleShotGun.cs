@@ -253,11 +253,14 @@ public class SingleShotGun : Gun
                 ray.origin = new Vector3((cam.transform.position.x + Random.Range(-bulletBloomAmount, bulletBloomAmount)), (cam.transform.position.y + Random.Range(-bulletBloomAmount, bulletBloomAmount)), (cam.transform.position.z + Random.Range(0, 0)));
                 if (Physics.Raycast(ray, out RaycastHit hit))
                 {
-                    hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                    if (hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>() != null)
+                    if (hit.collider.gameObject != transform.root.gameObject)
                     {
-                        hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
-                    }
+                        hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                        if (hit.collider.transform.parent.transform.parent.GetComponent<ShieldManager>().hasOpenedShield)
+                        {
+                            hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
+                        }
+                    }                    
                     PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
                 }
                 if (doesHaveAnimationForShooting)
@@ -323,7 +326,7 @@ public class SingleShotGun : Gun
                         if (hit.collider.gameObject != transform.root.gameObject)
                         {
                             hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                            if (hit.collider.transform.parent.transform.Find("Shield").GetComponent<ShieldManager>().hasOpenedShield)
+                            if (hit.collider.transform.parent.transform.parent.GetComponent<ShieldManager>().hasOpenedShield)
                             {
                                 hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
                             }
