@@ -22,7 +22,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject nonClientWaitingText;
 
     [SerializeField] GameObject playerViewerParent;
-    [SerializeField] GameObject playerModelSkin;
+    [SerializeField] GameObject playerModelSkin, lilbean;
     public Material colorChosen;
     [SerializeField] GameObject titleMenu, loadingMenu, roomMenu;
 
@@ -72,6 +72,7 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             playerModelSkin.SetActive(true);
             playerModelSkin.transform.GetChild(0).transform.gameObject.GetComponent<MeshRenderer>().material = colorChosen;
+            lilbean.transform.gameObject.GetComponent<MeshRenderer>().material = colorChosen;
             //playerModelSkin.transform.GetChild(0).GetChild(1).transform.gameObject.GetComponent<MeshRenderer>().material = colorChosen
         }
         else
