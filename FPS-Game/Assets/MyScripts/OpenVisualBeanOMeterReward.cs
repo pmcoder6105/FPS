@@ -20,6 +20,13 @@ public class OpenVisualBeanOMeterReward : MonoBehaviour
             }
         }
     }
+    public void CloseAllReward()
+    {
+        for (int i = 0; i < reward.Length; i++)
+        {
+            CloseReward(reward[i]);
+        }
+    }
 
     public void OpenReward(MainMenuVisualReward menu)
     {

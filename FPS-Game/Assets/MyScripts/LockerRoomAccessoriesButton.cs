@@ -12,6 +12,8 @@ public class LockerRoomAccessoriesButton : MonoBehaviour
     public GameObject[] eyewearChecks;
     public GameObject[] capeChecks;
 
+
+
     // Update is called once per frame
     void Start()
     {
@@ -42,7 +44,11 @@ public class LockerRoomAccessoriesButton : MonoBehaviour
         {
             GetComponent<Button>().onClick.AddListener(Btn_CancelCapes);
         }
+
+        
     }
+
+    
 
     public void Btn_CancelHat()
     {

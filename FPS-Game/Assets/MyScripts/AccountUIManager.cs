@@ -73,6 +73,10 @@ public class AccountUIManager : MonoBehaviour
 
     [HideInInspector] public GameObject process;
 
+    public GameObject[] hatChecks, eyeChecks, capeChecks;
+    public GameObject[] hats, eyewear, capes;
+    public Button[] saveButtons;
+
     private void Awake()
     {
         if (instance == null)

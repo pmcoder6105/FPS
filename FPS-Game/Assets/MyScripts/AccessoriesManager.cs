@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AccessoriesManager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class AccessoriesManager : MonoBehaviour
 
     private static AccessoriesManager _singleton;
 
-    public GameObject[] hats, eyewear, capes;
+    //public GameObject[] hats, eyewear, capes;
 
     private void Awake()
     {
@@ -39,46 +40,66 @@ public class AccessoriesManager : MonoBehaviour
 
     public void DisplayAccessories()
     {
-        for (int i = 0; i < hats.Length; i++)
+        for (int i = 0; i < AccountUIManager.instance.hats.Length; i++)
         {
             if (i != equipedHat)
             {
-                hats[i].SetActive(false);
+                AccountUIManager.instance.hats[i].SetActive(false);
             }
             else
             {
                 if (i == 0)
                     return;
-                hats[i].SetActive(true);
+                AccountUIManager.instance.hats[i].SetActive(true);
             }
         }
 
-        for (int i = 0; i < eyewear.Length; i++)
+        for (int i = 0; i < AccountUIManager.instance.eyewear.Length; i++)
         {
             if (i != equipedHat)
             {
-                eyewear[i].SetActive(false);
+                AccountUIManager.instance.eyewear[i].SetActive(false);
             }
             else
             {
                 if (i == 0)
                     return;
-                eyewear[i].SetActive(true);
+                AccountUIManager.instance.eyewear[i].SetActive(true);
             }
         }
 
-        for (int i = 0; i < capes.Length; i++)
+        for (int i = 0; i < AccountUIManager.instance.capes.Length; i++)
         {
             if (i != equipedHat)
             {
-                capes[i].SetActive(false);
+                AccountUIManager.instance.capes[i].SetActive(false);
             }
             else
             {
                 if (i == 0)
                     return;
-                capes[i].SetActive(true);
+                AccountUIManager.instance.capes[i].SetActive(true);
             }
         }
+    }
+
+    private void Start()
+    {
+        AccountUIManager.instance.saveButtons[0].onClick.AddListener(SaveHats);
+        AccountUIManager.instance.saveButtons[1].onClick.AddListener(SaveEyewear);
+        AccountUIManager.instance.saveButtons[2].onClick.AddListener(SaveCapes);
+    }
+
+    public void SaveHats()
+    {
+        StartCoroutine(nameof(FirebaseManager.Singleton.UpdateHats));
+    }
+    public void SaveEyewear()
+    {
+        StartCoroutine(nameof(FirebaseManager.Singleton.UpdateHats));
+    }
+    public void SaveCapes()
+    {
+        StartCoroutine(nameof(FirebaseManager.Singleton.UpdateHats));
     }
 }

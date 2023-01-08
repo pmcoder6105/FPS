@@ -135,7 +135,10 @@ public class FirebaseManager : MonoBehaviour
                 StartCoroutine(LoadSettings());
                 StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
                 StartCoroutine(LoadExperience());
-                StartCoroutine(LoadKills());       
+                StartCoroutine(LoadKills());
+                StartCoroutine(LoadHats());
+                StartCoroutine(LoadEyewear());
+                StartCoroutine(LoadCapes());
                 StartCoroutine(LoadApplicationGenuinity());
 
             }
@@ -276,6 +279,9 @@ public class FirebaseManager : MonoBehaviour
                 StartCoroutine(LoadExperience());
                 StartCoroutine(LoadApplicationGenuinity());
                 StartCoroutine(LoadKills());                
+                StartCoroutine(LoadHats());                
+                StartCoroutine(LoadEyewear());                
+                StartCoroutine(LoadCapes());                
                 StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
 
                 yield return new WaitForSeconds(2);
@@ -542,6 +548,55 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
+    public IEnumerator UpdateHats(int newAmount)
+    {
+        //Call the Firebase auth update user profile function passing the profile with the username
+        var DBTask = DBReference.Child("users").Child(User.UserId).Child("hats").SetValueAsync(newAmount);
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else
+        {
+            //Auth username is now updated
+            AccessoriesManager.Singleton.equipedHat = newAmount;
+        }
+    }
+    public IEnumerator UpdateEyewear(int newAmount)
+    {
+        //Call the Firebase auth update user profile function passing the profile with the username
+        var DBTask = DBReference.Child("users").Child(User.UserId).Child("eyewear").SetValueAsync(newAmount);
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else
+        {
+            //Auth username is now updated
+            AccessoriesManager.Singleton.equipedHat = newAmount;
+        }
+    }
+    public IEnumerator UpdateCapes(int newAmount)
+    {
+        //Call the Firebase auth update user profile function passing the profile with the username
+        var DBTask = DBReference.Child("users").Child(User.UserId).Child("capes").SetValueAsync(newAmount);
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else
+        {
+            //Auth username is now updated
+            AccessoriesManager.Singleton.equipedHat = newAmount;
+        }
+    }
+
     public IEnumerator UpdateSettings()
     {
         //Call the Firebase auth update user profile function passing the profile with the username
@@ -782,6 +837,145 @@ public class FirebaseManager : MonoBehaviour
 
 
             //Do all the stuff with the main menu level up bar (hint: check if the current scene is 0, if so, do the mathf.epsilon pattern
+        }
+    }
+
+    public IEnumerator LoadHats()
+    {
+        var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Value == null || DBTask.Result.Child("hats") == null)
+        {
+            AccessoriesManager.Singleton.equipedHat = 0;
+            StartCoroutine(UpdateHats(0));
+            foreach (GameObject item in AccountUIManager.instance.hatChecks)
+            {
+                item.SetActive(false);
+            }
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+
+            if (snapshot.HasChild("hats"))
+            {
+                AccessoriesManager.Singleton.equipedHat = int.Parse(snapshot.Child("hats").Value.ToString());
+
+                if (int.Parse(snapshot.Child("hats").Value.ToString()) != 0)
+                {
+                    foreach (GameObject item in AccountUIManager.instance.hatChecks)
+                    {
+                        item.SetActive(false);
+                    }
+                    AccountUIManager.instance.hatChecks[int.Parse(snapshot.Child("hats").Value.ToString())].SetActive(true);
+                }
+            }
+            else
+            {
+                AccessoriesManager.Singleton.equipedHat = 0;
+                foreach (GameObject item in AccountUIManager.instance.hatChecks)
+                {
+                    item.SetActive(false);
+                }
+            }
+        }
+    }
+    public IEnumerator LoadEyewear()
+    {
+        var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Value == null || DBTask.Result.Child("eyewear") == null)
+        {
+            AccessoriesManager.Singleton.equipedEyewear = 0;
+            StartCoroutine(UpdateEyewear(0));
+            foreach (GameObject item in AccountUIManager.instance.eyeChecks)
+            {
+                item.SetActive(false);
+            }
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+
+            if (snapshot.HasChild("eyewear"))
+            {
+                AccessoriesManager.Singleton.equipedEyewear = int.Parse(snapshot.Child("eyewear").Value.ToString());
+
+                if (int.Parse(snapshot.Child("eyewear").Value.ToString()) != 0)
+                {
+                    foreach (GameObject item in AccountUIManager.instance.eyeChecks)
+                    {
+                        item.SetActive(false);
+                    }
+                    AccountUIManager.instance.hatChecks[int.Parse(snapshot.Child("eyewear").Value.ToString())].SetActive(true);
+                }
+            }
+            else
+            {
+                AccessoriesManager.Singleton.equipedEyewear = 0;
+                foreach (GameObject item in AccountUIManager.instance.eyeChecks)
+                {
+                    item.SetActive(false);
+                }
+            }
+        }
+    }
+    public IEnumerator LoadCapes()
+    {
+        var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Value == null || DBTask.Result.Child("capes") == null)
+        {
+            AccessoriesManager.Singleton.equipedCape = 0;
+            StartCoroutine(UpdateCapes(0));
+            foreach (GameObject item in AccountUIManager.instance.capeChecks)
+            {
+                item.SetActive(false);
+            }
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+
+            if (snapshot.HasChild("capes"))
+            {
+                AccessoriesManager.Singleton.equipedHat = int.Parse(snapshot.Child("capes").Value.ToString());
+
+                if (int.Parse(snapshot.Child("capes").Value.ToString()) != 0)
+                {
+                    foreach (GameObject item in AccountUIManager.instance.capeChecks)
+                    {
+                        item.SetActive(false);
+                    }
+                    AccountUIManager.instance.hatChecks[int.Parse(snapshot.Child("capes").Value.ToString())].SetActive(true);
+                }
+            }
+            else
+            {
+                AccessoriesManager.Singleton.equipedCape = 0;
+                foreach (GameObject item in AccountUIManager.instance.capeChecks)
+                {
+                    item.SetActive(false);
+                }
+            }
         }
     }
 
