@@ -31,6 +31,7 @@ public class LockerRoomAccessoriesButton : MonoBehaviour
         if (isCape)
         {
             GetComponent<Button>().onClick.AddListener(ModifyEquipedCape);
+            GetComponent<Button>().onClick.AddListener(EquipCape);
         }
         if (removeAllHats)
         {
@@ -53,16 +54,24 @@ public class LockerRoomAccessoriesButton : MonoBehaviour
     public void Btn_CancelHat()
     {
         AccessoriesManager.Singleton.removeHats = true;
+        AccessoriesManager.Singleton.equipedHat = 0;
+        StartCoroutine(FirebaseManager.Singleton.UpdateHats(0));
+
     }
 
     public void Btn_CancelEyewear()
     {
         AccessoriesManager.Singleton.removeEyewear = true;
+        AccessoriesManager.Singleton.equipedEyewear = 0;
+        StartCoroutine(FirebaseManager.Singleton.UpdateEyewear(0));
+
     }
 
     public void Btn_CancelCapes()
     {
         AccessoriesManager.Singleton.removeCapes = true;
+        AccessoriesManager.Singleton.equipedCape = 0;
+        StartCoroutine(FirebaseManager.Singleton.UpdateCapes(0));
     }
 
     public void ModifyEquipedHat()

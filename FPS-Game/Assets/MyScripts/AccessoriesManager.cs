@@ -11,8 +11,6 @@ public class AccessoriesManager : MonoBehaviour
 
     private static AccessoriesManager _singleton;
 
-    //public GameObject[] hats, eyewear, capes;
-
     private void Awake()
     {
         Singleton = this;
@@ -48,37 +46,38 @@ public class AccessoriesManager : MonoBehaviour
             }
             else
             {
-                if (i == 0)
-                    return;
-                AccountUIManager.instance.hats[i].SetActive(true);
+                if (i != 0)
+                {
+                    AccountUIManager.instance.hats[i - 1].SetActive(true);
+                }
             }
         }
-
         for (int i = 0; i < AccountUIManager.instance.eyewear.Length; i++)
         {
-            if (i != equipedHat)
+            if (i != equipedEyewear)
             {
                 AccountUIManager.instance.eyewear[i].SetActive(false);
             }
             else
             {
-                if (i == 0)
-                    return;
-                AccountUIManager.instance.eyewear[i].SetActive(true);
+                if (i != 0)
+                {
+                    AccountUIManager.instance.eyewear[i - 1].SetActive(true);
+                }
             }
         }
-
         for (int i = 0; i < AccountUIManager.instance.capes.Length; i++)
         {
-            if (i != equipedHat)
+            if (i != equipedCape)
             {
                 AccountUIManager.instance.capes[i].SetActive(false);
             }
             else
             {
-                if (i == 0)
-                    return;
-                AccountUIManager.instance.capes[i].SetActive(true);
+                if (i != 0)
+                {
+                    AccountUIManager.instance.capes[i - 1].SetActive(true);
+                }
             }
         }
     }
@@ -92,14 +91,14 @@ public class AccessoriesManager : MonoBehaviour
 
     public void SaveHats()
     {
-        StartCoroutine(nameof(FirebaseManager.Singleton.UpdateHats));
+        StartCoroutine(FirebaseManager.Singleton.UpdateHats(equipedHat));
     }
     public void SaveEyewear()
     {
-        StartCoroutine(nameof(FirebaseManager.Singleton.UpdateHats));
+        StartCoroutine(FirebaseManager.Singleton.UpdateEyewear(equipedEyewear));
     }
     public void SaveCapes()
     {
-        StartCoroutine(nameof(FirebaseManager.Singleton.UpdateHats));
+        StartCoroutine(FirebaseManager.Singleton.UpdateCapes(equipedCape));
     }
 }

@@ -68,15 +68,16 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
     {
         for (int i = 0; i < hats.Length; i++)
         {
-            if (i + 1 != index)
+            if (i - 1 != index)
             {
-                hats[i + 1].SetActive(false);
+                hats[i - 1].SetActive(false);
             }
             else
             {
-                if (i == 0)
-                    return;
-                hats[i + 1].SetActive(true);
+                if (i != 0)
+                {
+                    hats[i - 1].SetActive(true);
+                }
             }
         }
     }
@@ -86,15 +87,16 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
     {
         for (int i = 0; i < eyeWear.Length; i++)
         {
-            if (i + 1 != index)
+            if (i - 1 != index)
             {
-                eyeWear[i + 1].SetActive(false);
+                eyeWear[i - 1].SetActive(false);
             }
             else
             {
-                if (i == 0)
-                    return;
-                eyeWear[i + 1].SetActive(true);
+                if (i != 0)
+                {
+                    eyeWear[i - 1].SetActive(true);
+                }
             }
         }
     }
@@ -104,15 +106,16 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
     {
         for (int i = 0; i < cape.Length; i++)
         {
-            if (i + 1 != index)
+            if (i - 1 != index)
             {
-                cape[i + 1].SetActive(false);
+                cape[i - 1].SetActive(false);
             }
             else
             {
-                if (i == 0)
-                    return;
-                cape[i + 1].SetActive(true);
+                if (i != 0)
+                {
+                    cape[i - 1].SetActive(true);
+                }
             }
         }
     }

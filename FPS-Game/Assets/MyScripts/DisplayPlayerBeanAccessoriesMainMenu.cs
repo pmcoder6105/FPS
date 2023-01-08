@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class DisplayPlayerBeanAccessoriesMainMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
         AccessoriesManager.Singleton.DisplayAccessories();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

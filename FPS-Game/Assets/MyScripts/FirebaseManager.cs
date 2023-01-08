@@ -873,7 +873,7 @@ public class FirebaseManager : MonoBehaviour
                     {
                         item.SetActive(false);
                     }
-                    AccountUIManager.instance.hatChecks[int.Parse(snapshot.Child("hats").Value.ToString())].SetActive(true);
+                    AccountUIManager.instance.hatChecks[int.Parse(snapshot.Child("hats").Value.ToString()) - 1].SetActive(true);
                 }
             }
             else
@@ -919,7 +919,7 @@ public class FirebaseManager : MonoBehaviour
                     {
                         item.SetActive(false);
                     }
-                    AccountUIManager.instance.hatChecks[int.Parse(snapshot.Child("eyewear").Value.ToString())].SetActive(true);
+                    AccountUIManager.instance.hatChecks[int.Parse(snapshot.Child("eyewear").Value.ToString()) - 1].SetActive(true);
                 }
             }
             else
@@ -965,7 +965,7 @@ public class FirebaseManager : MonoBehaviour
                     {
                         item.SetActive(false);
                     }
-                    AccountUIManager.instance.hatChecks[int.Parse(snapshot.Child("capes").Value.ToString())].SetActive(true);
+                    AccountUIManager.instance.hatChecks[int.Parse(snapshot.Child("capes").Value.ToString()) - 1].SetActive(true);
                 }
             }
             else
