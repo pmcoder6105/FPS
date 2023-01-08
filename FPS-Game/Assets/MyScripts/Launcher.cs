@@ -72,7 +72,7 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             playerModelSkin.SetActive(true);
             playerModelSkin.transform.GetChild(0).transform.gameObject.GetComponent<MeshRenderer>().material = colorChosen;
-            //playerModelSkin.transform.GetChild(0).GetChild(1).transform.gameObject.GetComponent<MeshRenderer>().material = colorChosen;
+            //playerModelSkin.transform.GetChild(0).GetChild(1).transform.gameObject.GetComponent<MeshRenderer>().material = colorChosen
         }
         else
         {

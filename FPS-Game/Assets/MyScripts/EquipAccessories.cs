@@ -74,6 +74,8 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
             }
             else
             {
+                if (i == 0)
+                    return;
                 hats[i + 1].SetActive(true);
             }
         }
@@ -90,6 +92,8 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
             }
             else
             {
+                if (i == 0)
+                    return;
                 eyeWear[i + 1].SetActive(true);
             }
         }
@@ -106,6 +110,8 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
             }
             else
             {
+                if (i == 0)
+                    return;
                 cape[i + 1].SetActive(true);
             }
         }

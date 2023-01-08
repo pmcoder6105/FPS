@@ -10,6 +10,8 @@ public class AccessoriesManager : MonoBehaviour
 
     private static AccessoriesManager _singleton;
 
+    public GameObject[] hats, eyewear, capes;
+
     private void Awake()
     {
         Singleton = this;
@@ -32,6 +34,51 @@ public class AccessoriesManager : MonoBehaviour
                 Destroy(value.gameObject);
             }
             Debug.Log("Singleton called");
+        }
+    }
+
+    public void DisplayAccessories()
+    {
+        for (int i = 0; i < hats.Length; i++)
+        {
+            if (i != equipedHat)
+            {
+                hats[i].SetActive(false);
+            }
+            else
+            {
+                if (i == 0)
+                    return;
+                hats[i].SetActive(true);
+            }
+        }
+
+        for (int i = 0; i < eyewear.Length; i++)
+        {
+            if (i != equipedHat)
+            {
+                eyewear[i].SetActive(false);
+            }
+            else
+            {
+                if (i == 0)
+                    return;
+                eyewear[i].SetActive(true);
+            }
+        }
+
+        for (int i = 0; i < capes.Length; i++)
+        {
+            if (i != equipedHat)
+            {
+                capes[i].SetActive(false);
+            }
+            else
+            {
+                if (i == 0)
+                    return;
+                capes[i].SetActive(true);
+            }
         }
     }
 }

@@ -18589,6 +18589,9 @@ MonoBehaviour:
   removeHats: 0
   removeEyewear: 0
   removeCapes: 0
+  hats: []
+  eyewear: []
+  capes: []
 --- !u!4 &358659617
 Transform:
   m_ObjectHideFlags: 0
@@ -105573,6 +105576,7 @@ GameObject:
   - component: {fileID: 2134621399}
   - component: {fileID: 2134621401}
   - component: {fileID: 2134621403}
+  - component: {fileID: 2134621404}
   m_Layer: 5
   m_Name: TitleMenu
   m_TagString: Untagged
@@ -105689,6 +105693,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationName: TitleMenuTransition
   animatorParent: {fileID: 1892620189}
+--- !u!114 &2134621404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134621396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 384cba08d56f7b24486da66d6f312bc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2138366870
 GameObject:
   m_ObjectHideFlags: 0
