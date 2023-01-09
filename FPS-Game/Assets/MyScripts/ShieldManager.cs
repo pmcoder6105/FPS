@@ -150,7 +150,7 @@ public class ShieldManager : MonoBehaviour
     {
         if (shieldHealth <= 19 && shieldHealth >= 15)
         {
-            transform.GetChild(0).GetChild(6).gameObject.SetActive(false);
+            transform.GetChild(0).GetChild(6).gameObject.GetComponent<MeshRenderer>().enabled = false;
             transform.GetChild(0).GetChild(7).gameObject.SetActive(true);
         }
         if (shieldHealth <= 14 && shieldHealth >= 10)
@@ -183,7 +183,7 @@ public class ShieldManager : MonoBehaviour
 
         yield return new WaitForSeconds(6.6f);
 
-        transform.GetChild(0).GetChild(6).gameObject.SetActive(true);
+        transform.GetChild(0).GetChild(6).gameObject.GetComponent<MeshRenderer>().enabled = true;
         transform.GetChild(0).GetChild(7).gameObject.SetActive(false);
         transform.GetChild(0).GetChild(8).gameObject.SetActive(false);
         transform.GetChild(0).GetChild(9).gameObject.SetActive(false);

@@ -256,10 +256,13 @@ public class SingleShotGun : Gun
                     if (hit.collider.gameObject != transform.root.gameObject)
                     {
                         hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                        if (hit.collider.transform.parent.transform.parent.GetComponent<ShieldManager>().hasOpenedShield)
+                        if (hit.collider.transform.name == "glass (1)")
                         {
-                            hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
-                        }
+                            if (hit.collider.transform.parent.transform.parent.GetComponent<ShieldManager>().hasOpenedShield)
+                            {
+                                hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
+                            }
+                        }                        
                     }                    
                     PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
                 }
@@ -326,9 +329,12 @@ public class SingleShotGun : Gun
                         if (hit.collider.gameObject != transform.root.gameObject)
                         {
                             hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                            if (hit.collider.transform.parent.transform.parent.GetComponent<ShieldManager>().hasOpenedShield)
+                            if (hit.collider.transform.name == "glass (1)")
                             {
-                                hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
+                                if (hit.collider.transform.parent.transform.parent.GetComponent<ShieldManager>().hasOpenedShield)
+                                {
+                                    hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
+                                }
                             }
                         }                        
                         PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
@@ -370,9 +376,12 @@ public class SingleShotGun : Gun
                             if (hit.collider.gameObject != transform.root.gameObject)
                             {
                                 hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
-                                if (hit.collider.transform.parent.transform.Find("Shield").GetComponent<ShieldManager>().hasOpenedShield)                                        
+                                if (hit.collider.transform.name == "glass (1)")
                                 {
-                                    hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
+                                    if (hit.collider.transform.parent.transform.parent.GetComponent<ShieldManager>().hasOpenedShield)
+                                    {
+                                        hit.collider.transform.parent.gameObject.GetComponent<ShieldManager>().TakeHit();
+                                    }
                                 }
                             }
                             PV.RPC("RPC_Shoot", RpcTarget.All, hit.point, hit.normal);
@@ -462,26 +471,26 @@ public class SingleShotGun : Gun
             if (_currentAmmoInClip == 4)
             {
                 animator.Play("ShotGunReload1", 0, 0.0f);
-                reloadTime = 2.30f;
+                reloadTime = 46f;
             }
             if (_currentAmmoInClip == 3)
             {
                 animator.Play("ShotGunReload2", 0, 0.0f);
-                reloadTime = 3f;
+                reloadTime = 60f;
             }
             if (_currentAmmoInClip == 2)
             {
                 animator.Play("ShotGunReload3", 0, 0.0f);
-                reloadTime = 3.30f;
+                reloadTime = 66f;
             }
             if (_currentAmmoInClip == 1)
             {
                 animator.Play("ShotGunReload4", 0, 0.0f);
-                reloadTime = 4f;
+                reloadTime = 80f;
             }
             if (_currentAmmoInClip == 0)
             {
-                reloadTime = 4.35f;
+                reloadTime = 87f;
                 animator.Play("ShotGunReload5", 0, 0.0f);
             }
         }  
@@ -500,7 +509,7 @@ public class SingleShotGun : Gun
         canAim = false;        
         _canShoot = false;        
 
-        yield return new WaitForSeconds(reloadTime);
+        yield return new WaitForSeconds(Time.smoothDeltaTime * reloadTime);
         canAim = true;
         isReloading = false;
         _canShoot = true;
