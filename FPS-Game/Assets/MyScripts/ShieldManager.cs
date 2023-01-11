@@ -150,25 +150,34 @@ public class ShieldManager : MonoBehaviour
     {
         if (shieldHealth <= 19 && shieldHealth >= 15)
         {
-            transform.GetChild(0).GetChild(6).gameObject.GetComponent<MeshRenderer>().enabled = false;
-            transform.GetChild(0).GetChild(7).gameObject.SetActive(true);
+            ChangeShieldDamageInitialVisual(6, 7);
         }
         if (shieldHealth <= 14 && shieldHealth >= 10)
         {
-            transform.GetChild(0).GetChild(7).gameObject.SetActive(false);
-            transform.GetChild(0).GetChild(8).gameObject.SetActive(true);
+            ChangeShieldDamageVisual(7, 8);
         }
         if (shieldHealth <= 6 && shieldHealth >= 2)
         {
-            transform.GetChild(0).GetChild(8).gameObject.SetActive(false);
-            transform.GetChild(0).GetChild(9).gameObject.SetActive(true);
+            ChangeShieldDamageVisual(8, 9);
         }
         if (shieldHealth <= 1 && shieldHealth >= 0)
         {
-            transform.GetChild(0).GetChild(9).gameObject.SetActive(false);
-            transform.GetChild(0).GetChild(10).gameObject.SetActive(true);
+            ChangeShieldDamageVisual(9, 10);
         }
     }
+
+    private void ChangeShieldDamageInitialVisual(int _old, int _new)
+    {
+        transform.GetChild(0).GetChild(_old).gameObject.GetComponent<MeshRenderer>().enabled = false;
+        transform.GetChild(0).GetChild(_new).gameObject.SetActive(true);
+    }
+
+    private void ChangeShieldDamageVisual(int _old, int _new)
+    {
+        transform.GetChild(0).GetChild(_old).gameObject.SetActive(false);
+        transform.GetChild(0).GetChild(_new).gameObject.SetActive(true);
+    }
+
 
     IEnumerator WaitUntilPlayCanReopenShield()
     {
@@ -183,12 +192,17 @@ public class ShieldManager : MonoBehaviour
 
         yield return new WaitForSeconds(6.6f);
 
+        ResetShieldDamageVisual();
+
+        lockShield = false;
+    }
+
+    private void ResetShieldDamageVisual()
+    {
         transform.GetChild(0).GetChild(6).gameObject.GetComponent<MeshRenderer>().enabled = true;
         transform.GetChild(0).GetChild(7).gameObject.SetActive(false);
         transform.GetChild(0).GetChild(8).gameObject.SetActive(false);
         transform.GetChild(0).GetChild(9).gameObject.SetActive(false);
         transform.GetChild(0).GetChild(10).gameObject.SetActive(false);
-
-        lockShield = false;
     }
 }

@@ -40,26 +40,7 @@ public class MenuManager : MonoBehaviour
         if (titleMenu.activeInHierarchy == true)
         {
             loadingMenu.SetActive(false);
-            //GetComponent<Animator>().SetBool("title_open", true);
-
-            
         }
-
-        //for (int i = 0; i < menus.Length; i++)
-        //{
-        //    Debug.Log("All the menus: " + menus[i]);
-        //    if (menus[i].open)
-        //    {
-        //        Debug.Log("Active menu: " + menus[i]);
-        //        float elapsedTime = 0f;
-        //        elapsedTime += Time.timeSinceLevelLoad;
-        //        float percentComplete = elapsedTime / 1;
-        //        float lerpTime = Mathf.Lerp(0, 1, percentComplete);
-
-        //        menus[i].GetComponent<CanvasGroup>().alpha = lerpTime;
-        //    }
-        //}
-            
     }
 
     public void OpenMenu(Menu menu)
@@ -90,7 +71,6 @@ public class MenuManager : MonoBehaviour
         AccountUIManager.instance.menuCanvas.SetActive(false);
         AccountUIManager.instance.accountCanvas.SetActive(true);
         AccountUIManager.instance.mainCamera.transform.Find("PlayerViewer").gameObject.SetActive(false);
-        //PhotonNetwork.Disconnect();
         FirebaseManager.Singleton.playerColorValue = "";
     }
 }

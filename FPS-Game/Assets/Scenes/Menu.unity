@@ -8829,7 +8829,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modifiedHat: 0
   modifiedEyewear: 0
-  modifiedCape: 2
+  modifiedCape: 1
   isHat: 0
   isEyeWear: 0
   isCape: 1
@@ -18712,7 +18712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffddf28ad3f964a49962a81bb4813e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifiedHat: 5
+  modifiedHat: 4
   modifiedEyewear: 0
   modifiedCape: 0
   isHat: 1
@@ -21558,7 +21558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffddf28ad3f964a49962a81bb4813e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifiedHat: 3
+  modifiedHat: 2
   modifiedEyewear: 0
   modifiedCape: 0
   isHat: 1
@@ -22742,7 +22742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffddf28ad3f964a49962a81bb4813e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifiedHat: 8
+  modifiedHat: 7
   modifiedEyewear: 0
   modifiedCape: 0
   isHat: 1
@@ -42073,7 +42073,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffddf28ad3f964a49962a81bb4813e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifiedHat: 2
+  modifiedHat: 1
   modifiedEyewear: 0
   modifiedCape: 0
   isHat: 1
@@ -46327,7 +46327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modifiedHat: 0
-  modifiedEyewear: 3
+  modifiedEyewear: 2
   modifiedCape: 0
   isHat: 0
   isEyeWear: 1
@@ -46338,7 +46338,7 @@ MonoBehaviour:
   hatChecks: []
   eyewearChecks:
   - {fileID: 827377486}
-  - {fileID: 1789111235}
+  - {fileID: 637377717}
   - {fileID: 980130740}
   - {fileID: 871901103}
   - {fileID: 1930229410}
@@ -47111,7 +47111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modifiedHat: 0
-  modifiedEyewear: 4
+  modifiedEyewear: 3
   modifiedCape: 0
   isHat: 0
   isEyeWear: 1
@@ -47122,7 +47122,7 @@ MonoBehaviour:
   hatChecks: []
   eyewearChecks:
   - {fileID: 827377486}
-  - {fileID: 1789111235}
+  - {fileID: 637377717}
   - {fileID: 980130740}
   - {fileID: 871901103}
   - {fileID: 1930229410}
@@ -59023,7 +59023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modifiedHat: 0
   modifiedEyewear: 0
-  modifiedCape: 1
+  modifiedCape: 0
   isHat: 0
   isEyeWear: 0
   isCape: 1
@@ -68589,7 +68589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modifiedHat: 0
-  modifiedEyewear: 2
+  modifiedEyewear: 1
   modifiedCape: 0
   isHat: 0
   isEyeWear: 1
@@ -68600,7 +68600,7 @@ MonoBehaviour:
   hatChecks: []
   eyewearChecks:
   - {fileID: 827377486}
-  - {fileID: 1789111235}
+  - {fileID: 637377717}
   - {fileID: 980130740}
   - {fileID: 871901103}
   - {fileID: 1930229410}
@@ -69404,7 +69404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffddf28ad3f964a49962a81bb4813e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifiedHat: 1
+  modifiedHat: 0
   modifiedEyewear: 0
   modifiedCape: 0
   isHat: 1
@@ -80071,23 +80071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 0
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1512990640}
-          m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-          m_MethodName: PlayOneShot
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 8300000, guid: a221e93a17579034a9af8f5dcbcbeb26, type: 3}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  m_Delegates: []
 --- !u!95 &1512990642
 Animator:
   serializedVersion: 4
@@ -80226,7 +80210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffddf28ad3f964a49962a81bb4813e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifiedHat: 4
+  modifiedHat: 3
   modifiedEyewear: 0
   modifiedCape: 0
   isHat: 1
@@ -80803,7 +80787,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffddf28ad3f964a49962a81bb4813e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifiedHat: 6
+  modifiedHat: 5
   modifiedEyewear: 0
   modifiedCape: 0
   isHat: 1
@@ -87445,7 +87429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modifiedHat: 0
-  modifiedEyewear: 5
+  modifiedEyewear: 4
   modifiedCape: 0
   isHat: 0
   isEyeWear: 1
@@ -87456,7 +87440,7 @@ MonoBehaviour:
   hatChecks: []
   eyewearChecks:
   - {fileID: 827377486}
-  - {fileID: 1789111235}
+  - {fileID: 637377717}
   - {fileID: 980130740}
   - {fileID: 871901103}
   - {fileID: 1930229410}
@@ -94583,7 +94567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffddf28ad3f964a49962a81bb4813e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifiedHat: 7
+  modifiedHat: 6
   modifiedEyewear: 0
   modifiedCape: 0
   isHat: 1
@@ -100040,7 +100024,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modifiedHat: 0
-  modifiedEyewear: 1
+  modifiedEyewear: 0
   modifiedCape: 0
   isHat: 0
   isEyeWear: 1
@@ -100051,7 +100035,7 @@ MonoBehaviour:
   hatChecks: []
   eyewearChecks:
   - {fileID: 827377486}
-  - {fileID: 1789111235}
+  - {fileID: 637377717}
   - {fileID: 980130740}
   - {fileID: 871901103}
   - {fileID: 1930229410}
@@ -107663,7 +107647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffddf28ad3f964a49962a81bb4813e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifiedHat: 9
+  modifiedHat: 8
   modifiedEyewear: 0
   modifiedCape: 0
   isHat: 1

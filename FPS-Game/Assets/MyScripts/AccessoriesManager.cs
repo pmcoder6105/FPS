@@ -38,45 +38,45 @@ public class AccessoriesManager : MonoBehaviour
 
     public void DisplayAccessories()
     {
-        for (int i = 0; i < AccountUIManager.instance.hats.Length; i++)
+        if (!removeHats)
         {
-            if (i != equipedHat)
+            for (int i = 0; i < AccountUIManager.instance.hats.Length; i++)
             {
-                AccountUIManager.instance.hats[i].SetActive(false);
-            }
-            else
-            {
-                if (i != 0)
+                if (i != equipedHat)
                 {
-                    AccountUIManager.instance.hats[i - 1].SetActive(true);
+                    AccountUIManager.instance.hats[i].SetActive(false);
+                }
+                else
+                {
+                    AccountUIManager.instance.hats[i].SetActive(true);
                 }
             }
         }
-        for (int i = 0; i < AccountUIManager.instance.eyewear.Length; i++)
+        if (!removeEyewear)
         {
-            if (i != equipedEyewear)
+            for (int i = 0; i < AccountUIManager.instance.eyewear.Length; i++)
             {
-                AccountUIManager.instance.eyewear[i].SetActive(false);
-            }
-            else
-            {
-                if (i != 0)
+                if (i != equipedEyewear)
                 {
-                    AccountUIManager.instance.eyewear[i - 1].SetActive(true);
+                    AccountUIManager.instance.eyewear[i].SetActive(false);
+                }
+                else
+                {
+                    AccountUIManager.instance.eyewear[i].SetActive(true);
                 }
             }
         }
-        for (int i = 0; i < AccountUIManager.instance.capes.Length; i++)
+        if (!removeCapes)
         {
-            if (i != equipedCape)
+            for (int i = 0; i < AccountUIManager.instance.capes.Length; i++)
             {
-                AccountUIManager.instance.capes[i].SetActive(false);
-            }
-            else
-            {
-                if (i != 0)
+                if (i != equipedCape)
                 {
-                    AccountUIManager.instance.capes[i - 1].SetActive(true);
+                    AccountUIManager.instance.capes[i].SetActive(false);
+                }
+                else
+                {
+                    AccountUIManager.instance.capes[i].SetActive(true);
                 }
             }
         }

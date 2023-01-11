@@ -70,13 +70,13 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
         {
             if (i - 1 != index)
             {
-                hats[i - 1].SetActive(false);
+                hats[i].SetActive(false);
             }
             else
             {
                 if (i != 0)
                 {
-                    hats[i - 1].SetActive(true);
+                    hats[i].SetActive(true);
                 }
             }
         }
@@ -89,13 +89,13 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
         {
             if (i - 1 != index)
             {
-                eyeWear[i - 1].SetActive(false);
+                eyeWear[i].SetActive(false);
             }
             else
             {
                 if (i != 0)
                 {
-                    eyeWear[i - 1].SetActive(true);
+                    eyeWear[i].SetActive(true);
                 }
             }
         }
@@ -108,13 +108,13 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
         {
             if (i - 1 != index)
             {
-                cape[i - 1].SetActive(false);
+                cape[i].SetActive(false);
             }
             else
             {
                 if (i != 0)
                 {
-                    cape[i - 1].SetActive(true);
+                    cape[i].SetActive(true);
                 }
             }
         }

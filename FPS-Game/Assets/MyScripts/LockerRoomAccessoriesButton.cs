@@ -55,7 +55,7 @@ public class LockerRoomAccessoriesButton : MonoBehaviour
     {
         AccessoriesManager.Singleton.removeHats = true;
         AccessoriesManager.Singleton.equipedHat = 0;
-        StartCoroutine(FirebaseManager.Singleton.UpdateHats(0));
+        StartCoroutine(FirebaseManager.Singleton.UpdateRemoveHats(true));
 
     }
 
@@ -63,7 +63,7 @@ public class LockerRoomAccessoriesButton : MonoBehaviour
     {
         AccessoriesManager.Singleton.removeEyewear = true;
         AccessoriesManager.Singleton.equipedEyewear = 0;
-        StartCoroutine(FirebaseManager.Singleton.UpdateEyewear(0));
+        StartCoroutine(FirebaseManager.Singleton.UpdateRemoveEyewear(true));
 
     }
 
@@ -71,21 +71,29 @@ public class LockerRoomAccessoriesButton : MonoBehaviour
     {
         AccessoriesManager.Singleton.removeCapes = true;
         AccessoriesManager.Singleton.equipedCape = 0;
-        StartCoroutine(FirebaseManager.Singleton.UpdateCapes(0));
+        StartCoroutine(FirebaseManager.Singleton.UpdateRemoveCapes(true));
     }
 
     public void ModifyEquipedHat()
     {
         AccessoriesManager.Singleton.equipedHat = modifiedHat;
-    }    
+        AccessoriesManager.Singleton.removeHats = false;
+        StartCoroutine(FirebaseManager.Singleton.UpdateRemoveHats(false));
+    }
     public void ModifyEquipedEyewear()
     {
         AccessoriesManager.Singleton.equipedEyewear = modifiedEyewear;
+        AccessoriesManager.Singleton.removeEyewear = false;
+
+        StartCoroutine(FirebaseManager.Singleton.UpdateRemoveEyewear(false));
 
     }
     public void ModifyEquipedCape()
     {
         AccessoriesManager.Singleton.equipedCape = modifiedCape;
+        AccessoriesManager.Singleton.removeCapes = false;
+        StartCoroutine(FirebaseManager.Singleton.UpdateRemoveCapes(false));
+
     }
 
     public void EquipHat()

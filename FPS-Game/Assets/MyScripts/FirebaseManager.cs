@@ -100,8 +100,6 @@ public class FirebaseManager : MonoBehaviour
 
         auth.StateChanged += AuthStateChanged;
         AuthStateChanged(this, null);
-
-        
     }
 
     IEnumerator CheckAutoLogin()
@@ -131,16 +129,7 @@ public class FirebaseManager : MonoBehaviour
                 AccountUIManager.instance.menuCanvas.SetActive(true);
                 AccountUIManager.instance.accountCanvas.SetActive(false);
                 Debug.Log("Should be logged in...");
-                StartCoroutine(LoadUsernameData());
-                StartCoroutine(LoadSettings());
-                StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
-                StartCoroutine(LoadExperience());
-                StartCoroutine(LoadKills());
-                StartCoroutine(LoadHats());
-                StartCoroutine(LoadEyewear());
-                StartCoroutine(LoadCapes());
-                StartCoroutine(LoadApplicationGenuinity());
-
+                LoadAllInitialDatabaseInfo();
             }
             else
             {
@@ -274,15 +263,7 @@ public class FirebaseManager : MonoBehaviour
                 Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
                 AccountUIManager.instance.warningLoginText.text = "";
                 AccountUIManager.instance.confirmLoginText.text = "Logged In";
-                StartCoroutine(LoadUsernameData());
-                StartCoroutine(LoadSettings());
-                StartCoroutine(LoadExperience());
-                StartCoroutine(LoadApplicationGenuinity());
-                StartCoroutine(LoadKills());                
-                StartCoroutine(LoadHats());                
-                StartCoroutine(LoadEyewear());                
-                StartCoroutine(LoadCapes());                
-                StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
+                LoadAllInitialDatabaseInfo();
 
                 yield return new WaitForSeconds(2);
 
@@ -303,6 +284,22 @@ public class FirebaseManager : MonoBehaviour
                 StartCoroutine(SendVerificationEmail());
             }
         }
+    }
+
+    public void LoadAllInitialDatabaseInfo()
+    {
+        StartCoroutine(LoadUsernameData());
+        StartCoroutine(LoadSettings());
+        StartCoroutine(LoadExperience());
+        StartCoroutine(LoadApplicationGenuinity());
+        StartCoroutine(LoadKills());
+        StartCoroutine(LoadHats());
+        StartCoroutine(LoadEyewear());
+        StartCoroutine(LoadCapes());
+        StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
+        StartCoroutine(CheckForRemoveHat());
+        StartCoroutine(CheckForRemoveEyeWear());
+        StartCoroutine(CheckForRemoveCape());
     }
 
     private IEnumerator Register(string _email, string _password, string _username)
@@ -511,7 +508,7 @@ public class FirebaseManager : MonoBehaviour
         }
         else
         {
-            //Auth username is now updated
+            StartCoroutine(LoadApplicationGenuinity());
         }
     }
 
@@ -545,6 +542,7 @@ public class FirebaseManager : MonoBehaviour
         {
             //Auth username is now updated
             currentLVL = newAmount;
+            StartCoroutine(LoadKills());
         }
     }
 
@@ -562,6 +560,7 @@ public class FirebaseManager : MonoBehaviour
         {
             //Auth username is now updated
             AccessoriesManager.Singleton.equipedHat = newAmount;
+            StartCoroutine(LoadHats());
         }
     }
     public IEnumerator UpdateEyewear(int newAmount)
@@ -578,6 +577,7 @@ public class FirebaseManager : MonoBehaviour
         {
             //Auth username is now updated
             AccessoriesManager.Singleton.equipedHat = newAmount;
+            StartCoroutine(LoadEyewear());
         }
     }
     public IEnumerator UpdateCapes(int newAmount)
@@ -594,6 +594,7 @@ public class FirebaseManager : MonoBehaviour
         {
             //Auth username is now updated
             AccessoriesManager.Singleton.equipedHat = newAmount;
+            StartCoroutine(LoadCapes());
         }
     }
 
@@ -779,6 +780,170 @@ public class FirebaseManager : MonoBehaviour
         {
             //Auth username is now updated
             currentXP = newAmount;
+            StartCoroutine(LoadExperience());
+        }
+    }
+
+    public IEnumerator UpdateRemoveHats(bool newAmount)
+    {
+        //Call the Firebase auth update user profile function passing the profile with the username
+        var DBTask = DBReference.Child("users").Child(User.UserId).Child("hatRemove").SetValueAsync(newAmount);
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else
+        {
+            StartCoroutine(nameof(CheckForRemoveHat));
+        }
+    }
+    public IEnumerator UpdateRemoveEyewear(bool newAmount)
+    {
+        //Call the Firebase auth update user profile function passing the profile with the username
+        var DBTask = DBReference.Child("users").Child(User.UserId).Child("eyewearRemove").SetValueAsync(newAmount);
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else
+        {
+            StartCoroutine(nameof(CheckForRemoveHat));
+        }
+    }
+    public IEnumerator UpdateRemoveCapes(bool newAmount)
+    {
+        //Call the Firebase auth update user profile function passing the profile with the username
+        var DBTask = DBReference.Child("users").Child(User.UserId).Child("capeRemove").SetValueAsync(newAmount);
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else
+        {
+            StartCoroutine(nameof(CheckForRemoveHat));
+        }
+    }
+
+    public IEnumerator CheckForRemoveHat()
+    {
+        var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Value == null || DBTask.Result.Child("hatRemove") == null)
+        {
+            AccessoriesManager.Singleton.removeHats = true;
+            StartCoroutine(UpdateRemoveHats(true));
+            foreach (GameObject item in AccountUIManager.instance.hatChecks)
+            {
+                item.SetActive(false);
+            }
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+
+            if (snapshot.HasChild("hatRemove"))
+            {
+                AccessoriesManager.Singleton.removeHats = bool.Parse(snapshot.Child("hatRemove").Value.ToString());
+            }
+            else
+            {
+                AccessoriesManager.Singleton.removeHats = true;
+                StartCoroutine(UpdateRemoveHats(true));
+                foreach (GameObject item in AccountUIManager.instance.hatChecks)
+                {
+                    item.SetActive(false);
+                }
+            }
+        }
+    }
+
+    public IEnumerator CheckForRemoveEyeWear()
+    {
+        var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Value == null || DBTask.Result.Child("eyeRemove") == null)
+        {
+            AccessoriesManager.Singleton.removeEyewear = true;
+            StartCoroutine(UpdateRemoveEyewear(true));
+            foreach (GameObject item in AccountUIManager.instance.eyeChecks)
+            {
+                item.SetActive(false);
+            }
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+
+            if (snapshot.HasChild("eyeRemove"))
+            {
+                AccessoriesManager.Singleton.removeEyewear = bool.Parse(snapshot.Child("eyeRemove").Value.ToString());
+            }
+            else
+            {
+                AccessoriesManager.Singleton.removeEyewear = true;
+                StartCoroutine(UpdateRemoveEyewear(true));
+                foreach (GameObject item in AccountUIManager.instance.eyeChecks)
+                {
+                    item.SetActive(false);
+                }
+            }
+        }
+    }
+
+    public IEnumerator CheckForRemoveCape()
+    {
+        var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else if (DBTask.Result.Value == null || DBTask.Result.Child("capeRemove") == null)
+        {
+            AccessoriesManager.Singleton.removeCapes = true;
+            StartCoroutine(UpdateRemoveCapes(true));
+            foreach (GameObject item in AccountUIManager.instance.capeChecks)
+            {
+                item.SetActive(false);
+            }
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+
+            if (snapshot.HasChild("capeRemove"))
+            {
+                AccessoriesManager.Singleton.removeCapes = bool.Parse(snapshot.Child("capeRemove").Value.ToString());
+            }
+            else
+            {
+                AccessoriesManager.Singleton.removeCapes = true;
+                StartCoroutine(UpdateRemoveCapes(true));
+                foreach (GameObject item in AccountUIManager.instance.capeChecks)
+                {
+                    item.SetActive(false);
+                }
+            }
         }
     }
 
@@ -867,13 +1032,20 @@ public class FirebaseManager : MonoBehaviour
             {
                 AccessoriesManager.Singleton.equipedHat = int.Parse(snapshot.Child("hats").Value.ToString());
 
-                if (int.Parse(snapshot.Child("hats").Value.ToString()) != 0)
+                for (int i = 0; i < AccountUIManager.instance.hatChecks.Length; i++)
                 {
-                    foreach (GameObject item in AccountUIManager.instance.hatChecks)
+                    if (!AccessoriesManager.Singleton.removeCapes)
                     {
-                        item.SetActive(false);
+                        if (i != int.Parse(snapshot.Child("hats").Value.ToString()))
+                        {
+                            AccountUIManager.instance.hatChecks[i].SetActive(false);
+                            Debug.Log(AccountUIManager.instance.hatChecks[i]);
+                        }
+                        else
+                        {
+                            AccountUIManager.instance.hatChecks[i].SetActive(true);
+                        }
                     }
-                    AccountUIManager.instance.hatChecks[int.Parse(snapshot.Child("hats").Value.ToString()) - 1].SetActive(true);
                 }
             }
             else
@@ -886,6 +1058,7 @@ public class FirebaseManager : MonoBehaviour
             }
         }
     }
+
     public IEnumerator LoadEyewear()
     {
         var DBTask = DBReference.Child("users").Child(User.UserId).GetValueAsync();
@@ -913,13 +1086,19 @@ public class FirebaseManager : MonoBehaviour
             {
                 AccessoriesManager.Singleton.equipedEyewear = int.Parse(snapshot.Child("eyewear").Value.ToString());
 
-                if (int.Parse(snapshot.Child("eyewear").Value.ToString()) != 0)
+                for (int i = 0; i < AccountUIManager.instance.eyeChecks.Length; i++)
                 {
-                    foreach (GameObject item in AccountUIManager.instance.eyeChecks)
+                    if (!AccessoriesManager.Singleton.removeCapes)
                     {
-                        item.SetActive(false);
+                        if (i != int.Parse(snapshot.Child("eyewear").Value.ToString()))
+                        {
+                            AccountUIManager.instance.eyeChecks[i].SetActive(false);
+                        }
+                        else
+                        {
+                            AccountUIManager.instance.eyeChecks[i].SetActive(true);
+                        }
                     }
-                    AccountUIManager.instance.hatChecks[int.Parse(snapshot.Child("eyewear").Value.ToString()) - 1].SetActive(true);
                 }
             }
             else
@@ -959,13 +1138,19 @@ public class FirebaseManager : MonoBehaviour
             {
                 AccessoriesManager.Singleton.equipedHat = int.Parse(snapshot.Child("capes").Value.ToString());
 
-                if (int.Parse(snapshot.Child("capes").Value.ToString()) != 0)
+                for (int i = 0; i < AccountUIManager.instance.capeChecks.Length; i++)
                 {
-                    foreach (GameObject item in AccountUIManager.instance.capeChecks)
+                    if (!AccessoriesManager.Singleton.removeCapes)
                     {
-                        item.SetActive(false);
+                        if (i != int.Parse(snapshot.Child("capes").Value.ToString()))
+                        {
+                            AccountUIManager.instance.capeChecks[i].SetActive(false);
+                        }
+                        else
+                        {
+                            AccountUIManager.instance.capeChecks[i].SetActive(true);
+                        }
                     }
-                    AccountUIManager.instance.hatChecks[int.Parse(snapshot.Child("capes").Value.ToString()) - 1].SetActive(true);
                 }
             }
             else

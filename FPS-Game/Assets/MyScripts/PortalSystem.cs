@@ -5,21 +5,8 @@ using Photon.Pun;
 
 public class PortalSystem : MonoBehaviour
 {
-
     [SerializeField] Transform tie;
     public AudioClip portalSound;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //tie = this.transform;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {

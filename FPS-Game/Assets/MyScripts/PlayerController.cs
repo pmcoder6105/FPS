@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public ParticleSystem dustTrailParticleSystem;
 
-    public FirebaseManager firebase;
+    [HideInInspector] public FirebaseManager firebase;
 
     public Shader toonShader;
 
