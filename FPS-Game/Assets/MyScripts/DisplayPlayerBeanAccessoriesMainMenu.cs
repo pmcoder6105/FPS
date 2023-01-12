@@ -6,6 +6,8 @@ public class DisplayPlayerBeanAccessoriesMainMenu : MonoBehaviour
 {
     private void OnEnable()
     {
-        AccessoriesManager.Singleton.DisplayAccessories();
+        AccessoriesManager.Singleton.DisplayHats();
+        AccessoriesManager.Singleton.DisplayEyewear();
+        AccessoriesManager.Singleton.DisplayCapes();
     }
 }

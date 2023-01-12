@@ -36,49 +36,51 @@ public class AccessoriesManager : MonoBehaviour
         }
     }
 
-    public void DisplayAccessories()
+    public void DisplayHats()
     {
         if (!removeHats)
         {
             for (int i = 0; i < AccountUIManager.instance.hats.Length; i++)
             {
-                if (i != equipedHat)
-                {
-                    AccountUIManager.instance.hats[i].SetActive(false);
-                }
-                else
-                {
-                    AccountUIManager.instance.hats[i].SetActive(true);
-                }
+                AccountUIManager.instance.hats[i].SetActive(false);
             }
+
+            AccountUIManager.instance.hats[equipedHat].SetActive(true);
+
+            Debug.Log("The activated hat " + AccountUIManager.instance.hats[equipedHat]);
+            Debug.Log("The equiped hat var " + equipedHat);
         }
+    }
+
+    public void DisplayEyewear()
+    {
         if (!removeEyewear)
         {
             for (int i = 0; i < AccountUIManager.instance.eyewear.Length; i++)
             {
-                if (i != equipedEyewear)
-                {
-                    AccountUIManager.instance.eyewear[i].SetActive(false);
-                }
-                else
-                {
-                    AccountUIManager.instance.eyewear[i].SetActive(true);
-                }
+                AccountUIManager.instance.eyewear[i].SetActive(false);
             }
+
+            AccountUIManager.instance.eyewear[equipedEyewear].SetActive(true);
+
+            Debug.Log("The activated eye " + AccountUIManager.instance.eyewear[equipedEyewear]);
+            Debug.Log("The equiped eye var " + equipedEyewear);
         }
+    }
+
+    public void DisplayCapes()
+    {
         if (!removeCapes)
         {
             for (int i = 0; i < AccountUIManager.instance.capes.Length; i++)
             {
-                if (i != equipedCape)
-                {
-                    AccountUIManager.instance.capes[i].SetActive(false);
-                }
-                else
-                {
-                    AccountUIManager.instance.capes[i].SetActive(true);
-                }
+                AccountUIManager.instance.eyewear[i].SetActive(false);
             }
+
+            AccountUIManager.instance.capes[equipedCape].SetActive(true);
+
+            Debug.Log("The activated cape " + AccountUIManager.instance.capes[equipedCape]);
+            Debug.Log("The equiped cape var " + equipedCape);
         }
     }
 
