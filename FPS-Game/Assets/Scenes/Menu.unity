@@ -8792,7 +8792,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.49019608, g: 0.42745098, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: 1.07, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -27642,7 +27642,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &476813313
 RectTransform:
   m_ObjectHideFlags: 0
@@ -59059,7 +59059,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.49019608, g: 0.42745098, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_RaycastPadding: {x: 1.58, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -73490,7 +73490,7 @@ GameObject:
   - component: {fileID: 1378719157}
   - component: {fileID: 1378719156}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: BullseyeCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80292,16 +80292,7 @@ MonoBehaviour:
   removeAllHats: 0
   removeAllEyewear: 0
   removeAllCapes: 0
-  hatChecks:
-  - {fileID: 778547105}
-  - {fileID: 15397177}
-  - {fileID: 579826107}
-  - {fileID: 1378719154}
-  - {fileID: 925388147}
-  - {fileID: 1482638096}
-  - {fileID: 2100411504}
-  - {fileID: 1175744154}
-  - {fileID: 1387767269}
+  hatChecks: []
   eyewearChecks:
   - {fileID: 827377486}
   - {fileID: 1378719154}

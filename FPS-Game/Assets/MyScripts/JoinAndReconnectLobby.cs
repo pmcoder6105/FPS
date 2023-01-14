@@ -9,21 +9,49 @@ public class JoinAndReconnectLobby : MonoBehaviourPunCallbacks
     [SerializeField] GameObject reconnectBtn;
     [SerializeField] GameObject playerViewerParent;
 
-    private void Start()
+    private static JoinAndReconnectLobby _singleton;
+
+    private void Awake()
     {
-        if (Time.realtimeSinceStartup > 5)
+        Singleton = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+    public static JoinAndReconnectLobby Singleton
+    {
+        get => _singleton;
+        private set
         {
-            StartCoroutine(nameof(Reconnect));
+            if (_singleton == null)
+            {
+                _singleton = value;
+            }
+            else if (_singleton != value)
+            {
+                Debug.Log($"{nameof(AccessoriesManager)} instance already exists, destroying object!");
+                Destroy(value.gameObject);
+            }
+            Debug.Log("Singleton called");
         }
+    }
+
+    public void OpenTitle()
+    {
+        StartCoroutine(nameof(Reconnect));
     }
 
     private IEnumerator Reconnect()
     {
-        while (this.gameObject.activeSelf)
-        {
-            yield return new WaitForSeconds(3f);
-            reconnectBtn.SetActive(true);
-        }
+        //while (this.gameObject.activeSelf)
+        //{
+        //    yield return new WaitForSeconds(3f);
+        //    reconnectBtn.SetActive(true);
+        //}
+
+        yield return new WaitForSeconds(3f);
+
+        MenuManager.Instance.OpenMenu("title");
+        playerViewerParent.SetActive(true);
     }
 
     public void Btn_Reconnect()

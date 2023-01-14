@@ -293,13 +293,13 @@ public class FirebaseManager : MonoBehaviour
         StartCoroutine(LoadExperience());
         StartCoroutine(LoadApplicationGenuinity());
         StartCoroutine(LoadKills());
-        StartCoroutine(LoadHats());
-        StartCoroutine(LoadEyewear());
-        StartCoroutine(LoadCapes());
-        StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
         StartCoroutine(CheckForRemoveHat());
         StartCoroutine(CheckForRemoveEyeWear());
         StartCoroutine(CheckForRemoveCape());
+        StartCoroutine(LoadHats());
+        StartCoroutine(LoadEyewear());
+        StartCoroutine(LoadCapes());
+        StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));        
     }
 
     private IEnumerator Register(string _email, string _password, string _username)
@@ -487,6 +487,10 @@ public class FirebaseManager : MonoBehaviour
                     AccountUIManager.instance.tutCanvas.SetActive(true);
                     StartCoroutine(UpdateApplicationGenuinity(1));
                 }
+                if (int.Parse(snapshot.Child("playTimes").Value.ToString()) == 1)
+                {
+                    AccountUIManager.instance.tutCanvas.SetActive(false);
+                }
             }
             else
             {
@@ -576,7 +580,7 @@ public class FirebaseManager : MonoBehaviour
         else
         {
             //Auth username is now updated
-            AccessoriesManager.Singleton.equipedHat = newAmount;
+            AccessoriesManager.Singleton.equipedEyewear = newAmount;
             StartCoroutine(LoadEyewear());
         }
     }
@@ -593,7 +597,7 @@ public class FirebaseManager : MonoBehaviour
         else
         {
             //Auth username is now updated
-            AccessoriesManager.Singleton.equipedHat = newAmount;
+            AccessoriesManager.Singleton.equipedCape = newAmount;
             StartCoroutine(LoadCapes());
         }
     }
@@ -811,7 +815,7 @@ public class FirebaseManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(nameof(CheckForRemoveHat));
+            StartCoroutine(nameof(CheckForRemoveEyeWear));
         }
     }
     public IEnumerator UpdateRemoveCapes(bool newAmount)
@@ -826,7 +830,7 @@ public class FirebaseManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(nameof(CheckForRemoveHat));
+            StartCoroutine(nameof(CheckForRemoveCape));
         }
     }
 
@@ -843,7 +847,6 @@ public class FirebaseManager : MonoBehaviour
         else if (DBTask.Result.Value == null || DBTask.Result.Child("hatRemove") == null)
         {
             AccessoriesManager.Singleton.removeHats = true;
-            StartCoroutine(UpdateRemoveHats(true));
             foreach (GameObject item in AccountUIManager.instance.hatChecks)
             {
                 item.SetActive(false);
@@ -860,7 +863,6 @@ public class FirebaseManager : MonoBehaviour
             else
             {
                 AccessoriesManager.Singleton.removeHats = true;
-                StartCoroutine(UpdateRemoveHats(true));
                 foreach (GameObject item in AccountUIManager.instance.hatChecks)
                 {
                     item.SetActive(false);
@@ -879,10 +881,9 @@ public class FirebaseManager : MonoBehaviour
         {
             Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
         }
-        else if (DBTask.Result.Value == null || DBTask.Result.Child("eyeRemove") == null)
+        else if (DBTask.Result.Value == null || DBTask.Result.Child("eyewearRemove") == null)
         {
             AccessoriesManager.Singleton.removeEyewear = true;
-            StartCoroutine(UpdateRemoveEyewear(true));
             foreach (GameObject item in AccountUIManager.instance.eyeChecks)
             {
                 item.SetActive(false);
@@ -892,14 +893,13 @@ public class FirebaseManager : MonoBehaviour
         {
             DataSnapshot snapshot = DBTask.Result;
 
-            if (snapshot.HasChild("eyeRemove"))
+            if (snapshot.HasChild("eyewearRemove"))
             {
-                AccessoriesManager.Singleton.removeEyewear = bool.Parse(snapshot.Child("eyeRemove").Value.ToString());
+                AccessoriesManager.Singleton.removeEyewear = bool.Parse(snapshot.Child("eyewearRemove").Value.ToString());
             }
             else
             {
                 AccessoriesManager.Singleton.removeEyewear = true;
-                StartCoroutine(UpdateRemoveEyewear(true));
                 foreach (GameObject item in AccountUIManager.instance.eyeChecks)
                 {
                     item.SetActive(false);
@@ -921,7 +921,6 @@ public class FirebaseManager : MonoBehaviour
         else if (DBTask.Result.Value == null || DBTask.Result.Child("capeRemove") == null)
         {
             AccessoriesManager.Singleton.removeCapes = true;
-            StartCoroutine(UpdateRemoveCapes(true));
             foreach (GameObject item in AccountUIManager.instance.capeChecks)
             {
                 item.SetActive(false);
@@ -938,7 +937,6 @@ public class FirebaseManager : MonoBehaviour
             else
             {
                 AccessoriesManager.Singleton.removeCapes = true;
-                StartCoroutine(UpdateRemoveCapes(true));
                 foreach (GameObject item in AccountUIManager.instance.capeChecks)
                 {
                     item.SetActive(false);
@@ -960,7 +958,6 @@ public class FirebaseManager : MonoBehaviour
         else if (DBTask.Result.Value == null || DBTask.Result.Child("kills") == null)
         {
             LevelUpManager.Singleton.currentLevel = 0;
-            StartCoroutine(UpdateKills(0));
         }
         else
         {
@@ -1018,7 +1015,6 @@ public class FirebaseManager : MonoBehaviour
         else if (DBTask.Result.Value == null || DBTask.Result.Child("hats") == null)
         {
             AccessoriesManager.Singleton.equipedHat = 0;
-            StartCoroutine(UpdateHats(0));
             foreach (GameObject item in AccountUIManager.instance.hatChecks)
             {
                 item.SetActive(false);
@@ -1031,10 +1027,11 @@ public class FirebaseManager : MonoBehaviour
             if (snapshot.HasChild("hats"))
             {
                 AccessoriesManager.Singleton.equipedHat = int.Parse(snapshot.Child("hats").Value.ToString());
+                Debug.Log("The Firebase pulled hat value " + int.Parse(snapshot.Child("hats").Value.ToString()));
 
                 for (int i = 0; i < AccountUIManager.instance.hatChecks.Length; i++)
                 {
-                    if (!AccessoriesManager.Singleton.removeCapes)
+                    if (!AccessoriesManager.Singleton.removeHats)
                     {
                         if (i != int.Parse(snapshot.Child("hats").Value.ToString()))
                         {
@@ -1072,7 +1069,6 @@ public class FirebaseManager : MonoBehaviour
         else if (DBTask.Result.Value == null || DBTask.Result.Child("eyewear") == null)
         {
             AccessoriesManager.Singleton.equipedEyewear = 0;
-            StartCoroutine(UpdateEyewear(0));
             foreach (GameObject item in AccountUIManager.instance.eyeChecks)
             {
                 item.SetActive(false);
@@ -1088,7 +1084,7 @@ public class FirebaseManager : MonoBehaviour
 
                 for (int i = 0; i < AccountUIManager.instance.eyeChecks.Length; i++)
                 {
-                    if (!AccessoriesManager.Singleton.removeCapes)
+                    if (!AccessoriesManager.Singleton.removeEyewear)
                     {
                         if (i != int.Parse(snapshot.Child("eyewear").Value.ToString()))
                         {
@@ -1124,7 +1120,6 @@ public class FirebaseManager : MonoBehaviour
         else if (DBTask.Result.Value == null || DBTask.Result.Child("capes") == null)
         {
             AccessoriesManager.Singleton.equipedCape = 0;
-            StartCoroutine(UpdateCapes(0));
             foreach (GameObject item in AccountUIManager.instance.capeChecks)
             {
                 item.SetActive(false);
@@ -1136,7 +1131,7 @@ public class FirebaseManager : MonoBehaviour
 
             if (snapshot.HasChild("capes"))
             {
-                AccessoriesManager.Singleton.equipedHat = int.Parse(snapshot.Child("capes").Value.ToString());
+                AccessoriesManager.Singleton.equipedCape = int.Parse(snapshot.Child("capes").Value.ToString());
 
                 for (int i = 0; i < AccountUIManager.instance.capeChecks.Length; i++)
                 {
@@ -1177,7 +1172,6 @@ public class FirebaseManager : MonoBehaviour
         else if (DBTask.Result.Value == null || DBTask.Result.Child("xp") == null)
         {
             LevelUpManager.Singleton.currentExperience = 0;
-            StartCoroutine(UpdateExperience(0));
         }
         else
         {

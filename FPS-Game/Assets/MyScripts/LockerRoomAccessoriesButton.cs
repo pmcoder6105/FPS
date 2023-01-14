@@ -15,38 +15,32 @@ public class LockerRoomAccessoriesButton : MonoBehaviour
 
 
     // Update is called once per frame
-    void Start()
+    void OnEnable()
     {
         if (isHat)
         {
             GetComponent<Button>().onClick.AddListener(ModifyEquipedHat);
-            GetComponent<Button>().onClick.AddListener(EquipHat);
         }
-        if (isEyeWear)
+        else if (isEyeWear)
         {
             GetComponent<Button>().onClick.AddListener(ModifyEquipedEyewear);
-            GetComponent<Button>().onClick.AddListener(EquipEyewear);
-
         }        
-        if (isCape)
+        else if (isCape)
         {
             GetComponent<Button>().onClick.AddListener(ModifyEquipedCape);
-            GetComponent<Button>().onClick.AddListener(EquipCape);
         }
         if (removeAllHats)
         {
             GetComponent<Button>().onClick.AddListener(Btn_CancelHat);
         }
-        if (removeAllEyewear)
+        else if (removeAllEyewear)
         {
             GetComponent<Button>().onClick.AddListener(Btn_CancelEyewear);
         }
-        if (removeAllCapes)
+        else if (removeAllCapes)
         {
             GetComponent<Button>().onClick.AddListener(Btn_CancelCapes);
         }
-
-        
     }
 
     
@@ -58,7 +52,6 @@ public class LockerRoomAccessoriesButton : MonoBehaviour
         StartCoroutine(FirebaseManager.Singleton.UpdateRemoveHats(true));
 
     }
-
     public void Btn_CancelEyewear()
     {
         AccessoriesManager.Singleton.removeEyewear = true;
@@ -66,64 +59,55 @@ public class LockerRoomAccessoriesButton : MonoBehaviour
         StartCoroutine(FirebaseManager.Singleton.UpdateRemoveEyewear(true));
 
     }
-
     public void Btn_CancelCapes()
     {
         AccessoriesManager.Singleton.removeCapes = true;
         AccessoriesManager.Singleton.equipedCape = 0;
         StartCoroutine(FirebaseManager.Singleton.UpdateRemoveCapes(true));
     }
-
     public void ModifyEquipedHat()
     {
-        AccessoriesManager.Singleton.equipedHat = modifiedHat;
         AccessoriesManager.Singleton.removeHats = false;
+
+        AccessoriesManager.Singleton.equipedHat = modifiedHat;
         StartCoroutine(FirebaseManager.Singleton.UpdateRemoveHats(false));
+        StartCoroutine(Equip(AccountUIManager.instance.hatChecks));
+
     }
     public void ModifyEquipedEyewear()
     {
-        AccessoriesManager.Singleton.equipedEyewear = modifiedEyewear;
         AccessoriesManager.Singleton.removeEyewear = false;
 
+        AccessoriesManager.Singleton.equipedEyewear = modifiedEyewear;
+        
         StartCoroutine(FirebaseManager.Singleton.UpdateRemoveEyewear(false));
+        StartCoroutine(Equip(AccountUIManager.instance.eyeChecks));
 
     }
     public void ModifyEquipedCape()
     {
-        AccessoriesManager.Singleton.equipedCape = modifiedCape;
         AccessoriesManager.Singleton.removeCapes = false;
+
+        AccessoriesManager.Singleton.equipedCape = modifiedCape;
         StartCoroutine(FirebaseManager.Singleton.UpdateRemoveCapes(false));
-
+        StartCoroutine(Equip(AccountUIManager.instance.capeChecks));
     }
 
-    public void EquipHat()
+    public IEnumerator Equip(GameObject[] check)
     {
-        foreach (GameObject item in hatChecks)
+        int point = 0;
+        bool done = false;
+
+        foreach (GameObject item in check)
         {
+            point++;
             item.SetActive(false);
-            //item.GetComponentInParent<Image>().color = normalButtonColor;
+            if (point == check.Length)
+            {
+                done = true;
+            }
         }
+        yield return new WaitUntil(predicate: () => done == true);
         transform.GetChild(2).gameObject.SetActive(true);
-        //GetComponent<Image>().color = selectedButtonColor;
-    }
-    public void EquipEyewear()
-    {
-        foreach (GameObject item in eyewearChecks)
-        {
-            item.SetActive(false);
-            //item.GetComponentInParent<Image>().color = normalButtonColor;
-        }
-        transform.GetChild(2).gameObject.SetActive(true);
-        //GetComponent<Image>().color = selectedButtonColor;
-    }
-    public void EquipCape()
-    {
-        foreach (GameObject item in capeChecks)
-        {
-            item.SetActive(false);
-            //item.GetComponentInParent<Image>().color = normalButtonColor;
-        }
-        transform.GetChild(2).gameObject.SetActive(true);
-        //GetComponent<Image>().color = selectedButtonColor;
-    }
+    }    
 }

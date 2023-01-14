@@ -74,7 +74,7 @@ public class AccessoriesManager : MonoBehaviour
         {
             for (int i = 0; i < AccountUIManager.instance.capes.Length; i++)
             {
-                AccountUIManager.instance.eyewear[i].SetActive(false);
+                AccountUIManager.instance.capes[i].SetActive(false);
             }
 
             AccountUIManager.instance.capes[equipedCape].SetActive(true);
