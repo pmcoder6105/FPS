@@ -45,8 +45,6 @@ public class PlayerManager : MonoBehaviour
     public int currentExperience;
 
     public int currentLVL;
-
-    public string playerControllerPathName = "PlayerController 1";
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -57,7 +55,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (PV.IsMine)
         {
-            CreateController();
+            PV.RPC(nameof(CreateController), RpcTarget.AllBuffered);
             killTextNotificationHolder = GameObject.Find("KillTextNotificationHolder");
             canvas = GameObject.Find("ScoreBoardCanvas");
             if (FirebaseManager.Singleton.isMusicOn)
@@ -70,18 +68,17 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        if (!PV.IsMine)
-            return;
-        if (controller == null)
+        if (!PV.IsMine || controller == null)
             return;
 
         itemIndex = controller.GetComponent<PlayerController>().itemIndex;               
     }
 
+    [PunRPC]
     void CreateController()
     {        
         Transform spawnpoint = SpawnManager.Instance.GetSpawnPoint();
-        controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", playerControllerPathName), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
+        controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController 1"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
     }
 
     void Respawn()

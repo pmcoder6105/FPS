@@ -717,6 +717,8 @@ public class FirebaseManager : MonoBehaviour
         }
         if (myChars[1] == 't')
         {
+            if (SceneManager.GetActiveScene().name != "Menu")
+                return;
             AccountUIManager.instance.accountCanvas.GetComponent<AudioSource>().enabled = true;
             AccountUIManager.instance.menuCanvas.GetComponent<AudioSource>().enabled = true;
             isMusicOn = true;
@@ -725,6 +727,9 @@ public class FirebaseManager : MonoBehaviour
         }
         if (myChars[1] == 'f')
         {
+
+            if (SceneManager.GetActiveScene().name != "Menu")
+                return;
             AccountUIManager.instance.accountCanvas.GetComponent<AudioSource>().enabled = false;
             AccountUIManager.instance.menuCanvas.GetComponent<AudioSource>().enabled = false;
             isMusicOn = false;

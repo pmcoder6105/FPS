@@ -46,9 +46,6 @@ public class AccessoriesManager : MonoBehaviour
             }
 
             AccountUIManager.instance.hats[equipedHat].SetActive(true);
-
-            Debug.Log("The activated hat " + AccountUIManager.instance.hats[equipedHat]);
-            Debug.Log("The equiped hat var " + equipedHat);
         }
     }
 
@@ -62,9 +59,6 @@ public class AccessoriesManager : MonoBehaviour
             }
 
             AccountUIManager.instance.eyewear[equipedEyewear].SetActive(true);
-
-            Debug.Log("The activated eye " + AccountUIManager.instance.eyewear[equipedEyewear]);
-            Debug.Log("The equiped eye var " + equipedEyewear);
         }
     }
 
@@ -78,9 +72,6 @@ public class AccessoriesManager : MonoBehaviour
             }
 
             AccountUIManager.instance.capes[equipedCape].SetActive(true);
-
-            Debug.Log("The activated cape " + AccountUIManager.instance.capes[equipedCape]);
-            Debug.Log("The equiped cape var " + equipedCape);
         }
     }
 
