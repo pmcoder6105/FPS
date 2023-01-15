@@ -52,10 +52,13 @@ public class PlayerManager : MonoBehaviour
     }
 
     void Start()
-    {
+    {        
         if (PV.IsMine)
         {
-            PV.RPC(nameof(CreateController), RpcTarget.AllBuffered);
+            if (PhotonNetwork.InRoom)
+            {
+                CreateController();
+            }
             killTextNotificationHolder = GameObject.Find("KillTextNotificationHolder");
             canvas = GameObject.Find("ScoreBoardCanvas");
             if (FirebaseManager.Singleton.isMusicOn)
@@ -68,17 +71,18 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        if (!PV.IsMine || controller == null)
+        if (!PV.IsMine)
+            return;
+
+        if (controller == null)
             return;
 
         itemIndex = controller.GetComponent<PlayerController>().itemIndex;               
     }
-
-    [PunRPC]
     void CreateController()
     {        
         Transform spawnpoint = SpawnManager.Instance.GetSpawnPoint();
-        controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController 1"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
+        controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
     }
 
     void Respawn()

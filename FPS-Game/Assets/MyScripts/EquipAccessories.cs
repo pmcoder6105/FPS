@@ -7,9 +7,7 @@ using Photon.Realtime;
 public class EquipAccessories : MonoBehaviourPunCallbacks
 {
     AccessoriesManager aM;
-    public GameObject[] hats;
-    public GameObject[] eyeWear;
-    public GameObject[] cape;
+    public GameObject[] hats, eyeWear, cape;
 
     PhotonView PV;
 
@@ -25,43 +23,21 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-
-
-        //Call RPC with "all" as target
         if (PV.IsMine)
         {
             accessoriesParent.SetActive(false);
 
             if (!aM.removeHats)
-                PV.RPC(nameof(EquipHat), RpcTarget.All, aM.equipedHat);
+                PV.RPC(nameof(EquipHat), RpcTarget.AllBuffered, aM.equipedHat);
 
             if (!aM.removeEyewear)
-                PV.RPC(nameof(EquipEyewear), RpcTarget.All, aM.equipedEyewear);
+                PV.RPC(nameof(EquipEyewear), RpcTarget.AllBuffered, aM.equipedEyewear);
 
             if (!aM.removeCapes)
-                PV.RPC(nameof(EquipCape), RpcTarget.All, aM.equipedCape);
+                PV.RPC(nameof(EquipCape), RpcTarget.AllBuffered, aM.equipedCape);
         }
             
     }
-
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        //Call RPC with "newPlayer" as target
-        if (PV.IsMine)
-        {
-            accessoriesParent.SetActive(false);
-
-            if (!aM.removeHats)
-                PV.RPC(nameof(EquipHat), newPlayer, aM.equipedHat);
-
-            if (!aM.removeEyewear)
-                PV.RPC(nameof(EquipEyewear), newPlayer, aM.equipedEyewear);
-
-            if (!aM.removeCapes)
-                PV.RPC(nameof(EquipCape), newPlayer, aM.equipedCape);
-        }
-    }
-
 
     [PunRPC]
     void EquipHat(int index)

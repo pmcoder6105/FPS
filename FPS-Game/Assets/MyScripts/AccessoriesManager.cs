@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AccessoriesManager : MonoBehaviour
 {
@@ -75,11 +76,17 @@ public class AccessoriesManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Update()
     {
-        AccountUIManager.instance.saveButtons[0].onClick.AddListener(SaveHats);
-        AccountUIManager.instance.saveButtons[1].onClick.AddListener(SaveEyewear);
-        AccountUIManager.instance.saveButtons[2].onClick.AddListener(SaveCapes);
+        if (Time.timeSinceLevelLoad <= Mathf.Epsilon)
+        {
+            if (SceneManager.GetActiveScene().name == "Menu")
+            {
+                AccountUIManager.instance.saveButtons[0].onClick.AddListener(SaveHats);
+                AccountUIManager.instance.saveButtons[1].onClick.AddListener(SaveEyewear);
+                AccountUIManager.instance.saveButtons[2].onClick.AddListener(SaveCapes);
+            }
+        }        
     }
 
     public void SaveHats()

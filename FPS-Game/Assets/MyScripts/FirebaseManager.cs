@@ -8,8 +8,6 @@ using UnityEngine.SceneManagement;
 using Firebase.Database;
 using Photon.Pun;
 using UnityEngine.UI;
-using Photon.Realtime;
-using UnityEngine.Rendering.PostProcessing;
 
 
 public class FirebaseManager : MonoBehaviour

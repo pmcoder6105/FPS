@@ -59,9 +59,6 @@ public class ApplyColor : MonoBehaviour
 
         blockColor.color = fcp.color;
 
-        //PlayerPrefs.SetString("BeanPlayerColor", ColorUtility.ToHtmlStringRGB(matHealthy.GetColor("_MaterialColor")));
-        //fcp.TypeHex(PlayerPrefs.GetString("BeanPlayerColor"));
-
         StartCoroutine(firebaseManager.UpdatePlayerColor(ColorUtility.ToHtmlStringRGB(this.gameObject.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<MeshRenderer>().material.GetColor("_MaterialColor"))));
     }
 

@@ -37,7 +37,7 @@ public class AccountUIManager : MonoBehaviour
 
     public TMP_InputField usernameInputField;
 
-    public GameObject titleMenu;
+    public GameObject titleMenu, loadingMenu;
 
     public GameObject mainMenuBeanObject;
     public Material healthyMat;

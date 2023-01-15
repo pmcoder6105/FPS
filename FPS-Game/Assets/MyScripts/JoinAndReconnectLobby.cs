@@ -42,35 +42,17 @@ public class JoinAndReconnectLobby : MonoBehaviourPunCallbacks
 
     private IEnumerator Reconnect()
     {
-        //while (this.gameObject.activeSelf)
-        //{
-        //    yield return new WaitForSeconds(3f);
-        //    reconnectBtn.SetActive(true);
-        //}
-
         yield return new WaitForSeconds(3f);
 
         MenuManager.Instance.OpenMenu("title");
+        AccountUIManager.instance.loadingMenu.SetActive(false);
         playerViewerParent.SetActive(true);
     }
 
     public void Btn_Reconnect()
     {
-        PhotonNetwork.LoadLevel("Menu");
-        PhotonNetwork.ConnectUsingSettings();
-    }
-
-    public override void OnConnectedToMaster()
-    {
-        Debug.Log("Connected to Master");
-        PhotonNetwork.JoinLobby();
-        PhotonNetwork.AutomaticallySyncScene = true;
-    }
-
-    public override void OnJoinedLobby()
-    {
         MenuManager.Instance.OpenMenu("title");
-        Debug.Log("Joined Lobby");
+        AccountUIManager.instance.loadingMenu.SetActive(false);
         playerViewerParent.SetActive(true);
     }
 }

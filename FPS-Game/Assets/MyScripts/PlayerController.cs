@@ -10,8 +10,7 @@ using System.Linq;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
-{
-    [SerializeField] Image healthBarImage; // health bar image from Tutorial
+{    
     [SerializeField] GameObject ui; // ui from Tutorial
     
     [SerializeField] GameObject cameraHolder;
@@ -71,8 +70,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     GameObject micToggleText; // a UI text that shows if the mic is on or off to the player ingame
 
-    public BuildingSystem buildingSystem; 
-
     GameObject mapViewerCamera; // a camera that overlooks the map
 
     public AudioClip walkSound;
@@ -130,6 +127,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             killFeedManager = GameObject.Find("KillFeedManager").GetComponent<KillFeed>();
             //normalCam.gameObject.tag = "Untagged";
             needToClearFog = true;
+            PV.RPC(nameof(DeleteMeCheck), RpcTarget.AllBuffered);
         }
         else // if PV isn't mine
         {
@@ -153,6 +151,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Physics.gravity = new Vector3(0, -9.81f, 0);
             jumpForce = 300f;
         }
+    }
+
+    [PunRPC]
+    public void DeleteMeCheck()
+    {
+        Debug.LogError(PhotonNetwork.PlayerList);
     }
 
     private void Update()
@@ -264,7 +268,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             }
         }
         items[itemIndex].Use();
-        if (transform.position.y < -10f && PV.IsMine)
+        if (transform.position.y < -10f)
         {
             hasDiedFromFallDamage = true;
             Die(); // die            
