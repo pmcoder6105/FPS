@@ -125,9 +125,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             mapViewerCamera = GameObject.Find("RoomViewerCamera");
             firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
             killFeedManager = GameObject.Find("KillFeedManager").GetComponent<KillFeed>();
-            //normalCam.gameObject.tag = "Untagged";
             needToClearFog = true;
-            PV.RPC(nameof(DeleteMeCheck), RpcTarget.AllBuffered);
         }
         else // if PV isn't mine
         {
@@ -137,16 +135,20 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             for (int i = 0; i < canvas.Count(); i++)
             {
                 Destroy(canvas[i]); // destroy all the canvases that i want destroyed
-            }
-            //Destroy(buildingSystem.handHeldBlock); // destroy hand held block gameobject from the buildingsystem class
-            //Destroy(buildingSystem.blockCrosshair); // destroy block crosshair gameobject from the buildingsystem class            
+            }         
         }
 
+        SetGravity();
+    }
+
+    private void SetGravity()
+    {
         if (SceneManager.GetActiveScene().name == "Sky-Beans") // if the active scene is the low gravity scene
         {
             Physics.gravity = new Vector3(0, -2, 0); // set gravity lower
             jumpForce = 500; // increase jump force
-        } else
+        }
+        else
         {
             Physics.gravity = new Vector3(0, -9.81f, 0);
             jumpForce = 300f;
@@ -168,7 +170,31 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             return;
 
         normalCam.enabled = true;
+        SetCursorLockState();
 
+        ProcessMicrophoneToggle();
+        ProcessLeaveConfirmation();
+
+        if (isDead == true) // if dead, return
+            return;
+
+        playerManager.transform.position = this.gameObject.transform.position;
+        ProcessClearingFog();
+        Look();
+        Move();
+        Jump();
+        SetPlayerHealthShader(); // set player health shader
+        SetPlayerHealthInt();
+        SetHealthColorPropertyAndGlowShader();
+        ProcessWeaponSwitching();
+        items[itemIndex].Use();
+        ProcessFallDamageDeath();
+        PV.RPC(nameof(ProcessFootstepSFX), RpcTarget.All);
+        ProcessInventoryToggle();
+    }
+
+    private void SetCursorLockState()
+    {
         if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked && playerManager.hasDeathPanelActivated == false)
         {
             Cursor.lockState = CursorLockMode.None;
@@ -178,50 +204,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
+    }
 
-        string _deviceName = Microphone.devices[0]; // find the first device and log the name
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            micIsOn = !micIsOn;
-            GetComponent<MicrophoneToggle>().ToggleMicrophone();
-        }
-        if (micIsOn) micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic on"; // if the mic is on, set the mic UI text to "on"
-        else micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic off"; // if the mic is on, set the mic UI text to "off"
-
-        scoreBoard.GetComponent<ScoreBoard>().OpenLeaveConfirmation(); // call OpenLeaveConfirmation function from ScoreBoard class
-
-        if (scoreBoard.GetComponent<ScoreBoard>().leaveConfirmation.alpha == 1)
-        {
-            StartCoroutine(nameof(Leave)); // start Leave coroutine
-        }
-
-        if (isDead == true) // if dead, return
-            return;
-
-        playerManager.transform.position = this.gameObject.transform.position;
-        if (needToClearFog == true)
-        {
-            StartCoroutine(nameof(ClearFog));
-        }
-        Look();
-        Move();
-        Jump();
-        SetPlayerHealthShader(); // set player health shader
-        if (currentHealth <= 100 && currentHealth >= 50)
-        {
-            playerHealth = 3; // set the player health to 3
-        }
-        // if the current health is <= 49 and >= 30
-        if (currentHealth <= 49 && currentHealth >= 30)
-        {
-            playerHealth = 2; // set the player health to 2
-        }
-        // if the current health is <= 29 and >= 0
-        if (currentHealth <= 29 && currentHealth >= 0)
-        {
-            playerHealth = 1; // set the player health to 1
-        }
+    private void SetHealthColorPropertyAndGlowShader()
+    {
         if (PV.IsMine)
         {
             Hashtable hash = new(); // new hash
@@ -234,6 +220,35 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
             PV.RPC(nameof(SetGlowIntensitity), RpcTarget.All); // set glow shader intensity to all players using RPC
         }
+    }
+
+    private void ProcessFallDamageDeath()
+    {
+        if (transform.position.y < -10f)
+        {
+            hasDiedFromFallDamage = true;
+            Die(); // die            
+        }
+    }
+
+    private void ProcessInventoryToggle()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            inventory.GetComponent<Animator>().Play("InventoryBarTransition");
+            inventoryEnabled = true;
+            scoreBoard.GetComponent<ScoreBoard>().blur.SetActive(true);
+        }
+        if (Input.GetKeyUp(KeyCode.I))
+        {
+            inventory.GetComponent<Animator>().Play("InventoryBarIdle");
+            inventoryEnabled = false;
+            scoreBoard.GetComponent<ScoreBoard>().blur.SetActive(false);
+        }
+    }
+
+    private void ProcessWeaponSwitching()
+    {
         if (canSwitchWeapons)
         {
             for (int i = 0; i < items.Length; i++)
@@ -267,25 +282,55 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 }
             }
         }
-        items[itemIndex].Use();
-        if (transform.position.y < -10f)
+    }
+
+    private void SetPlayerHealthInt()
+    {
+        if (currentHealth <= 100 && currentHealth >= 50)
         {
-            hasDiedFromFallDamage = true;
-            Die(); // die            
+            playerHealth = 3; // set the player health to 3
         }
-        PV.RPC(nameof(ProcessFootstepSFX), RpcTarget.All);
-        if (Input.GetKeyDown(KeyCode.I))
+        // if the current health is <= 49 and >= 30
+        if (currentHealth <= 49 && currentHealth >= 30)
         {
-            inventory.GetComponent<Animator>().Play("InventoryBarTransition");
-            inventoryEnabled = true;
-            scoreBoard.GetComponent<ScoreBoard>().blur.SetActive(true);
+            playerHealth = 2; // set the player health to 2
         }
-        if (Input.GetKeyUp(KeyCode.I))
+        // if the current health is <= 29 and >= 0
+        if (currentHealth <= 29 && currentHealth >= 0)
         {
-            inventory.GetComponent<Animator>().Play("InventoryBarIdle");
-            inventoryEnabled = false;
-            scoreBoard.GetComponent<ScoreBoard>().blur.SetActive(false);
+            playerHealth = 1; // set the player health to 1
         }
+    }
+
+    private void ProcessClearingFog()
+    {
+        if (needToClearFog == true)
+        {
+            StartCoroutine(nameof(ClearFog));
+        }
+    }
+
+    private void ProcessLeaveConfirmation()
+    {
+        scoreBoard.GetComponent<ScoreBoard>().OpenLeaveConfirmation(); // call OpenLeaveConfirmation function from ScoreBoard class
+
+        if (scoreBoard.GetComponent<ScoreBoard>().leaveConfirmation.alpha == 1)
+        {
+            StartCoroutine(nameof(Leave)); // start Leave coroutine
+        }
+    }
+
+    private void ProcessMicrophoneToggle()
+    {
+        string _deviceName = Microphone.devices[0]; // find the first device and log the name
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            micIsOn = !micIsOn;
+            GetComponent<MicrophoneToggle>().ToggleMicrophone();
+        }
+        if (micIsOn) micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic on"; // if the mic is on, set the mic UI text to "on"
+        else micToggleText.GetComponent<TMP_Text>().text = "Click 'M' to toggle mic off"; // if the mic is on, set the mic UI text to "off"
     }
 
     [PunRPC]

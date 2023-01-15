@@ -154,9 +154,7 @@ public class PlayerManager : MonoBehaviour
 
     public void GetKill()
     {
-        PV.RPC(nameof(RPC_GetKill), PV.Owner);
-
-        
+        PV.RPC(nameof(RPC_GetKill), PV.Owner);        
     }
 
 
