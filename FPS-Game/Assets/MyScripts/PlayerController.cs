@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public GameObject damageNumber;
 
-    public bool needToClearFog = false;
+    public bool needToClearFog = true;
 
     public bool isMoving = false;
 
@@ -103,6 +103,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public GameObject lilBean;
 
     public KillFeed killFeedManager;
+    public GameObject fogClearer;
 
 
     private void Awake()
@@ -124,8 +125,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             micToggleText = GameObject.Find("MicToggleText");
             mapViewerCamera = GameObject.Find("RoomViewerCamera");
             firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
-            killFeedManager = GameObject.Find("KillFeedManager").GetComponent<KillFeed>();
-            needToClearFog = true;
+            GameObject clearer = Instantiate(fogClearer, this.transform, true);
+            clearer.GetComponent<ClearFog>().Clear(PV);
+            Destroy(clearer, 2);
+            //killFeedManager = GameObject.Find("KillFeedManager").GetComponent<KillFeed>();
+            //StartCoroutine(ClearFog());
+
         }
         else // if PV isn't mine
         {
@@ -155,12 +160,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
     }
 
-    [PunRPC]
-    public void DeleteMeCheck()
-    {
-        Debug.LogError(PhotonNetwork.PlayerList);
-    }
-
     private void Update()
     {
         if (PhotonNetwork.IsConnectedAndReady == false) // if player isn't connected and ready
@@ -178,11 +177,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (isDead == true) // if dead, return
             return;
 
-        playerManager.transform.position = this.gameObject.transform.position;
-        ProcessClearingFog();
+        playerManager.transform.position = this.gameObject.transform.position;       
         Look();
         Move();
         Jump();
+        //ProcessClearingFog();
         SetPlayerHealthShader(); // set player health shader
         SetPlayerHealthInt();
         SetHealthColorPropertyAndGlowShader();
@@ -302,14 +301,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
     }
 
-    private void ProcessClearingFog()
-    {
-        if (needToClearFog == true)
-        {
-            StartCoroutine(nameof(ClearFog));
-        }
-    }
-
     private void ProcessLeaveConfirmation()
     {
         scoreBoard.GetComponent<ScoreBoard>().OpenLeaveConfirmation(); // call OpenLeaveConfirmation function from ScoreBoard class
@@ -383,20 +374,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     void RPC_StopDustTrail()
     {
         dustTrailParticleSystem.GetComponent<ParticleSystem>().Emit(0);
-    }
-
-    IEnumerator ClearFog()
-    {
-        float elapsedTime = 0f;
-        elapsedTime += Time.timeSinceLevelLoad;
-        float percentComplete = elapsedTime / 1;
-        float lerpTime = Mathf.Lerp(0.2f, 0f, percentComplete);
-
-        RenderSettings.fogDensity = lerpTime;
-
-        yield return new WaitUntil(predicate: () => lerpTime == 0);
-
-        needToClearFog = false;
     }
 
     IEnumerator WalkSFX()
@@ -615,7 +592,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public void RPC_DisplayDamage()
     {
         GameObject playerHitEffect = Instantiate(playerHitParticleEffect, this.gameObject.transform.position, Quaternion.identity); // instantiate a player hit particle effect when you take damage
-        playerHitEffect.GetComponent<ParticleSystem>().Emit(15); // emit 15 particles
         Destroy(playerHitEffect, 2f); // destroy this in 2 secs
     }
 
@@ -854,8 +830,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [PunRPC] 
     void RPC_DisplayDeath()
     {
-        GameObject particleSystem = PhotonNetwork.Instantiate(nameof(redDeathParticleSystem), this.gameObject.transform.position, Quaternion.identity, 0); // instantiate a death particle effect
-        particleSystem.GetComponent<ParticleSystem>().Emit(30); // emit 30 particles
+        GameObject particleSystem = PhotonNetwork.Instantiate("GenericDeath", this.gameObject.transform.position, Quaternion.identity, 0); // instantiate a death particle effect
         Destroy(particleSystem, 5f); // destroy particle system in 5 seconds
 
         Destroy(playerVisuals); // destroy player visuals

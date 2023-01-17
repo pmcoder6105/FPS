@@ -19,16 +19,18 @@ public class PortalSystem : MonoBehaviour
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
         tie.gameObject.GetComponent<BoxCollider>().enabled = false;
 
-        other.transform.SetPositionAndRotation(new Vector3(tie.position.x, tie.position.y - 0.3f, tie.position.z), tie.rotation);
 
-        StartCoroutine(nameof(WarpCamera), other);
+        StartCoroutine(nameof(Warp), other);
     }
 
-    private IEnumerator WarpCamera(Collider other)
-    {       
-        other.gameObject.transform.root.transform.GetChild(0).GetChild(0).GetComponent<Animator>().Play("CameraWarpAnimation");
+    private IEnumerator Warp(Collider other)
+    {
+        yield return new WaitForSeconds(0.2f);
 
-        yield return new WaitForSeconds(1);
+        other.gameObject.transform.root.transform.GetChild(0).GetChild(0).GetComponent<Animator>().Play("CameraWarpAnimation");
+        other.transform.SetPositionAndRotation(new Vector3(tie.position.x, tie.position.y - 0.3f, tie.position.z), tie.rotation);
+
+        yield return new WaitForSeconds(.8f);
 
         this.gameObject.GetComponent<BoxCollider>().enabled = true;
         tie.gameObject.GetComponent<BoxCollider>().enabled = true;

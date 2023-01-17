@@ -174,11 +174,18 @@ public class SingleShotGun : Gun
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            cam.GetComponent<Animator>().Play("CameraZoomIn");
+            if (isSniper)
+                cam.GetComponent<Animator>().Play("SniperCameraZoomIn");
+            else
+                cam.GetComponent<Animator>().Play("CameraZoomIn");
+
         }
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
-            cam.GetComponent<Animator>().Play("CameraZoomOut");
+            if (isSniper)
+                cam.GetComponent<Animator>().Play("SniperCameraZoomOut");
+            else
+                cam.GetComponent<Animator>().Play("CameraZoomOut");
         }
     }
 
@@ -247,6 +254,7 @@ public class SingleShotGun : Gun
                 _canShoot = false;
                 playerController.canSwitchWeapons = false;
                 _currentAmmoInClip--;
+
 
                 StartCoroutine(ShootGun());
                 Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
@@ -466,7 +474,8 @@ public class SingleShotGun : Gun
         if (isShotGun == false)
         {
             animator.Play(reload.ToString(), 0, 0.0f);
-        } else if (isShotGun)
+        }
+        else if (isShotGun)
         {
             if (_currentAmmoInClip == 4)
             {
@@ -493,8 +502,8 @@ public class SingleShotGun : Gun
                 reloadTime = 87f;
                 animator.Play("ShotGunReload5", 0, 0.0f);
             }
-        }  
-        
+        }
+
         if (isSniper)
         {
             scope.SetActive(false);
@@ -506,17 +515,17 @@ public class SingleShotGun : Gun
                 scopePieces[i].SetActive(true);
             }
         }
-        canAim = false;        
-        _canShoot = false;        
+        canAim = false;
+        _canShoot = false;
 
-        yield return new WaitForSeconds(Time.smoothDeltaTime * reloadTime);
+        yield return new WaitForSeconds(reloadTime);
+
         canAim = true;
         isReloading = false;
         _canShoot = true;
         playerController.canSwitchWeapons = true;
 
         _currentAmmoInClip = clipSize;
-
     }
 
     void DetermineWeaponSway()
@@ -635,11 +644,17 @@ public class SingleShotGun : Gun
             canDaggerSwing = false;
         }
         DetermineRecoil();
-        
-        yield return new WaitForSeconds(fireRate * Time.smoothDeltaTime);
+
+        yield return new WaitForSeconds(fireRate);
+
         _canShoot = true;
         canDaggerSwing = true;
         playerController.canSwitchWeapons = true;
+    }
+
+    private void ResetShoot()
+    {
+        
     }
 
     void DetermineRecoil()

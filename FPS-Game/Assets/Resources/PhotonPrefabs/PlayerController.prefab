@@ -11806,7 +11806,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -13884,6 +13884,7 @@ MonoBehaviour:
   xpAnimation: {fileID: 583976165800334038}
   lilBean: {fileID: 8689864033967333580}
   killFeedManager: {fileID: 0}
+  fogClearer: {fileID: 2463615234085099380, guid: 24464a12c1207b04f948503479bfc86d, type: 3}
 --- !u!54 &2567718919365197072
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17209,11 +17210,11 @@ MonoBehaviour:
   bulletImpactVFX: {fileID: 8923324794198242486, guid: 5acee24a3668e214a931fc7dc4acd0c8, type: 3}
   scopePieces: []
   playerID: 0
-  fireRate: 2
+  fireRate: 0.1
   clipSize: 30
   reservedAmmoCapacity: 270
   isAutomatic: 1
-  reloadTime: 68
+  reloadTime: 3.5
   _canShoot: 0
   muzzleFlashEffect: {fileID: 1336949550903370, guid: 4543ab5e3d405ec40a8d4e9aa5165030, type: 3}
   muzzleFlashSpawnPlace: {fileID: 1417356945351635494}
@@ -17342,7 +17343,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -21908,11 +21909,11 @@ MonoBehaviour:
   bulletImpactVFX: {fileID: 8923324794198242486, guid: 5acee24a3668e214a931fc7dc4acd0c8, type: 3}
   scopePieces: []
   playerID: 0
-  fireRate: 3
+  fireRate: 0.15
   clipSize: 15
   reservedAmmoCapacity: 30
   isAutomatic: 0
-  reloadTime: 48
+  reloadTime: 2.5
   _canShoot: 0
   muzzleFlashEffect: {fileID: 3442750785543676353, guid: f7717fc28be77fd4bbc7e76966fe51e9, type: 3}
   muzzleFlashSpawnPlace: {fileID: 7829378323093517404}
@@ -22043,7 +22044,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -28805,11 +28806,11 @@ MonoBehaviour:
   bulletImpactVFX: {fileID: 8923324794198242486, guid: 5acee24a3668e214a931fc7dc4acd0c8, type: 3}
   scopePieces: []
   playerID: 0
-  fireRate: 21
+  fireRate: 1.02
   clipSize: 5
   reservedAmmoCapacity: 270
   isAutomatic: 0
-  reloadTime: 107.4
+  reloadTime: 4.5
   _canShoot: 0
   muzzleFlashEffect: {fileID: 1336949550903370, guid: 4543ab5e3d405ec40a8d4e9aa5165030, type: 3}
   muzzleFlashSpawnPlace: {fileID: 6682651339321976925}
@@ -28937,7 +28938,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -31206,7 +31207,7 @@ MonoBehaviour:
   clipSize: 1
   reservedAmmoCapacity: 3
   isAutomatic: 0
-  reloadTime: 104
+  reloadTime: 5.2
   _canShoot: 0
   muzzleFlashEffect: {fileID: 1336949550903370, guid: 4543ab5e3d405ec40a8d4e9aa5165030, type: 3}
   muzzleFlashSpawnPlace: {fileID: 8089965405699872532}
@@ -31334,7 +31335,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -46548,6 +46549,47 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8784314265392742630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7795593234172517854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 9151847853643499030}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &9151847853643499030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7795593234172517854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters: []
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!4 &7795593234172517855 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7399821039810068613, guid: a85ed85edce37894f98bafe1c07f94db, type: 3}
