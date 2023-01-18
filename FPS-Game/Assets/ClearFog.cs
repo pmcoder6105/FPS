@@ -10,8 +10,15 @@ public class ClearFog : MonoBehaviour
     {
         if (pv.IsMine)
         {
-            RenderSettings.fogDensity = this.transform.position.x;
-
+            GetComponent<Animator>().Play("ClearFogAnim");
         }
+    }
+
+    private void Update()
+    {
+        if (!transform.root.gameObject.GetComponent<PhotonView>().IsMine)
+            return;
+
+        RenderSettings.fogDensity = this.transform.position.x;
     }
 }

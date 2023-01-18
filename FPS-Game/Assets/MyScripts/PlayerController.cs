@@ -125,9 +125,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             micToggleText = GameObject.Find("MicToggleText");
             mapViewerCamera = GameObject.Find("RoomViewerCamera");
             firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
-            GameObject clearer = Instantiate(fogClearer, this.transform, true);
+            GameObject clearer = Instantiate(fogClearer, this.transform);
             clearer.GetComponent<ClearFog>().Clear(PV);
-            Destroy(clearer, 2);
+            Destroy(clearer, 10f);
             //killFeedManager = GameObject.Find("KillFeedManager").GetComponent<KillFeed>();
             //StartCoroutine(ClearFog());
 

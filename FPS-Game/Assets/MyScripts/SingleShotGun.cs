@@ -131,7 +131,8 @@ public class SingleShotGun : Gun
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
         {
             bulletBloomAmount *= 2;
-        } if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) bulletBloomAmount /= 2;
+        }
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) bulletBloomAmount /= 2;
 
         if (isReloading)
         {
@@ -172,20 +173,39 @@ public class SingleShotGun : Gun
             }
         }
 
+    }
+
+    private void CamWarp()
+    {
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            if (isSniper)
-                cam.GetComponent<Animator>().Play("SniperCameraZoomIn");
-            else
+            if (isDagger)
+                return;
+
+            if (!isSniper)
+            {
                 cam.GetComponent<Animator>().Play("CameraZoomIn");
+            }
+            else
+            {
+                cam.GetComponent<Animator>().Play("SniperCameraZoomIn");
+                Debug.Log("is a sniper");
+            }
 
         }
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
-            if (isSniper)
-                cam.GetComponent<Animator>().Play("SniperCameraZoomOut");
-            else
+            if (isDagger)
+                return;
+
+            if (!isSniper)
+            {
                 cam.GetComponent<Animator>().Play("CameraZoomOut");
+            }
+            else
+            {
+                cam.GetComponent<Animator>().Play("SniperCameraZoomOut");
+            }
         }
     }
 
@@ -205,6 +225,7 @@ public class SingleShotGun : Gun
             
 
         Shoot();
+        CamWarp();
 
         if (!isSniper)
         {
