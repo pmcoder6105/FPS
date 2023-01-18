@@ -186,7 +186,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         SetPlayerHealthInt();
         SetHealthColorPropertyAndGlowShader();
         ProcessWeaponSwitching();
-        items[itemIndex].Use();
         ProcessFallDamageDeath();
         PV.RPC(nameof(ProcessFootstepSFX), RpcTarget.All);
         ProcessInventoryToggle();
@@ -577,6 +576,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (!PV.IsMine)
             return;
         rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
+        items[itemIndex].Use();
     }
 
     //TakeDamage with parameter damage from tutorial
