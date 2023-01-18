@@ -104,7 +104,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public KillFeed killFeedManager;
     public GameObject fogClearer;
-
+    public float drag;
+    public float playerHeight;
+    //public LayerMask whatIsGround;
 
     private void Awake()
     {
@@ -180,6 +182,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Look();
         Move();
         Jump();
+        SetGroundedState();
         //ProcessClearingFog();
         SetPlayerHealthShader(); // set player health shader
         SetPlayerHealthInt();
@@ -564,9 +567,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
 
     // set grounded state from tutorial
-    public void SetGroundedState(bool _grounded)
+    public void SetGroundedState()
     {
-        grounded = _grounded;
+        grounded = Physics.Raycast(transform.position, Vector3.down, (float)(playerHeight * 0.5 + 0.2f));
+
+        if (grounded)
+        {
+            rb.drag = drag;
+        }
+        else
+        {
+            rb.drag = 0;
+        }
     }
 
     // IDK what Rugbug did with this, but this is from the tutorial
