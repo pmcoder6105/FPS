@@ -79,7 +79,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public bool hasDiedFromFallDamage = false;
 
     GameObject inventory;
-    //public GameObject inventoryNumbers;
     public bool inventoryEnabled = false;
 
     public ParticleSystem dustTrailParticleSystem;
@@ -106,7 +105,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public GameObject fogClearer;
     public float drag;
     public float playerHeight;
-    //public LayerMask whatIsGround;
+
+    bool shouldWaddle;
 
     private void Awake()
     {
@@ -171,26 +171,47 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         normalCam.enabled = true;
         SetCursorLockState();
-
         ProcessMicrophoneToggle();
         ProcessLeaveConfirmation();
 
-        if (isDead == true) // if dead, return
+        if (isDead) // if dead, return
             return;
 
-        playerManager.transform.position = this.gameObject.transform.position;       
+        playerManager.transform.position = this.gameObject.transform.position;
         Look();
         Move();
         Jump();
         SetGroundedState();
-        //ProcessClearingFog();
-        SetPlayerHealthShader(); // set player health shader
+        SetPlayerHealthShader();
         SetPlayerHealthInt();
         SetHealthColorPropertyAndGlowShader();
         ProcessWeaponSwitching();
         ProcessFallDamageDeath();
         PV.RPC(nameof(ProcessFootstepSFX), RpcTarget.All);
         ProcessInventoryToggle();
+        ProcessWaddle();
+    }
+
+    private void ProcessWaddle()
+    {
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
+        {
+            if (!grounded)
+                return;
+
+            shouldWaddle = true;
+        }
+        else
+        {
+            shouldWaddle = false;
+        }
+
+        PlayWaddle(shouldWaddle);
+    }
+
+    private void PlayWaddle(bool _moving)
+    {
+        playerVisuals.GetComponent<Animator>().SetBool("isMoving", _moving);
     }
 
     private void SetCursorLockState()
