@@ -189,29 +189,29 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         ProcessFallDamageDeath();
         PV.RPC(nameof(ProcessFootstepSFX), RpcTarget.All);
         ProcessInventoryToggle();
-        ProcessWaddle();
+        PV.RPC(nameof(ProcessWaddle), RpcTarget.All);
     }
 
+    [PunRPC]
     private void ProcessWaddle()
     {
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
+        if (!PV.IsMine)
+            return;
+
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
         {
             if (!grounded)
                 return;
 
             shouldWaddle = true;
         }
-        else
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
         {
             shouldWaddle = false;
         }
 
-        PlayWaddle(shouldWaddle);
-    }
-
-    private void PlayWaddle(bool _moving)
-    {
-        playerVisuals.GetComponent<Animator>().SetBool("isMoving", _moving);
+        playerVisuals.GetComponent<Animator>().SetBool("isMoving", shouldWaddle);
     }
 
     private void SetCursorLockState()
