@@ -5,12 +5,14 @@ using Photon.Pun;
 
 public class ClearFog : MonoBehaviour
 {
+    public bool shouldClear = false;
 
     public void Clear(PhotonView pv)
     {
         if (pv.IsMine)
         {
             GetComponent<Animator>().Play("ClearFogAnim");
+            shouldClear = true;
         }
     }
 
@@ -19,6 +21,9 @@ public class ClearFog : MonoBehaviour
         if (!transform.root.gameObject.GetComponent<PhotonView>().IsMine)
             return;
 
-        RenderSettings.fogDensity = this.transform.position.x;
+        if (!shouldClear)
+            return;
+
+        RenderSettings.fogDensity = transform.localPosition.x;
     }
 }

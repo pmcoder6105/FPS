@@ -127,9 +127,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
             GameObject clearer = Instantiate(fogClearer, this.transform);
             clearer.GetComponent<ClearFog>().Clear(PV);
-            Destroy(clearer, 10f);
+            Destroy(clearer, 2);
             //killFeedManager = GameObject.Find("KillFeedManager").GetComponent<KillFeed>();
-            //StartCoroutine(ClearFog());
 
         }
         else // if PV isn't mine
