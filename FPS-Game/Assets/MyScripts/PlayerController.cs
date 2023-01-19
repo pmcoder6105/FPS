@@ -108,6 +108,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     bool shouldWaddle;
 
+    public GameObject vignetteFlash;
+    public GameObject permVignetteFlash;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -186,6 +189,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         SetPlayerHealthInt();
         SetHealthColorPropertyAndGlowShader();
         ProcessWeaponSwitching();
+        SetPermVignetteFlash();
         ProcessFallDamageDeath();
         PV.RPC(nameof(ProcessFootstepSFX), RpcTarget.All);
         ProcessInventoryToggle();
@@ -320,6 +324,25 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (currentHealth <= 29 && currentHealth >= 0)
         {
             playerHealth = 1; // set the player health to 1
+            //Open perm vignette
+        }
+    }
+
+    private void SetPermVignetteFlash()
+    {
+        if (isDead)
+            return;
+
+
+        if (currentHealth <= 25)
+        {
+            permVignetteFlash.SetActive(true);
+            float reverse = 25 - currentHealth;
+            permVignetteFlash.GetComponent<CanvasGroup>().alpha = reverse / 25;
+        }
+        else
+        {
+            permVignetteFlash.SetActive(false);
         }
     }
 
@@ -688,6 +711,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         CancelInvoke(nameof(StartRegen)); // first, cancel the StartRegen function invoke
         Invoke(nameof(StartRegen), 5f); // then, start invoking StartRegen in 5 secs
         canRegenerateHealth = false; // set canRegenerateHealth to false
+
+        int rot = Random.Range(-5, 6);
+        GameObject flash = Instantiate(vignetteFlash, new Vector3(0, 0, 0), new Quaternion(0, 0, rot, 0));
+        Destroy(flash, 3f);
 
         
         // if current health <= 0
