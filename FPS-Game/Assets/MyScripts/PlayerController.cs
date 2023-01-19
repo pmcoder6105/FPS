@@ -713,7 +713,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         canRegenerateHealth = false; // set canRegenerateHealth to false
 
         int rot = Random.Range(-5, 6);
-        GameObject flash = Instantiate(vignetteFlash, new Vector3(0, 0, 0), new Quaternion(0, 0, rot, 0), ui.transform);
+        GameObject flash = Instantiate(vignetteFlash, ui.transform);
+        flash.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, rot);
         Destroy(flash, 3f);
 
         
@@ -727,7 +728,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
                 return;
 
             PV.RPC(nameof(killFeedManager.OnPlayerKilled), RpcTarget.All, info.Sender.NickName, PhotonNetwork.LocalPlayer.NickName);
-
 
             playerManager.killer = info.Sender;
 
