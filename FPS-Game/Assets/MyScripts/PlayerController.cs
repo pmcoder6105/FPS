@@ -713,7 +713,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         canRegenerateHealth = false; // set canRegenerateHealth to false
 
         int rot = Random.Range(-5, 6);
-        GameObject flash = Instantiate(vignetteFlash, new Vector3(0, 0, 0), new Quaternion(0, 0, rot, 0));
+        GameObject flash = Instantiate(vignetteFlash, new Vector3(0, 0, 0), new Quaternion(0, 0, rot, 0), ui.transform);
         Destroy(flash, 3f);
 
         
