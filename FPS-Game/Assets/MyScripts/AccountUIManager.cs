@@ -13,7 +13,7 @@ public class AccountUIManager : MonoBehaviour
     public GameObject registerUI;
 
 
-
+    public GameObject playerViewer;
 
     //Login variables
     [Header("Login")]

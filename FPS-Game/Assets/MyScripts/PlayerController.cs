@@ -521,7 +521,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             while (PhotonNetwork.InRoom) // while in a room, yield
                 yield return null;
 
-            JoinAndReconnectLobby.Singleton.OpenTitle();
             PhotonNetwork.LoadLevel("Menu"); // load scene 0 (main menu)
         }
     }

@@ -25,6 +25,10 @@ public class LoadingMenu : MonoBehaviour
 
     [SerializeField] GameObject loading;
 
+    [SerializeField] GameObject canvas;
+
+    bool stopSFX = false;
+
     void Start()
     {
         int loadingClip = Random.Range(1, 4);
@@ -42,13 +46,14 @@ public class LoadingMenu : MonoBehaviour
             //Load Main Menu
             chooser.SetActive(true);
             StopCoroutine("GenerateTip");
-            chooserButtons[0].onClick.AddListener(FreeForAllMenu);
+            canvas.GetComponent<AudioSource>().enabled = true;
+            //chooserButtons[0].onClick.AddListener(FreeForAllMenu);
             //chooserButtons[1].onClick.AddListener(FreeForAllMenu);
             //chooserButtons[2].onClick.AddListener(FreeForAllMenu);
         }
     }
 
-    private void FreeForAllMenu()
+    public void FreeForAllMenu()
     {
         loading.SetActive(true);
         

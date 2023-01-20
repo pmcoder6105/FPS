@@ -84,6 +84,20 @@ MonoBehaviour:
       m_Height: 23
     m_Scale: 1
     m_AtlasIndex: 0
+  - m_Index: 22
+    m_Metrics:
+      m_Width: 36.71875
+      m_Height: 45.546875
+      m_HorizontalBearingX: 0.453125
+      m_HorizontalBearingY: 63
+      m_HorizontalAdvance: 37.625
+    m_GlyphRect:
+      m_X: 351
+      m_Y: 500
+      m_Width: 38
+      m_Height: 46
+    m_Scale: 1
+    m_AtlasIndex: 0
   - m_Index: 25
     m_Metrics:
       m_Width: 50.03125
@@ -1302,20 +1316,6 @@ MonoBehaviour:
       m_Height: 21
     m_Scale: 1
     m_AtlasIndex: 0
-  - m_Index: 22
-    m_Metrics:
-      m_Width: 36.71875
-      m_Height: 45.546875
-      m_HorizontalBearingX: 0.453125
-      m_HorizontalBearingY: 63
-      m_HorizontalAdvance: 37.625
-    m_GlyphRect:
-      m_X: 351
-      m_Y: 500
-      m_Width: 38
-      m_Height: 46
-    m_Scale: 1
-    m_AtlasIndex: 0
   m_CharacterTable:
   - m_ElementType: 1
     m_Unicode: 32
@@ -1328,6 +1328,10 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 34
     m_GlyphIndex: 21
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 35
+    m_GlyphIndex: 22
     m_Scale: 1
   - m_ElementType: 1
     m_Unicode: 38
@@ -1676,10 +1680,6 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 8230
     m_GlyphIndex: 171
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 35
-    m_GlyphIndex: 22
     m_Scale: 1
   m_AtlasTextures:
   - {fileID: 4348989554631722686}
@@ -2495,7 +2495,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: BurbankBigCondensed-Black Atlas Material
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
-  m_ShaderKeywords: UNDERLAY_ON
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

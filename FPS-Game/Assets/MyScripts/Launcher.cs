@@ -5,6 +5,8 @@ using Photon.Pun;
 using TMPro;
 using Photon.Realtime;
 using System.Linq;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Launcher : MonoBehaviourPunCallbacks
 {
@@ -34,6 +36,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public GameObject customizeBeanModel;
 
+    public Button gameMode;
+
 
     private void Awake()
     {
@@ -43,7 +47,11 @@ public class Launcher : MonoBehaviourPunCallbacks
     void Start()
     {
         Debug.Log("Connecting to Master");
-        PhotonNetwork.ConnectUsingSettings();
+        if (!PhotonNetwork.IsConnectedAndReady)
+        {
+            PhotonNetwork.ConnectUsingSettings();
+        }
+        gameMode.onClick.AddListener(ReturnToGameMode);
     }
 
     public override void OnConnectedToMaster()
@@ -64,6 +72,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     void Update()
     {
         DisplayPlayerInMainMenu();
+
     }
 
     private void DisplayPlayerInMainMenu()
@@ -149,7 +158,18 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         MenuManager.Instance.OpenMenu("title");
-    }   
+    } 
+    
+    public void ReturnToGameMode()
+    {
+        Destroy(GameObject.Find("VoiceChatManager"));
+        Destroy(GameObject.Find("FirebaseManager"));
+        Destroy(GameObject.Find("AccessoriesManager"));
+        Destroy(GameObject.Find("LevelUpManager"));
+        Destroy(GameObject.Find("RoomManager"));
+        SceneManager.LoadScene("LoadingScene");
+        
+    }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {

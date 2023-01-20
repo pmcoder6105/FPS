@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class JoinAndReconnectLobby : MonoBehaviourPunCallbacks
 {    
-    [SerializeField] GameObject reconnectBtn;
+    //[SerializeField] GameObject reconnectBtn;
     [SerializeField] GameObject playerViewerParent;
 
     private static JoinAndReconnectLobby _singleton;
@@ -15,6 +15,17 @@ public class JoinAndReconnectLobby : MonoBehaviourPunCallbacks
     {
         Singleton = this;
         DontDestroyOnLoad(this.gameObject);
+    }
+
+    private void Update()
+    {
+        if (Time.timeSinceLevelLoad <= Mathf.Epsilon)
+        {
+            if (SceneManager.GetActiveScene().name == "Menu")
+            {
+                OpenTitle();
+            }
+        }
     }
 
     public static JoinAndReconnectLobby Singleton
@@ -42,11 +53,23 @@ public class JoinAndReconnectLobby : MonoBehaviourPunCallbacks
 
     private IEnumerator Reconnect()
     {
+        Debug.Log("reconnect 1");
+        //while(AccountUIManager.instance.loadingMenu.activeSelf)
+        //{
+        //    Debug.Log("reconnect 2");
+        //    yield return new WaitForSeconds(3f);
+
+        //    Debug.Log("reconnect 3");
+        //    AccountUIManager.instance.titleMenu.SetActive(true);
+        //    AccountUIManager.instance.loadingMenu.SetActive(false);
+        //    playerViewerParent.SetActive(true);
+        //}        
         yield return new WaitForSeconds(3f);
 
-        MenuManager.Instance.OpenMenu("title");
+        Debug.Log("reconnect 3");
+        AccountUIManager.instance.titleMenu.SetActive(true);
         AccountUIManager.instance.loadingMenu.SetActive(false);
-        playerViewerParent.SetActive(true);
+        AccountUIManager.instance.playerViewer.SetActive(true);
     }
 
     public void Btn_Reconnect()
