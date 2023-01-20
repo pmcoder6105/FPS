@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class LoadingMenu : MonoBehaviour
 {
@@ -17,6 +18,13 @@ public class LoadingMenu : MonoBehaviour
 
     [SerializeField] int amountOfTips;
     // Start is called before the first frame update
+
+    [SerializeField] GameObject chooser;
+
+    [SerializeField] Button[] chooserButtons;
+
+    [SerializeField] GameObject loading;
+
     void Start()
     {
         int loadingClip = Random.Range(1, 4);
@@ -32,9 +40,19 @@ public class LoadingMenu : MonoBehaviour
         if (isDone)
         {
             //Load Main Menu
-            SceneManager.LoadScene("Menu");
+            chooser.SetActive(true);
             StopCoroutine("GenerateTip");
+            chooserButtons[0].onClick.AddListener(FreeForAllMenu);
+            //chooserButtons[1].onClick.AddListener(FreeForAllMenu);
+            //chooserButtons[2].onClick.AddListener(FreeForAllMenu);
         }
+    }
+
+    private void FreeForAllMenu()
+    {
+        loading.SetActive(true);
+        
+        SceneManager.LoadScene("Menu");
     }
 
     private IEnumerator GenerateTip()
