@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class CullGuns : MonoBehaviour
 {
@@ -26,9 +27,20 @@ public class CullGuns : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (PV.IsMine)
+        if (SceneManager.GetActiveScene().name != "ParkourMap")
         {
-            Debug.Log("Should set all weapons' layer to Weapon");
+            if (PV.IsMine)
+            {
+                Debug.Log("Should set all weapons' layer to Weapon");
+                for (int i = 0; i < weapons.Count(); i++)
+                {
+                    weapons[i].layer = LayerMask.NameToLayer("Weapon");
+                    SetLayerRecursively(weapons[i], 7);
+                }
+            }
+        }
+        else
+        {
             for (int i = 0; i < weapons.Count(); i++)
             {
                 weapons[i].layer = LayerMask.NameToLayer("Weapon");
