@@ -154,7 +154,7 @@ public class FirebaseManager : MonoBehaviour
 
     private void Update()
     {
-        if (SceneManager.GetActiveScene().name == "Menu")
+        if (SceneManager.GetActiveScene().name == "Menu" || SceneManager.GetActiveScene().name == "ParkourMenu")
         {
             if (Time.timeSinceLevelLoad < Mathf.Epsilon) 
             {
@@ -167,8 +167,10 @@ public class FirebaseManager : MonoBehaviour
                 return;
             AccountUIManager.instance.accountDetailsEmail.text = "Your email is: " + User.Email;
         }
-        if (SceneManager.GetActiveScene().name != "Menu")
+        if (SceneManager.GetActiveScene().name != "Menu" || SceneManager.GetActiveScene().name != "ParkourMenu")
         {
+            if (User == null)
+                return;
             if (Time.timeSinceLevelLoad < Mathf.Epsilon)
             {
                 StartCoroutine(LoadSettings());
@@ -286,18 +288,28 @@ public class FirebaseManager : MonoBehaviour
 
     public void LoadAllInitialDatabaseInfo()
     {
-        StartCoroutine(LoadUsernameData());
-        StartCoroutine(LoadSettings());
-        StartCoroutine(LoadExperience());
-        StartCoroutine(LoadApplicationGenuinity());
-        StartCoroutine(LoadKills());
-        StartCoroutine(CheckForRemoveHat());
-        StartCoroutine(CheckForRemoveEyeWear());
-        StartCoroutine(CheckForRemoveCape());
-        StartCoroutine(LoadHats());
-        StartCoroutine(LoadEyewear());
-        StartCoroutine(LoadCapes());
-        StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));        
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            StartCoroutine(LoadUsernameData());
+            StartCoroutine(LoadSettings());
+            StartCoroutine(LoadExperience());
+            StartCoroutine(LoadApplicationGenuinity());
+            StartCoroutine(LoadKills());
+            StartCoroutine(CheckForRemoveHat());
+            StartCoroutine(CheckForRemoveEyeWear());
+            StartCoroutine(CheckForRemoveCape());
+            StartCoroutine(LoadHats());
+            StartCoroutine(LoadEyewear());
+            StartCoroutine(LoadCapes());
+            StartCoroutine(LoadPlayerColorDataMainMenuBeanModel(AccountUIManager.instance.mainMenuBeanObject, AccountUIManager.instance.fcp, AccountUIManager.instance.healthyMat));
+        }
+        else
+        {
+            //Load XP
+            //Load gun golden amount
+            //Load settings
+            //Load tutorial play time
+        }
     }
 
     private IEnumerator Register(string _email, string _password, string _username)
@@ -480,28 +492,77 @@ public class FirebaseManager : MonoBehaviour
 
             if (snapshot.HasChild("playTimes"))
             {
-                if (int.Parse(snapshot.Child("playTimes").Value.ToString()) == 0)
+                if (SceneManager.GetActiveScene().name == "Menu")
                 {
-                    AccountUIManager.instance.tutCanvas.SetActive(true);
-                    StartCoroutine(UpdateApplicationGenuinity(1));
+                    if (int.Parse(snapshot.Child("playTimes").Value.ToString()) == 0)
+                    {
+                        AccountUIManager.instance.tutCanvas.SetActive(true);
+                        if (SceneManager.GetActiveScene().name == "Menu")
+                        {
+                            StartCoroutine(UpdateApplicationGenuinity(1));
+
+                        }
+                    }
+                    if (int.Parse(snapshot.Child("playTimes").Value.ToString()) == 1)
+                    {
+                        AccountUIManager.instance.tutCanvas.SetActive(false);
+                    }
                 }
-                if (int.Parse(snapshot.Child("playTimes").Value.ToString()) == 1)
+                if (SceneManager.GetActiveScene().name == "ParkourMenu")
                 {
-                    AccountUIManager.instance.tutCanvas.SetActive(false);
+                    if (int.Parse(snapshot.Child("parkourplayTimes").Value.ToString()) == 0)
+                    {
+                        AccountUIManager.instance.tutCanvas.SetActive(true);
+                        if (SceneManager.GetActiveScene().name == "ParkourMenu")
+                        {
+                            StartCoroutine(UpdateParkourApplicationGenuinity(1));
+
+                        }
+                    }
+                    if (int.Parse(snapshot.Child("parkourplayTimes").Value.ToString()) == 1)
+                    {
+                        AccountUIManager.instance.tutCanvas.SetActive(false);
+                    }
                 }
             }
             else
             {
                 AccountUIManager.instance.tutCanvas.SetActive(true);
-                StartCoroutine(UpdateApplicationGenuinity(1));
+                if (SceneManager.GetActiveScene().name == "Menu")
+                {
+                    StartCoroutine(UpdateApplicationGenuinity(1));
+
+                }
+
+                if (SceneManager.GetActiveScene().name == "ParkourMenu")
+                {
+                    StartCoroutine(UpdateParkourApplicationGenuinity(1));
+
+                }
             }
         }
     }
 
-    public IEnumerator UpdateApplicationGenuinity(int playTime)
+    public IEnumerator UpdateApplicationGenuinity(int freeforAllplayTime)
     {
         //Call the Firebase auth update user profile function passing the profile with the username
-        var DBTask = DBReference.Child("users").Child(User.UserId).Child("playTimes").SetValueAsync(playTime);
+        var DBTask = DBReference.Child("users").Child(User.UserId).Child("playTimes").SetValueAsync(freeforAllplayTime);
+        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+        }
+        else
+        {
+            StartCoroutine(LoadApplicationGenuinity());
+        }
+    }
+
+    public IEnumerator UpdateParkourApplicationGenuinity(int parkour)
+    {
+        //Call the Firebase auth update user profile function passing the profile with the username
+        var DBTask = DBReference.Child("users").Child(User.UserId).Child("parkourplayTimes").SetValueAsync(parkour);
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
 
         if (DBTask.Exception != null)
