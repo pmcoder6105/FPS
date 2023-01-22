@@ -91,4 +91,9 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
 
         }
     }
+
+    public void DisableCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
 }

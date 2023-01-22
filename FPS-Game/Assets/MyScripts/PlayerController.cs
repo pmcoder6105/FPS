@@ -133,6 +133,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             GameObject clearer = Instantiate(fogClearer, this.transform);
             clearer.GetComponent<ClearFog>().Clear(PV);
             Destroy(clearer, 2);
+            GameObject.Find("yes i do").GetComponent<Button>().onClick.AddListener(ProcessLeaveConfirmation);
+
             //killFeedManager = GameObject.Find("KillFeedManager").GetComponent<KillFeed>();
 
         }
@@ -175,7 +177,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         normalCam.enabled = true;
         SetCursorLockState();
         ProcessMicrophoneToggle();
-        ProcessLeaveConfirmation();
+        //ProcessLeaveConfirmation();
 
         if (isDead) // if dead, return
             return;
@@ -188,6 +190,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         SetPlayerHealthShader();
         SetPlayerHealthInt();
         SetHealthColorPropertyAndGlowShader();
+        scoreBoard.GetComponent<ScoreBoard>().OpenLeaveConfirmation();
         ProcessWeaponSwitching();
         SetPermVignetteFlash();
         ProcessFallDamageDeath();
@@ -220,12 +223,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void SetCursorLockState()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked && playerManager.hasDeathPanelActivated == false)
+        if (Input.GetKeyDown(KeyCode.Escape) && Cursor.lockState == CursorLockMode.Locked// && playerManager.hasDeathPanelActivated == false
+            )
         {
             Cursor.lockState = CursorLockMode.None;
         }
         // if you click escape and the death panel hasn't been instantiated, if the scoreboard isn't active, and if the leave confirmation is disactive, then unlock cursor
-        if (Input.GetMouseButtonDown(0) && Cursor.lockState == CursorLockMode.None && playerManager.hasDeathPanelActivated == false && scoreBoard.GetComponent<ScoreBoard>().isOpen == false && scoreBoard.GetComponent<ScoreBoard>().leaveConfirmation.alpha != 1)
+        if (Input.GetMouseButtonDown(0) && Cursor.lockState == CursorLockMode.None&& playerManager.hasDeathPanelActivated == false && scoreBoard.GetComponent<ScoreBoard>().isOpen == false && scoreBoard.GetComponent<ScoreBoard>().leaveConfirmation.alpha != 1
+            )
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -346,14 +351,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
     }
 
-    private void ProcessLeaveConfirmation()
+    void ProcessLeaveConfirmation()
     {
-        scoreBoard.GetComponent<ScoreBoard>().OpenLeaveConfirmation(); // call OpenLeaveConfirmation function from ScoreBoard class
+        StartCoroutine(nameof(Leave)); // start Leave coroutine
 
-        if (scoreBoard.GetComponent<ScoreBoard>().leaveConfirmation.alpha == 1)
-        {
-            StartCoroutine(nameof(Leave)); // start Leave coroutine
-        }
     }
 
     private void ProcessMicrophoneToggle()
@@ -498,11 +499,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             yield return new WaitForSeconds(0.01f); // wait for 0.01 seconds
 
-            // if esc is pressed
-            if (Input.GetKeyDown(KeyCode.Escape)) 
-            {
-                StartCoroutine(DisconnectAndLoad()); // start Disconnect And Load coroutine
-            }
+            StartCoroutine(DisconnectAndLoad()); // start Disconnect And Load coroutine
         }
     }
 

@@ -94,6 +94,8 @@ public class SingleShotGun : Gun
     public GameObject otherGunScopeReference;
 
     public float bulletBloomAmount;
+    public float doubleBulletBloom;
+    public float originalBloom;
 
     [SerializeField] GameObject shield;
 
@@ -120,7 +122,8 @@ public class SingleShotGun : Gun
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
-        
+        doubleBulletBloom = bulletBloomAmount * 2;
+        originalBloom = bulletBloomAmount;
     }
 
     private void FixedUpdate()
@@ -130,9 +133,12 @@ public class SingleShotGun : Gun
 
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
         {
-            bulletBloomAmount *= 2;
+            bulletBloomAmount = doubleBulletBloom;
         }
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) bulletBloomAmount /= 2;
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+        {
+            bulletBloomAmount = originalBloom;
+        }
 
         if (isReloading)
         {
@@ -586,20 +592,20 @@ public class SingleShotGun : Gun
         
         if (Input.GetMouseButtonDown(1))
         {
-            bulletBloomAmount /= 2;
+            bulletBloomAmount = doubleBulletBloom;
             if (isDagger)
                 return;
-            playerController.walkSpeed /= 2;
-            playerController.sprintSpeed /= 2;
+            playerController.walkSpeed = 2.5f;
+            playerController.sprintSpeed = 5;
 
         }
-        if (Input.GetMouseButtonUp(1))
+        else if (Input.GetMouseButtonUp(1))
         {
-            bulletBloomAmount *= 2;
+            bulletBloomAmount = originalBloom;
             if (isDagger)
                 return;
-            playerController.walkSpeed *= 2;
-            playerController.sprintSpeed *= 2;
+            playerController.walkSpeed = 5;
+            playerController.sprintSpeed = 10;
         }
 
 
@@ -677,11 +683,6 @@ public class SingleShotGun : Gun
         _canShoot = true;
         canDaggerSwing = true;
         playerController.canSwitchWeapons = true;
-    }
-
-    private void ResetShoot()
-    {
-        
     }
 
     void DetermineRecoil()

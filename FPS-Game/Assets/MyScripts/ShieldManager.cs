@@ -95,8 +95,8 @@ public class ShieldManager : MonoBehaviour
         GetComponent<Animator>().Play("ShieldOpen");
 
         weapons[controller.itemIndex].transform.gameObject.GetComponent<SingleShotGun>().DisableGun();
-        controller.walkSpeed /= 2;
-        controller.sprintSpeed /= 2;
+        controller.walkSpeed = 2.5f;
+        controller.sprintSpeed = 5;
 
         GetComponent<AudioSource>().PlayOneShot(equip);
     }

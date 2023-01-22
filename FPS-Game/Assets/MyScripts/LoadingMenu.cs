@@ -53,11 +53,33 @@ public class LoadingMenu : MonoBehaviour
         }
     }
 
-    public void FreeForAllMenu()
+    public void FreeForAllMenuBtn()
+    {
+        StartCoroutine(FreeForAllMenu());
+    }
+
+    IEnumerator FreeForAllMenu()
     {
         loading.SetActive(true);
-        
+
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene("Menu");
+
+    }
+
+    public void ParkourBtn()
+    {
+        StartCoroutine(Parkour());
+
+    }
+
+    IEnumerator Parkour()
+    {
+        loading.SetActive(true);
+
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene("ParkourMap");
+
     }
 
     private IEnumerator GenerateTip()
