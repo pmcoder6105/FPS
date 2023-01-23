@@ -27,7 +27,7 @@ public class PlayerManager : MonoBehaviour
 
     public bool hasDeathPanelActivated = false;
 
-    GameObject canvas;
+    GameObject scoreBoardCanvas;
 
     GameObject deathPanelGameObject;
     public GameObject musicHolder;
@@ -45,6 +45,9 @@ public class PlayerManager : MonoBehaviour
     public int currentExperience;
 
     public int currentLVL;
+
+    public GameObject threetwooneanim;
+    public Transform canvas;
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -57,10 +60,12 @@ public class PlayerManager : MonoBehaviour
         {
             if (PhotonNetwork.InRoom)
             {
-                CreateController();
+                GameObject anim = Instantiate(threetwooneanim, canvas);
+                Destroy(anim, 3);
+                Invoke(nameof(CreateController), 3f);
             }
             killTextNotificationHolder = GameObject.Find("KillTextNotificationHolder");
-            canvas = GameObject.Find("ScoreBoardCanvas");
+            scoreBoardCanvas = GameObject.Find("ScoreBoardCanvas");
             if (FirebaseManager.Singleton.isMusicOn)
             {
                 GameObject musicHolderGO = Instantiate(musicHolder);
@@ -90,7 +95,9 @@ public class PlayerManager : MonoBehaviour
         Destroy(deathPanelGameObject);
         Destroy(virtualCamInstantiation);
         Destroy(cinemachineCamInstantiation);
-        CreateController();
+        GameObject anim = Instantiate(threetwooneanim, canvas);
+        Destroy(anim, 3);
+        Invoke(nameof(CreateController), 3f);
         hasDeathPanelActivated = false;
     }
 
@@ -130,7 +137,7 @@ public class PlayerManager : MonoBehaviour
 
     public void OpenDeathPanel() 
     { 
-        deathPanelGameObject = Instantiate(deathPanel, canvas.transform);
+        deathPanelGameObject = Instantiate(deathPanel, scoreBoardCanvas.transform);
 
 
         hasDeathPanelActivated = true;

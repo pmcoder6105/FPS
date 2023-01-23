@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 {    
-    [SerializeField] GameObject ui; // ui from Tutorial
+    public GameObject ui; // ui from Tutorial
     
     [SerializeField] GameObject cameraHolder;
     public AudioClip killSFX;
