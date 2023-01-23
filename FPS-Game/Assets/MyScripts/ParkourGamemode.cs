@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class ParkourLeave : MonoBehaviour
+public class ParkourGamemode : MonoBehaviour
 {
     [SerializeField] GameObject leaveConfirm;
     [SerializeField] Button leaveButton;
+    [SerializeField] Button startButton;
     [SerializeField] GameObject player;
     [SerializeField] GameObject[] starters;
 
@@ -15,6 +16,7 @@ public class ParkourLeave : MonoBehaviour
     void Start()
     {
         leaveButton.onClick.AddListener(ProcessLeaveConfirmation);
+        startButton.onClick.AddListener(EnablePlayer);
     }
 
     // Update is called once per frame
@@ -27,6 +29,18 @@ public class ParkourLeave : MonoBehaviour
             leaveConfirm.GetComponent<CanvasGroup>().alpha = 1;
             Cursor.lockState = CursorLockMode.None;
         }
+    }
+
+    void EnablePlayer()
+    {
+        StartCoroutine(EnablePlayerTimer());
+    }
+
+    IEnumerator EnablePlayerTimer()
+    {
+        yield return new WaitForSeconds(0.5f);
+        player.SetActive(true);
+
     }
 
     void ProcessLeaveConfirmation()
