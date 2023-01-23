@@ -27,14 +27,23 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
         {
             accessoriesParent.SetActive(false);
 
-            if (!aM.removeHats)
-                PV.RPC(nameof(EquipHat), RpcTarget.AllBuffered, aM.equipedHat);
+            if (!AccessoriesManager.Singleton.removeHats)
+            {
+                PV.RPC(nameof(EquipHat), RpcTarget.AllBuffered, AccessoriesManager.Singleton.equipedHat);
 
-            if (!aM.removeEyewear)
-                PV.RPC(nameof(EquipEyewear), RpcTarget.AllBuffered, aM.equipedEyewear);
+            }
 
-            if (!aM.removeCapes)
-                PV.RPC(nameof(EquipCape), RpcTarget.AllBuffered, aM.equipedCape);
+            if (!AccessoriesManager.Singleton.removeEyewear)
+            {
+                PV.RPC(nameof(EquipEyewear), RpcTarget.AllBuffered, AccessoriesManager.Singleton.equipedEyewear);
+
+            }
+
+            if (!AccessoriesManager.Singleton.removeCapes)
+            {
+                PV.RPC(nameof(EquipCape), RpcTarget.AllBuffered, AccessoriesManager.Singleton.equipedCape);
+
+            }
         }
             
     }
@@ -44,16 +53,14 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
     {
         for (int i = 0; i < hats.Length; i++)
         {
-            if (i - 1 != index)
+            if (i != index)
             {
                 hats[i].SetActive(false);
             }
             else
             {
-                if (i != 0)
-                {
-                    hats[i].SetActive(true);
-                }
+                hats[i].SetActive(true);
+
             }
         }
     }
@@ -63,16 +70,14 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
     {
         for (int i = 0; i < eyeWear.Length; i++)
         {
-            if (i - 1 != index)
+            if (i != index)
             {
                 eyeWear[i].SetActive(false);
             }
             else
             {
-                if (i != 0)
-                {
-                    eyeWear[i].SetActive(true);
-                }
+                eyeWear[i].SetActive(true);
+
             }
         }
     }
@@ -82,16 +87,14 @@ public class EquipAccessories : MonoBehaviourPunCallbacks
     {
         for (int i = 0; i < cape.Length; i++)
         {
-            if (i - 1 != index)
+            if (i != index)
             {
                 cape[i].SetActive(false);
             }
             else
             {
-                if (i != 0)
-                {
-                    cape[i].SetActive(true);
-                }
+                cape[i].SetActive(true);
+
             }
         }
     }
