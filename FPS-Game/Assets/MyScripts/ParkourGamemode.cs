@@ -24,7 +24,6 @@ public class ParkourGamemode : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("ESCAPE NOWWWWW");
             leaveConfirm.GetComponent<Animator>().Play("LeaveConfirmationTransition");
             leaveConfirm.GetComponent<CanvasGroup>().alpha = 1;
             Cursor.lockState = CursorLockMode.None;
