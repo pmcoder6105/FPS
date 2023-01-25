@@ -16,7 +16,7 @@ public class DaggerController : MonoBehaviour
 
             if (other.gameObject != transform.root.gameObject)
             {
-                if (other.gameObject.CompareTag("Player"))
+                if (!other.gameObject.CompareTag("Player"))
                 {
                     other.gameObject.transform.root.gameObject.GetComponent<IDamageable>()?.TakeDamage(40);
                 }

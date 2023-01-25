@@ -1,6 +1,7 @@
 ﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -69,6 +70,15 @@ public class PlayerMovement : MonoBehaviour
 
     public bool shouldCrouch, shouldGrapple, shouldCalculateSpeed;
 
+    Vector3 moveAmount, smoothMoveVelocity;
+
+    PhotonView PV;
+
+    private void Awake()
+    {
+        PV = GetComponent<PhotonView>();
+    }
+
     private bool OnSlope()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.5f))
@@ -93,6 +103,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        MovePlayer();
+
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         MyInput();
@@ -172,8 +185,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isGrounded)
         {
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            rb.AddForce(transform.up * GetComponent<PlayerController>().jumpForce);
+
         }
     }
 
@@ -245,31 +258,41 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        if (!PV.IsMine)
+            return;
+        rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.deltaTime);
+
     }
 
     void MovePlayer()
     {
-        if (isGrounded && !OnSlope() && !isCrouching)
-        {
-            rb.AddForce(movementMultiplier * moveSpeed * Time.fixedDeltaTime * moveDirection.normalized, ForceMode.Acceleration);
-            Debug.Log("I am walking question mark l bozo?");
-        }
+        //if (isGrounded && !OnSlope() && !isCrouching)
+        //{
+        //    rb.AddForce(movementMultiplier * moveSpeed * moveDirection.normalized, ForceMode.Acceleration);
+        //}
 
-        if (isGrounded && OnSlope())
-        {
-            rb.AddForce(movementMultiplier * moveSpeed * Time.fixedDeltaTime * slopeMoveDirection.normalized, ForceMode.Acceleration);
-        }
+        //if (isGrounded && OnSlope())
+        //{
+        //    rb.AddForce(movementMultiplier * moveSpeed * Time.fixedDeltaTime * slopeMoveDirection.normalized, ForceMode.Acceleration);
+        //}
 
-        if (!isGrounded)
-        {
-            rb.AddForce(airMultiplier * movementMultiplier * moveSpeed * Time.fixedDeltaTime * moveDirection.normalized, ForceMode.Acceleration);
-        }
+        //if (!isGrounded)
+        //{
+        //    rb.AddForce(airMultiplier * movementMultiplier * moveSpeed * Time.fixedDeltaTime * moveDirection.normalized, ForceMode.Acceleration);
+        //}
 
-        if(isGrounded && isCrouching)
-        {
-            rb.AddForce(crouchMultiplier * crouchSpeed * Time.fixedDeltaTime * moveDirection.normalized, ForceMode.Acceleration);
-        }
+        //if(isGrounded && isCrouching)
+        //{
+        //    rb.AddForce(crouchMultiplier * crouchSpeed * Time.fixedDeltaTime * moveDirection.normalized, ForceMode.Acceleration);
+        //}
+
+        Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+
+        if (!PV.IsMine)
+            return;
+
+
+        moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, 0.15f);
     }
 
     private void OnTriggerEnter(Collider other)

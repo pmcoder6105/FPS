@@ -23,15 +23,6 @@ public class Menu : MonoBehaviour
         firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
     }
 
-    private void Update()
-    {
-        if (fadeIn)
-        {
-            //StartCoroutine(nameof(FadeMenuIn));
-        }
-        
-    }
-
     public void Open()
     {
         open = true;

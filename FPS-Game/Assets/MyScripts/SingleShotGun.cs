@@ -290,7 +290,7 @@ public class SingleShotGun : Gun
                 {
                     if (hit.collider.gameObject != transform.root.gameObject)
                     {
-                        if (hit.collider.gameObject.CompareTag("Player"))
+                        if (!hit.collider.gameObject.CompareTag("Player"))
                         {
                             hit.collider.gameObject.transform.root.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
                         }
@@ -366,7 +366,7 @@ public class SingleShotGun : Gun
                     {
                         if (hit.collider.gameObject != transform.root.gameObject)
                         {
-                            if (hit.collider.gameObject.CompareTag("Player"))
+                            if (!hit.collider.gameObject.CompareTag("Player"))
                             {
                                 hit.collider.gameObject.transform.root.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
                             }
@@ -416,7 +416,10 @@ public class SingleShotGun : Gun
                         {
                             if (hit.collider.gameObject != transform.root.gameObject)
                             {
-                                hit.collider.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                                if (!hit.collider.gameObject.CompareTag("Player"))
+                                {
+                                    hit.collider.gameObject.transform.root.gameObject.GetComponent<IDamageable>()?.TakeDamage(((GunInfo)itemInfo).damage);
+                                }
                                 if (hit.collider.transform.name == "glass (1)")
                                 {
                                     if (hit.collider.transform.parent.transform.parent.GetComponent<ShieldManager>().hasOpenedShield)

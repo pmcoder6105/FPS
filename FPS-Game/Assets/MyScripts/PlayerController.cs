@@ -111,6 +111,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public GameObject vignetteFlash;
     public GameObject permVignetteFlash;
 
+    public LayerMask whatIsWall;
+    public float wallrunForce, maxWallrunTime, maxWallSpeed;
+    bool isWallRight, isWallLeft;
+    bool isWallrunning;
+    public float maxWallRunCameraTilt, wallRunCameraTilt;
+    public Transform orientation;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -129,7 +136,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             inventory = GameObject.Find("Inventory");
             micToggleText = GameObject.Find("MicToggleText");
             mapViewerCamera = GameObject.Find("RoomViewerCamera");
-            //firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
+            Destroy(destroyables[1]);
             GameObject clearer = Instantiate(fogClearer, this.transform);
             clearer.GetComponent<ClearFog>().Clear(PV);
             Destroy(clearer, 2);
@@ -183,10 +190,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             return;
 
         playerManager.transform.position = this.gameObject.transform.position;
-        //Look();
-        //Move();
-        //Jump();
-        //SetGroundedState();
+        Look();
+        Move();
+        Jump();
+        SetGroundedState();
+        CheckForWall();
+        WallRunInput();
         SetPlayerHealthShader();
         SetPlayerHealthInt();
         SetHealthColorPropertyAndGlowShader();
@@ -197,6 +206,46 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         PV.RPC(nameof(ProcessFootstepSFX), RpcTarget.All);
         ProcessInventoryToggle();
         PV.RPC(nameof(ProcessWaddle), RpcTarget.All);
+    }
+
+    private void WallRunInput()
+    {
+        if (Input.GetKey(KeyCode.D) && isWallRight) StartWallRun();
+        if (Input.GetKey(KeyCode.A) && isWallLeft) StartWallRun();
+    }
+    private void StartWallRun()
+    {
+        rb.useGravity = false;
+        isWallrunning = true;
+
+        if (rb.velocity.magnitude <= maxWallSpeed)
+        {
+            rb.AddForce(Time.deltaTime * wallrunForce * orientation.forward);
+            if (isWallRight)
+            {
+                rb.AddForce(orientation.right * wallrunForce / 5 * Time.deltaTime);
+
+            }
+            else
+            {
+                rb.AddForce(-orientation.right * wallrunForce / 5 * Time.deltaTime);
+            }
+        }
+    }
+    private void StopWallRun()
+    {
+        rb.useGravity = true;
+        isWallrunning = false;
+    }
+    private void CheckForWall()
+    {
+        isWallRight = Physics.Raycast(transform.position, orientation.right, 1f, whatIsWall);
+        isWallLeft = Physics.Raycast(transform.position, -orientation.right, 1f, whatIsWall);
+
+        if (!isWallRight && !isWallLeft)
+        {
+            StopWallRun();
+        }
     }
 
     [PunRPC]
@@ -465,6 +514,26 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         verticalLookRotation = Mathf.Clamp(verticalLookRotation, -90f, 90f);
 
         cameraHolder.transform.localEulerAngles = Vector3.left * verticalLookRotation;
+
+        cameraHolder.transform.localRotation = Quaternion.Euler(0, 0, wallRunCameraTilt);
+        orientation.transform.localRotation = Quaternion.Euler(0, Input.GetAxisRaw("Mouse X") * mouseSensitivity, 0);
+        if (Mathf.Abs(wallRunCameraTilt) < maxWallRunCameraTilt && isWallrunning && isWallRight)
+        {
+            wallRunCameraTilt += Time.deltaTime * maxWallRunCameraTilt * 2;
+        }
+        if (Mathf.Abs(wallRunCameraTilt) < maxWallRunCameraTilt && isWallrunning && isWallLeft)
+        {
+            wallRunCameraTilt -= Time.deltaTime * maxWallRunCameraTilt * 2;
+        }
+
+        if (wallRunCameraTilt > 0 && !isWallRight && !isWallLeft)
+        {
+            wallRunCameraTilt -= Time.deltaTime * maxWallRunCameraTilt * 2;
+        }
+        if (wallRunCameraTilt < 0 && !isWallRight && !isWallLeft)
+        {
+            wallRunCameraTilt += Time.deltaTime * maxWallRunCameraTilt * 2;
+        }
     }
 
     // move function from the tutorial
@@ -476,10 +545,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             return;
 
 
-        if (FirebaseManager.Singleton.alwaysSprint == false)
-            moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
-        else
-            moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * sprintSpeed, ref smoothMoveVelocity, smoothTime);
+        moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
     }
 
     // jump function from the tutorial
@@ -489,7 +555,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             rb.AddForce(transform.up * jumpForce);            
         }
-        
+        if (Input.GetKeyDown(KeyCode.Space) && isWallrunning)
+        {
+            if (isWallLeft && !Input.GetKey(KeyCode.D) || isWallRight && !Input.GetKey(KeyCode.A))
+            {
+                rb.AddForce(transform.up * jumpForce);
+            }
+            if (isWallRight || isWallLeft && Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) rb.AddForce(-orientation.up * jumpForce * 4f);
+            if (isWallRight && Input.GetKey(KeyCode.A)) rb.AddForce(-orientation.right * jumpForce * 3.2f);
+            if (isWallLeft && Input.GetKey(KeyCode.D)) rb.AddForce(orientation.right * jumpForce * 3.2f);
+            rb.AddForce(orientation.forward * jumpForce * 1f);
+            //rb.velocity = Vector3.zero;
+        }
     }
 
     // a leave ienumerator
@@ -626,7 +703,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         if (!PV.IsMine)
             return;
-        //rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
         items[itemIndex].Use();
     }
 
