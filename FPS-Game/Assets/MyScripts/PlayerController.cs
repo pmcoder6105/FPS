@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     [HideInInspector] public GameObject scoreBoard; // scoreboard that I assign later
 
-    public GameObject[] canvas; // canvases I want to destroy when a player dies
+    public GameObject[] destroyables; // canvases I want to destroy when a player dies
 
     bool canRegenerateHealth = false;
 
@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public ParticleSystem dustTrailParticleSystem;
 
-    [HideInInspector] public FirebaseManager firebase;
+    //[HideInInspector] public FirebaseManager firebase;
 
     public Shader toonShader;
 
@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             inventory = GameObject.Find("Inventory");
             micToggleText = GameObject.Find("MicToggleText");
             mapViewerCamera = GameObject.Find("RoomViewerCamera");
-            firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
+            //firebase = GameObject.Find("FirebaseManager").GetComponent<FirebaseManager>();
             GameObject clearer = Instantiate(fogClearer, this.transform);
             clearer.GetComponent<ClearFog>().Clear(PV);
             Destroy(clearer, 2);
@@ -143,9 +143,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Destroy(GetComponentInChildren<Camera>().gameObject); // destroy camera's children
             Destroy(rb); // destroy rigidbody
             Destroy(ui); // destroy ui
-            for (int i = 0; i < canvas.Count(); i++)
+            for (int i = 0; i < destroyables.Count(); i++)
             {
-                Destroy(canvas[i]); // destroy all the canvases that i want destroyed
+                Destroy(destroyables[i]); // destroy all the canvases that i want destroyed
             }         
         }
 
@@ -183,10 +183,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             return;
 
         playerManager.transform.position = this.gameObject.transform.position;
-        Look();
-        Move();
-        Jump();
-        SetGroundedState();
+        //Look();
+        //Move();
+        //Jump();
+        //SetGroundedState();
         SetPlayerHealthShader();
         SetPlayerHealthInt();
         SetHealthColorPropertyAndGlowShader();
@@ -626,7 +626,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         if (!PV.IsMine)
             return;
-        rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
+        //rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
         items[itemIndex].Use();
     }
 
@@ -785,7 +785,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             //hash.Add("beanColor", PlayerPrefs.GetString("BeanPlayerColor")); // add "beanColor" with a value of PlayerPrefs.GetString("BeanPlayerColor")
             //PhotonNetwork.LocalPlayer.SetCustomProperties(hash); // set custom properties
 
-            hash.Add("beanColor", firebase.playerColorValue); // add "beanColor" with a value of PlayerPrefs.GetString("BeanPlayerColor")
+            hash.Add("beanColor", FirebaseManager.Singleton.playerColorValue); // add "beanColor" with a value of PlayerPrefs.GetString("BeanPlayerColor")
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash); // set custom properties
 
             if (isDead)
@@ -808,7 +808,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Material healthyMat = new(glowShader); // new material with glowshader
         
         // get player hexadecimal that was saved in player prefs and convert that into a color
-        if (ColorUtility.TryParseHtmlString("#" + firebase.playerColorValue, out Color healthyColor))
+        if (ColorUtility.TryParseHtmlString("#" + FirebaseManager.Singleton.playerColorValue, out Color healthyColor))
         {
             healthyMat.SetColor("_MaterialColor", healthyColor); // healthymat's "_MaterialColor" should be set to the converted healthyColor
             healthyMat.SetColor("_FresnelColor", Color.green); // set "_FresnelColor" color to green
@@ -826,7 +826,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Material normalMat = new(glowShader); // new material with glowshader
 
         // get player hexadecimal that was saved in player prefs and convert that into a color
-        if (ColorUtility.TryParseHtmlString("#" + firebase.playerColorValue, out Color normalColor))
+        if (ColorUtility.TryParseHtmlString("#" + FirebaseManager.Singleton.playerColorValue, out Color normalColor))
         {
             normalMat.SetColor("_MaterialColor", normalColor); // normalmat's "_MaterialColor" should be set to the converted normalColor
             normalMat.SetColor("_FresnelColor", Color.yellow); // set "_FresnelColor" color to yellow
@@ -843,7 +843,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Material hurtMat = new(glowShader); // new material with glowshader
 
         // get player hexadecimal that was saved in player prefs and convert that into a color
-        if (ColorUtility.TryParseHtmlString("#" + firebase.playerColorValue, out Color hurtColor))
+        if (ColorUtility.TryParseHtmlString("#" + FirebaseManager.Singleton.playerColorValue, out Color hurtColor))
         {
             hurtMat.SetColor("_MaterialColor", hurtColor); // normalmat's "_MaterialColor" should be set to the converted hurtColor
             hurtMat.SetColor("_FresnelColor", Color.red); // set "_FresnelColor" color to red
@@ -863,9 +863,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         GetComponent<CapsuleCollider>().enabled = false; // disable capsule collider
         playerManager.Die();
 
-        for (int i = 0; i < canvas.Count(); i++)
+        for (int i = 0; i < destroyables.Count(); i++)
         {
-            Destroy(canvas[i]); // destroy all canvases specified
+            Destroy(destroyables[i]); // destroy all canvases specified
         }
 
         isDead = true; // set isdead to true

@@ -10,8 +10,10 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] private float sensX = 100f;
     [SerializeField] private float sensY = 100f;
 
-    [SerializeField] Transform cam = null;
-    [SerializeField] Transform orientation = null;
+    [SerializeField] Transform cam ;
+    [SerializeField] Transform orientation;
+
+    float verticalLookRotation;
 
     float mouseX;
     float mouseY;
@@ -29,15 +31,12 @@ public class PlayerLook : MonoBehaviour
 
     private void FixedUpdate()
     {
-        mouseX = Input.GetAxisRaw("Mouse X");
-        mouseY = Input.GetAxisRaw("Mouse Y");
-         
-        yRotation += mouseX * sensX * multiplier;
-        xRotation -= mouseY * sensY * multiplier;
+        transform.Rotate(Input.GetAxisRaw("Mouse X") * 3 * Vector3.up);
 
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        verticalLookRotation += Input.GetAxisRaw("Mouse Y") * 3;
+        verticalLookRotation = Mathf.Clamp(verticalLookRotation, -90f, 90f);
 
-        cam.transform.rotation = Quaternion.Euler(xRotation, yRotation, wallRun.tilt);
-        orientation.transform.rotation = Quaternion.Euler(0, yRotation, 0);
+        cam.transform.localEulerAngles = Vector3.left * verticalLookRotation;
+        orientation.transform.localEulerAngles = Vector3.left * verticalLookRotation;
     }
 }
