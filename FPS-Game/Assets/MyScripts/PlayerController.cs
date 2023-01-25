@@ -118,6 +118,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public float maxWallRunCameraTilt, wallRunCameraTilt;
     public Transform orientation;
 
+    bool cantMove = true;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -194,8 +196,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Move();
         Jump();
         SetGroundedState();
-        CheckForWall();
-        WallRunInput();
         SetPlayerHealthShader();
         SetPlayerHealthInt();
         SetHealthColorPropertyAndGlowShader();
@@ -205,46 +205,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         ProcessFallDamageDeath();
         PV.RPC(nameof(ProcessFootstepSFX), RpcTarget.All);
         ProcessInventoryToggle();
-        PV.RPC(nameof(ProcessWaddle), RpcTarget.All);
-    }
-
-    private void WallRunInput()
-    {
-        if (Input.GetKey(KeyCode.D) && isWallRight) StartWallRun();
-        if (Input.GetKey(KeyCode.A) && isWallLeft) StartWallRun();
-    }
-    private void StartWallRun()
-    {
-        rb.useGravity = false;
-        isWallrunning = true;
-
-        if (rb.velocity.magnitude <= maxWallSpeed)
+        if (!cantMove)
         {
-            rb.AddForce(Time.deltaTime * wallrunForce * orientation.forward);
-            if (isWallRight)
-            {
-                rb.AddForce(orientation.right * wallrunForce / 5 * Time.deltaTime);
-
-            }
-            else
-            {
-                rb.AddForce(-orientation.right * wallrunForce / 5 * Time.deltaTime);
-            }
-        }
-    }
-    private void StopWallRun()
-    {
-        rb.useGravity = true;
-        isWallrunning = false;
-    }
-    private void CheckForWall()
-    {
-        isWallRight = Physics.Raycast(transform.position, orientation.right, 1f, whatIsWall);
-        isWallLeft = Physics.Raycast(transform.position, -orientation.right, 1f, whatIsWall);
-
-        if (!isWallRight && !isWallLeft)
-        {
-            StopWallRun();
+            PV.RPC(nameof(ProcessWaddle), RpcTarget.All);
         }
     }
 
@@ -514,26 +477,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         verticalLookRotation = Mathf.Clamp(verticalLookRotation, -90f, 90f);
 
         cameraHolder.transform.localEulerAngles = Vector3.left * verticalLookRotation;
-
-        cameraHolder.transform.localRotation = Quaternion.Euler(0, 0, wallRunCameraTilt);
-        orientation.transform.localRotation = Quaternion.Euler(0, Input.GetAxisRaw("Mouse X") * mouseSensitivity, 0);
-        if (Mathf.Abs(wallRunCameraTilt) < maxWallRunCameraTilt && isWallrunning && isWallRight)
-        {
-            wallRunCameraTilt += Time.deltaTime * maxWallRunCameraTilt * 2;
-        }
-        if (Mathf.Abs(wallRunCameraTilt) < maxWallRunCameraTilt && isWallrunning && isWallLeft)
-        {
-            wallRunCameraTilt -= Time.deltaTime * maxWallRunCameraTilt * 2;
-        }
-
-        if (wallRunCameraTilt > 0 && !isWallRight && !isWallLeft)
-        {
-            wallRunCameraTilt -= Time.deltaTime * maxWallRunCameraTilt * 2;
-        }
-        if (wallRunCameraTilt < 0 && !isWallRight && !isWallLeft)
-        {
-            wallRunCameraTilt += Time.deltaTime * maxWallRunCameraTilt * 2;
-        }
     }
 
     // move function from the tutorial
@@ -703,7 +646,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         if (!PV.IsMine)
             return;
-        rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
+        cantMove = Physics.Raycast(transform.position, Vector3.forward, 0.4f);
+
+        if (!cantMove)
+        {
+            rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
+        }
         items[itemIndex].Use();
     }
 

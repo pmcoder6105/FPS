@@ -570,8 +570,10 @@ public class SingleShotGun : Gun
             return;
 
         Vector2 mouseAxis = new(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        //float mouseAxis = Input.GetAxisRaw("Mouse X");
 
         transform.localPosition += (Vector3)mouseAxis * weaponSwayAmount / 1000;
+        //transform.localPosition += new Vector3 (mouseAxis * weaponSwayAmount / 1000, 0, 0);
     }
 
     void DetermineAim()

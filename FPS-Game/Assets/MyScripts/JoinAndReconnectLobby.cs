@@ -23,8 +23,13 @@ public class JoinAndReconnectLobby : MonoBehaviourPunCallbacks
         {
             if (SceneManager.GetActiveScene().name == "Menu")
             {
+                
                 OpenTitle();
             }
+        }
+        if (!AccountUIManager.instance.loadingMenu.activeSelf)
+        {
+            StopCoroutine("Reconnect");
         }
     }
 
@@ -48,22 +53,12 @@ public class JoinAndReconnectLobby : MonoBehaviourPunCallbacks
 
     public void OpenTitle()
     {
-        StartCoroutine(nameof(Reconnect));
+        StartCoroutine("Reconnect");        
     }
 
     private IEnumerator Reconnect()
     {
         Debug.Log("reconnect 1");
-        //while(AccountUIManager.instance.loadingMenu.activeSelf)
-        //{
-        //    Debug.Log("reconnect 2");
-        //    yield return new WaitForSeconds(3f);
-
-        //    Debug.Log("reconnect 3");
-        //    AccountUIManager.instance.titleMenu.SetActive(true);
-        //    AccountUIManager.instance.loadingMenu.SetActive(false);
-        //    playerViewerParent.SetActive(true);
-        //}        
         yield return new WaitForSeconds(3f);
 
         Debug.Log("reconnect 3");
