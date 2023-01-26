@@ -498,18 +498,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         {
             rb.AddForce(transform.up * jumpForce);            
         }
-        if (Input.GetKeyDown(KeyCode.Space) && isWallrunning)
-        {
-            if (isWallLeft && !Input.GetKey(KeyCode.D) || isWallRight && !Input.GetKey(KeyCode.A))
-            {
-                rb.AddForce(transform.up * jumpForce);
-            }
-            if (isWallRight || isWallLeft && Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) rb.AddForce(-orientation.up * jumpForce * 4f);
-            if (isWallRight && Input.GetKey(KeyCode.A)) rb.AddForce(-orientation.right * jumpForce * 3.2f);
-            if (isWallLeft && Input.GetKey(KeyCode.D)) rb.AddForce(orientation.right * jumpForce * 3.2f);
-            rb.AddForce(orientation.forward * jumpForce * 1f);
-            //rb.velocity = Vector3.zero;
-        }
     }
 
     // a leave ienumerator

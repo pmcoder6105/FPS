@@ -105,6 +105,8 @@ public class SingleShotGun : Gun
 
     [SerializeField] GameObject crosshairCanvas;
 
+    public TrailRenderer trail;
+
     private void Start()
     {
         _currentAmmoInClip = clipSize;
@@ -702,6 +704,13 @@ public class SingleShotGun : Gun
         if (!PhotonNetwork.InRoom)
             return;
 
+        if (!PV.IsMine)
+            return;
+
+        TrailRenderer _trail = Instantiate(trail, muzzleFlashSpawnPlace.position, Quaternion.identity);
+
+        StartCoroutine(SpawnTrail(_trail, hitPosition));
+            
         Collider[] colliders = Physics.OverlapSphere(hitPosition, 0.3f);
         if (colliders.Length != 0)
         {
@@ -712,5 +721,22 @@ public class SingleShotGun : Gun
             impactObject.transform.SetParent(colliders[0].transform);
         }
         
+    }
+
+    public IEnumerator SpawnTrail(TrailRenderer trail, Vector3 point)
+    {
+        float time = 0;
+        Vector3 startPos = trail.transform.position;
+
+        while (time < 1)
+        {
+            trail.transform.position = Vector3.Lerp(startPos, point, time);
+            time += Time.deltaTime / trail.time;
+
+            yield return null;
+
+            trail.transform.position = point;
+            Destroy(trail.gameObject, trail.time);
+        }
     }
 }
