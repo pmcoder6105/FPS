@@ -728,15 +728,15 @@ public class SingleShotGun : Gun
         float time = 0;
         Vector3 startPos = trail.transform.position;
 
-        while (time < 1)
+        while (time < 1 && trail.gameObject.activeSelf)
         {
             trail.transform.position = Vector3.Lerp(startPos, point, time);
-            time += Time.deltaTime / trail.time;
+            time += Time.fixedDeltaTime / trail.time;
 
             yield return null;
 
             trail.transform.position = point;
-            Destroy(trail.gameObject, trail.time);
+            //Destroy(trail.gameObject, trail.time);
         }
     }
 }
