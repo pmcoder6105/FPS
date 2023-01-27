@@ -679,13 +679,14 @@ public class SingleShotGun : Gun
             //flash.GetComponent<ParticleSystem>().Emit(1);
             //flash.transform.Find("Sparks").GetComponent<ParticleSystem>().Emit(1);
             Destroy(flash, 1f);
+            cam.GetComponentInParent<Shake>().start = true;
 
         }
         if (isDagger)
         {
             canDaggerSwing = false;
         }
-        //DetermineRecoil();
+        DetermineRecoil();
 
 
         yield return new WaitForSecondsRealtime(fireRate * Time.fixedDeltaTime);

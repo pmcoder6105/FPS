@@ -899,7 +899,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     [PunRPC] 
     void RPC_DisplayDeath()
     {
-        GameObject particleSystem = PhotonNetwork.Instantiate("GenericDeath", this.gameObject.transform.position, Quaternion.identity, 0); // instantiate a death particle effect
+        GameObject particleSystem = PhotonNetwork.Instantiate("CFXR2 WW Enemy Explosion", this.gameObject.transform.position, Quaternion.identity, 0); // instantiate a death particle effect
         Destroy(particleSystem, 5f); // destroy particle system in 5 seconds
 
         Destroy(playerVisuals); // destroy player visuals

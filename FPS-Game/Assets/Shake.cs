@@ -20,7 +20,8 @@ public class Shake : MonoBehaviour
         if (start)
         {
             start = false;
-            StartCoroutine(Shaking());
+            StopCoroutine("Shaking");
+            StartCoroutine("Shaking");
         }
     }
 
@@ -32,7 +33,8 @@ public class Shake : MonoBehaviour
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
-            transform.position = startPosition + Random.insideUnitSphere;
+            float strenght = curve.Evaluate(elapsedTime / duration);
+            transform.position = startPosition + Random.insideUnitSphere * strenght;
             yield return null;
         }
         transform.position = startPosition;
