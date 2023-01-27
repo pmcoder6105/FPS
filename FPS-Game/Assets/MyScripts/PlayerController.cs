@@ -618,6 +618,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public void SetGroundedState()
     {
         grounded = Physics.Raycast(transform.position, Vector3.down, (float)(playerHeight * 0.5 + 0.2f));
+        Debug.DrawRay(transform.position, Vector3.down, Color.red, (float)(playerHeight * 0.5 + 0.2f));
 
         if (grounded)
         {

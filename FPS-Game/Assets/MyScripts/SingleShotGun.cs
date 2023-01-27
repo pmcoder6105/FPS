@@ -6,6 +6,7 @@ using TMPro;
 
 public class SingleShotGun : Gun
 {
+
     [SerializeField] Camera cam;
 
     public bool canDaggerSwing = true;
@@ -678,12 +679,14 @@ public class SingleShotGun : Gun
             //flash.GetComponent<ParticleSystem>().Emit(1);
             //flash.transform.Find("Sparks").GetComponent<ParticleSystem>().Emit(1);
             Destroy(flash, 1f);
+
         }
         if (isDagger)
         {
             canDaggerSwing = false;
         }
-        DetermineRecoil();
+        //DetermineRecoil();
+
 
         yield return new WaitForSecondsRealtime(fireRate * Time.fixedDeltaTime);
 
@@ -736,7 +739,7 @@ public class SingleShotGun : Gun
             yield return null;
 
             trail.transform.position = point;
-            //Destroy(trail.gameObject, trail.time);
+            Destroy(trail.gameObject, trail.time);
         }
     }
 }
