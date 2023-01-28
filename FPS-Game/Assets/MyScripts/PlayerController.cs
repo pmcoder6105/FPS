@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void SetGravity()
     {
-        if (SceneManager.GetActiveScene().name == "Sky-Beans") // if the active scene is the low gravity scene
+        if (SceneManager.GetActiveScene().name == "Sky-Beans" || SceneManager.GetActiveScene().name == "Cross_Plains") // if the active scene is the low gravity scene
         {
             Physics.gravity = new Vector3(0, -2, 0); // set gravity lower
             jumpForce = 500; // increase jump force
