@@ -680,7 +680,18 @@ public class SingleShotGun : Gun
             //flash.transform.Find("Sparks").GetComponent<ParticleSystem>().Emit(1);
             Destroy(flash, 1f);
             cam.GetComponentInParent<Shake>().start = true;
-
+            if (isShotGun)
+            {
+                cam.GetComponentInParent<Shake>().duration = 0.4f;
+            }
+            if (isSniper)
+            {
+                cam.GetComponentInParent<Shake>().duration = 0.3f;
+            }
+            if (!isShotGun || !isSniper)
+            {
+                cam.GetComponentInParent<Shake>().duration = 0.1f;
+            }
         }
         if (isDagger)
         {

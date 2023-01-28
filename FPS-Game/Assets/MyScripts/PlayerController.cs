@@ -194,8 +194,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         playerManager.transform.position = this.gameObject.transform.position;
         Look();
         Move();
-        Jump();
         SetGroundedState();
+
+        Jump();
         SetPlayerHealthShader();
         SetPlayerHealthInt();
         SetHealthColorPropertyAndGlowShader();
@@ -617,17 +618,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     // set grounded state from tutorial
     public void SetGroundedState()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, (float)(playerHeight * 0.5 + 0.2f));
-        Debug.DrawRay(transform.position, Vector3.down, Color.red, (float)(playerHeight * 0.5 + 0.2f));
+        grounded = Physics.Raycast(transform.position, Vector3.down, 1.059f);
+        Debug.Log(grounded);
 
-        if (grounded)
-        {
-            rb.drag = drag;
-        }
-        else
-        {
-            rb.drag = 0;
-        }
+        //if (grounded)
+        //{
+        //    rb.drag = drag;
+        //}
+        //else
+        //{
+        //    rb.drag = 0;
+        //}
     }
 
     // IDK what Rugbug did with this, but this is from the tutorial
