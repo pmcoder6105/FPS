@@ -43,8 +43,8 @@ MonoBehaviour:
     y: 0
     width: 369
     height: 659
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 53
+  controlID: 135
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 54
+  controlID: 136
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 55
+  controlID: 137
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -602,13 +602,13 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Unvik_3D/Cross_Plains/Scene
+    - Assets/Unvik_3D/Cross_Plains/Prefabs
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 43
   m_LastFolders:
-  - Assets/Unvik_3D/Cross_Plains/Scene
+  - Assets/Unvik_3D/Cross_Plains/Prefabs
   m_LastFoldersGridSize: 43
   m_LastProjectPath: C:\Users\Pratyush Mahadevaiah\OneDrive\Desktop\Main Projects
     Unity\FPS-Game\FPS\FPS-Game
@@ -616,9 +616,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 705}
-    m_SelectedIDs: 92d30900
-    m_LastClickedID: 643986
-    m_ExpandedIDs: 00000000e0aa0000e2aa0000e4aa0000e6aa0000e8aa0000eaaa0000ecaa0000eeaa0000f0aa0000f2aa0000f4aa0000f6aa0000f8aa0000faaa0000fcaa0000feaa000000ab000002ab000004ab000090dd080096dd0800a4d30900d0d30900ffffff7f
+    m_SelectedIDs: a0880000
+    m_LastClickedID: 34976
+    m_ExpandedIDs: 00000000028600000486000006860000088600000a8600000c8600000e86000010860000128600001486000016860000188600001a8600001c8600001e86000020860000228600002486000026860000288600002a8600004e8800009c880000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -646,7 +646,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000e0aa0000e2aa0000e4aa0000e6aa0000e8aa0000eaaa0000ecaa0000eeaa0000f0aa0000f2aa0000f4aa0000f6aa0000f8aa0000faaa0000fcaa0000feaa000000ab000002ab000004ab000006ab0000
+    m_ExpandedIDs: 00000000028600000486000006860000088600000a8600000c8600000e86000010860000128600001486000016860000188600001a8600001c8600001e86000020860000228600002486000026860000288600002a860000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -773,10 +773,10 @@ MonoBehaviour:
     m_SaveData: []
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 247}
-      m_SelectedIDs: 806ff7ff
-      m_LastClickedID: -561280
-      m_ExpandedIDs: 887af7ffc67af7fff87bf7ffa4cff7ffdad0f7ff56d3f7ff92d8f7ff16d9f7ffde8ff8ff6cdcf8ff72e2f8ff4cedf8ffa4edf8ff64f2f8ffd8f7f8ff4efdf8ff02fef8ff9006f9ff760df9ff1a22f9ffa222f9ff7eadfcff8cb5fcff06b7fcffa8bdfcff50c1fcff12f0fcff56f4fcff060bfdff0e60fdffceccfdffd413feffc635feff2837feff5478feff80b9feff4cbbfeff1e28ffffb23effff4043ffff5843ffffde4cffffe64cffffb857ffff1258ffffb25affffe865ffff2c66ffff3070ffff2c71ffffee78fffff078fffff28fffff5c90ffffdaafffff5ceeffff84faffffaaf6000056160200f41f0200a42e0200605b0200be68020008700200fa9102005a9f0200e8e502009aec0200ee010300a24b0700587c0800
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 88faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1047,9 +1047,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 90.96122, y: 70.926674, z: 62.85324}
+    m_Target: {x: 61.04092, y: 28.38222, z: 29.855097}
     speed: 2
-    m_Value: {x: 90.96122, y: 70.92667, z: 62.853233}
+    m_Value: {x: 61.04092, y: 28.38222, z: 29.855097}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1096,13 +1096,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.059345465, y: -0.93750143, z: 0.23772788, w: 0.24720149}
+    m_Target: {x: -0.09090261, y: -0.8260677, z: -0.13325332, w: 0.54004544}
     speed: 2
-    m_Value: {x: 0.05970038, y: -0.9371043, z: 0.23763219, w: 0.24860077}
+    m_Value: {x: -0.08989184, y: -0.8270526, z: -0.13214529, w: 0.53892595}
   m_Size:
     m_Target: 2.141819
     speed: 2
-    m_Value: 2.141832
+    m_Value: 2.141819
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1178,8 +1178,8 @@ MonoBehaviour:
     vZoomLockedByDefault: 0
     m_HBaseRangeMin: -547.5
     m_HBaseRangeMax: 547.5
-    m_VBaseRangeMin: -308.5
-    m_VBaseRangeMax: 308.5
+    m_VBaseRangeMin: -319
+    m_VBaseRangeMax: 319
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -1196,11 +1196,11 @@ MonoBehaviour:
     m_DrawArea:
       serializedVersion: 2
       x: 0
-      y: 21
+      y: 0
       width: 1095
-      height: 617
+      height: 638
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 547.5, y: 308.5}
+    m_Translation: {x: 547.5, y: 319}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
@@ -1208,9 +1208,9 @@ MonoBehaviour:
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
       x: -547.5
-      y: -308.5
+      y: -319
       width: 1095
-      height: 617
+      height: 638
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_LastWindowPixelSize: {x: 1095, y: 638}
