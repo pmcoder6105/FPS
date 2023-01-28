@@ -200,16 +200,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         SetPlayerHealthShader();
         SetPlayerHealthInt();
         SetHealthColorPropertyAndGlowShader();
-        scoreBoard.GetComponent<ScoreBoard>().OpenLeaveConfirmation();
+        if (!playerManager.hasDeathPanelActivated)
+        {
+            scoreBoard.GetComponent<ScoreBoard>().OpenLeaveConfirmation();
+        }
         ProcessWeaponSwitching();
         SetPermVignetteFlash();
         ProcessFallDamageDeath();
         PV.RPC(nameof(ProcessFootstepSFX), RpcTarget.All);
         ProcessInventoryToggle();
-        if (!cantMove)
-        {
-            PV.RPC(nameof(ProcessWaddle), RpcTarget.All);
-        }
+        PV.RPC(nameof(ProcessWaddle), RpcTarget.All);
     }
 
     [PunRPC]
@@ -242,7 +242,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Cursor.lockState = CursorLockMode.None;
         }
         // if you click escape and the death panel hasn't been instantiated, if the scoreboard isn't active, and if the leave confirmation is disactive, then unlock cursor
-        if (Input.GetMouseButtonDown(0) && Cursor.lockState == CursorLockMode.None&& playerManager.hasDeathPanelActivated == false && scoreBoard.GetComponent<ScoreBoard>().isOpen == false && scoreBoard.GetComponent<ScoreBoard>().leaveConfirmation.alpha != 1
+        if (Input.GetMouseButtonDown(0) && Cursor.lockState == CursorLockMode.None&& !playerManager.hasDeathPanelActivated && !scoreBoard.GetComponent<ScoreBoard>().isConfirmationOpen
             )
         {
             Cursor.lockState = CursorLockMode.Locked;

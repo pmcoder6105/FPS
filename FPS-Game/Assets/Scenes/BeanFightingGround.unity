@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.08988297, g: 0.07305313, b: 0.14573157, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3109,7 +3109,7 @@ MonoBehaviour:
   scoreBoardTitle: {fileID: 948845449}
   holdTabForScoreBoardText: {fileID: 826602226}
   leaveConfirmation: {fileID: 372176106}
-  isOpen: 0
+  isConfirmationOpen: 0
 --- !u!225 &223664852
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5238,6 +5238,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7972316352594965007, guid: 71192b38747782347a892a444f4f172c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 223664851}
+    - target: {fileID: 7972316352594965007, guid: 71192b38747782347a892a444f4f172c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 223664851}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71192b38747782347a892a444f4f172c, type: 3}
 --- !u!224 &372176105 stripped

@@ -123,8 +123,7 @@ public class PlayerManager : MonoBehaviour
             killTextNotificationGameObject.GetComponent<TMP_Text>().text = "You were killed by: The Void"; // set the text of that to you were killed by the void
         }
 
-
-        Invoke(nameof(OpenDeathPanel), 3f);
+        StartCoroutine(OpenDeathPanel());
 
         PhotonNetwork.Destroy(controller);
 
@@ -135,8 +134,11 @@ public class PlayerManager : MonoBehaviour
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
     }
 
-    public void OpenDeathPanel() 
-    { 
+    public IEnumerator OpenDeathPanel() 
+    {
+        yield return new WaitUntil(predicate: () => scoreBoardCanvas.GetComponent<ScoreBoard>().isConfirmationOpen == true);
+
+
         deathPanelGameObject = Instantiate(deathPanel, scoreBoardCanvas.transform);
 
 

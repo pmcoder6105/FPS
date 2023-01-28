@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.2
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.089628056, g: 0.072796844, b: 0.14547904, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11245,7 +11245,7 @@ MonoBehaviour:
   scoreBoardTitle: {fileID: 1288893959}
   holdTabForScoreBoardText: {fileID: 505079123}
   leaveConfirmation: {fileID: 758516349}
-  isOpen: 0
+  isConfirmationOpen: 0
 --- !u!114 &616447816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13857,6 +13857,22 @@ PrefabInstance:
     - target: {fileID: 7972316352208576669, guid: 71192b38747782347a892a444f4f172c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972316352594965007, guid: 71192b38747782347a892a444f4f172c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 616447815}
+    - target: {fileID: 7972316352594965007, guid: 71192b38747782347a892a444f4f172c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 616447815}
+    - target: {fileID: 7972316352594965007, guid: 71192b38747782347a892a444f4f172c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: DisableCursor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972316352594965007, guid: 71192b38747782347a892a444f4f172c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: CloseLeave
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71192b38747782347a892a444f4f172c, type: 3}

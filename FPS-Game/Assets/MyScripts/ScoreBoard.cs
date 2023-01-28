@@ -18,7 +18,7 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
 
     public CanvasGroup leaveConfirmation;
 
-    public bool isOpen = false;
+    public bool isConfirmationOpen = false;
 
     Dictionary<Player, ScoreBoardItem> scoreBoardItems = new();
 
@@ -61,17 +61,14 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
         {
             canvasGroup.alpha = 1;
             transform.root.GetComponent<Animator>().Play("ScoreBoardTransition", 0, 0f);
-            isOpen = true;
             scoreBoardTitle.alpha = 1;
             holdTabForScoreBoardText.color = new Color(holdTabForScoreBoardText.color.r, holdTabForScoreBoardText.color.g, holdTabForScoreBoardText.color.b, 0);
-            Cursor.lockState = CursorLockMode.None;
             blur.SetActive(true);
         }
         if (Input.GetKeyUp(KeyCode.Tab))
         {
             canvasGroup.alpha = 0;
             transform.root.GetComponent<Animator>().Play("ScoreBoardIdleAnimation", 0, 0f);
-            isOpen = false;
             scoreBoardTitle.alpha = 0;
             blur.SetActive(false);
 
@@ -85,8 +82,8 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
         {
             leaveConfirmation.alpha = 1;
             leaveConfirmation.GetComponent<Animator>().Play("LeaveConfirmationTransition");
-            Cursor.lockState = CursorLockMode.None;
-            isOpen = true;
+            DisableCursor();
+            isConfirmationOpen = true;
             blur.SetActive(true);
 
         }
@@ -95,5 +92,10 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
     public void DisableCursor()
     {
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void CloseLeave()
+    {
+        isConfirmationOpen = false;
     }
 }
