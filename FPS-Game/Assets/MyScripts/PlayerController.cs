@@ -163,7 +163,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void SetGravity()
     {
-        if (SceneManager.GetActiveScene().name == "Sky-Beans" || SceneManager.GetActiveScene().name == "Cross_Plains") // if the active scene is the low gravity scene
+        if (SceneManager.GetActiveScene().name == "Sky-Beans" || SceneManager.GetActiveScene().name == "Cross_Plains"
+            ) // if the active scene is the low gravity scene
         {
             Physics.gravity = new Vector3(0, -2, 0); // set gravity lower
             jumpForce = 500; // increase jump force
@@ -392,21 +393,23 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             {
                 if (grounded)
                 {
-                    if (FirebaseManager.Singleton.alwaysSprint == false)
-                    {
-                        if (Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift))
-                        {
-                            StartCoroutine(nameof(RunSFX));
-                        }
-                        else if (!Input.GetKey(KeyCode.RightShift) && !Input.GetKey(KeyCode.LeftShift))
-                        {
-                            StartCoroutine(nameof(WalkSFX));
-                        }
-                    }
-                    else
-                    {
-                        StartCoroutine(nameof(RunSFX)); Debug.Log("running is always on");
-                    }
+                    //if (FirebaseManager.Singleton.alwaysSprint == false)
+                    //{
+                    //    if (Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift))
+                    //    {
+                    //        StartCoroutine(nameof(RunSFX));
+                    //    }
+                    //    else if (!Input.GetKey(KeyCode.RightShift) && !Input.GetKey(KeyCode.LeftShift))
+                    //    {
+                    //        StartCoroutine(nameof(WalkSFX));
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    StartCoroutine(nameof(RunSFX)); Debug.Log("running is always on");
+                    //}
+                    StartCoroutine(nameof(WalkSFX));
+
                 }
             }
             
@@ -489,7 +492,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             return;
 
 
-        moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
+        moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * walkSpeed, ref smoothMoveVelocity, smoothTime);
     }
 
     // jump function from the tutorial
