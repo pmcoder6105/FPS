@@ -27,14 +27,15 @@ public class Shake : MonoBehaviour
 
     IEnumerator Shaking()
     {
-        Vector3 startPosition = transform.position;
+        Vector2 startPosition = new Vector2(transform.position.x, transform.position.y);
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
             float strenght = curve.Evaluate(elapsedTime / duration);
-            transform.position = startPosition + Random.insideUnitSphere * strenght;
+            transform.position = startPosition + Random.insideUnitCircle * strenght;
+            //transform.position = startPosition + Random.insideUnitCircle * strenght;
             yield return null;
         }
         transform.position = startPosition;

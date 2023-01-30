@@ -621,7 +621,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     // set grounded state from tutorial
     public void SetGroundedState()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, 1.059f);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight/2);
         Debug.Log(grounded);
 
         //if (grounded)
