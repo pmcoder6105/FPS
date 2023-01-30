@@ -112,6 +112,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public GameObject permVignetteFlash;
 
     public LayerMask whatIsWall;
+    public LayerMask whatisGround;
     public float wallrunForce, maxWallrunTime, maxWallSpeed;
     bool isWallRight, isWallLeft;
     bool isWallrunning;
@@ -621,7 +622,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     // set grounded state from tutorial
     public void SetGroundedState()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight/2);
+        RaycastHit hit;
+        grounded = Physics.Raycast(transform.position, Vector3.down, out hit, playerHeight/2 + 0.2f, whatisGround);
+        Debug.Log(hit.collider.name);
         Debug.Log(grounded);
 
         //if (grounded)
