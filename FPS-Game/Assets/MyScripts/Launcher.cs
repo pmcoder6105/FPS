@@ -139,8 +139,14 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         loadingMenu.SetActive(true);
         roomMenu.SetActive(false);
-        PhotonNetwork.LoadLevel(mapChooseMenu.GetComponent<MapChooser>().mapName);
+        
+        Invoke("LoadGame", 3f);
         //PhotonNetwork.LoadLevel(1);
+    }
+
+    private void LoadGame()
+    {
+        PhotonNetwork.LoadLevel(mapChooseMenu.GetComponent<MapChooser>().mapName);
     }
 
     public void LeaveRoom()
