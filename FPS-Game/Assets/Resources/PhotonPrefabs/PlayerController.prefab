@@ -14107,8 +14107,8 @@ MonoBehaviour:
   randomRecoilContstraints: {x: 0, y: 0}
   recoilPattern: {x: 0, y: 0}
   recoilAmount: 0.5
-  animator: {fileID: 794114464}
-  reload: ShotGunReload
+  animator: {fileID: 3411668254857197009}
+  reload: 
   doesHaveAnimationForShooting: 1
   shoot: DaggerSwing
   audioSource: {fileID: 7952799843421940460}
@@ -38779,7 +38779,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4463500639273689718
 Transform:
   m_ObjectHideFlags: 0
@@ -42137,7 +42137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2834624604261686685
 Transform:
   m_ObjectHideFlags: 0
@@ -50769,7 +50769,7 @@ PrefabInstance:
     - target: {fileID: 33422146411399788, guid: 689946d975a0e55449b1e7ae41933e73, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4300000, guid: 9f9a975f5f1dca044a8a467deb5d9e29, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 689946d975a0e55449b1e7ae41933e73, type: 3}
 --- !u!1 &573334208263654553 stripped
@@ -52132,6 +52132,59 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 332391acf7e54f8429f789d3e51c950b, type: 3}
+--- !u!1 &1368618762469733446 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 332391acf7e54f8429f789d3e51c950b, type: 3}
+  m_PrefabInstance: {fileID: 2179502880547686679}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &6144620257181029820
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368618762469733446}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: 332391acf7e54f8429f789d3e51c950b, type: 3}
+--- !u!95 &3411668254857197009
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368618762469733446}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1074a12fd06ef974b9c1e22ccd82bfd3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5700723020352463293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368618762469733446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a54d4323cfc273142937bbb0da62af25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pV: {fileID: 2511184437448133920}
+  daggerManager: {fileID: 4593207813660433441}
 --- !u!4 &1852561850160459516 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 332391acf7e54f8429f789d3e51c950b, type: 3}
@@ -53519,7 +53572,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a54d4323cfc273142937bbb0da62af25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxCollider: {fileID: 5268808814132497489}
   pV: {fileID: 9209597007893392388}
   daggerManager: {fileID: 4593207813660433441}
 --- !u!1001 &3793107957726713928

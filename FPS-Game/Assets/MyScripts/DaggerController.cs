@@ -5,9 +5,14 @@ using Photon.Pun;
 
 public class DaggerController : MonoBehaviour
 {
-    public BoxCollider boxCollider;
+    MeshCollider meshcollider;
     public PhotonView pV;
     public SingleShotGun daggerManager;
+
+    private void Awake()
+    {
+        meshcollider = GetComponent<MeshCollider>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -35,8 +40,8 @@ public class DaggerController : MonoBehaviour
 
     private IEnumerator DisableDagger()
     {
-        boxCollider.enabled = false;
+        meshcollider.enabled = false;
         yield return new WaitForSeconds(2);
-        boxCollider.enabled = true;
+        meshcollider.enabled = true;
     }
 }

@@ -437,7 +437,15 @@ public class SingleShotGun : Gun
                 }                
                 if (doesHaveAnimationForShooting)
                 {
-                    animator.Play(shoot.ToString(), 0, 0.0f);
+                    if (isDagger)
+                    {
+                        int num = Random.Range(1, 4);
+                        animator.Play("KnifeSwing" + num);
+                    }else
+                    {
+                        animator.Play(shoot.ToString(), 0, 0.0f);
+
+                    }
                 }
             }            
             else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInClip < clipSize && _ammoInReserve > 0 && !isDagger)
