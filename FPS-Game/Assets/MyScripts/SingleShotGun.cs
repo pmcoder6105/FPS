@@ -74,7 +74,7 @@ public class SingleShotGun : Gun
     public bool isSniper;
     bool isScoped = false;
     public bool isShotGun;
-    public GameObject scope;
+    //public GameObject scope;
 
     public Vector2 _currentRotation;
     public bool canAim = true;
@@ -108,6 +108,9 @@ public class SingleShotGun : Gun
 
     public TrailRenderer trail;
 
+    public Shader sniperScope;
+    public GameObject sniperGlassScope;
+
     private void Start()
     {
         _currentAmmoInClip = clipSize;
@@ -118,6 +121,11 @@ public class SingleShotGun : Gun
             if (FirebaseManager.Singleton.crosshairs == false)
             {
                 crosshairCanvas.SetActive(false);
+            }
+            if (isSniper)
+            {
+                Material sniperScopeMat = new(sniperScope);
+                sniperGlassScope.GetComponent<MeshRenderer>().material = sniperScopeMat;
             }
         }
     }
@@ -247,6 +255,14 @@ public class SingleShotGun : Gun
             {
                 sniper.GetComponent<SingleShotGun>().scopePieces[i].SetActive(true);
             }
+        }
+        else
+        {
+            Vector2 screenPixels = cam.WorldToScreenPoint(transform.position);
+            screenPixels = new Vector2(screenPixels.x / Screen.width, screenPixels.y / Screen.height);
+
+            sniperGlassScope.GetComponent<MeshRenderer>().material.SetVector("_ObjectScreenPosition", screenPixels);
+
         }
     }
     [PunRPC]
@@ -553,7 +569,7 @@ public class SingleShotGun : Gun
 
         if (isSniper)
         {
-            scope.SetActive(false);
+            //scope.SetActive(false);
             isScoped = false;
             cam.fieldOfView = 60;
             playerController.mouseSensitivity = 3;
@@ -596,14 +612,21 @@ public class SingleShotGun : Gun
         if (Input.GetMouseButton(1))
         {            
             if (isSniper)
+            {
                 isSniperScoped = true;
+                sniperGlassScope.GetComponent<MeshRenderer>().material.SetFloat("_ZoomAmount", .4f);
+            }
 
             target = aimingLocalPosition;
         }
         else if (Input.GetMouseButtonUp(1) && isSniper)
         {
             if (isSniper)
+            {
                 isSniperScoped = false;
+                sniperGlassScope.GetComponent<MeshRenderer>().material.SetFloat("_ZoomAmount", .2f);
+
+            }
         }   
         
         if (Input.GetMouseButtonDown(1))
@@ -633,18 +656,19 @@ public class SingleShotGun : Gun
             if (Input.GetMouseButtonDown(1))
             {
                 Debug.Log("Should enable scope NOW");
-
+                //StartCoroutine(nameof(OpenScope));
                 isScoped = true;
                 audioSource.Stop();
                 audioSource.PlayOneShot(scopeSFX);
-                StartCoroutine(OpenScope());
+                cam.fieldOfView = 30;
+
                 playerController.mouseSensitivity = 0.5f;
 
             }
 
             else if (Input.GetMouseButtonUp(1))
             {
-                StopCoroutine(nameof(OpenScope));
+                //StopCoroutine(nameof(OpenScope));
                 isScoped = false;
                 cam.fieldOfView = 60;
                 playerController.mouseSensitivity = 3;
@@ -652,7 +676,7 @@ public class SingleShotGun : Gun
                 {
                     scopePieces[i].SetActive(true);
                 }
-                scope.SetActive(false);
+                //scope.SetActive(false);
             }
         }       
 
@@ -661,24 +685,23 @@ public class SingleShotGun : Gun
         transform.localPosition = desiredPosition;
     }
 
-    IEnumerator OpenScope()
-    {
+    //IEnumerator OpenScope()
+    //{
        
-        yield return new WaitForSeconds(Time.deltaTime * aimSmoothing);
-        Debug.Log(Input.GetMouseButton(1));
-        if (Input.GetMouseButton(1))
-        {
-            scope.SetActive(true);
-            cam.fieldOfView = 30;
-            for (int i = 0; i < scopePieces.Count(); i++)
-            {
-                scopePieces[i].SetActive(false);
-            }
-        }            
-        //weaponCam.SetActive(false);
-        //Disable sniper visuals
-        //Modify muzzle flash
-    }
+    //    yield return new WaitForSeconds(Time.deltaTime * aimSmoothing);
+    //    Debug.Log(Input.GetMouseButton(1));
+    //    if (Input.GetMouseButton(1))
+    //    {
+    //        //scope.SetActive(true);
+    //        for (int i = 0; i < scopePieces.Count(); i++)
+    //        {
+    //            scopePieces[i].SetActive(false);
+    //        }
+    //    }            
+    //    //weaponCam.SetActive(false);
+    //    //Disable sniper visuals
+    //    //Modify muzzle flash
+    //}
     IEnumerator ShootGun()
     {
         if (isDagger == false)
