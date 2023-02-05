@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6796023859885538903}
-  - component: {fileID: 2074812999470957733}
+  - component: {fileID: 200209258}
   m_Layer: 0
   m_Name: prefab_concreat_block
   m_TagString: Untagged
@@ -27,13 +27,14 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3197502379143446799}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &2074812999470957733
-MeshCollider:
+--- !u!65 &200209258
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -42,10 +43,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: b5568699d86c38d44b8d09934f1b54ef, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 3.0797877, y: 0.5183524, z: 3.0619829}
+  m_Center: {x: 0, y: 0.24082379, z: 0}
 --- !u!1001 &3197502379143060367
 PrefabInstance:
   m_ObjectHideFlags: 0

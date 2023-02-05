@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4406682562675757779}
-  - component: {fileID: 4803125373337099309}
+  - component: {fileID: 8585250097882073664}
   m_Layer: 0
   m_Name: prefab_corrugated_metal_01
   m_TagString: Untagged
@@ -27,13 +27,14 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5323828103117636391}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &4803125373337099309
-MeshCollider:
+--- !u!65 &8585250097882073664
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -42,10 +43,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 4a9206d2174c6d94ba7a414e8e93446f, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 3.0740087, y: 1.4788914, z: 0.24087617}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5323828103118035367
 PrefabInstance:
   m_ObjectHideFlags: 0

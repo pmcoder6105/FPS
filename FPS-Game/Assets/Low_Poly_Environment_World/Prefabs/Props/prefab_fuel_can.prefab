@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6989613757947486923}
-  - component: {fileID: 2740643497047326191}
+  - component: {fileID: 6076947251429062913}
   m_Layer: 0
   m_Name: prefab_fuel_can
   m_TagString: Untagged
@@ -27,13 +27,14 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6935580951011448321}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &2740643497047326191
-MeshCollider:
+--- !u!65 &6076947251429062913
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -42,10 +43,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: d0bbe3d4d1ecb20448b20f0314c94d63, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.49038583, y: 0.64949226, z: 0.2785937}
+  m_Center: {x: 0, y: 0.0015530586, z: 0}
 --- !u!1001 &6935580951011839105
 PrefabInstance:
   m_ObjectHideFlags: 0

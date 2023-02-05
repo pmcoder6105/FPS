@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4412681915028304}
-  - component: {fileID: 6438621282500175508}
+  - component: {fileID: 1966741968}
   m_Layer: 0
   m_Name: prefab_polytope_windmill
   m_TagString: Untagged
@@ -27,13 +27,14 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5475062712707645843}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &6438621282500175508
-MeshCollider:
+--- !u!65 &1966741968
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -42,10 +43,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 6737b8e99723d044880ed5b87c7d71ae, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 4.4174957, y: 12.259029, z: 3.764102}
+  m_Center: {x: 0, y: 5.6295137, z: 0}
 --- !u!1001 &5475062712707521299
 PrefabInstance:
   m_ObjectHideFlags: 0

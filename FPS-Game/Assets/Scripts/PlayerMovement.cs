@@ -1,7 +1,6 @@
-﻿ using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -68,17 +67,6 @@ public class PlayerMovement : MonoBehaviour
 
     float nextTimeToJump = 0f;
 
-    public bool shouldCrouch, shouldGrapple, shouldCalculateSpeed;
-
-    Vector3 moveAmount, smoothMoveVelocity;
-
-    PhotonView PV;
-
-    private void Awake()
-    {
-        PV = GetComponent<PhotonView>();
-    }
-
     private bool OnSlope()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.5f))
@@ -103,21 +91,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        MovePlayer();
-
-
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         MyInput();
-        if (shouldGrapple)
-        {
-            ControlDrag();
-        }
-        if (shouldCalculateSpeed)
-        {
-            CheckIfMoving();
-        }
+        ControlDrag();
         ControlSpeed();
+        CheckIfMoving();
 
         if (Input.GetKey(jumpKey) && isGrounded && Time.time >= nextTimeToJump)
         {
@@ -127,21 +106,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(crouchKey))
         {
-            if (!shouldCrouch)
-                return;
-
-
             Crouch();
             isCrouching = true;
         }
 
         if (Input.GetKeyUp(crouchKey))
         {
-
-            if (!shouldCrouch)
-                return;
-
-
             UnCrouch();
             isCrouching = false;
         }
@@ -185,8 +155,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isGrounded)
         {
-            rb.AddForce(transform.up * GetComponent<PlayerController>().jumpForce);
-
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         }
     }
 
@@ -229,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-
+            
             if (grapplingGun.IsGrappling())
             {
                 rb.drag = grapplingDrag;
@@ -258,41 +228,30 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!PV.IsMine)
-            return;
-        rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.deltaTime);
-
+        MovePlayer();
     }
 
     void MovePlayer()
     {
-        //if (isGrounded && !OnSlope() && !isCrouching)
-        //{
-        //    rb.AddForce(movementMultiplier * moveSpeed * moveDirection.normalized, ForceMode.Acceleration);
-        //}
+        if (isGrounded && !OnSlope() && !isCrouching)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * movementMultiplier, ForceMode.Acceleration);
+        }
 
-        //if (isGrounded && OnSlope())
-        //{
-        //    rb.AddForce(movementMultiplier * moveSpeed * Time.fixedDeltaTime * slopeMoveDirection.normalized, ForceMode.Acceleration);
-        //}
+        if (isGrounded && OnSlope())
+        {
+            rb.AddForce(slopeMoveDirection.normalized * moveSpeed * movementMultiplier, ForceMode.Acceleration);
+        }
 
-        //if (!isGrounded)
-        //{
-        //    rb.AddForce(airMultiplier * movementMultiplier * moveSpeed * Time.fixedDeltaTime * moveDirection.normalized, ForceMode.Acceleration);
-        //}
+        if (!isGrounded)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * movementMultiplier * airMultiplier, ForceMode.Acceleration);
+        }
 
-        //if(isGrounded && isCrouching)
-        //{
-        //    rb.AddForce(crouchMultiplier * crouchSpeed * Time.fixedDeltaTime * moveDirection.normalized, ForceMode.Acceleration);
-        //}
-
-        Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
-
-        if (!PV.IsMine)
-            return;
-
-
-        moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, 0.15f);
+        if(isGrounded && isCrouching)
+        {
+            rb.AddForce(moveDirection.normalized * crouchSpeed * crouchMultiplier, ForceMode.Acceleration);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

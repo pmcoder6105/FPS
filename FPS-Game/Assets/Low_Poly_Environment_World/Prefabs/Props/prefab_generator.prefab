@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3256498243191912230}
-  - component: {fileID: 8951740420019214241}
+  - component: {fileID: 4467285053469313700}
   m_Layer: 0
   m_Name: prefab_generator
   m_TagString: Untagged
@@ -27,13 +27,14 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6890607067095117081}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &8951740420019214241
-MeshCollider:
+--- !u!65 &4467285053469313700
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -42,10 +43,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: ac662b8fc5f02c94a9f66069d5e60e53, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.1392813, z: 1.1958183}
+  m_Center: {x: 0, y: 0.53400517, z: 0}
 --- !u!1001 &6890607067095512985
 PrefabInstance:
   m_ObjectHideFlags: 0
