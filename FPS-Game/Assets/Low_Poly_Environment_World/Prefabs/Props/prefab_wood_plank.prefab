@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6269549233585685436}
-  - component: {fileID: 8462954819105321314}
+  - component: {fileID: 6741205340318322852}
   m_Layer: 0
   m_Name: prefab_wood_plank
   m_TagString: Untagged
@@ -24,16 +24,17 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6615543541926755567}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4194160351190772555}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &8462954819105321314
-MeshCollider:
+--- !u!65 &6741205340318322852
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -42,10 +43,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -8699419000098993510, guid: d4de72c8a2ba58346a1d07c57fdb7a3f, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.108303644, z: 4.1604176}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4449028543208066208
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1322067062458935469}
-  - component: {fileID: 2732697200352836848}
+  - component: {fileID: 3510145095191071291}
   m_Layer: 0
   m_Name: prefab_wood_pallet_damaged
   m_TagString: Untagged
@@ -27,13 +27,14 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 565216895382510652}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &2732697200352836848
-MeshCollider:
+--- !u!65 &3510145095191071291
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -42,10 +43,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8545142558978767573, guid: 998b7576e6683884b841e824ea65fe5d, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 1.9877222, y: 0.3547543, z: 1.8375869}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &23279654499498967
 PrefabInstance:
   m_ObjectHideFlags: 0
