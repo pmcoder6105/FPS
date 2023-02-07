@@ -23,7 +23,6 @@ public class JoinAndReconnectLobby : MonoBehaviourPunCallbacks
         {
             if (SceneManager.GetActiveScene().name == "Menu")
             {
-                
                 OpenTitle();
             }
         }
@@ -59,6 +58,7 @@ public class JoinAndReconnectLobby : MonoBehaviourPunCallbacks
     private IEnumerator Reconnect()
     {
         Debug.Log("reconnect 1");
+        yield return new WaitUntil(predicate: () => FirebaseManager.Singleton.hasFixedDependencies);
         yield return new WaitForSeconds(3f);
 
         Debug.Log("reconnect 3");
