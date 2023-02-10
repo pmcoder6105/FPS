@@ -16143,7 +16143,8 @@ GameObject:
   - component: {fileID: 3036645135522511440}
   - component: {fileID: 5824856212842597629}
   - component: {fileID: 3141517849836887114}
-  - component: {fileID: 371044559031721506}
+  - component: {fileID: 7956040459670654239}
+  - component: {fileID: 2753331142105186316}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Player
@@ -16476,22 +16477,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312a5b7594b1ad341aa73b9e9130e203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &371044559031721506
+--- !u!143 &7956040459670654239
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2511184437448133935}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2753331142105186316
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2511184437448133935}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e4c4bbc71fdae24a9831f77bea05e9c, type: 3}
+  m_Script: {fileID: 11500000, guid: 50b25ae13abd83c4b90bc40e5182eecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wallRunUpForce: 1
-  _wallRunPushForce: 5
-  cam: {fileID: 1029141208401553951}
-  head: {fileID: 4753991430929898074}
+  isGround: 0
+  groundAngle: 0
+  ProjectMoveOnGround: 0
+  moveInput: {x: 0, y: 0, z: 0}
+  slopeLimit: 40
+  inertiaDampingTime: 0.1
+  slopeStartForce: 3
+  slopeAcceleration: 3
+  inertiaVelocity: {x: 0, y: 0, z: 0}
+  platformAction: 1
+  platformVelocity: {x: 0, y: 0, z: 0}
+  applyCollision: 1
+  pushForce: 55
 --- !u!1 &2511297007582513298
 GameObject:
   m_ObjectHideFlags: 0
@@ -38583,6 +38611,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1029141208401553951}
   - component: {fileID: 7493538053532579797}
+  - component: {fileID: 2946498591225190596}
   m_Layer: 0
   m_Name: CameraHolder
   m_TagString: Untagged
@@ -38655,6 +38684,22 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2946498591225190596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7125649003663543827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac5fdad194d2ce499a8e03a0b343c5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 1029141208401553951}
+  maxVerticalAngle: 60
+  body: {fileID: 2511184437448133923}
+  sensitivity: 1
 --- !u!1 &7155549761163450762
 GameObject:
   m_ObjectHideFlags: 0
