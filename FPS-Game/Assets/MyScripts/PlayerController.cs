@@ -204,7 +204,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         SetHealthColorPropertyAndGlowShader();
         if (!playerManager.hasDeathPanelActivated)
         {
-            scoreBoard.GetComponent<ScoreBoard>().OpenLeaveConfirmation();
+            scoreBoard.GetComponent<ScoreBoard>().OpenOptions();
         }
         ProcessWeaponSwitching();
         SetPermVignetteFlash();

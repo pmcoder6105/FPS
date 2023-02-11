@@ -18704,7 +18704,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2933133216023928144}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.397, y: 0.1993, z: 1.3341}
+  m_LocalPosition: {x: 0.3971, y: 0.2005, z: 1.3215}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19391,7 +19391,7 @@ MonoBehaviour:
   muzzleFlashSpawnPlace: {fileID: 1417356945351635494}
   normalLocalPosition: {x: 0, y: 0, z: 0}
   aimingLocalPosition: {x: -0.4, y: 0.24, z: -0.448}
-  aimSmoothing: 10
+  aimSmoothing: 15
   weaponSwayAmount: -5
   randomizeRecoil: 0
   randomRecoilContstraints: {x: 0, y: 0}
@@ -23983,7 +23983,7 @@ MonoBehaviour:
   muzzleFlashSpawnPlace: {fileID: 7829378323093517404}
   normalLocalPosition: {x: 0, y: 0, z: 0}
   aimingLocalPosition: {x: -0.358, y: 0.17, z: -0.26}
-  aimSmoothing: 10
+  aimSmoothing: 15
   weaponSwayAmount: 5
   randomizeRecoil: 0
   randomRecoilContstraints: {x: 0, y: 0}
@@ -31063,7 +31063,7 @@ MonoBehaviour:
   muzzleFlashSpawnPlace: {fileID: 6682651339321976925}
   normalLocalPosition: {x: 0, y: 0, z: 0.31}
   aimingLocalPosition: {x: -0.39603, y: 0.211999, z: -0.013802}
-  aimSmoothing: 10
+  aimSmoothing: 15
   weaponSwayAmount: 10
   randomizeRecoil: 0
   randomRecoilContstraints: {x: 0, y: 0}
@@ -33231,7 +33231,7 @@ MonoBehaviour:
   muzzleFlashSpawnPlace: {fileID: 8089965405699872532}
   normalLocalPosition: {x: 0, y: 0, z: 0}
   aimingLocalPosition: {x: -0.34, y: 0.17, z: -0.41}
-  aimSmoothing: 10
+  aimSmoothing: 15
   weaponSwayAmount: 12
   randomizeRecoil: 1
   randomRecoilContstraints: {x: -0.1, y: 0.1}
@@ -38534,7 +38534,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1029141208401553951}
   - component: {fileID: 7493538053532579797}
-  - component: {fileID: 2946498591225190596}
   m_Layer: 0
   m_Name: CameraHolder
   m_TagString: Untagged
@@ -38607,22 +38606,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2946498591225190596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7125649003663543827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eac5fdad194d2ce499a8e03a0b343c5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 1029141208401553951}
-  maxVerticalAngle: 60
-  body: {fileID: 2511184437448133923}
-  sensitivity: 1
 --- !u!1 &7155549761163450762
 GameObject:
   m_ObjectHideFlags: 0

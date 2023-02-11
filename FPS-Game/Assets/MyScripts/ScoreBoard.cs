@@ -17,6 +17,7 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
     [SerializeField] TMP_Text holdTabForScoreBoardText;
 
     public CanvasGroup leaveConfirmation;
+    public CanvasGroup options;
 
     public bool isConfirmationOpen = false;
 
@@ -30,6 +31,7 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
         }
         scoreBoardTitle.alpha = 0;
         leaveConfirmation.alpha = 0;
+        options.alpha = 0;
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -76,17 +78,22 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
         }                
     }
 
+    public void OpenOptions() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            options.GetComponent<Animator>().Play("OptionsTransition");
+            isConfirmationOpen = true;
+            blur.SetActive(true);
+            DisableCursor();
+        }
+    }
+
     public void OpenLeaveConfirmation()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            leaveConfirmation.alpha = 1;
+        leaveConfirmation.alpha = 1;
             leaveConfirmation.GetComponent<Animator>().Play("LeaveConfirmationTransition");
             DisableCursor();
             isConfirmationOpen = true;
             blur.SetActive(true);
-
-        }
     }
 
     public void DisableCursor()

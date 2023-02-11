@@ -646,8 +646,6 @@ public class SingleShotGun : Gun
                 sniperGlassScope.GetComponent<MeshRenderer>().material.SetFloat("_ZoomAmount", .2f);
 
             }
-            recoilAmount = weaponRecoilOrigional;
-            isAiming = false;
         }   
         
         if (Input.GetMouseButtonDown(1))
@@ -666,6 +664,8 @@ public class SingleShotGun : Gun
                 return;
             playerController.walkSpeed = 5;
             playerController.sprintSpeed = 10;
+            isAiming = false;
+            recoilAmount = weaponRecoilOrigional;
         }
 
 
