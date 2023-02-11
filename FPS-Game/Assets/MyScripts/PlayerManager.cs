@@ -67,7 +67,7 @@ public class PlayerManager : MonoBehaviour
                 Invoke(nameof(CreateController), 3f);
             }
             killTextNotificationHolder = GameObject.Find("KillTextNotificationHolder");
-            scoreBoardCanvas = GameObject.Find("ScoreBoardCanvas");
+            scoreBoardCanvas = GameObject.Find("ScoreBoard");
             if (FirebaseManager.Singleton.isMusicOn)
             {
                 GameObject musicHolderGO = Instantiate(musicHolder);
@@ -138,7 +138,7 @@ public class PlayerManager : MonoBehaviour
 
     public IEnumerator OpenDeathPanel() 
     {
-        yield return new WaitUntil(predicate: () => scoreBoardCanvas.GetComponent<ScoreBoard>().isConfirmationOpen == true);
+        yield return new WaitUntil(predicate: () => scoreBoardCanvas.GetComponent<ScoreBoard>().isConfirmationOpen == false);
 
 
         deathPanelGameObject = Instantiate(deathPanel, scoreBoardCanvas.transform);

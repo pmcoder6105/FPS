@@ -560,28 +560,28 @@ public class SingleShotGun : Gun
         {
             if (_currentAmmoInClip == 4)
             {
-                animator.Play("ShotGunReload1", 0, 0.0f);
+                animator.Play("BenelliReload1", 0, 0.0f);
                 reloadTime = 46f;
             }
             if (_currentAmmoInClip == 3)
             {
-                animator.Play("ShotGunReload2", 0, 0.0f);
+                animator.Play("BenelliReload2", 0, 0.0f);
                 reloadTime = 60f;
             }
             if (_currentAmmoInClip == 2)
             {
-                animator.Play("ShotGunReload3", 0, 0.0f);
+                animator.Play("BenelliReload3", 0, 0.0f);
                 reloadTime = 66f;
             }
             if (_currentAmmoInClip == 1)
             {
-                animator.Play("ShotGunReload4", 0, 0.0f);
+                animator.Play("BenelliReload4", 0, 0.0f);
                 reloadTime = 80f;
             }
             if (_currentAmmoInClip == 0)
             {
                 reloadTime = 87f;
-                animator.Play("ShotGunReload5", 0, 0.0f);
+                animator.Play("BenelliReload5", 0, 0.0f);
             }
         }
 
