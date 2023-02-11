@@ -34,7 +34,7 @@ public class Shake : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             float strenght = curve.Evaluate(elapsedTime / duration);
-            transform.position = startPosition + Random.insideUnitCircle * strenght;
+            transform.position = new Vector3(startPosition.x + Random.Range(0, 2) * strenght, startPosition.y + Random.Range(0,2) * strenght, 0);
             //transform.position = startPosition + Random.insideUnitCircle * strenght;
             yield return null;
         }

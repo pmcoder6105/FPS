@@ -260,7 +260,7 @@ public class SingleShotGun : Gun
         {
             Vector2 screenPixels = cam.WorldToScreenPoint(transform.position);
             screenPixels = new Vector2(screenPixels.x / Screen.width, screenPixels.y / Screen.height);
-
+            Debug.Log("Should be glassing");
             sniperGlassScope.GetComponent<MeshRenderer>().material.SetVector("_ObjectScreenPosition", screenPixels);
 
         }
@@ -279,10 +279,19 @@ public class SingleShotGun : Gun
             DetermineAim();
         }
 
-        if (!isSniperScoped)
+        if (!isReloading) 
         {
-            DetermineWeaponSway();
-        }        
+            if (!isSniperScoped)
+               {
+                    if (!Input.GetKey(KeyCode.Mouse1)) 
+                    {
+                           DetermineWeaponSway();
+
+                    }
+
+              } 
+        }
+               
 
         if (isDagger)
         {
@@ -710,7 +719,6 @@ public class SingleShotGun : Gun
             //flash.GetComponent<ParticleSystem>().Emit(1);
             //flash.transform.Find("Sparks").GetComponent<ParticleSystem>().Emit(1);
             Destroy(flash, 1f);
-            cam.GetComponentInParent<Shake>().start = true;
             if (isShotGun)
             {
                 cam.GetComponentInParent<Shake>().duration = 0.4f;
@@ -723,6 +731,7 @@ public class SingleShotGun : Gun
             {
                 cam.GetComponentInParent<Shake>().duration = 0.1f;
             }
+            //cam.GetComponentInParent<Shake>().start = true;
         }
         if (isDagger)
         {

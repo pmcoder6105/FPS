@@ -811,8 +811,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             if (isDead)
                 return;
 
-            if (playerHealth == 3) // if player health is 3
+            if (playerHealth == 3) 
+            {
                 SetHealthyNewMaterial(); // set HEALTHY new material function
+
+                
+            } // if player health is 3
 
             if (playerHealth == 2) // if player health is 2
                 SetNormalNewMaterial(); // set NORMAL new material function
