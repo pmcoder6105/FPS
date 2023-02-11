@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Photon.Pun;
 
 [RequireComponent(typeof(CharacterController))]
 public class PhysicalCC : MonoBehaviour
@@ -31,13 +32,15 @@ public class PhysicalCC : MonoBehaviour
 	[Header("Collision")]
 	public bool applyCollision = true;
 	public float pushForce = 55f;
+	public PhotonView pv;
 
-	private void Start()
-	{
-		cc = GetComponent<CharacterController>();
+	public LayerMask whatisGround;
+
+	void Awake() {
+		pv = GetComponent<PhotonView>();
 	}
 
-	private void Update()
+	private void FixedUpdate()
 	{
 		GroundCheck();
 
@@ -52,7 +55,7 @@ public class PhysicalCC : MonoBehaviour
 
 		Vector3 moveDirection = (moveVelocity + inertiaVelocity + platformVelocity);
 
-		cc.Move((moveDirection) * Time.deltaTime);
+		cc.Move((moveDirection) * Time.fixedDeltaTime);
 	}
 
 	private void GravityUpdate()
@@ -79,27 +82,29 @@ public class PhysicalCC : MonoBehaviour
 
 	private void GroundCheck()
 	{
-		if (Physics.SphereCast(transform.position, cc.radius, Vector3.down, out RaycastHit hit, cc.height / 2 - cc.radius + 0.01f))
-		{
-			isGround = true;
-			groundAngle = Vector3.Angle(Vector3.up, hit.normal);
-			groundNormal = hit.normal;
+		// if (Physics.SphereCast(transform.position, cc.radius, Vector3.down, out RaycastHit hit, cc.height / 2 - cc.radius + 0.01f))
+		// {
+		// 	isGround = true;
+		// 	groundAngle = Vector3.Angle(Vector3.up, hit.normal);
+		// 	groundNormal = hit.normal;
 
-			if (hit.transform.tag == "Platform")
-				platformVelocity = hit.collider.attachedRigidbody == null | !platformAction ?
-				 Vector3.zero : hit.collider.attachedRigidbody.velocity;
+		// 	if (hit.transform.tag == "Platform")
+		// 		platformVelocity = hit.collider.attachedRigidbody == null | !platformAction ?
+		// 		 Vector3.zero : hit.collider.attachedRigidbody.velocity;
 
-			if (Physics.BoxCast(transform.position, new Vector3(cc.radius / 2.5f, cc.radius / 3f, cc.radius / 2.5f),
-						Vector3.down, out RaycastHit helpHit, transform.rotation, cc.height / 2 - cc.radius / 2))
-			{
-				groundAngle = Vector3.Angle(Vector3.up, helpHit.normal);
-			}
-		}
-		else
-		{
-			platformVelocity = Vector3.zero;
-			isGround = false;
-		}
+		// 	if (Physics.BoxCast(transform.position, new Vector3(cc.radius / 2.5f, cc.radius / 3f, cc.radius / 2.5f),
+		// 				Vector3.down, out RaycastHit helpHit, transform.rotation, cc.height / 2 - cc.radius / 2))
+		// 	{
+		// 		groundAngle = Vector3.Angle(Vector3.up, helpHit.normal);
+		// 	}
+		// }
+		// else
+		// {
+		// 	platformVelocity = Vector3.zero;
+		// 	isGround = false;
+		// }
+
+		isGround = Physics.Raycast(transform.position, Vector3.down, cc.height/2 + 0.2f, whatisGround);
 	}
 
 	private void OnControllerColliderHit(ControllerColliderHit hit)

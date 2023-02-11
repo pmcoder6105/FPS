@@ -473,7 +473,7 @@ public class SingleShotGun : Gun
                         return;
                     if (isDagger)
                     {
-                        int num = Random.Range(1, 4);
+                        int num = Random.Range(1, 3);
                         animator.Play("KnifeSwing" + num);
                     }else
                     {
