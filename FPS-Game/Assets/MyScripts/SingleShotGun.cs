@@ -52,6 +52,8 @@ public class SingleShotGun : Gun
     public Vector2 recoilPattern;
     public float recoilAmount = 0.1f;
 
+    bool isAiming;
+
     [Header("Animations")]
     //Reloading
     public Animator animator;
@@ -111,6 +113,8 @@ public class SingleShotGun : Gun
     public Shader sniperScope;
     public GameObject sniperGlassScope;
 
+    float weaponRecoilOrigional;
+
     private void Start()
     {
         _currentAmmoInClip = clipSize;
@@ -135,6 +139,7 @@ public class SingleShotGun : Gun
         PV = GetComponent<PhotonView>();
         doubleBulletBloom = bulletBloomAmount * 2;
         originalBloom = bulletBloomAmount;
+        weaponRecoilOrigional = recoilAmount;
     }
 
     private void FixedUpdate()
@@ -334,10 +339,12 @@ public class SingleShotGun : Gun
                 }
                 if (doesHaveAnimationForShooting)
                 {
+                    if (isAiming)
+                        return;
                     animator.Play(shoot.ToString(), 0, 0.0f);
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInClip < clipSize && _ammoInReserve > 0)
+            else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInClip < clipSize && _ammoInReserve > 0 && !isAiming)
             {
                 if (!_canShoot || isReloading)
                     return;
@@ -462,6 +469,8 @@ public class SingleShotGun : Gun
                 }                
                 if (doesHaveAnimationForShooting)
                 {
+                    if (isAiming)
+                        return;
                     if (isDagger)
                     {
                         int num = Random.Range(1, 4);
@@ -473,7 +482,7 @@ public class SingleShotGun : Gun
                     }
                 }
             }            
-            else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInClip < clipSize && _ammoInReserve > 0 && !isDagger)
+            else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInClip < clipSize && _ammoInReserve > 0 && !isDagger && !isAiming)
             {
                 if (!_canShoot || isReloading)
                     return;
@@ -625,8 +634,9 @@ public class SingleShotGun : Gun
                 isSniperScoped = true;
                 sniperGlassScope.GetComponent<MeshRenderer>().material.SetFloat("_ZoomAmount", .4f);
             }
-
+            recoilAmount = recoilAmount / 3;
             target = aimingLocalPosition;
+            isAiming = true;
         }
         else if (Input.GetMouseButtonUp(1) && isSniper)
         {
@@ -636,6 +646,8 @@ public class SingleShotGun : Gun
                 sniperGlassScope.GetComponent<MeshRenderer>().material.SetFloat("_ZoomAmount", .2f);
 
             }
+            recoilAmount = weaponRecoilOrigional;
+            isAiming = false;
         }   
         
         if (Input.GetMouseButtonDown(1))
@@ -749,8 +761,10 @@ public class SingleShotGun : Gun
 
     void DetermineRecoil()
     {
-        if (!isDagger)
+        if (!isDagger) 
+        {
             transform.localPosition -= Vector3.forward * recoilAmount;       
+        }
     }
 
     [PunRPC]
