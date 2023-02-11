@@ -48,6 +48,8 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject threetwooneanim;
     public Transform canvas;
+    public AudioClip xp, levelup;
+
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -181,11 +183,18 @@ public class PlayerManager : MonoBehaviour
         LevelUpManager.Singleton.AddExperiencePoints();
         LevelUpManager.Singleton.CheckLevelUp(int.Parse(PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"].ToString()), levelUpEmpty, PV);
 
-        //Play XP Level UP animation        
+        GetComponent<AudioSource>().PlayOneShot(xp);
+        GetComponent<AudioSource>().volume = 0.5f;
+        Invoke(nameof(PlayXPAudio), 2f);
 
         Hashtable hash = new();
         hash.Add("kills", kills);
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+    }
+
+    void PlayXPAudio() 
+    {
+        GetComponent<AudioSource>().volume = 1;
     }
 
     IEnumerator DisableXPAnimation()

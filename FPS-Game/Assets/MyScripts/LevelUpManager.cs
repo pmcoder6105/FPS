@@ -66,7 +66,7 @@ public class LevelUpManager : MonoBehaviour
 
         if (_currentExperience >= 1) //JUST FOR PLAYTESTING! MAKE SURE TO REVERT BACK TO 20 AFTER PLAYTESTING
         {
-            LevelUp();
+            LevelUp(pv);
             currentExperience = 0;
             StartCoroutine(FirebaseManager.Singleton.UpdateExperience(0));
 
@@ -85,13 +85,15 @@ public class LevelUpManager : MonoBehaviour
         __empty.SetActive(false);
     }
 
-    public void LevelUp()
+    public void LevelUp(PhotonView pv)
     {
         currentLevel++;
         StartCoroutine(FirebaseManager.Singleton.UpdateKills(currentLevel));
 
         FirebaseManager.Singleton._customProps["playerLevel"] = currentLevel;
         PhotonNetwork.LocalPlayer.CustomProperties = FirebaseManager.Singleton._customProps;
+
+        PhotonView.Find(pv.ViewID).gameObject.GetComponent<AudioSource>().PlayOneShot(PhotonView.Find(pv.ViewID).gameObject.GetComponent<PlayerManager>().levelup);
 
         Debug.Log("Manager's properties " + PhotonNetwork.LocalPlayer.CustomProperties["playerLevel"]);
     }
