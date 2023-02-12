@@ -507,11 +507,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             rb.AddForce(transform.up * jumpForce); 
             doubleJump = true;           
         }
-        if (Input.GetKeyDown(KeyCode.Space) && doubleJump) 
-        {
-            rb.AddForce(transform.up * jumpForce); 
-            doubleJump = false;
-        }
+        // if (Input.GetKeyDown(KeyCode.Space) && doubleJump) 
+        // {
+        //     rb.AddForce(transform.up * jumpForce); 
+        //     doubleJump = false;
+        // }
     }
 
     // a leave ienumerator
