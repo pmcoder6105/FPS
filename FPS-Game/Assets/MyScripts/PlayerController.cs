@@ -121,6 +121,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     bool cantMove = true;
 
+    public bool doubleJump;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -502,7 +504,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
-            rb.AddForce(transform.up * jumpForce);            
+            rb.AddForce(transform.up * jumpForce); 
+            doubleJump = true;           
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && doubleJump) 
+        {
+            rb.AddForce(transform.up * jumpForce); 
+            doubleJump = false;
         }
     }
 
@@ -625,15 +633,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight/2 + 0.2f, whatisGround);
         Debug.Log(grounded);
-
-        //if (grounded)
-        //{
-        //    rb.drag = drag;
-        //}
-        //else
-        //{
-        //    rb.drag = 0;
-        //}
     }
 
     // IDK what Rugbug did with this, but this is from the tutorial
@@ -641,12 +640,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     {
         if (!PV.IsMine)
             return;
-        cantMove = Physics.Raycast(transform.position, Vector3.forward, 0.4f);
 
-        if (!cantMove)
-        {
-            rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
-        }
+
+        rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
+
         items[itemIndex].Use();
     }
 
