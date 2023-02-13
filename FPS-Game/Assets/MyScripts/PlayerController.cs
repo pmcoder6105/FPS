@@ -502,15 +502,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     // jump function from the tutorial
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && grounded)
+        if (Input.GetKeyDown(KeyCode.Space) && grounded || doubleJump)
         {
             rb.AddForce(transform.up * jumpForce); 
             doubleJump = true;           
-        }
-        if (Input.GetKeyDown(KeyCode.Space) && doubleJump) 
-        {
-            rb.AddForce(transform.up * jumpForce); 
-            doubleJump = false;
         }
     }
 
