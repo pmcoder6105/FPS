@@ -11382,6 +11382,7 @@ MonoBehaviour:
   scoreBoardTitle: {fileID: 1288893959}
   holdTabForScoreBoardText: {fileID: 505079123}
   leaveConfirmation: {fileID: 758516349}
+  options: {fileID: 0}
   isConfirmationOpen: 0
 --- !u!114 &616447816
 MonoBehaviour:
@@ -45101,7 +45102,6 @@ MonoBehaviour:
   playerController: {fileID: 0}
   isSniper: 1
   isShotGun: 0
-  scope: {fileID: 8757865082874749986}
   _currentRotation: {x: 0, y: 0}
   canAim: 1
   shotGunRange: 0
@@ -45120,6 +45120,8 @@ MonoBehaviour:
   inputKey: 0
   crosshairCanvas: {fileID: 0}
   trail: {fileID: 0}
+  sniperScope: {fileID: 0}
+  sniperGlassScope: {fileID: 0}
 --- !u!224 &2509712507726776675
 RectTransform:
   m_ObjectHideFlags: 0
@@ -45609,7 +45611,6 @@ MonoBehaviour:
   playerController: {fileID: 0}
   isSniper: 0
   isShotGun: 0
-  scope: {fileID: 0}
   _currentRotation: {x: 0, y: 0}
   canAim: 1
   shotGunRange: 0
@@ -45631,6 +45632,8 @@ MonoBehaviour:
   inputKey: 0
   crosshairCanvas: {fileID: 0}
   trail: {fileID: 0}
+  sniperScope: {fileID: 0}
+  sniperGlassScope: {fileID: 0}
 --- !u!222 &2995205600962619814
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -47296,7 +47299,6 @@ MonoBehaviour:
   playerController: {fileID: 0}
   isSniper: 0
   isShotGun: 1
-  scope: {fileID: 0}
   _currentRotation: {x: 0, y: 0}
   canAim: 1
   shotGunRange: 25
@@ -47315,6 +47317,8 @@ MonoBehaviour:
   inputKey: 0
   crosshairCanvas: {fileID: 0}
   trail: {fileID: 0}
+  sniperScope: {fileID: 0}
+  sniperGlassScope: {fileID: 0}
 --- !u!223 &4368000240291610246
 Canvas:
   m_ObjectHideFlags: 0
@@ -47858,7 +47862,6 @@ MonoBehaviour:
   playerController: {fileID: 0}
   isSniper: 0
   isShotGun: 0
-  scope: {fileID: 0}
   _currentRotation: {x: 0, y: 0}
   canAim: 1
   shotGunRange: 25
@@ -47877,6 +47880,8 @@ MonoBehaviour:
   inputKey: 0
   crosshairCanvas: {fileID: 0}
   trail: {fileID: 0}
+  sniperScope: {fileID: 0}
+  sniperGlassScope: {fileID: 0}
 --- !u!224 &4626242197470475386
 RectTransform:
   m_ObjectHideFlags: 0
@@ -48398,7 +48403,6 @@ MonoBehaviour:
   playerController: {fileID: 0}
   isSniper: 0
   isShotGun: 0
-  scope: {fileID: 0}
   _currentRotation: {x: 0, y: 0}
   canAim: 1
   shotGunRange: 0
@@ -48420,6 +48424,8 @@ MonoBehaviour:
   inputKey: 0
   crosshairCanvas: {fileID: 0}
   trail: {fileID: 0}
+  sniperScope: {fileID: 0}
+  sniperGlassScope: {fileID: 0}
 --- !u!1 &5530043618566547623
 GameObject:
   m_ObjectHideFlags: 0
