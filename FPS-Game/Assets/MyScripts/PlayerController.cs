@@ -214,7 +214,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         PV.RPC(nameof(ProcessFootstepSFX), RpcTarget.All);
         ProcessInventoryToggle();
         PV.RPC(nameof(ProcessWaddle), RpcTarget.All);
+
+        TestWalk();
     }
+
+    void TestWalk() {
+        rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.deltaTime);
+    }
+
 
     [PunRPC]
     private void ProcessWaddle()
@@ -636,8 +643,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (!PV.IsMine)
             return;
 
-
-        rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
+        //rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
 
         items[itemIndex].Use();
     }
