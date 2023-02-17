@@ -219,7 +219,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     }
 
     void TestWalk() {
-        rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.smoothDeltaTime);
     }
 
 
