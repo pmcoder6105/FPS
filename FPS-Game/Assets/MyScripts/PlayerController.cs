@@ -30,11 +30,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     Rigidbody rb; 
 
-    public PhotonView PV; 
+    PhotonView PV; 
 
     const float maxHealth = 100f; 
     public float currentHealth = maxHealth; 
-
+    
     PlayerManager playerManager; // player manager
 
     [SerializeField] GameObject playerVisuals; // this is the colored visual part of the "bean" player
@@ -42,11 +42,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public GameObject redDeathParticleSystem; 
 
-    public bool isDead = false; 
+    [HideInInspector] public bool isDead = false; 
 
     [SerializeField] GameObject overheadUsernameText; 
     [SerializeField] GameObject itemHolder; 
-    [SerializeField] GameObject healthBar; // health bar from tutorial
 
     [SerializeField] Camera normalCam;   
 
@@ -54,7 +53,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     [SerializeField] GameObject gunClippingCam; // a camera that only renders the weapons to prevent them clipping into the walls
 
-    public bool canSwitchWeapons = true;
+    [HideInInspector] public bool canSwitchWeapons = true;
 
     [HideInInspector] public GameObject scoreBoard; // scoreboard that I assign later
 
@@ -74,26 +73,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public AudioClip walkSound;
     public AudioClip runSound;
-    public float footstepDelay;
+  
     public AudioSource footstepAudioSource;
-    public bool hasDiedFromFallDamage = false;
+    [HideInInspector] public bool hasDiedFromFallDamage = false;
 
     GameObject inventory;
-    public bool inventoryEnabled = false;
+    [HideInInspector] public bool inventoryEnabled = false;
 
     public ParticleSystem dustTrailParticleSystem;
 
-    //[HideInInspector] public FirebaseManager firebase;
-
-    public Shader toonShader;
-
-    public int itemGlobal;
+    [HideInInspector] public int itemGlobal;
 
     public GameObject damageNumber;
-
-    public bool needToClearFog = true;
-
-    public bool isMoving = false;
 
     public GameObject levelUpAnimation;
 
@@ -101,9 +92,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     public GameObject lilBean;
 
-    public KillFeed killFeedManager;
+    [HideInInspector] public KillFeed killFeedManager;
     public GameObject fogClearer;
-    public float drag;
     public float playerHeight;
 
     bool shouldWaddle;
@@ -111,17 +101,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     public GameObject vignetteFlash;
     public GameObject permVignetteFlash;
 
-    public LayerMask whatIsWall;
     public LayerMask whatisGround;
-    public float wallrunForce, maxWallrunTime, maxWallSpeed;
-    bool isWallRight, isWallLeft;
-    bool isWallrunning;
-    public float maxWallRunCameraTilt, wallRunCameraTilt;
-    public Transform orientation;
 
-    bool cantMove = true;
-
-    public bool doubleJump;
+    bool doubleJump;
 
     private void Awake()
     {
@@ -146,7 +128,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             clearer.GetComponent<ClearFog>().Clear(PV);
             Destroy(clearer, 2);
             GameObject.Find("yes i do").GetComponent<Button>().onClick.AddListener(ProcessLeaveConfirmation);
-
             //killFeedManager = GameObject.Find("KillFeedManager").GetComponent<KillFeed>();
 
         }
@@ -197,7 +178,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         playerManager.transform.position = this.gameObject.transform.position;
         Look();
-        Move();
+        //Move();
         SetGroundedState();
 
         Jump();
@@ -212,14 +193,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         SetPermVignetteFlash();
         ProcessFallDamageDeath();
         PV.RPC(nameof(ProcessFootstepSFX), RpcTarget.All);
-        ProcessInventoryToggle();
+        InventoryToggle();
         PV.RPC(nameof(ProcessWaddle), RpcTarget.All);
-
-        TestWalk();
-    }
-
-    void TestWalk() {
-        rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.smoothDeltaTime);
     }
 
 
@@ -285,7 +260,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         }
     }
 
-    private void ProcessInventoryToggle()
+    private void InventoryToggle()
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -403,21 +378,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             {
                 if (grounded)
                 {
-                    //if (FirebaseManager.Singleton.alwaysSprint == false)
-                    //{
-                    //    if (Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift))
-                    //    {
-                    //        StartCoroutine(nameof(RunSFX));
-                    //    }
-                    //    else if (!Input.GetKey(KeyCode.RightShift) && !Input.GetKey(KeyCode.LeftShift))
-                    //    {
-                    //        StartCoroutine(nameof(WalkSFX));
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    StartCoroutine(nameof(RunSFX)); Debug.Log("running is always on");
-                    //}
                     StartCoroutine(nameof(WalkSFX));
 
                 }
@@ -457,15 +417,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             footstepAudioSource.PlayOneShot(walkSound, 0.25f);
         }
     }
-    IEnumerator RunSFX()
-    {
-        yield return new WaitForSeconds(0.05f);
-        footstepAudioSource.enabled = true;
-        if (footstepAudioSource.isPlaying == false)
-        {
-            footstepAudioSource.PlayOneShot(runSound, 0.25f);
-        }
-    }
 
     IEnumerator StopWalkSFX()
     {
@@ -500,16 +451,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
         if (!PV.IsMine)
             return;
-
-
-        //moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * walkSpeed, ref smoothMoveVelocity, smoothTime);
         moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
     }
 
     // jump function from the tutorial
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && grounded || doubleJump)
+        if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             rb.AddForce(transform.up * jumpForce); 
             doubleJump = true;           
@@ -643,9 +591,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (!PV.IsMine)
             return;
 
-        //rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
-
+        Move();
+        rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
         items[itemIndex].Use();
+        
     }
 
     //TakeDamage with parameter damage from tutorial
@@ -913,8 +862,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         Destroy(playerVisuals); // destroy player visuals
         Destroy(itemHolder); // destroy item holder
         Destroy(overheadUsernameText); // destroy overhead username text
-        Destroy(healthBar); // destroy health bar
-        GetComponent<CapsuleCollider>().enabled = false; // disable capsule collider
+        playerVisuals.gameObject.GetComponent<MeshCollider>().enabled = false; // disable capsule collider
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)

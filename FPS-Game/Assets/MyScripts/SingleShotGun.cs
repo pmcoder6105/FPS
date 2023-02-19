@@ -599,7 +599,7 @@ public class SingleShotGun : Gun
         canAim = false;
         _canShoot = false;
 
-        yield return new WaitForSecondsRealtime(reloadTime * Time.deltaTime);
+        yield return new WaitForSecondsRealtime(reloadTime * Time.smoothDeltaTime);
 
         canAim = true;
         isReloading = false;
@@ -752,7 +752,7 @@ public class SingleShotGun : Gun
         DetermineRecoil();
 
 
-        yield return new WaitForSecondsRealtime(fireRate * Time.fixedDeltaTime);
+        yield return new WaitForSecondsRealtime(fireRate * Time.smoothDeltaTime);
 
         _canShoot = true;
         canDaggerSwing = true;
