@@ -33,8 +33,8 @@ namespace AFPC {
         private bool isRunningAvaiable = true;
 
         [Header("Endurance")]
-        public float referenceEndurance = 20.0f;
-        private float endurance = 20.0f;
+        public float referenceEndurance = Mathf.Infinity;
+        private float endurance = Mathf.Infinity;
 
         [Header("Jumping")]
         public float jumpForce = 7.5f;
