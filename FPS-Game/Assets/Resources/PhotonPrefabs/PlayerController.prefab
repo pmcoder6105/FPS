@@ -16283,7 +16283,6 @@ MonoBehaviour:
   - {fileID: 4593207813660433441}
   itemIndex: 0
   grounded: 0
-  PV: {fileID: 2511184437448133920}
   currentHealth: 100
   playerVisuals: {fileID: 4195023367634013940}
   playerHealth: 0
@@ -16291,7 +16290,6 @@ MonoBehaviour:
   isDead: 0
   overheadUsernameText: {fileID: 7480224287480394087}
   itemHolder: {fileID: 5084062447775689742}
-  healthBar: {fileID: 0}
   normalCam: {fileID: 2511184436295150316}
   gunClippingCam: {fileID: 2429949987780874682}
   canSwitchWeapons: 1
@@ -16303,29 +16301,23 @@ MonoBehaviour:
   glowShader: {fileID: -6465566751694194690, guid: 6ad2dabf2acfce943a062f5e7878dd92, type: 3}
   walkSound: {fileID: 8300000, guid: 7b7b8b14b0b4e6b48b7166902616c096, type: 3}
   runSound: {fileID: 8300000, guid: 03b1566898d1b2e41b62e22059f54878, type: 3}
-  footstepDelay: 0.1
   footstepAudioSource: {fileID: 662530612618795039}
   hasDiedFromFallDamage: 0
   inventoryEnabled: 0
   dustTrailParticleSystem: {fileID: 7317072522588978674}
-  toonShader: {fileID: 4800000, guid: 1aa979b233181c14398935f2c30c03cd, type: 3}
   itemGlobal: 0
   damageNumber: {fileID: 4250319609010949178, guid: 37c0529082a6fd642a910d03ec6cdcf6, type: 3}
-  needToClearFog: 0
-  isMoving: 0
   levelUpAnimation: {fileID: 5595959314286490986}
   xpAnimation: {fileID: 583976165800334038}
   lilBean: {fileID: 8689864033967333580}
   killFeedManager: {fileID: 0}
   fogClearer: {fileID: 2463615234085099380, guid: 24464a12c1207b04f948503479bfc86d, type: 3}
-  drag: 1
   playerHeight: 2.09
   vignetteFlash: {fileID: 1472882327267094903, guid: 9f6a3d1d6ae8030439f758e186f039f1, type: 3}
   permVignetteFlash: {fileID: 6747592588273846337}
   whatisGround:
     serializedVersion: 2
     m_Bits: 256
-  doubleJump: 0
 --- !u!54 &2567718919365197072
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -19384,7 +19376,7 @@ MonoBehaviour:
   normalLocalPosition: {x: 0, y: 0, z: 0}
   aimingLocalPosition: {x: -0.4, y: 0.24, z: -0.448}
   aimSmoothing: 15
-  weaponSwayAmount: -5
+  weaponSwayAmount: -8
   randomizeRecoil: 0
   randomRecoilContstraints: {x: 0, y: 0}
   recoilPattern: {x: 0, y: 0}
