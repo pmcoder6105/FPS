@@ -177,11 +177,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             return;
 
         playerManager.transform.position = this.gameObject.transform.position;
-        Look();
+        //Look();
         //Move();
         SetGroundedState();
 
-        Jump();
+        //Jump();
         SetPlayerHealthShader();
         SetPlayerHealthInt();
         SetHealthColorPropertyAndGlowShader();

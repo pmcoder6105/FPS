@@ -16138,6 +16138,7 @@ GameObject:
   - component: {fileID: 2511184437448133932}
   - component: {fileID: 6327171089784823577}
   - component: {fileID: 2511184437448133920}
+  - component: {fileID: 6664240182106388884}
   - component: {fileID: 3069946463937519793}
   - component: {fileID: 2567718919365197072}
   - component: {fileID: 3036645135522511440}
@@ -16159,7 +16160,7 @@ Transform:
   m_GameObject: {fileID: 2511184437448133935}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1029141208401553951}
@@ -16195,7 +16196,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 2511184437448133935}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.49717623
   m_Height: 2.1268086
   m_Direction: 1
@@ -16255,6 +16256,62 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &6664240182106388884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2511184437448133935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7ecd681b26b44dc6a0fd8a7479a13e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HUD: {fileID: 0}
+  lifecycle:
+    isDebugLog: 1
+    ID: Hero
+    referenceHealth: 100
+    referenceShield: 100
+  movement:
+    isDebugLog: 1
+    movementInputValues: {x: 0, y: 0, z: 0}
+    runningInputValue: 0
+    jumpingInputValue: 0
+    referenceAcceleration: 5
+    runningAcceleration: 10
+    referenceEndurance: 20
+    jumpForce: 7.5
+    isGeneratePhysicMaterial: 1
+    mass: 70
+    drag: 3
+    height: 1.6
+    groundMask:
+      serializedVersion: 2
+      m_Bits: 1
+    rb: {fileID: 2567718919365197072}
+    cc: {fileID: 2511184437448133932}
+  overview:
+    isDebugLog: 1
+    lookingInputValues: {x: 0, y: 0}
+    aimingInputValue: 0
+    isFollowingInstant: 1
+    damping: 10
+    cameraOffset: {x: 0, y: 0.8, z: 0}
+    isHorizontalInverted: 0
+    isVerticalInverted: 1
+    sensitivity: 300
+    horizontalRange: 0
+    verticalRange: 50
+    searchMask:
+      serializedVersion: 2
+      m_Bits: 1
+    "sear\u0441hDistance": 1
+    defaultFOV: 80
+    aimingFOV: 40
+    referenceShakingAmount: 0
+    camera: {fileID: 2511184436295150316}
 --- !u!114 &3069946463937519793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50662,7 +50719,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8899993190703049177, guid: a770bb2e207809c47bbb82fee87ad255, type: 3}
+    - {fileID: 8825995810714226484, guid: a770bb2e207809c47bbb82fee87ad255, type: 3}
+    - {fileID: 1196440341496887322, guid: a770bb2e207809c47bbb82fee87ad255, type: 3}
+    - {fileID: 3115342717254433809, guid: a770bb2e207809c47bbb82fee87ad255, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a770bb2e207809c47bbb82fee87ad255, type: 3}
 --- !u!4 &4629724811992330367 stripped
 Transform:
@@ -55616,7 +55677,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 984686827, guid: 16104d9c034adf5408d2cc2d0500045c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 16104d9c034adf5408d2cc2d0500045c, type: 3}
 --- !u!4 &4107889466937380671 stripped
 Transform:
@@ -56318,7 +56380,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7507987052539735536, guid: 9036482d076ec364c9705059e4b6e1b3, type: 3}
+    - {fileID: 761279124317683167, guid: 9036482d076ec364c9705059e4b6e1b3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9036482d076ec364c9705059e4b6e1b3, type: 3}
 --- !u!4 &6271179857425784480 stripped
 Transform:
