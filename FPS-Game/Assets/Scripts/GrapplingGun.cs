@@ -16,7 +16,7 @@ public class GrapplingGun : MonoBehaviour
     public float spring = 4.5f;
     public float damper = 0.24f;
     public float massScale = 4.5f;
-    public PlayerMovement playerMovement;
+    public PlayerMovementGrapple playerMovement;
     public CalculateSpeed playerSpeed;
 
     void Update()
