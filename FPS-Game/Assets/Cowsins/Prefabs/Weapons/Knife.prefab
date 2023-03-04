@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1821956303053685228}
   - component: {fileID: 7993007527332023736}
   - component: {fileID: 7695782344637745101}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Blade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0.49999994, y: -0.50000006, z: 0.50000024, w: 0.4999997}
   m_LocalPosition: {x: 0, y: 0.00075207965, z: -0.026715634}
   m_LocalScale: {x: 1.4156898, y: 1.7360296, z: 4.4238086}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1945490750920240844}
   m_RootOrder: 0
@@ -93,7 +94,7 @@ GameObject:
   - component: {fileID: 5357364531324656555}
   - component: {fileID: 3767513256790683850}
   - component: {fileID: 3445747955435290574}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Detail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,6 +111,7 @@ Transform:
   m_LocalRotation: {x: 0.70710677, y: 0.70710677, z: -0.00000011920926, w: 0.00000020861621}
   m_LocalPosition: {x: 0, y: 0.0073793093, z: -0.009066007}
   m_LocalScale: {x: 3.557505, y: 1.5202719, z: 0.30668962}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1945490750920240844}
   m_RootOrder: 1
@@ -173,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2122740216732874567}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,6 +192,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1945490750920240844}
   m_Father: {fileID: 0}
@@ -206,7 +209,7 @@ GameObject:
   - component: {fileID: 1945490750920240844}
   - component: {fileID: 1945490750920240834}
   - component: {fileID: 1945490750920240835}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,6 +226,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 2, z: 0}
   m_LocalScale: {x: 6.5665402, y: 18.601652, z: 100.398445}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1821956303053685228}
   - {fileID: 5357364531324656555}
