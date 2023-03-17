@@ -29,7 +29,7 @@ MonoBehaviour:
   explosionRadius: 0
   explosionForce: 0
   explosionVFX: {fileID: 0}
-  fireRate: 0.8
+  fireRate: 0.1
   reloadTime: 2.5
   infiniteBullets: 0
   magazineSize: 15
@@ -162,7 +162,7 @@ MonoBehaviour:
     reload: {fileID: 8300000, guid: ed38e296f3e5f464496018a6b8386485, type: 3}
     emptyMag: {fileID: 8300000, guid: 5959d65463fbfe342a9219287eb7315f, type: 3}
   pitchVariationFiringSFX: 0.15
-  camShakeAmount: 0.2
+  camShakeAmount: 0.05
   applyFOVEffectOnShooting: 1
   FOVValueToSubstract: 6
   AimingFOVValueToSubstract: 3
